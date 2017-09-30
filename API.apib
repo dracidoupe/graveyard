@@ -17,18 +17,22 @@ API for exposing underying public data from DraciDoupe.cz.
                     "items": [
                         {
                             "name": "Články&Eseje",
+                            "type": "article",
                             "_links": {"self": { "href": "/tvorba/clanky-a-eseje/" }}
                         },
                         {
                             "name": "Galerie",
+                            "type": "photo",
                             "_links": {"self": { "href": "/tvorba/galerie/" }}
                         },
                         {
                             "name": "Fotogalerie",
+                            "type": "photo",
                             "_links": {"self": { "href": "/tvorba/fotogalerie/" }}
                         },
                         {
                             "name": "Hřbitov",
+                            "type": "article",
                             "_links": {"self": { "href": "/tvorba/hrbitov/" }}
                         }
                     ]
@@ -38,18 +42,52 @@ API for exposing underying public data from DraciDoupe.cz.
                     "items": [
                         {
                             "name": "Dovednosti",
+                            "type": "skills",
                             "_links": {"self": { "href": "/doplnky/dovednosti/" }}
                         },
                         {
                             "name": "Nová Povolání",
+                            "type": "article",
                             "_links": {"self": { "href": "/doplnky/nova-povolani/" }}
                         },
                         {
                             "name": "Nové Rasy",
+                            "type": "article",
                             "_links": {"self": { "href": "/doplnky/nove-rasy/" }}
                         }
                     ]
-                }
-            }
+                },
+             	{
+                    "name": "Pro PJ",
+                    "items": [
+                        {
+                            "name": "Bestiář",
+                            "type": "monster",
+                            "_links": {"self": { "href": "/pro-pj/nestvury/" }}
+                        },
+                        {
+                            "name": "Dobrodružství",
+                            "type": "adventure",
+                            "_links": {"self": { "href": "/pro-pj/dobrodruzstvi/" }}
+                        },
+                        {
+                            "name": "Předměty",
+                            "type": "game-object",
+                            "_links": {"self": { "href": "/pro-pj/predmety/" }}
+                        }
+                    ]
+                }                   
+            ],
+            "news": [
+            	{
+	            	"name": "Aktuality",
+	                "items": [
+	                    {
+	                        "name": "Aktuality",
+	                        "type": "news",
+	                        "_links": {"self": { "href": "/aktuality/" }}
+	                    },
+	                ]
+	            }
+            ]
         }
-
