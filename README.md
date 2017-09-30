@@ -16,6 +16,8 @@ Hence, it still attracts few hundred of visitors every day.
 
 Because I want to keep it available, something to be discovered for both nostalgics and new player generation, if only for nostalgia reasons. That is unsustainable in current state, mainly for security reasons. 
 
+Also, I am just grateful. This site shaped my life like nothing else.
+
 ### Why not fix the product in the process?
 
 That was an idea of RPGPlanet, planned successor to DraciDoupe.cz. It, however, entered development hell, coupled with changing landscape of how sites are consumed. It was also never truly accepted by community, hence dying before bing born. 
@@ -52,10 +54,11 @@ Most of the things from user perspective. The goal is to preserve, not to rework
 * Site being Czech to the bones (and routes)
 * Skins. They are terrible, make the site much harder to develop, makes maintenance costly and doesn't bring almost any value. I love them
 * Filters, some of them. They are beautifully terrible in the same way skins are
+* User registration approval. It's elitists, awful, unfriendly and it makes the site the way it is
 
 ### What will change?
 
-* Either cookies or local storage (TBD) will be required for skins and for log in. Those days, it's _more_ safe than URL parameter, trust me
+* Either cookies or local storage (TBD) will be required for skins and for log in. Those days, it's _more_ safe than URL parameter, trust me. It also means it is safer to have longer session length than terrible 15 minutes
 * Public site still working without either, though
 * SEO, those articles deserve it. Current site is _very_ unfriendly to search engines
 * Security, on multiple levels
@@ -73,7 +76,7 @@ Technically, DDCZ is kinda CMS with simple workflow meeting very simple social n
 * Page load speed is a concern. Everybody loves fast pages
 * General speed and scalability is not a concern. Whole dataset can fit into modern memory. Please do not optimise on bare metal and single node
 * Maintenance cost is a concern. The less it costs to run, the more likely it will stay with us
-* Stability of an ecosystem is a concern. This site is going to run for another decade. Which technologies do you think are going to stay for so long, preferably with no need for upgrade?
+* Stability of an ecosystem is a concern. This site is going to run for another decade. Which technologies do you think are going to stay for so long, preferably with no need for upgrade? That site, this has been always my playground for failed experiments. Judge me
 
 ### Separation of concerns
 
@@ -83,4 +86,48 @@ Precisely for the abovementioned reasons, decoupling data, frontend and backend 
 * Frontend (server-rendered on public website for usability) consuming that API and displaying results
 * Compatibility redirect, exchanging cookie authentication for URL authentication for the old DDCZ
 
+## Pages & Data Design
 
+Oh boy, this thing has a _lot_ of dubiously designed data underneath. However, from a high-level perspective, they would be normalised as follows.
+
+There is a Czech/English tension in the naming. Decision TBD. 
+
+### Public pages
+
+* Common attributes for all "creation" pages: Author, External source (for _very_ legacy articles from bootstrapped version of the page), rating (AVG of all votes, expressed in starts, 0-5) and read and print counters
+* Creation pages: "Articles", containing annotation and text
+* Creation pages: System extensions (roughly dozen of them), containing arbitrary amount of additional attributes, rendered in a table-like structure
+
+---
+* Ad section and dating section (both surprisingly active)
+* Links to other sites (now defuct)
+* Few system pages (search in users, news, newsfeed, artices being in the approval process, top stats etc.)
+* Forum (as in public discussion place)
+* Head of Golden Dragon competition (best articles for a given time period)
+* Polls
+* Chat
+
+* Registration (subject to approval)
+* Wise Owl / Phorum (as in Phorum installation, separate from the page, with various hand-made wires to make it kinda works)
+
+### Private pages
+
+* "Table discussions" (~600 tables): categories, "flat" discussion list with post rating, book/ignore, notice board, access stats and polls
+* Discussion voting
+* User levels (based on activity)
+* Private Messages (with groups)
+* Ability to send new creations into approval queue (with cathegory-specific directions)
+* Settings
+    * Personal settings (user attributes change...ICQ status icon present!)
+    * Mentoring system for new users
+    * Mailing list for new creations
+    * Default filters configuration
+    * Login configuration / API key / skin settings
+    * News groups (used in private messages)
+
+### Administration pages
+
+* Approval and comments for approval queue
+* User registration approvals
+* Article edit
+* Head of Gold Dragon award management
