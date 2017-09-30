@@ -1,0 +1,55 @@
+FORMAT: 1A
+
+# DraciDoupe.cz
+
+API for exposing underying public data from DraciDoupe.cz.
+
+## Entry Point [/]
+
+### List available pages [GET]
+
++ Response 200 (application/json)
+
+        {
+            "creations": [
+                {
+                    "name": "Tvorba",
+                    "items": [
+                        {
+                            "name": "Články&Eseje",
+                            "_links": {"self": { "href": "/tvorba/clanky-a-eseje/" }}
+                        },
+                        {
+                            "name": "Galerie",
+                            "_links": {"self": { "href": "/tvorba/galerie/" }}
+                        },
+                        {
+                            "name": "Fotogalerie",
+                            "_links": {"self": { "href": "/tvorba/fotogalerie/" }}
+                        },
+                        {
+                            "name": "Hřbitov",
+                            "_links": {"self": { "href": "/tvorba/hrbitov/" }}
+                        }
+                    ]
+                },
+                {
+                    "name": "Doplňky",
+                    "items": [
+                        {
+                            "name": "Dovednosti",
+                            "_links": {"self": { "href": "/doplnky/dovednosti/" }}
+                        },
+                        {
+                            "name": "Nová Povolání",
+                            "_links": {"self": { "href": "/doplnky/nova-povolani/" }}
+                        },
+                        {
+                            "name": "Nové Rasy",
+                            "_links": {"self": { "href": "/doplnky/nove-rasy/" }}
+                        }
+                    ]
+                }
+            }
+        }
+

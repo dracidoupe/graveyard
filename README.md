@@ -55,6 +55,7 @@ Most of the things from user perspective. The goal is to preserve, not to rework
 * Skins. They are terrible, make the site much harder to develop, makes maintenance costly and doesn't bring almost any value. I love them
 * Filters, some of them. They are beautifully terrible in the same way skins are
 * User registration approval. It's elitists, awful, unfriendly and it makes the site the way it is
+* Focus on user privacy. All data is pseudonymous. No personal information collected
 
 ### What will change?
 
@@ -97,6 +98,9 @@ There is a Czech/English tension in the naming. Decision TBD.
 * Common attributes for all "creation" pages: Author, External source (for _very_ legacy articles from bootstrapped version of the page), rating (AVG of all votes, expressed in starts, 0-5) and read and print counters
 * Creation pages: "Articles", containing annotation and text
 * Creation pages: System extensions (roughly dozen of them), containing arbitrary amount of additional attributes, rendered in a table-like structure
+* Creation pages: Gallery and Photogallery (photo uploads included)
+* Creation page: Adventures / Dungeons (random uploads included)
+* Creation page: Downloads (various programs available for download)
 
 ---
 * Ad section and dating section (both surprisingly active)
