@@ -83,8 +83,9 @@ Technically, DDCZ is kinda CMS with simple workflow meeting very simple social n
 
 Precisely for the abovementioned reasons, decoupling data, frontend and backend is useful to be able to move forward carefully. Hence:
 
-* Backend API for exposing data (cleaned up, normalised and in UTF-8)
+* Backend API for exposing data (cleaned up, normalised and in UTF-8) running on top of...nonideal database
 * Frontend (server-rendered on public website for usability) consuming that API and displaying results
+	* While SPA limit SEO and have their class of problems, they are useful in the initial prototype in order to avoid another layer of applications. Over time, public pages should be completely migrated to dedicated application, running reasonable framework and _generating_ site on public webpages
 * Compatibility redirect, exchanging cookie authentication for URL authentication for the old DDCZ
 
 ## Pages & Data Design
