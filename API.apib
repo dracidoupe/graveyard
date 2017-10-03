@@ -91,3 +91,36 @@ API for exposing underying public data from DraciDoupe.cz.
                 }
             ]
         }
+
+
+
+## News [/]
+
+### Retrieve all news [GET]
+
++ Response 200 (application/json)
+
+        {
+            "name": "Aktuality",
+            "_links": {"self": { "href": "/aktuality/" }},
+            items: [
+                {
+                    date: "2017-01-02 02:02:02",
+                    title: "Example News",
+                    text: "Text of news (tm)",
+                    author: {
+                        nick: "Unknown/N",
+                        _url: "/uzivatele/123/"
+                    }
+                },
+                {
+                    date: "2017-01-01 01:01:01",
+                    title: "Example News 2",
+                    text: "Text of news (tm), but longer",
+                    author: {
+                        nick: "Unknown/N",
+                        _url: "/uzivatele/123/"
+                    }
+                }
+            ]
+        }
