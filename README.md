@@ -136,3 +136,20 @@ There is a Czech/English tension in the naming. Decision TBD.
 * User registration approvals
 * Article edit
 * Head of Gold Dragon award management
+
+## Dictionary
+
+Dictionary of words used during move and translation. 
+
+## Universal domain names
+
+* Sekce = Sections
+* Nazev stranky / rubriky = Page Heading
+* Nickname = nick (always shortened)
+
+## Pages
+
+* Aktuality = News
+* Novinky = Newsfeed
+
+## Rubriky (= Creative Pages)
