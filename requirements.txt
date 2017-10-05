@@ -3,3 +3,4 @@ falcon-cors
 
 gunicorn
 pytest
+PyMySQL

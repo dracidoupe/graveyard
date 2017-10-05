@@ -3,9 +3,22 @@
 import json
 import logging
 
+import pymysql
+import pymysql.cursors
+
+
 import falcon
 from falcon import HTTP_200
 from falcon_cors import CORS
+
+
+def getConnection():
+    return pymysql.connect(host='localhost',
+                             user='ddcz_test',
+                             password='xxx',
+                             db='dracidoupe_cz',
+                             charset='latin2',
+                             cursorclass=pymysql.cursors.DictCursor)
 
 cors = CORS(allow_origins_list=['http://localhost:8080'])
 
@@ -22,7 +35,29 @@ def getLogger(name):
 class StorageEngine(object):
 
     def get_news(self, marker, limit):
-        return ""
+        items = []
+
+        conn = getConnection()
+        try:
+            with conn.cursor() as cursor:
+                # TODO: marker, limit
+                sql = "SELECT id, datum, autor, autmail, text FROM aktuality ORDER BY datum DESC LIMIT 10"
+                cursor.execute(sql)
+
+                for row in cursor.fetchall():
+                    items.append({
+                        u"id": row["id"],
+                        u"date": row["datum"].isoformat(),
+                        u"text": row["text"],
+                        u"author": {
+                            u"nick": row["autor"],
+                            u"_url": u"/uzivatele/%s" % row["autor"]
+                        }
+                    })
+
+                return items
+        finally:
+            conn.close()
 
 class RequireJSON(object):
 
@@ -52,7 +87,13 @@ class NewsResource(object):
         limit = req.get_param_as_int('limit') or 50
 
         try:
-            result = self.db.get_news(marker, limit)
+            items = self.db.get_news(marker, limit)
+            resp.body = json.dumps({
+                u"name": "Aktuality",
+                u"_links": {u"self": { u"href": u"/aktuality/" }},
+                u"items": items
+            }
+        )
         except Exception as ex:
             self.logger.error(ex)
 
@@ -64,32 +105,6 @@ class NewsResource(object):
                 'Service Outage',
                 description,
                 30)
-        resp.body = json.dumps(json.loads("""
-        {
-            "name": "Aktuality",
-            "_links": {"self": { "href": "/aktuality/" }},
-            "items": [
-                {
-                    "date": "2017-01-02 02:02:02",
-                    "title": "Example News",
-                    "text": "Text of news (tm)",
-                    "author": {
-                        "nick": "Unknown/N",
-                        "_url": "/uzivatele/123/"
-                    }
-                },
-                {
-                    "date": "2017-01-01 01:01:01",
-                    "title": "Example News 2",
-                    "text": "Text of news (tm), but longer",
-                    "author": {
-                        "nick": "Unknown/N",
-                        "_url": "/uzivatele/123/"
-                    }
-                }
-            ]
-        }
-        """))
 
 def create():
     app = falcon.API(middleware=[
