@@ -52,7 +52,7 @@ class NewsResource(object):
         limit = req.get_param_as_int('limit') or 50
 
         try:
-            result = self.db.get_things(marker, limit)
+            result = self.db.get_news(marker, limit)
         except Exception as ex:
             self.logger.error(ex)
 
@@ -64,33 +64,32 @@ class NewsResource(object):
                 'Service Outage',
                 description,
                 30)
-        else:
-            resp.body = json.dumps(json.loads("""
-            {
-                "name": "Aktuality",
-                "_links": {"self": { "href": "/aktuality/" }},
-                "items": [
-                    {
-                        "date": "2017-01-02 02:02:02",
-                        "title": "Example News",
-                        "text": "Text of news (tm)",
-                        "author": {
-                            "nick": "Unknown/N",
-                            "_url": "/uzivatele/123/"
-                        }
-                    },
-                    {
-                        "date": "2017-01-01 01:01:01",
-                        "title": "Example News 2",
-                        "text": "Text of news (tm), but longer",
-                        "author": {
-                            "nick": "Unknown/N",
-                            "_url": "/uzivatele/123/"
-                        }
+        resp.body = json.dumps(json.loads("""
+        {
+            "name": "Aktuality",
+            "_links": {"self": { "href": "/aktuality/" }},
+            "items": [
+                {
+                    "date": "2017-01-02 02:02:02",
+                    "title": "Example News",
+                    "text": "Text of news (tm)",
+                    "author": {
+                        "nick": "Unknown/N",
+                        "_url": "/uzivatele/123/"
                     }
-                ]
-            }
-            """))
+                },
+                {
+                    "date": "2017-01-01 01:01:01",
+                    "title": "Example News 2",
+                    "text": "Text of news (tm), but longer",
+                    "author": {
+                        "nick": "Unknown/N",
+                        "_url": "/uzivatele/123/"
+                    }
+                }
+            ]
+        }
+        """))
 
 def create():
     app = falcon.API(middleware=[
