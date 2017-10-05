@@ -1,3 +1,3 @@
 #!/bin/bash
-gunicorn raise:app
+gunicorn --reload animate:app
 
