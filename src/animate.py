@@ -115,7 +115,7 @@ class NewsResource(object):
                 u"name": "Aktuality",
                 u"_links": {u"self": { u"href": u"/aktuality/" }},
                 u"items": items
-            }
+            }, ensure_ascii=False
         )
         except Exception as ex:
             self.logger.error(ex)
