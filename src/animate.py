@@ -1,6 +1,6 @@
 # Raise, Undeads!
 
-import ConfigParser
+import configparser
 import json
 import logging
 import os
@@ -15,7 +15,7 @@ from falcon_cors import CORS
 
 # '../config/raise.cfg'
 config_file = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'config', 'raise.cfg'))
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 USE_CONFIG = False
 
 if os.path.exists(config_file):
