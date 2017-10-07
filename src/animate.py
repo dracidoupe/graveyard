@@ -1,7 +1,9 @@
 # Raise, Undeads!
 
+import ConfigParser
 import json
 import logging
+import os
 
 import pymysql
 import pymysql.cursors
@@ -11,14 +13,30 @@ import falcon
 from falcon import HTTP_200
 from falcon_cors import CORS
 
+# '../config/raise.cfg'
+config_file = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'config', 'raise.cfg'))
+config = ConfigParser.ConfigParser()
+USE_CONFIG = False
+
+if os.path.exists(config_file):
+    USE_CONFIG = True
+    config.read(config_file)
+
+def get_config_value(section, option, default_value):
+    if USE_CONFIG and config.has_section(section) and config.has_option(section, option):
+        return config.get(section, option)
+    else:
+        return default_value
+
 
 def getConnection():
-    return pymysql.connect(host='localhost',
-                             user='ddcz_test',
-                             password='xxx',
-                             db='dracidoupe_cz',
-                             charset='latin2',
-                             cursorclass=pymysql.cursors.DictCursor)
+    return pymysql.connect(host=get_config_value('db', 'host', 'localhost'),
+                             user=get_config_value('db', 'user', 'ddcz_test'),
+                             password=get_config_value('db', 'password', 'xxx'),
+                             db=get_config_value('db', 'database_name', 'dracidoupe_cz'),
+                             charset=get_config_value('db', 'charset', 'latin2'),
+                             cursorclass=pymysql.cursors.DictCursor
+                          )
 
 cors = CORS(allow_origins_list=['http://localhost:8080'])
 
