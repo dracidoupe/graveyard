@@ -24,4 +24,4 @@ for i in $ALLOWED_ENV; do
 done
 
 cd $APP
-sudo -u $TARGET_USER $GUNI -w $WORKERS -b localhost:$PORT $APP_NAME
+sudo -u $TARGET_USER $GUNI -w $WORKERS -b localhost:$PORT ENVIRONMENT=production $APP_NAME

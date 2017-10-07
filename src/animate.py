@@ -38,7 +38,12 @@ def getConnection():
                              cursorclass=pymysql.cursors.DictCursor
                           )
 
-cors = CORS(allow_origins_list=['http://localhost:8080'])
+if os.environ.has_key('ENVIRONMENT') and os.environ['ENVIRONMENT'] == 'production':
+    fext_source = ['https://nove.dracidoupe.cz', 'https://www.dracidoupe.cz']
+else:
+    fext_source = ['http://localhost:8000']
+
+cors = CORS(allow_origins_list=fext_source)
 
 def getLogger(name):
     logger = logging.getLogger(name)
