@@ -38,7 +38,7 @@ def getConnection():
                              cursorclass=pymysql.cursors.DictCursor
                           )
 
-if os.environ.has_key('ENVIRONMENT') and os.environ['ENVIRONMENT'] == 'production':
+if os.getenv('RUNTIME_ENVIRON') == 'production':
     fext_source = ['https://nove.dracidoupe.cz', 'https://www.dracidoupe.cz']
 else:
     fext_source = ['http://localhost:8000']
