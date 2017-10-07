@@ -1,0 +1,27 @@
+#!/bin/sh
+
+exec 2>&1
+
+WORKERS=3
+PORT=8181
+APP_NAME="animate:app"
+
+GUNI="/var/www/dracidoupe.cz/www_root/api/application/ddcz-api-venv/bin/gunicorn"
+APP="/var/www/dracidoupe.cz/www_root/api/application/src"
+TARGET_USER=w-dracidoupe-cz
+TARGET_GRUP=w-dracidoupe-cz
+
+ALLOWED_ENV="LANGUAGE"
+
+FCGISOCKET="/var/www/fastcgi/sockets/w-dracidoupe-cz/dracidoupe.cz.socket"
+
+
+# copy the allowed environment variables
+E=
+
+for i in $ALLOWED_ENV; do
+  E="$E $i=$(eval echo "\$$i")"
+done
+
+cd $APP
+sudo -u $TARGET_USER $GUNI -w $WORKERS -b localhost:$PORT $APP_NAME
