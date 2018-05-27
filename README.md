@@ -73,7 +73,7 @@ Technically, DDCZ is kinda CMS with simple workflow meeting very simple social n
 
 ### Considerations
 
-* MySQL is the database of choice and integration layer between old and new. For all its awfulness, this will stay. It is encoded as latin2, which is annoying and hopefully changeable in future
+* MySQL is the database of choice and integration layer between old and new. For all its awfulness, this will stay. While database pretends to be in latin2 (and even the site's connectin to it is explicitly set to latin2), the actual content is stored in cp1250. This is a major fuckup that will render most default tools unusable with the database. "Proper" Python way to present a record is to connect using `latin2` encoding and then convert individual records using `record.encode("latin2").decode("cp1250").encode("utf-8")`
 * Page load speed is a concern. Everybody loves fast pages
 * General speed and scalability is not a concern. Whole dataset can fit into modern memory. Please do not optimise on bare metal and single node
 * Maintenance cost is a concern. The less it costs to run, the more likely it will stay with us
