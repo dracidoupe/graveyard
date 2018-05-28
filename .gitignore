@@ -1,4 +1,9 @@
 *.pyc
 *.pyo
+__pycache__
+
 /graveyard-venv
+
+/graveyard/settings/local.py
+/graveyard/settings/production.py
 
