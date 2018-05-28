@@ -10,7 +10,7 @@ from django.db import models
 from .magic import MisencodedCharField, MisencodedTextField
 
 
-class Aktuality(models.Model):
+class News(models.Model):
     datum = models.DateTimeField()
     autor = MisencodedTextField()
     autmail = MisencodedTextField()
@@ -19,6 +19,7 @@ class Aktuality(models.Model):
     class Meta:
         managed = False
         db_table = 'aktuality'
+        verbose_name = 'Aktuality'
         verbose_name_plural = "Aktuality"
         
     def __str__(self):

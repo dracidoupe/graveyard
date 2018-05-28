@@ -2,9 +2,9 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
-from .models import Aktuality
+from .models import News
 
 
 def index(request):
-    akt = Aktuality.objects.all()[0]
-    return HttpResponse("<html><head><meta charset=\"utf-8\"><title>Test</title></head><body>{0}</body></html>".format(akt.text))
+    news = News.objects.order_by('-datum')[:10]
+    return render(request, 'news/list.html', {'news': news})
