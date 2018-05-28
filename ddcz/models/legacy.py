@@ -8,35 +8,6 @@
 from django.db import models
 
 
-class MisencodedTextField(models.TextField):    
-    def from_db_value(self, value, expression, connection):
-        if isinstance(value, str):
-            return value.encode("latin2").decode("cp1250")
-        else:
-            return value
-
-
-    def clean(self, value, model_instance):
-        super().clean(value, model_instance)
-        if isinstance(value, str):
-            value = value.encode("cp1250").decode("latin2")
-        return value
-
-
-class MisencodedCharField(models.CharField):    
-    def from_db_value(self, value, expression, connection):
-        if isinstance(value, str):
-            return value.encode("latin2").decode("cp1250")
-        else:
-            return value
-
-
-    def clean(self, value, model_instance):
-        super().clean(value, model_instance)
-        if isinstance(value, str):
-            value = value.encode("cp1250").decode("latin2")
-        return value
-
 
 class AktivniUzivatele(models.Model):
     relid = models.CharField(primary_key=True, max_length=32)
@@ -52,20 +23,6 @@ class AktivniUzivatele(models.Model):
         managed = False
         db_table = 'aktivni_uzivatele'
 
-
-class Aktuality(models.Model):
-    datum = models.DateTimeField()
-    autor = models.TextField()
-    autmail = models.TextField()
-    text = MisencodedTextField()
-
-    class Meta:
-        managed = False
-        db_table = 'aktuality'
-        verbose_name_plural = "Aktuality"
-        
-    def __str__(self):
-        return self.text
 
 
 class Alchpredmety(models.Model):
