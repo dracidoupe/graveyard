@@ -78,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dracidoupe_cz',
-        'USER': 'ddcz_test',
-        'PASSWORD': 'xxx',
+        'USER': 'root',
+        'PASSWORD': '',
         'OPTIONS': {
             'charset': 'latin2'
         }
