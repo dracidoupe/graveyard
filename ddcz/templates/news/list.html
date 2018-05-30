@@ -1,3 +1,5 @@
+{% load html %}
+
 <div>
     <h1 class="page-heading">Aktuality</h1>
     <div v-html="page_intro"></div>
@@ -7,7 +9,7 @@
             <p><time :datetime={{ n.datum | date:"r"  }}>{{ n.datum | date:"j. n. Y v H:i:s" }}</time></p>
         </header>
         <div class="content">
-            {{ n.text }}
+            {{ n.text|render_html|safe }}
         </div>
         <footer>
             <a href="{{ n.autmail }}" class="author" rel="author">{{ n.autor }}</a>
