@@ -2,6 +2,26 @@
 
 Graveyard is an attempt at open-source reimplementation of DraciDoupe.cz (referred to as DDCZ in this text).
 
+## Installation
+
+Graveyard is currently written in [Django](https://www.djangoproject.com/). Requirements to develop it:
+
+* You have working Python 3 installation on your machine
+* You have working MySQL installation on your machine
+
+To use the project, clone this repository and:
+
+* Create a virtual environment: `python3 -m venv gvenv`
+* Enter it (on Mac OS X or Linux): `source gvenv/bin/activte`
+* Copy settings template: `cp graveyard/settings/local.example.py graveyard/settings/local.py`
+* Edit the settings above, especially enter credentials to your local MySQL
+* Create the database schema: `python manage.py migrate`
+* Run the thing! `python manage.py runserver`
+* Observe if you have contact at `http://localhost:8000`
+* Maybe create a superuser in order to enter admin: `python manage.py createsuperuser`
+* Look around the administration interface at `http://localhost:8000/admin/`
+
+
 ## QNEA (Questions Not Even Asked)
 
 ### What is it?
