@@ -1,19 +1,21 @@
+{% extends 'public.html' %}
 {% load html %}
-
-<div>
+{% block content %}
+<div id="page-news">
     <h1 class="page-heading">Aktuality</h1>
-    <div v-html="page_intro"></div>
+    <div>Vítejte na největším serveru o Dračím Doupěti. Najdete zde spoustu doplňků, článků či diskuzí k tématům. Pomocí menu "Skiny" si můžete změnit i vzhled tohoto webu, přesně podle Vašeho vkusu. Chcete-li využít všech funkcí tohoto webu, měli byste se zaregistrovat. </div>
     {% for n in news %}
         <article>
-        <header>
-            <p><time :datetime={{ n.datum | date:"r"  }}>{{ n.datum | date:"j. n. Y v H:i:s" }}</time></p>
-        </header>
-        <div class="content">
-            {{ n.text|render_html|safe }}
-        </div>
-        <footer>
-            <a href="{{ n.autmail }}" class="author" rel="author">{{ n.autor }}</a>
-        </footer>
+            <header>
+                <p><time datetime={{ n.datum | date:"r"  }}>{{ n.datum | date:"j. n. Y v H:i:s" }}</time></p>
+            </header>
+            <div class="content">
+                {{ n.text|render_html|safe }}
+            </div>
+            <footer>
+                <a href="{{ n.autmail }}" class="author" rel="author">{{ n.autor }}</a>
+            </footer>
         </article>
     {% endfor %}
 </div>
+{% endblock %}

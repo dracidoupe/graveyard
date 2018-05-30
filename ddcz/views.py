@@ -6,5 +6,5 @@ from .models import News
 
 
 def index(request):
-    news = News.objects.order_by('-datum')[:10]
+    news = News.objects.order_by('-datum')[:5]
     return render(request, 'news/list.html', {'news': news})
