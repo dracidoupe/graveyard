@@ -2,6 +2,8 @@
 
 Graveyard is an attempt at open-source reimplementation of DraciDoupe.cz (referred to as DDCZ in this text).
 
+Developer's documentation is [at Read the Docs](https://ddcz.readthedocs.io/en/latest/). 
+
 ## Installation
 
 You can run Graveyard either directly on your machine or inside [Docker](https://www.docker.com/).
