@@ -28,4 +28,10 @@ STATIC_ROOT = '/var/www/dracidoupe.cz/www_root/static/htdocs/'
 
 STATIC_URL = 'https://static.dracidoupe.cz/'
 
-STATICFILE_DIRS = []
+# Security settings
+X_FRAME_OPTIONS="DENY"
+CSRF_COOKIE_SECURE=True
+SESSION_COOKIE_SECURE=True
+SECURE_SSL_REDIRECT=True
+SECURE_BROWSER_XSS_FILTER=True
+SECURE_CONTENT_TYPE_NOSNIFF=True

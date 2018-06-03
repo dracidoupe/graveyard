@@ -1,0 +1,27 @@
+#!/bin/sh
+
+exec 2>&1
+
+WORKERS=2
+PORT=8282
+APP_NAME="graveyard.wsgi"
+
+GUNI="/var/www/dracidoupe.cz/www_root/nove/application/ddcz-venv/bin/gunicorn"
+APP="/var/www/dracidoupe.cz/www_root/nove/application/"
+TARGET_USER=w-dracidoupe-cz
+TARGET_GRUP=w-dracidoupe-cz
+
+ALLOWED_ENV="LANGUAGE"
+
+FCGISOCKET="/var/www/fastcgi/sockets/w-dracidoupe-cz/dracidoupe-nove.cz.socket"
+
+
+# copy the allowed environment variables
+E=
+
+for i in $ALLOWED_ENV; do
+  E="$E $i=$(eval echo "\$$i")"
+done
+
+cd $APP
+sudo -u $TARGET_USER RUNTIME_ENVIRON=production $GUNI -w $WORKERS -b localhost:$PORT $APP_NAME
