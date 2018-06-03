@@ -393,18 +393,6 @@ class Forum(models.Model):
         db_table = 'forum'
 
 
-class ForumBck2006719(models.Model):
-    nickname = models.TextField()
-    email = models.TextField(blank=True, null=True)
-    datum = models.DateTimeField()
-    text = models.TextField()
-    reg = models.CharField(max_length=50)
-
-    class Meta:
-        managed = False
-        db_table = 'forum_bck_2006_7_19'
-
-
 class Forums(models.Model):
     name = models.CharField(max_length=50)
     active = models.SmallIntegerField()
@@ -625,15 +613,6 @@ class Inzerce(models.Model):
         managed = False
         db_table = 'inzerce'
 
-
-class Ips2Log(models.Model):
-    ip = models.CharField(primary_key=True, max_length=15)
-
-    class Meta:
-        managed = False
-        db_table = 'ips2log'
-
-
 class Kouzla(models.Model):
     jmeno = models.TextField()
     kouzsl = models.TextField()
@@ -701,15 +680,6 @@ class Linky(models.Model):
         db_table = 'linky'
 
 
-class LoggedAliens(models.Model):
-    nick = models.CharField(max_length=40)
-    ip = models.CharField(max_length=15)
-    psw = models.CharField(max_length=40)
-    time = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'logged_aliens'
 
 
 class Mailgroups(models.Model):
@@ -1113,16 +1083,6 @@ class Navstevnost(models.Model):
     class Meta:
         managed = False
         db_table = 'navstevnost'
-
-
-class Pokus(models.Model):
-    a = models.AutoField(primary_key=True)
-    b = models.IntegerField()
-    c = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'pokus'
 
 
 # class Pomocnici(models.Model):
@@ -1626,14 +1586,6 @@ class UserStats(models.Model):
     class Meta:
         managed = False
         db_table = 'user_stats'
-
-
-class Users2Log(models.Model):
-    nick = models.CharField(primary_key=True, max_length=50)
-
-    class Meta:
-        managed = False
-        db_table = 'users2log'
 
 
 class Uzivatele(models.Model):
