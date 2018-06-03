@@ -105,3 +105,9 @@ body.light a:hover{
   width: 100%;
   text-align: right;
 }
+
+#global-footer {
+  width: 60%;
+  font-size: 80%;
+  text-align: center;
+}
