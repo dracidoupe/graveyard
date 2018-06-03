@@ -30,3 +30,33 @@ class News(models.Model):
             self.text[0:50]
         )
 
+
+class CommonArticles(models.Model):
+    jmeno = MisencodedTextField()
+    text = MisencodedTextField()
+    autor = MisencodedCharField(max_length=25, blank=True, null=True)
+    autmail = MisencodedCharField(max_length=30, blank=True, null=True)
+    datum = models.DateTimeField()
+    schvaleno = MisencodedCharField(max_length=1)
+    zdroj = MisencodedTextField(blank=True, null=True)
+    zdrojmail = MisencodedCharField(max_length=30, blank=True, null=True)
+    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
+    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
+    pochvez = MisencodedCharField(max_length=5)
+    precteno = models.IntegerField()
+    tisknuto = models.IntegerField()
+    skupina = MisencodedCharField(max_length=30, blank=True, null=True)
+    anotace = MisencodedTextField(blank=True, null=True)
+    rubrika = MisencodedCharField(max_length=30)
+
+    class Meta:
+        managed = False
+        db_table = 'prispevky_dlouhe'
+        verbose_name = 'Běžné příspěvky'
+        verbose_name_plural = 'Běžné příspěvky'
+
+    def __str__(self):
+        return "{} od {}".format(
+            self.jmeno,
+            self.autor,
+        )

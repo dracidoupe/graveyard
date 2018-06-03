@@ -1147,30 +1147,6 @@ class Predmety(models.Model):
         managed = False
         db_table = 'predmety'
 
-
-class PrispevkyDlouhe(models.Model):
-    jmeno = models.TextField()
-    text = models.TextField()
-    autor = models.CharField(max_length=25, blank=True, null=True)
-    autmail = models.CharField(max_length=30, blank=True, null=True)
-    datum = models.DateTimeField()
-    schvaleno = models.CharField(max_length=1)
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.CharField(max_length=30, blank=True, null=True)
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-    pochvez = models.CharField(max_length=5)
-    precteno = models.IntegerField()
-    tisknuto = models.IntegerField()
-    skupina = models.CharField(max_length=30, blank=True, null=True)
-    anotace = models.TextField(blank=True, null=True)
-    rubrika = models.CharField(max_length=30)
-
-    class Meta:
-        managed = False
-        db_table = 'prispevky_dlouhe'
-
-
 class PsiSmecka(models.Model):
     id_uz = models.IntegerField(primary_key=True)
     cizi_tbl = models.CharField(max_length=20)
