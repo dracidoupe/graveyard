@@ -20,12 +20,27 @@ COMMON_ARTICLES_CREATIVE_PAGES = {
             'Recenze',
             'Úvahy',
         ]
+    },
+    'novapovolani': {
+        'name': 'Nová Povolání',
+        'sections': [
+            'Kompletní povolání',
+            'Nový obor pro experty',
+            'Nový obor pro pokročilé',
+            'Obor',
+            'Ostatní',
+            'Specializace',
+            'Specializace pro experty',
+            'Specializace pro pokročilé',
+            'Začátečnické povolání',
+        ]
     }
 }
 
 
 SLUG_NAME_TRANSLATION_FROM_CZ = {
-    'clanky': 'articles-and-essays'
+    'clanky': 'articles-and-essays',
+    'novapovolani': 'new-classes',
 }
 
 SLUG_NAME_TRANSLATION_TO_CZ = {v:k for k,v in SLUG_NAME_TRANSLATION_FROM_CZ.items()}

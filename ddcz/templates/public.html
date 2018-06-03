@@ -24,14 +24,21 @@
                             <ul>
                                 <li><span class="list_subheading">Tvorba</span>
                                     <ul>
-                                        <li><a href="{% url 'ddcz:articles-and-essays' %}">Články&amp;Eseje</a></li>
+                                        <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='clanky' %}">Články&amp;Eseje</a></li>
                                         <li><a href="#">Galerie</a></li>
                                         <li><a href="#">Fotogalerie</a></li>
                                         <li><a href="#">Hřbitov</a></li>
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
+                            <ul>
+                                    <li><span class="list_subheading">Doplňky</span>
+                                        <ul>
+                                                <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='novapovolani' %}">Nová Povolání</a></li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                            </li>
                     </ul>
                 </nav>
                 
@@ -40,7 +47,6 @@
                         <li><span class="list_heading">Vzhled</span>
                             <ul>
                                 <li><a href="#">Light</a></li>
-                                <li><a href="#">Historic</a></li>
                             </ul>
                         </li>
                     </ul>
