@@ -1,0 +1,19 @@
+{% extends 'public.html' %}
+{% load html %}
+{% block content %}
+<div id="page-common-article">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <ul class="article-list">
+    {% for a in articles %}
+        <li>
+            <h2>
+                <a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a>
+                &nbsp;{{ a.pochvez }}*
+            </h2>
+            <p class="synopsis"><i>{{ a.anotace }}</i></p>
+            <p><a href="mailto:{{ a.autmail }}" class="author" rel="author">{{ a.autor }}</a></p>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
