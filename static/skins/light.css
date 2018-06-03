@@ -1,0 +1,107 @@
+body {
+    background-color: #c0c0c0;
+    font-family: Verdana, Arial, sans-serif;
+}
+.logo {
+    width: 100%;
+    text-align: center;
+}
+body.historic {
+    background-color: red;
+}
+#app div.flex{
+    display: flex;
+}
+body.historic nav {
+    width: 15%;
+}
+body.historic nav.left {
+    order: 0;
+}
+body.historic main {
+    width: 70%;
+    order: 1;
+}
+body.historic nav.right {
+    order: 2;
+}
+body.light h1.page-heading {
+  width: 100%;
+  font-weight: bold;
+  border-top: 0px;
+  border-bottom: 0px;
+  background-color: #2f4f4f;
+  color: white;
+  text-align: center;
+  font-size: 150%;
+  padding: 3px;
+}
+body.light nav {
+    width: 15%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+body.light nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+body.light ul.nav_border {
+  display: block;
+  border: solid 1px;
+}
+body.light nav .list_heading {
+  font-weight: bold;
+  background-color: #2f4f4f;
+  color: white;
+  text-align: center;
+  width: 100%;
+  display: block;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+body.light nav .list_subheading {
+  background-color: #aaaaaa;
+  display: block;
+  text-align: center;
+  padding: 3px;
+  font-weight: bold;
+}
+body.light nav .list_subheading::before {
+  content: "- ";
+}
+body.light nav .list_subheading::after {
+  content: " -";
+}
+body.light nav ul li a {
+  font-weight: bold;
+  display: block;
+}
+body.light nav ul li a::first-letter {
+  color: #000050;
+}
+body.light nav.left {
+    order: 0;
+}
+body.light main {
+    width: 70%;
+    order: 1;
+}
+body.light nav.right {
+    order: 2;
+}
+body.light a {
+    color: #2f4f4f;
+    text-decoration: none;
+}
+body.light a:hover{
+    color: #0d2d2d;
+}
+
+
+#page-news header time {
+  font-weight: bold;
+}
+#page-news footer {
+  width: 100%;
+  text-align: right;
+}
