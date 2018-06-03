@@ -4,11 +4,11 @@ DEBUG = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dracidoupe_cz',
+        'NAME': 'ddcz',
         'TEST_DATABASE_NAME': 'circle_test',
         'USER': 'root',
-        'HOST': '127.0.0.1',
-        'PASSWORD': '',
+        'HOST': 'db',
+        'PASSWORD': 'docker',
         'OPTIONS': {
             'charset': 'latin2'
         }

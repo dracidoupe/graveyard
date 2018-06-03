@@ -1,0 +1,22 @@
+version: '3'
+
+# This docker-compose is same as docker-compose.yml except it's not using 
+# volumes since they are not allowed under "docker" CircleCI environment
+# See https://circleci.com/docs/2.0/executor-types/ 
+
+services:
+  db:
+    image: mysql:5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_DATABASE=ddcz
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    links:
+      - db:db
+
