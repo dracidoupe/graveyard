@@ -58,4 +58,4 @@ ssh $machine bash -c "'
 # Restart process on remote, in a non-graceful way because traffic
 # Before you ask...yes, sudo is whitelisted to this single command on remote
 
-# ssh $machine sudo /usr/bin/svc -k /etc/service/nove.dracidoupe.cz/
+ssh $machine bash -c 'sudo /usr/bin/svc -k /etc/service/nove.dracidoupe.cz/'
