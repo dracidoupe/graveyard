@@ -4,6 +4,53 @@ Graveyard is an attempt at open-source reimplementation of DraciDoupe.cz (referr
 
 ## Installation
 
+You can run Graveyard either directly on your machine or inside [Docker](https://www.docker.com/).
+
+Installing and running Graveyard directly is faster (on some systems) and removes one lever of indirection, but it makes the setup more compliated. 
+
+Running in Docker requires familiarity with it, but it makes setup easier and guarantees consistency with the testing environment (and hopefully in the future, production environment as well). 
+
+In both cases, first clone this repository and run all commands in it. 
+
+### Installing in Docker
+
+Requirements:
+
+* You have [Docker CE installed](https://www.docker.com/community-edition)
+* You have [installed docker-compose](https://docs.docker.com/compose/install/)
+
+Verify you have everything ready by running the test suite:
+
+* `docker-compose run web python3 manage.py test`
+
+If you see output like this:
+
+```
+(graveyard-venv) almad@zeruel:~/projects/graveyard$ docker-compose run web python3 manage.py test
+Starting graveyard_db_1 ... done
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
+Destroying test database for alias 'default'...
+(graveyard-venv) almad@zeruel:~/projects/graveyard$ 
+
+```
+
+You are all set. Afterwards, install database schema by running
+
+*  `docker-compose run web python3 manage.py migrate`
+
+You are done! Now you can just run the project and develop using
+
+*  `docker-compose start`
+
+
+### Installing on your machine
+
 Graveyard is currently written in [Django](https://www.djangoproject.com/). Requirements to develop it:
 
 * You have working Python 3 installation on your machine
