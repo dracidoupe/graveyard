@@ -1,8 +1,9 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 def common_variables(request):
+    skin = request.session.get("skin", "light")
     return {
-        'skin': 'light',
-        'skin_css_url': staticfiles_storage.url("skins/light/light.css"),
-        'skin_logo_url': staticfiles_storage.url("skins/light/img/logo.gif"),
+        'skin': skin,
+        'skin_css_url': staticfiles_storage.url("skins/%s/light.css" % skin),
+        'skin_logo_url': staticfiles_storage.url("skins/%s/img/logo.gif" % skin),
     }

@@ -1,10 +1,11 @@
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ , COMMON_ARTICLES_CREATIVE_PAGES
 
 from .models import CommonArticles, News
 
+VALID_SKINS = ['light', 'dark']
 
 def index(request):
     news = News.objects.order_by('-datum')[:5]
@@ -48,3 +49,12 @@ def common_article_detail(request, creative_page_slug, article_id, article_slug)
         'creative_page_slug': creative_page_slug,
         'creative_page_slug_en': en_slug,
     })
+
+def change_skin(request):
+    new_skin = request.GET.get('skin', 'light')
+    if new_skin not in VALID_SKINS:
+        return HttpResponseBadRequest("Nerozpoznán skin, který bych mohl nastavit.")
+
+    request.session['skin'] = new_skin
+
+    return HttpResponseRedirect("/")
