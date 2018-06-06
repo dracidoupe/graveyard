@@ -7,11 +7,11 @@
         <!-- Remove once this is _the_ main version -->
         <meta name="robots" content="noindex,nofollow">
         <link rel="alternate" href="http://www.dracidoupe.cz/rss/novinky.xml" type="application/rss+xml" title="Nové články ze všech rubrik" />
-        <link rel="stylesheet" href="{% static "skins/light/light.css" %}">
+        <link rel="stylesheet" href="{{ skin_css_url }}">
     </head>
     <body class="light">
         <header>
-            <h1 class="logo"><a href="/" rel="home"><img src="{% static "skins/light/img/logo.gif" %}" alt="DraciDoupe.cz"></a></h1>
+            <h1 class="logo"><a href="/" rel="home"><img src="{{ skin_logo_url }}" alt="DraciDoupe.cz"></a></h1>
         </header>
         <div id="app">
             <div class="skin-light flex">
