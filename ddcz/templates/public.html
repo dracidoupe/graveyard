@@ -34,23 +34,26 @@
                             <ul>
                                 <li><span class="list_subheading">Doplňky</span>
                                     <ul>
+                                        <li>Dovednosti</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='novapovolani' %}">Nová Povolání</a></li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='noverasy' %}">Nové Rasy</a></li>
                                     </ul>
                                 </li>
                             </ul>
-                            <!--
                             <ul>
                                 <li><span class="list_subheading">Pro PJ</span>
                                     <ul>
-                                        <li><a href="">Předměty</a></li>
+                                        <li>Bestiář</li>
+                                        <li>Dobrodružství</li>
+                                        <li>Předměty</li>
                                     </ul>
                                 </li>
                             </ul>
-                            -->
                             <ul>
                                 <li><span class="list_subheading">Všeobecné</span>
                                     <ul>
+                                        <li>Downloady</li>
+                                        <li>Linky</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='expanze' %}">Rozvoj DrD</a></li>
                                     </ul>
                                 </li>
@@ -60,14 +63,55 @@
                                 <li><span class="list_subheading">Postavy</span>
                                     <ul>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='alchymistazvl' %}">Alchymista</a></li>
+                                        <li>Alchymistické předměty</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='hranicar' %}">Hraničář</a></li>
+                                        <li>Hraničářská kouzla</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='kouzelnikzvl' %}">Kouzelník</a></li>
+                                        <li>Kouzelnická kouzla</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='valecnik' %}">Válečník</a></li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='zlodej' %}">Zloděj</a></li>
                                     </ul>
                                 </li>
                             </ul>
-    
+                        </li>
+                    </ul>
+                    <ul class="nav_border">
+                        <li><span class="list_heading">Ostatní</span>
+                            <ul>
+                                <li><span class="list_subheading">Hledat</span>
+                                    <ul>
+                                        <li>Vyhledávání</li>
+                                        <li>Rekordy a statistiky</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li><span class="list_subheading">Hledat</span>
+                                    <ul>
+                                        <li>Co je to Dračí Doupě?</li>
+                                        <li>Dračí manuál</li>
+                                        <li>Otázky a Odpovědi</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li><span class="list_subheading">Kontakt</span>
+                                    <ul>
+                                        <li>Seznamka</li>
+                                        <li>Inzerce</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li><span class="list_subheading">Seznamy</span>
+                                    <ul>
+                                        <li>Tvůrci a Redakce</li>
+                                        <li>Čekající díla</li>
+                                        <li>Dračí líheň</li>
+                                        <li>Uživatelé</li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </nav>
@@ -76,14 +120,47 @@
                     <ul class="nav_border">
                         <li><span class="list_heading">Vzhled</span>
                             <ul>
+                                <li>Family Silver</li>
+                                <li>Historic</li>
                                 <li><a href="#">Light</a></li>
+                                <li>Dark</li>
+                                <li>Timmothy Gold</li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="nav_border">
-                        <li><span class="list_heading">News</span>
+                        <li><span class="list_heading">Novinky</span>
                             <ul>
                                 <li><a href="{% url 'ddcz:news' %}">Aktuality</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav_border">
+                        <li><span class="list_heading">Komunikace</span>
+                            <ul>
+                                <li>Chat</li>
+                                <li><a href="http://www.dracidoupe.cz/moudrasova/">Moudrá Sova</a></li>
+                                <li>Fórum</li>
+                                <li>Ankety</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav_border">
+                        <li><span class="list_heading">Control</span>
+                            <p>Registrace</p>
+                            <form action="post">
+                                <label for="nick">Nick</label>: 
+                                    <input type="text" id="nick">
+                                <label for="password">Heslo</label>: 
+                                    <input type="password" id="password">
+                            </form>
+                            <p>Zapomněl jsem heslo</p>
+                        </li>
+                    </ul>
+                    <ul class="nav_border">
+                        <li><span class="list_heading">Doupě jinde</span>
+                            <ul>
+                                <li><a href="https://www.facebook.com/DraciDoupecz-47586881642/">Facebook</a></li>
                             </ul>
                         </li>
                     </ul>
