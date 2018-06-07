@@ -1,0 +1,24 @@
+{% load static %}
+<html>
+    <head>
+        <title>RS DraciDoupe.cz</title>
+        <!-- Nobody knows how hard-earned this charset is -->
+        <meta charset="utf-8">
+        <!-- Remove once this is _the_ main version -->
+        <meta name="robots" content="noindex,nofollow">
+        <link rel="stylesheet" href="{% static 'common.css' %}">
+        <link rel="stylesheet" href="{{ skin_css_url }}">
+    </head>
+    <body class="{{ skin }}" lang="cs">
+        <header>
+            <h1 class="logo">Hic Sunt Dragones</h1>
+        </header>
+        <div id="app">
+            <div class="skin-{{ skin }} flex">
+                <main>
+                    {% block content %}{% endblock %}
+                </main>
+            </div>
+        </div>
+    </body>
+</html>

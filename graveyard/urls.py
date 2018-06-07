@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('ddcz.urls', namespace='ddcz')),
     path('admin/', admin.site.urls),
+    path('sprava/', include('dragon.urls', namespace='dragon')),
 ]

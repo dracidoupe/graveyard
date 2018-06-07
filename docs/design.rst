@@ -63,7 +63,11 @@ Private pages
 Administration pages
 ====================
 
+Now simply know as "Dragon" in order to distinguish from Admin, which has now more php-style interface. 
+
 * Approval and comments for approval queue
 * User registration approvals
 * Article edit
 * Head of Gold Dragon award management
+
+* Level system adjustments
