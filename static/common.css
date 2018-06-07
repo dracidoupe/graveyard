@@ -1,0 +1,28 @@
+
+
+/* Styling for dating section */
+
+article.dating {
+    display: table;
+    width: 100%;
+    margin-bottom: 3%;
+    margin-top: 3%; 
+    border-spacing: 1em;
+}
+
+article.dating address {
+    font-weight: normal;
+}
+
+article.dating p {
+    display: table-row;
+}
+
+article.dating span.label {
+    font-weight: bold;
+    width: 20%;
+}
+
+article.dating span.label, article.dating span.value {
+    display: table-cell;
+}

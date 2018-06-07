@@ -1414,23 +1414,6 @@ class Runy(models.Model):
         db_table = 'runy'
 
 
-class Seznamka(models.Model):
-    jmeno = models.CharField(max_length=40, blank=True, null=True)
-    email = models.CharField(max_length=40, blank=True, null=True)
-    telefon = models.CharField(max_length=20, blank=True, null=True)
-    mobil = models.CharField(max_length=20, blank=True, null=True)
-    vek = models.IntegerField(blank=True, null=True)
-    okres = models.CharField(max_length=40, blank=True, null=True)
-    doba = models.CharField(max_length=20, blank=True, null=True)
-    datum = models.DateTimeField(blank=True, null=True)
-    text = models.TextField(blank=True, null=True)
-    sekce = models.CharField(max_length=20, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'seznamka'
-
-
 class Skiny(models.Model):
     nazev = models.CharField(max_length=10)
     jmeno = models.CharField(max_length=50)

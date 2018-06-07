@@ -80,3 +80,22 @@ class CommonArticles(models.Model):
         slug = re.sub("^([^a-z0-9])+", "", slug)
         slug = re.sub("([^a-z0-9]+)$", "", slug)
         return slug
+
+
+class Dating(models.Model):
+    jmeno = models.CharField(max_length=40, blank=True, null=True)
+    email = models.CharField(max_length=40, blank=True, null=True)
+    telefon = models.CharField(max_length=20, blank=True, null=True)
+    mobil = models.CharField(max_length=20, blank=True, null=True)
+    vek = models.IntegerField(blank=True, null=True)
+    okres = models.CharField(max_length=40, blank=True, null=True)
+    doba = models.CharField(max_length=20, blank=True, null=True)
+    datum = models.DateTimeField(blank=True, null=True)
+    text = models.TextField(blank=True, null=True)
+    sekce = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'seznamka'
+        verbose_name = 'Seznamka'
+        verbose_name_plural = 'Seznamky'

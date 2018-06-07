@@ -1,0 +1,53 @@
+{% extends 'public.html' %}
+{% load html %}
+{% block content %}
+<div id="page-news">
+    <h1 class="page-heading">Seznamka</h1>
+    <p>Seznamka slouží k seznamování hráčů a PJů. Pokud chcete něco prodat, nebo něco sháníte vkládejte inzeráty do inzerce.</p>
+    {% for i in items %}
+        <article class="dating">
+            <p>
+                <span class="label">Jméno:</span>{% if i.email %}
+                    <span class="value"><a href="mailto:{{ i.email }}">{{ i.jmeno }}</a></span>
+                {% else %}
+                    <span class="value">{{ i.jmeno }}</span>
+                {% endif %}
+            </p>
+            <p>
+                <span class="label">Sekce:</span><span class="value">{{ i.sekce }}</span>
+            </p>
+            <p>
+                <span class="label">Okres:</span><span class="value">{{ i.okres }}</span>
+            </p>
+            {% if i.vek %}
+            <p>
+                <span class="label">Věk:</span><span class="value">{{ i.vek }}</span>
+            </p>
+            {% endif %}
+            {% if i.telefon %}
+            <p>
+                <span class="label">Telefon:</span><span class="value">{{ i.telefon }}</span>
+            </p>
+            {% endif %}
+            {% if i.mobil %}
+            <p>
+                <span class="label">Mobil:</span><span class="value">{{ i.mobil }}</span>
+            </p>
+            {% endif %}
+            {% if i.doba %}
+            <p>
+                <span class="label">Doba:</span><span class="value">{{ i.doba }}</span>
+            </p>
+            {% endif %}
+            <p>
+                <span class="label">Přidáno:</span><span class="value"><time datetime={{ i.datum | date:"r"  }}>{{ i.datum | date:"j. n. Y v H:i:s" }}</time></span>
+            </p>
+            <p>
+                <span class="label">Text:</span><span class="value">{{ i.text|render_html|safe }}</span>
+            </p>
+        </article>
+
+        <hr>
+    {% endfor %}
+</div>
+{% endblock %}

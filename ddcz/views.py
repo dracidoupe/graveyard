@@ -1,9 +1,9 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ , COMMON_ARTICLES_CREATIVE_PAGES
 
-from .models import CommonArticles, News
+from .models import CommonArticles, News, Dating
 
 VALID_SKINS = ['light', 'dark']
 
@@ -48,6 +48,14 @@ def common_article_detail(request, creative_page_slug, article_id, article_slug)
         'article': article,
         'creative_page_slug': creative_page_slug,
         'creative_page_slug_en': en_slug,
+    })
+
+def dating(request):
+
+    items = Dating.objects.order_by('-datum')[:5]
+
+    return render(request, 'dating/list.html', {
+        'items': items
     })
 
 def change_skin(request):

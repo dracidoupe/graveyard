@@ -7,9 +7,10 @@
         <!-- Remove once this is _the_ main version -->
         <meta name="robots" content="noindex,nofollow">
         <link rel="alternate" href="http://www.dracidoupe.cz/rss/novinky.xml" type="application/rss+xml" title="Nové články ze všech rubrik" />
+        <link rel="stylesheet" href="{% static 'common.css' %}">
         <link rel="stylesheet" href="{{ skin_css_url }}">
     </head>
-    <body class="{{ skin }}">
+    <body class="{{ skin }}" lang="cs">
         <header>
             <h1 class="logo"><a href="/" rel="home"><img src="{{ skin_logo_url }}" alt="DraciDoupe.cz"></a></h1>
         </header>
@@ -97,7 +98,7 @@
                             <ul>
                                 <li><span class="list_subheading">Kontakt</span>
                                     <ul>
-                                        <li>Seznamka</li>
+                                        <li><a href="{% url 'ddcz:dating' %}">Seznamka</a></li>
                                         <li>Inzerce</li>
                                     </ul>
                                 </li>
