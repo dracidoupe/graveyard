@@ -111,3 +111,12 @@ A {
   font-size: 80%;
   text-align: center;
 }
+
+input, textarea, select {
+  background-color: #000000;
+  color : #ff8c00;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}

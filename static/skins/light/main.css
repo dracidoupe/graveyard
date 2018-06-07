@@ -111,3 +111,12 @@ body.light a:hover{
   font-size: 80%;
   text-align: center;
 }
+
+input, textarea, select {
+  background-color: #c0c0c0;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+  
