@@ -14,13 +14,16 @@ It assumes you have local working copy of the site. If not, follow installation 
 
     Nová verze má proto jasné rozhraní: veřejně viditelné texty (stránky, popisky stránek, URL adresy atd.) jsou české, ale v kódu je konzistentně použita angličtina. Protože mít programátorskou dokumentaci v češtině by vedlo ke zmatení (jazyků), je pro konzistenci použita angličtina i zde.
 
-    Pochopitelně to má i své nevýhody. Jednou z nich je reprezentace některých čistě českých názvů v angličtině. K tomuto účelu je udržován :ref:`konzistentní slovník <dictionary>`, který se všude používá.  
+    Pochopitelně to má i své nevýhody. Jednou z nich je reprezentace některých čistě českých názvů v angličtině. K tomuto účelu je udržován :ref:`konzistentní slovník <dictionary>`, který se všude používá.
+
+    Pro popis toho co se to tu děje a proč vlastně navštivte sekci :ref:`faq`.
 
 .. toctree::
     :maxdepth: 2
     :caption: Contents:
 
-    qnea
+    faq
+    migration
     design
     dictionary
 

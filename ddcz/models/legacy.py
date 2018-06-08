@@ -1547,43 +1547,6 @@ class UserStats(models.Model):
         db_table = 'user_stats'
 
 
-class Uzivatele(models.Model):
-    jmeno_uzivatele = models.CharField(max_length=20)
-    nick_uzivatele = models.CharField(unique=True, max_length=25)
-    prijmeni_uzivatele = models.CharField(max_length=20)
-    psw_uzivatele = models.CharField(max_length=40)
-    email_uzivatele = models.CharField(max_length=50)
-    pohlavi_uzivatele = models.CharField(max_length=4, blank=True, null=True)
-    vek_uzivatele = models.IntegerField()
-    kraj_uzivatele = models.CharField(max_length=20)
-    chat_barva = models.CharField(max_length=6)
-    chat_pismo = models.IntegerField()
-    chat_reload = models.IntegerField()
-    chat_zprav = models.IntegerField()
-    chat_filtr = models.CharField(max_length=255, blank=True, null=True)
-    chat_filtr_zobrazit = models.IntegerField()
-    pospristup = models.DateTimeField()
-    level = models.CharField(max_length=1)
-    icq_uzivatele = models.IntegerField()
-    vypsat_udaje = models.CharField(max_length=15)
-    ikonka_uzivatele = models.CharField(max_length=25, blank=True, null=True)
-    popis_uzivatele = models.CharField(max_length=255, blank=True, null=True)
-    nova_posta = models.IntegerField()
-    skin = models.CharField(max_length=10)
-    reputace = models.IntegerField()
-    reputace_rozdel = models.PositiveIntegerField()
-    status = models.CharField(max_length=1)
-    reg_schval_datum = models.DateTimeField(blank=True, null=True)
-    indexhodnotitele = models.DecimalField(max_digits=4, decimal_places=2)
-    reload = models.CharField(max_length=1)
-    max_level = models.IntegerField(blank=True, null=True)
-    api_key = models.CharField(unique=True, max_length=40, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'uzivatele'
-
-
 class UzivateleCekajici(models.Model):
     id_zaznamu = models.AutoField(primary_key=True)
     nick_uzivatele = models.CharField(unique=True, max_length=30)
