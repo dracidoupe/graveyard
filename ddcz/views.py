@@ -1,6 +1,6 @@
 from hashlib import md5
 
-from django.contrib.auth import authenticate, login as login_auth
+from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
 from django.contrib import messages
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
@@ -73,6 +73,16 @@ def change_skin(request):
 
     return HttpResponseRedirect("/")
 
+
+def logout(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest("Use POST.")
+
+    referer = request.META.get('HTTP_REFERER', '/')
+
+    logout_auth(request)
+    return HttpResponseRedirect(referer)
+    
 
 def login(request):
     """

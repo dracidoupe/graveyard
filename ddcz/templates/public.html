@@ -158,6 +158,11 @@
                         <li><span class="list_heading">Control</span>
                             {% if user.is_authenticated %}
                                 <p>{{ user.username }}</p>
+                                <form method="post" action="{% url 'ddcz:logout-action' %}">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Odhlásit">
+                                </form>
+                                <p></p>
                             {% else %}
                                 <p>Registrace</p>
                                 <form method="post" action="{% url 'ddcz:login-action' %}">
