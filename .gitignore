@@ -2,11 +2,12 @@
 *.pyo
 __pycache__
 /.cache
-/.vscode
+
 /docs/_build/
 
-
 /graveyard-venv
+/.vscode
+/.directory
 
 /graveyard/settings/local.py
 /graveyard/settings/production.py

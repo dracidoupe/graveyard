@@ -14,4 +14,7 @@ urlpatterns = [
     path('seznamka/', views.dating, name='dating'),
 
     path('nastaveni/zmena-skinu/', views.change_skin, name='change-skin'),
+    path('uzivatel/login/', views.login, name='login-action'),
+
+
 ]

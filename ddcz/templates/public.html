@@ -17,6 +17,14 @@
         <div id="app">
             <div class="skin-{{ skin }} flex">
                 <main>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    
                     {% block content %}{% endblock %}
                 </main>
                 <nav class="left">
@@ -148,14 +156,17 @@
                     </ul>
                     <ul class="nav_border">
                         <li><span class="list_heading">Control</span>
-                            <p>Registrace</p>
-                            <form action="post">
-                                <label for="nick">Nick</label>: 
-                                    <input type="text" id="nick">
-                                <label for="password">Heslo</label>: 
-                                    <input type="password" id="password">
-                            </form>
-                            <p>Zapomněl jsem heslo</p>
+                            {% if user.is_authenticated %}
+                                <p>{{ user.username }}</p>
+                            {% else %}
+                                <p>Registrace</p>
+                                <form method="post" action="{% url 'ddcz:login-action' %}">
+                                    {% csrf_token %}
+                                    {{ login_form }}
+                                    <input type="submit" value="Přihlásit">
+                                </form>
+                                <p>Zapomněl jsem heslo</p>
+                            {% endif %}
                         </li>
                     </ul>
                     <ul class="nav_border">

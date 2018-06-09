@@ -1,9 +1,15 @@
-from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest
+from hashlib import md5
+
+from django.contrib.auth import authenticate, login as login_auth
+from django.contrib import messages
+
+from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ , COMMON_ARTICLES_CREATIVE_PAGES
-
-from .models import CommonArticles, News, Dating
+from .forms import LoginForm
+from .models import CommonArticles, News, Dating, UserProfile
+from .users import migrate_user
 
 VALID_SKINS = ['light', 'dark']
 
@@ -66,3 +72,67 @@ def change_skin(request):
     request.session['skin'] = new_skin
 
     return HttpResponseRedirect("/")
+
+
+def login(request):
+    """
+    Log user in from one of the two sources:
+        
+        * Normal Django's authentication framework
+        * Legacy DDCZ database
+
+    If user is able to log in from legacy database table and does not have
+    corresponding user object, create it for him.
+
+    After this version of the site will become the default one, also delete User's
+    password from the legacy table and consider them "migrated".
+
+    Note that it is unusal for this form to handle only POST data and creates
+    a bit of a weird experience with the form--but given the form is present
+    on each and every page, it feels better to do this than to feed this kind
+    of POST handling to every view. 
+    """
+
+    if request.method != 'POST':
+        return HttpResponseBadRequest("Use POST.")
+
+    referer = request.META.get('HTTP_REFERER', '/')
+
+    form = LoginForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponseRedirect(referer)
+
+    user = authenticate(username=form.cleaned_data['nick'], password=form.cleaned_data['password'])
+    if user is not None:
+        login_auth(request, user)
+        return HttpResponseRedirect(referer)
+    else:
+        m = md5()
+        #TODO: Encoding needs verification
+        m.update(form.cleaned_data['password'].encode('cp1250'))
+        old_insecure_hashed_password = m.hexdigest()
+
+        try:
+            profile = UserProfile.objects.get(nick_uzivatele=form.cleaned_data['nick'])
+        except UserProfile.DoesNotExist:
+            messages.error(request, 'Špatný nick a nebo heslo')
+            return HttpResponseRedirect(referer)
+
+        if profile.psw_uzivatele != old_insecure_hashed_password:
+            messages.error(request, 'Špatný nick a nebo heslo')
+            return HttpResponseRedirect(referer)
+
+        else:
+            migrate_user(profile=profile, password=form.cleaned_data['password'])
+            user = authenticate(username=form.cleaned_data['nick'], password=form.cleaned_data['password'])
+
+            if not user:
+                return HttpResponseServerError("Chyba během migrace na nový systém! Prosím kontaktujte Almada")
+
+            login_auth(request, user)
+
+            #TODO: For first-time login, bunch of stuff happens. Inspect legacy login and reimplement
+
+            return HttpResponseRedirect(referer)
+
