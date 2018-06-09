@@ -45,7 +45,7 @@ ssh $machine bash -c "'
 # Step 3: Sync source code to remote
 # --delete is not used because of how production.py works. This is to be solved
 # in the future using proper redirects
-rsync -avzt -m --exclude="*.pyc" --exclude="*.pyo" --exclude="__pycache__" $curdir/ddcz $curdir/graveyard $curdir/manage.py $curdir/static $machine:$remote_root/
+rsync -avzt -m --exclude="*.pyc" --exclude="*.pyo" --exclude="__pycache__" $curdir/ddcz $curdir/graveyard $curdir/dragon $curdir/manage.py $curdir/static $machine:$remote_root/
 
 # Migrate database and collect static files
 ssh $machine bash -c "'
