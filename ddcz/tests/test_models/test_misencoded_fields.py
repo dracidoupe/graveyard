@@ -1,4 +1,5 @@
 from datetime import datetime
+import pytz
 
 from django.test import TestCase
 
@@ -50,15 +51,13 @@ class NewsTestCase(TestCase):
         # text = MisencodedTextField()
 
         p = News(
-            datum = datetime.now(),
+            datum = datetime.now(pytz.timezone('Europe/Prague')),
             autor = "xoxo",
             autmail = "xoxo@example.com",
             text = self.problematic_diacritic_string
         )
         p.save()
 
-        import time
-        time.sleep(600)
         self.assertEquals(
             self.problematic_diacritic_string,
             p.text
