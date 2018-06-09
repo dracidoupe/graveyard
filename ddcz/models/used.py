@@ -82,7 +82,6 @@ class News(models.Model):
     text = MisencodedTextField()
 
     class Meta:
-        managed = False
         db_table = 'aktuality'
         verbose_name = 'Aktuality'
         verbose_name_plural = "Aktuality"

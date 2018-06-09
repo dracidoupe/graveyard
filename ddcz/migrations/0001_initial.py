@@ -1302,7 +1302,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Aktuality',
                 'verbose_name_plural': 'Aktuality',
                 'db_table': 'aktuality',
-                'managed': False,
+                'managed': not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
