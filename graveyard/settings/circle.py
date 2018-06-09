@@ -12,7 +12,7 @@ DATABASES = {
             'charset': 'latin2'
         },
         'TEST': {
-            'NAME': 'test_dracidoupe_cz',
+            'NAME': 'circle_test',
             'CHARSET': 'latin2',
         }
     }
