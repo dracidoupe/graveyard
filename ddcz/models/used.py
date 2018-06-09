@@ -153,3 +153,13 @@ class Dating(models.Model):
         db_table = 'seznamka'
         verbose_name = 'Seznamka'
         verbose_name_plural = 'Seznamky'
+
+
+
+class LevelSystemParams(models.Model):
+    parametr = models.CharField(primary_key=True, max_length=40)
+    hodnota = models.CharField(max_length=30)
+
+    class Meta:
+        managed = False
+        db_table = 'level_parametry_2'

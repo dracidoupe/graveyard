@@ -1,0 +1,45 @@
+body {
+    font-family: Verdana, Tahoma, Garamond, Arial, Sans-serif; 
+    background-color: black; 
+    color: #b9b9b9;
+}
+
+.flex {
+    display: flex;
+    min-height: 500px;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: baseline;
+    width: 100%;
+}
+
+main {
+    order: 1;
+    flex: 1 auto;
+}
+
+nav.menu {
+    order: 0;
+    padding-right: 20px;
+}
+
+nav.menu ul {
+    list-style: none;
+}
+  
+a, input, textarea {
+    color: gold;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: underline overline;
+}
+
+h1 {
+    text-align: center;
+}

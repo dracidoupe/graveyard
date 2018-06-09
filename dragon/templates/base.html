@@ -1,24 +1,31 @@
 {% load static %}
 <html>
     <head>
-        <title>RS DraciDoupe.cz</title>
-        <!-- Nobody knows how hard-earned this charset is -->
+        <title>Redaktor {{ user.username }} [redakční systém serveru DraciDoupe.cz]</title>
         <meta charset="utf-8">
-        <!-- Remove once this is _the_ main version -->
         <meta name="robots" content="noindex,nofollow">
-        <link rel="stylesheet" href="{% static 'common.css' %}">
-        <link rel="stylesheet" href="{{ skin_css_url }}">
+        <link rel="stylesheet" href="{% static 'dragon/main.css' %}">
     </head>
-    <body class="{{ skin }}" lang="cs">
+    <body lang="cs">
         <header>
-            <h1 class="logo">Hic Sunt Dragones</h1>
+            <h1 class="logo"><a href="{% url 'dragon:dashboard' %}" rel="home"><img src="{% static 'dragon/img/logo.gif' %}" alt="Redakční Systém DraciDoupe.cz"></a></h1>
         </header>
-        <div id="app">
-            <div class="skin-{{ skin }} flex">
-                <main>
-                    {% block content %}{% endblock %}
-                </main>
+        <div id="app" class="flex">
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+            <nav class="menu">
+                <ul>
+                    <li><a href="{% url 'dragon:dashboard' %}">Úvod</a></li>
+                    
+                    {% if user.is_superuser %}
+                        <li><a href="{% url 'dragon:levelsystem' %}">Levelsystém</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
             </div>
+        <div id="footer">
+            © 2002-2018 autorem redakčního systému je Almad, na nějž se stále obracejte v případě nouze :-)
         </div>
     </body>
 </html>

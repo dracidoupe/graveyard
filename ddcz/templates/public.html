@@ -163,6 +163,9 @@
                                     Hlasů: {{ user.profile.reputace_rozdel }} <br>
                                     Reputace: {{ user.profile.reputace }}
                                 </p>
+                                {% if user.is_staff %}
+                                    <p class="admin_link"><a href="{% url 'dragon:dashboard' %}">Správa</a></p>
+                                {% endif %}
                                 <form method="post" action="{% url 'ddcz:logout-action' %}">
                                     {% csrf_token %}
                                     <input type="submit" value="Odhlaš">

@@ -84,7 +84,7 @@ body.light a:hover{
     color: #0d2d2d;
 }
 
-.nav_border .nick, .nav_border .state, .nav_border .stats {
+.nav_border .nick, .nav_border .state, .nav_border .stats, .nav_border .admin_link {
   text-align: center;
   font-weight: bold;
 }

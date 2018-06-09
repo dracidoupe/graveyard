@@ -2,4 +2,13 @@
 {% load html %}
 {% block content %}
 <h1>Level systém</h1>
+<p>Tato stránka slouží k lazení parametrů pro level systém a ukazuje, jak by změny zahýbaly s počty uživatelů.</p>
+<p>Zatím se zde pouze zobrazují data, neboť pravidla pro levelsystém ve starém RS slouží jako referenční.</p>
+<p>params {{ amount }}</p>
+<ul>
+    {% for param in level_params %}
+        <li>{{ param.parametr }}: {{ param.hodnota }}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

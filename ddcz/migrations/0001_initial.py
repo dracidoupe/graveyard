@@ -775,12 +775,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='LevelParametry2',
             fields=[
-                ('parametr', models.CharField(max_length=40, primary_key=True, serialize=False)),
-                ('hodnota', models.CharField(max_length=30)),
+                ('parametr', ddcz.models.magic.MisencodedCharField(max_length=40, primary_key=True, serialize=False)),
+                ('hodnota', ddcz.models.magic.MisencodedCharField(max_length=30)),
             ],
             options={
                 'db_table': 'level_parametry_2',
-                'managed': False,
+                'managed': not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(

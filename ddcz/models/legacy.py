@@ -645,15 +645,6 @@ class Kouzla(models.Model):
         db_table = 'kouzla'
 
 
-class LevelParametry2(models.Model):
-    parametr = models.CharField(primary_key=True, max_length=40)
-    hodnota = models.CharField(max_length=30)
-
-    class Meta:
-        managed = False
-        db_table = 'level_parametry_2'
-
-
 class Limity(models.Model):
     oprava_hlasovani_po = models.PositiveIntegerField(primary_key=True)
     platnost = models.CharField(max_length=1)
