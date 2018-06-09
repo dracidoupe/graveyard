@@ -15,6 +15,8 @@ Database
 Database is the main integration point. The original structure is just inspection of the original data, so do not pay attention to its design. List of consideration follows. 
 
 
+.. _db-encoding:
+
 Database encoding
 =================
 
@@ -25,12 +27,34 @@ This is transparently handled by ``ddcz.models.magic``; for original tables, :cl
 New models respect the connection setting and store data as latin2. Once the old application is shut down, everything should be recoded in a way 21st century people store data (UTF-8). 
 
 
+.. _db-migration:
+
+Django's (database model) migration strategy
+============================================
+
+Django provides `a reasonable framework for handling migration <https://docs.djangoproject.com/en/2.0/topics/migrations/>`_ that is used in our application. Initial structure has been done using :cmd:`inspectdb`, which automatically creates unmanaged models and has been placed into :mod:`ddcz.models.legacy`.
+
+When model/table is incorporated into application with all bells and whistles required for it to actually run and be read- and write-able, it's moved into :mod:`ddcz.models.used`.
+
+There is one problem: unmanaged models are not created during the normal setup, hence tests are failing and application is unusable for anyone without access to database structured backup. To work around it, there is a hack:
+
+* In the initial migration, the default managed is set depending on :cls:`SETTINGS.IS_DATABASE_SEEDED`. This *has* to be set depending on whether database is restored from original data
+* This means that migration from unmanaged to managed model will work correctly with seeded database and will be "noop" migration for seeded database
+* 
+
+
+.. _user-model-migration:
+
 User Model
 ==========
 
 In order to leverage Django's authentication framework (meaning reasonable forward-compatible safety), tricks are needed.
 
 Original data is stored in ``uzivatele`` table. For usability, this is exposed as :cls:`UserProfile` model and `appropriate relation is used <https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#extending-the-existing-user-model>`_. 
+
+.. warning::
+    Always use :cls:`ddcz.users.create_user` for creating users, instead of :cls:`django.auth.models.User.create_user`
+
 
 .. warning::
     To avoid the need for complete database migration, :cls:`django.auth.models.User` is **not** prepopulated and the migration is to be transparently handled on user login until the old application exist.

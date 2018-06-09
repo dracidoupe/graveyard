@@ -2,7 +2,7 @@
 Documentation for DraciDoupe.cz development
 ###########################################
 
-This documentation is intended for developers intersted in joining development of https://www.dracidoupe.cz/ .
+This documentation is intended for developers interested in joining development of `DraciDoupe.cz <https://www.dracidoupe.cz/>`_.
 
 It assumes you have local working copy of the site. If not, follow installation guide from `repository's README <https://github.com/dracidoupe/graveyard/>`_. 
 
@@ -17,6 +17,18 @@ It assumes you have local working copy of the site. If not, follow installation 
     Pochopitelně to má i své nevýhody. Jednou z nich je reprezentace některých čistě českých názvů v angličtině. K tomuto účelu je udržován :ref:`konzistentní slovník <dictionary>`, který se všude používá.
 
     Pro popis toho co se to tu děje a proč vlastně navštivte sekci :ref:`faq`.
+
+.. warning::
+
+    This project has significant legacy hacks that makes it behave unexpectedly for seasoned Django developer!
+
+    Please note:
+
+        * ``python manage.py test`` is the only reasonable way to run tests; see :ref:`db-migration`
+        * database encoding is wrong; see :ref:`db-encoding`
+        * because of above, only MySQL backend is supported
+        * never use :cls:`django.auth.models.User.create_user` directly! see :ref:`user-model-migration`
+
 
 .. toctree::
     :maxdepth: 2

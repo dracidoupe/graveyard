@@ -5,7 +5,22 @@
 from django.db import models
 
 
-class MisencodedTextField(models.TextField):    
+class MisencodedTextField(models.TextField):
+    def from_db_value(self, value, expression, connection):
+        if isinstance(value, str):
+            return value.encode("latin2").decode("cp1250")
+        else:
+            return value
+
+    def get_db_prep_value(self, value, connection, prepared=False):
+        if isinstance(value, str):
+            return value.encode("cp1250").decode("latin2")
+        else:
+            return value
+
+
+
+class MisencodedCharField(models.CharField):
     def from_db_value(self, value, expression, connection):
         if isinstance(value, str):
             return value.encode("latin2").decode("cp1250")
@@ -13,24 +28,8 @@ class MisencodedTextField(models.TextField):
             return value
 
 
-    def clean(self, value, model_instance):
-        super().clean(value, model_instance)
-        if isinstance(value, str):
-            value = value.encode("cp1250").decode("latin2")
-        return value
-
-
-class MisencodedCharField(models.CharField):    
-    def from_db_value(self, value, expression, connection):
-        if isinstance(value, str):
-            return value.encode("latin2").decode("cp1250")
+    def get_db_prep_value(self, value, connection, prepared=False):
+        if isinstance(value, str) and not prepared:
+            return value.encode("cp1250").decode("latin2")
         else:
             return value
-
-
-    def clean(self, value, model_instance):
-        super().clean(value, model_instance)
-        if isinstance(value, str):
-            value = value.encode("cp1250").decode("latin2")
-        return value
-

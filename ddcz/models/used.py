@@ -151,7 +151,6 @@ class Dating(models.Model):
     sekce = MisencodedCharField(max_length=20, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'seznamka'
         verbose_name = 'Seznamka'
         verbose_name_plural = 'Seznamky'
