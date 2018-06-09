@@ -157,12 +157,16 @@
                     <ul class="nav_border">
                         <li><span class="list_heading">Control</span>
                             {% if user.is_authenticated %}
-                                <p>{{ user.username }}</p>
+                                <div class="nick">{{ user.username }}</div>
+                                <div class="state">online</div>
+                                <p class="stats">
+                                    Hlasů: {{ user.profile.reputace_rozdel }} <br>
+                                    Reputace: {{ user.profile.reputace }}
+                                </p>
                                 <form method="post" action="{% url 'ddcz:logout-action' %}">
                                     {% csrf_token %}
-                                    <input type="submit" value="Odhlásit">
+                                    <input type="submit" value="Odhlaš">
                                 </form>
-                                <p></p>
                             {% else %}
                                 <p>Registrace</p>
                                 <form method="post" action="{% url 'ddcz:login-action' %}">

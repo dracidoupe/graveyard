@@ -2,28 +2,15 @@ body {
     background-color: #c0c0c0;
     font-family: Verdana, Arial, sans-serif;
 }
+
+#app div.flex{
+  display: flex;
+}
+  
+
 .logo {
     width: 100%;
     text-align: center;
-}
-body.historic {
-    background-color: red;
-}
-#app div.flex{
-    display: flex;
-}
-body.historic nav {
-    width: 15%;
-}
-body.historic nav.left {
-    order: 0;
-}
-body.historic main {
-    width: 70%;
-    order: 1;
-}
-body.historic nav.right {
-    order: 2;
 }
 body.light h1.page-heading {
   width: 100%;
@@ -95,6 +82,19 @@ body.light a {
 }
 body.light a:hover{
     color: #0d2d2d;
+}
+
+.nav_border .nick, .nav_border .state, .nav_border .stats {
+  text-align: center;
+  font-weight: bold;
+}
+
+.nav_border .nick {
+  color: red;
+}
+
+.nav_border form {
+  text-align: center;
 }
 
 
