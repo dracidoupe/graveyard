@@ -27,7 +27,7 @@ It assumes you have local working copy of the site. If not, follow installation 
         * ``python manage.py test`` is the only reasonable way to run tests; see :ref:`db-migration`
         * database encoding is wrong; see :ref:`db-encoding`
         * because of above, only MySQL backend is supported
-        * never use :cls:`django.auth.models.User.create_user` directly! see :ref:`user-model-migration`
+        * never use `django.auth.models.User.create_user` directly! see :ref:`user-model-migration`
 
 
 .. toctree::

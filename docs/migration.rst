@@ -22,7 +22,7 @@ Database encoding
 
 The original data are misencoded: while stored in field that pretends to be ISO-8859-2/latin2, the data is in fact stored in win1250/cp1250 encoding.
 
-This is transparently handled by ``ddcz.models.magic``; for original tables, :cls:`MisencodedTextField` or :cls:`MisencodedCharField` **must** be used. 
+This is transparently handled by ``ddcz.models.magic``; for original tables, :class:`MisencodedTextField` or :class:`MisencodedCharField` **must** be used. 
 
 New models respect the connection setting and store data as latin2. Once the old application is shut down, everything should be recoded in a way 21st century people store data (UTF-8). 
 
@@ -38,7 +38,7 @@ When model/table is incorporated into application with all bells and whistles re
 
 There is one problem: unmanaged models are not created during the normal setup, hence tests are failing and application is unusable for anyone without access to database structured backup. To work around it, there is a hack:
 
-* In the initial migration, the default managed is set depending on :cls:`SETTINGS.IS_DATABASE_SEEDED`. This *has* to be set depending on whether database is restored from original data
+* In the initial migration, the default managed is set depending on :class:`SETTINGS.IS_DATABASE_SEEDED`. This *has* to be set depending on whether database is restored from original data
 * This means that migration from unmanaged to managed model will work correctly with seeded database and will be "noop" migration for seeded database
 * 
 
@@ -50,16 +50,16 @@ User Model
 
 In order to leverage Django's authentication framework (meaning reasonable forward-compatible safety), tricks are needed.
 
-Original data is stored in ``uzivatele`` table. For usability, this is exposed as :cls:`UserProfile` model and `appropriate relation is used <https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#extending-the-existing-user-model>`_. 
+Original data is stored in ``uzivatele`` table. For usability, this is exposed as :class:`UserProfile` model and `appropriate relation is used <https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#extending-the-existing-user-model>`_. 
 
 .. warning::
-    Always use :cls:`ddcz.users.create_user` for creating users, instead of :cls:`django.auth.models.User.create_user`
+    Always use :class:`ddcz.users.create_user` for creating users, instead of :class:`django.auth.models.User.create_user`
 
 
 .. warning::
-    To avoid the need for complete database migration, :cls:`django.auth.models.User` is **not** prepopulated and the migration is to be transparently handled on user login until the old application exist.
+    To avoid the need for complete database migration, :class:`django.auth.models.User` is **not** prepopulated and the migration is to be transparently handled on user login until the old application exist.
 
-    Hence, the application **must** use :cls:`UserProfile` model **only** when displaying user data (i.e. in user stats).
+    Hence, the application **must** use :class:`UserProfile` model **only** when displaying user data (i.e. in user stats).
 
 
-During the initial setup, the arbitrary value of 20000 has been selected for :cls:`django.auth.models.User`'s auto_increment value to distinguish between users from pre-migration to post-migration and to allow old users to retain their IDs.
+During the initial setup, the arbitrary value of 20000 has been selected for :class:`django.auth.models.User`'s auto_increment value to distinguish between users from pre-migration to post-migration and to allow old users to retain their IDs.
