@@ -11,6 +11,8 @@ services:
       - MYSQL_ROOT_PASSWORD=docker
       - MYSQL_DATABASE=ddcz
   web:
+    environment:
+      - CIRCLECI=true
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
     ports:

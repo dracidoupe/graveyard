@@ -13,13 +13,26 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            docker-compose -v
       - setup_remote_docker
       - run:
           name: Build docker images
-          command: docker-compose -f docker-compose.circle.yml build --pull
+          command: docker-compose -f docker-compose.circle.yml build --pull && docker-compose -f docker-compose.circle.yml up --no-start
+      - run:
+          name: Start MySQL
+          command: docker-compose -f docker-compose.circle.yml start db
+      - run:
+          name: Wait for MySQL to create initial database
+          command: sleep 5
       - run:
           name: run tests
-          command: docker-compose -f docker-compose.circle.yml run web python3 manage.py test
+          command: docker-compose -f docker-compose.circle.yml run --rm web python3 manage.py test
 
       # # Download and cache dependencies
       # - restore_cache:

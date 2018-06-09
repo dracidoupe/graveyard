@@ -4,7 +4,7 @@ DEBUG = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ddcz',
+        'NAME': 'circle_test',
         'USER': 'root',
         'HOST': 'db',
         'PASSWORD': 'docker',
