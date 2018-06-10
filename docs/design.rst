@@ -24,12 +24,19 @@ There is a Czech/English tension in the naming. Decision TBD.
 Public pages
 ============
 
-* Common attributes for all "creation" pages: Author, External source (for *very* legacy articles from bootstrapped version of the page), rating (AVG of all votes, expressed in starts, 0-5) and read and print counters
+* Common attributes for all "creations": Author, External source (for *very* legacy articles from bootstrapped version of the page), rating (AVG of all votes, expressed in starts, 0-5) and read and print counters
 * Creation pages: "Articles", containing annotation and text
 * Creation pages: System extensions (roughly dozen of them), containing arbitrary amount of additional attributes, rendered in a table-like structure
 * Creation pages: Gallery and Photogallery (photo uploads included)
 * Creation page: Adventures / Dungeons (random uploads included)
 * Creation page: Downloads (various programs available for download)
+
+
+All of the "articles" are known as Creations (no equivalent in the old world; let's call them "Tvorba"). They differ from the rest that they originally:
+
+* Have to be approved by editor and they do have a workflow attached to them
+* They are rated by both editor and visitors
+
 
 ---
 
