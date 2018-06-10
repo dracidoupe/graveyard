@@ -554,20 +554,6 @@ class Groupmembers(models.Model):
         db_table = 'groupmembers'
 
 
-class HlasovaniPrispevky(models.Model):
-    id_uz = models.IntegerField(primary_key=True)
-    id_cizi = models.IntegerField()
-    rubrika = models.CharField(max_length=20)
-    pochvez = models.IntegerField()
-    time = models.IntegerField()
-    opraveno = models.CharField(max_length=1)
-
-    class Meta:
-        managed = False
-        db_table = 'hlasovani_prispevky'
-        unique_together = (('id_uz', 'id_cizi', 'rubrika'),)
-
-
 class Hranicarkouzla(models.Model):
     jmeno = models.TextField()
     mag = models.SmallIntegerField()

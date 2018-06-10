@@ -18,7 +18,27 @@ APPROVAL_CHOICES = (
     ('n', 'Neschváleno'),
 )
 
+###
+# Introduce an umbrella model for all Creations
+###
+
 class Creation(models.Model):
+    """
+    Encapsulates common fields and actions for all creations. Please note:
+
+        * This is introduced as a new concept in the rewrite, hence
+            backward-compatible handling of all relations is needed
+        * It may be tempting to add "popis" or "anotace" to the model, but
+            note that (Photo)Gallery is part of this as well
+        * Authors are _not_ handled using ForeignKeys -- this is to be introduced later
+        * `pochvez` (aka rating) CAN'T be recomputed from CreationVotes since votes are not created equal:
+            - Editor's vote is counted as three votes
+            - The Head of the Gold Dragon Awards flatly marks winners as having six stars
+
+            Neither of those is tracked in database very well and such information is lost.
+            Be careful, don't lose aggregates!
+    """
+    jmeno = MisencodedTextField()
     autor = MisencodedCharField(max_length=25, blank=True, null=True)
     autmail = MisencodedCharField(max_length=30, blank=True, null=True)
     schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES)
@@ -29,11 +49,9 @@ class Creation(models.Model):
     pochvez = MisencodedCharField(max_length=5)
     precteno = models.IntegerField()
     tisknuto = models.IntegerField()
-    jmeno = MisencodedTextField()
 
     class Meta:
         abstract = True
-
 
     def get_slug(self):
         # slug = normalize('NKFD', self.jmeno)
@@ -43,6 +61,32 @@ class Creation(models.Model):
         slug = re.sub("^([^a-z0-9])+", "", slug)
         slug = re.sub("([^a-z0-9]+)$", "", slug)
         return slug
+
+###
+# Handle all models that should work with all creations.
+# Do note that for backward compatibility, all relations to creations
+# has to be NULLable and that (lazy) migration is needed in order to fix
+# this model
+###
+
+
+class CreationVotes(models.Model):
+    # creation = models.OneToMany(Creation) -- to be introduced later
+    id_uz = models.IntegerField(primary_key=True)
+    id_cizi = models.IntegerField()
+    rubrika = models.CharField(max_length=20)
+    pochvez = models.IntegerField()
+    time = models.IntegerField()
+    opraveno = models.CharField(max_length=1)
+
+    class Meta:
+        db_table = 'hlasovani_prispevky'
+        unique_together = (('id_uz', 'id_cizi', 'rubrika'),)
+
+
+###
+# Particular models for all creations follow
+###
 
 class CommonArticles(Creation):
     text = MisencodedTextField()
