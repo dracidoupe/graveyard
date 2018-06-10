@@ -18,14 +18,9 @@ APPROVAL_CHOICES = (
     ('n', 'Neschváleno'),
 )
 
-
-
-class CommonArticles(models.Model):
-    jmeno = MisencodedTextField()
-    text = MisencodedTextField()
+class Creation(models.Model):
     autor = MisencodedCharField(max_length=25, blank=True, null=True)
     autmail = MisencodedCharField(max_length=30, blank=True, null=True)
-    datum = models.DateTimeField()
     schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES)
     zdroj = MisencodedTextField(blank=True, null=True)
     zdrojmail = MisencodedCharField(max_length=30, blank=True, null=True)
@@ -34,6 +29,24 @@ class CommonArticles(models.Model):
     pochvez = MisencodedCharField(max_length=5)
     precteno = models.IntegerField()
     tisknuto = models.IntegerField()
+    jmeno = MisencodedTextField()
+
+    class Meta:
+        abstract = True
+
+
+    def get_slug(self):
+        # slug = normalize('NKFD', self.jmeno)
+        slug = normalize('NFD', self.jmeno)
+        slug = ''.join([ch for ch in slug if not combining(ch)]).lower()
+        slug = re.sub("[^a-z0-9]+", "-", slug)
+        slug = re.sub("^([^a-z0-9])+", "", slug)
+        slug = re.sub("([^a-z0-9]+)$", "", slug)
+        return slug
+
+class CommonArticles(Creation):
+    text = MisencodedTextField()
+    datum = models.DateTimeField()
     skupina = MisencodedCharField(max_length=30, blank=True, null=True)
     anotace = MisencodedTextField(blank=True, null=True)
     rubrika = MisencodedCharField(max_length=30)
@@ -51,13 +64,3 @@ class CommonArticles(models.Model):
             self.jmeno,
             self.autor,
         )
-
-    def get_slug(self):
-        # slug = normalize('NKFD', self.jmeno)
-        slug = normalize('NFD', self.jmeno)
-        slug = ''.join([ch for ch in slug if not combining(ch)]).lower()
-        slug = re.sub("[^a-z0-9]+", "-", slug)
-        slug = re.sub("^([^a-z0-9])+", "", slug)
-        slug = re.sub("([^a-z0-9]+)$", "", slug)
-        return slug
-
