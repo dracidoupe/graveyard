@@ -44,7 +44,7 @@ All of the "articles" are known as Creations (no equivalent in the old world; le
 * Links to other sites (now defuct)
 * Few system pages (search in users, news, newsfeed, artices being in the approval process, top stats etc.)
 * Forum (as in public discussion place)
-* Head of Golden Dragon competition (best articles for a given time period)
+* Head of a Golden Dragon competition (best articles for a given time period)
 * Polls
 * Chat
 

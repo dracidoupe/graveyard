@@ -33,7 +33,7 @@ class Creation(models.Model):
         * Authors are _not_ handled using ForeignKeys -- this is to be introduced later
         * `pochvez` (aka rating) CAN'T be recomputed from CreationVotes since votes are not created equal:
             - Editor's vote is counted as three votes
-            - The Head of the Gold Dragon Awards flatly marks winners as having six stars
+            - The Head of a Gold Dragon Awards flatly marks winners as having six stars
 
             Neither of those is tracked in database very well and such information is lost.
             Be careful, don't lose aggregates!
@@ -72,6 +72,7 @@ class Creation(models.Model):
 
 class CreationVotes(models.Model):
     # creation = models.OneToMany(Creation) -- to be introduced later
+    #TODO: Would conversion to ForeignKey work..and would it work to User?
     id_uz = models.IntegerField(primary_key=True)
     id_cizi = models.IntegerField()
     rubrika = models.CharField(max_length=20)
