@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
-from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ , COMMON_ARTICLES_CREATIVE_PAGES
+from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm
 from .models import CommonArticles, News, Dating, UserProfile
 from .users import migrate_user
@@ -26,8 +26,12 @@ def common_articles(request, creative_page_slug):
 
     articles = CommonArticles.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:5]
 
+    # if request.GET['komp'] == '1':
+    #     template = 'common-articles/list-compact.html'
+    # else:
+    template = 'common-articles/list.html'
 
-    return render(request, 'common-articles/list.html', {
+    return render(request, template, {
         'heading': COMMON_ARTICLES_CREATIVE_PAGES[creative_page_slug]['name'],
         'articles': articles,
         'creative_page_slug': creative_page_slug,

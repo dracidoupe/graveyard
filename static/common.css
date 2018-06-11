@@ -1,4 +1,30 @@
 
+/* Styling for main section of creations */
+
+.creation-detail {
+    margin-top: 5%;
+}
+
+.creation-detail .table-like {
+    display: table;
+    width: 100%;
+    border-spacing: 0px 0.3em;
+}
+
+.creation-detail p {
+    display: table-row;
+}
+
+.creation-detail span.label {
+    font-weight: bold;
+    width: 25%;
+}
+
+.creation-detail span.label, .creation-detail span.value {
+    display: table-cell;
+}
+
+
 
 /* Styling for dating section */
 
@@ -26,3 +52,4 @@ article.dating span.label {
 article.dating span.label, article.dating span.value {
     display: table-cell;
 }
+

@@ -5,13 +5,21 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <ul class="article-list">
     {% for a in articles %}
-        <li>
+        <li class="creation-detail">
             <h2>
                 <a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a>
                 &nbsp;{{ a.pochvez }}*
             </h2>
-            <p class="synopsis"><i>{{ a.anotace }}</i></p>
-            <p><a href="mailto:{{ a.autmail }}" class="author" rel="author">{{ a.autor }}</a></p>
+            {% if a.anotace %} 
+                <p class="synopsis"><i>{{ a.anotace }}</i></p>
+            {% endif %}
+            <div class="table-like">
+                <p><span class="label">Autor:</span> <span class="value"><a href="mailto:{{ a.autmail }}" class="author" rel="author">{{ a.autor }}</a></span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+                <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
+                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
+                <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
+            </div>
         </li>
     {% endfor %}
     </ul>
