@@ -682,7 +682,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'hlasovani_prispevky',
-                'managed': False,
+                'managed': not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
