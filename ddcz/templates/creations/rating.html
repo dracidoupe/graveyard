@@ -1,0 +1,5 @@
+<span class="rating-stars">
+{% for i in rating %}
+    <img src="{{ skin_rating_star_url }}"{% if forloop.first %} alt="{{ rating_description }}"{% endif %}>
+{% endfor %}
+</span>

@@ -10,7 +10,7 @@ from unicodedata import normalize, combining
 
 from django.db import models
 
-from ..magic import MisencodedCharField, MisencodedTextField
+from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
 from ...commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
 
 APPROVAL_CHOICES = (
@@ -46,7 +46,7 @@ class Creation(models.Model):
     zdrojmail = MisencodedCharField(max_length=30, blank=True, null=True)
     pocet_hlasujicich = models.IntegerField(blank=True, null=True)
     hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-    pochvez = MisencodedCharField(max_length=5)
+    pochvez = MisencodedIntegerField(max_length=5)
     precteno = models.IntegerField()
     tisknuto = models.IntegerField()
 

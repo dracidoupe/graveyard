@@ -1,15 +1,14 @@
 {% extends 'public.html' %}
 {% load html %}
+{% load creations %}
+
 {% block content %}
 <div id="page-common-article">
     <h1 class="page-heading">{{ heading }}</h1>
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
-            <h2>
-                <a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a>
-                &nbsp;{{ a.pochvez }}*
-            </h2>
+            <h2><a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
             {% if a.anotace %} 
                 <p class="synopsis"><i>{{ a.anotace }}</i></p>
             {% endif %}
