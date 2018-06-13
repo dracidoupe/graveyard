@@ -65,6 +65,7 @@ class Creation(models.Model):
     pochvez = MisencodedIntegerField(max_length=5)
     precteno = models.IntegerField(default=0)
     tisknuto = models.IntegerField(default=0)
+    datum = models.DateTimeField(auto_now_add=True)
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -109,7 +110,6 @@ class CreationVotes(models.Model):
 
 class CommonArticles(Creation):
     text = MisencodedTextField()
-    datum = models.DateTimeField()
     skupina = MisencodedCharField(max_length=30, blank=True, null=True)
     anotace = MisencodedTextField(blank=True, null=True)
     rubrika = MisencodedCharField(max_length=30)
@@ -142,7 +142,6 @@ class Monster(Creation):
     pokl = models.TextField(blank=True, null=True)
     zkus = models.CharField(max_length=50)
     popis = models.TextField()
-    datum = models.DateTimeField()
     skupina = models.TextField()
     bojovnost = models.CharField(max_length=50, blank=True, null=True)
     sm = models.CharField(db_column='SM', max_length=50)  # Field name made lowercase.
