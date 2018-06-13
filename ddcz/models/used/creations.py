@@ -25,18 +25,18 @@ APPROVAL_CHOICES = (
 
 class CreativePage(models.Model):
     """ I represent a Creative Page as a first-item concept to help with foreign keys, definitions etc. """
-    name = models.CharField(max_length=30)
+    name = MisencodedCharField(max_length=30)
     slug = models.SlugField(max_length=30)
     editors = models.ManyToManyField(User)
 
 class CreativePageSection(models.Model):
     """ Section within a Creative Page """
-    name = models.CharField(max_length=30)
+    name = MisencodedCharField(max_length=30)
     slug = models.SlugField(max_length=30)
 
 class CreativePageConcept(models.Model):
     page = models.OneToOneField(CreativePage, on_delete=models.CASCADE)
-    text = models.TextField()
+    text = MisencodedTextField()
     
 class Creation(models.Model):
     """
@@ -94,10 +94,10 @@ class CreationVotes(models.Model):
     #TODO: Would conversion to ForeignKey work..and would it work to User?
     id_uz = models.IntegerField(primary_key=True)
     id_cizi = models.IntegerField()
-    rubrika = models.CharField(max_length=20)
+    rubrika = MisencodedCharField(max_length=20)
     pochvez = models.IntegerField()
     time = models.IntegerField()
-    opraveno = models.CharField(max_length=1)
+    opraveno = MisencodedCharField(max_length=1)
 
     class Meta:
         db_table = 'hlasovani_prispevky'
@@ -130,21 +130,21 @@ class CommonArticles(Creation):
 
 
 class Monster(Creation):
-    zvt = models.TextField()
-    uc = models.TextField()
-    oc = models.TextField()
-    odl = models.CharField(max_length=3)
-    inteligence = models.CharField(max_length=50, blank=True, null=True)
-    vel = models.CharField(max_length=20)
-    zran = models.TextField(blank=True, null=True)
-    poh = models.TextField(blank=True, null=True)
-    pres = models.TextField(blank=True, null=True)
-    pokl = models.TextField(blank=True, null=True)
-    zkus = models.CharField(max_length=50)
-    popis = models.TextField()
-    skupina = models.TextField()
-    bojovnost = models.CharField(max_length=50, blank=True, null=True)
-    sm = models.CharField(db_column='SM', max_length=50)  # Field name made lowercase.
+    zvt = MisencodedTextField()
+    uc = MisencodedTextField()
+    oc = MisencodedTextField()
+    odl = MisencodedCharField(max_length=3)
+    inteligence = MisencodedCharField(max_length=50, blank=True, null=True)
+    vel = MisencodedCharField(max_length=20)
+    zran = MisencodedTextField(blank=True, null=True)
+    poh = MisencodedTextField(blank=True, null=True)
+    pres = MisencodedTextField(blank=True, null=True)
+    pokl = MisencodedTextField(blank=True, null=True)
+    zkus = MisencodedCharField(max_length=50)
+    popis = MisencodedTextField()
+    skupina = MisencodedTextField()
+    bojovnost = MisencodedCharField(max_length=50, blank=True, null=True)
+    sm = MisencodedCharField(db_column='SM', max_length=50)  # Field name made lowercase.
     tisknuto = models.PositiveIntegerField()
 
     class Meta:
