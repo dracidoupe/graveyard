@@ -63,8 +63,8 @@ class Creation(models.Model):
     pocet_hlasujicich = models.IntegerField(blank=True, null=True)
     hodnota_hlasovani = models.IntegerField(blank=True, null=True)
     pochvez = MisencodedIntegerField(max_length=5)
-    precteno = models.IntegerField()
-    tisknuto = models.IntegerField()
+    precteno = models.IntegerField(default=0)
+    tisknuto = models.IntegerField(default=0)
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -127,3 +127,26 @@ class CommonArticles(Creation):
             self.jmeno,
             self.autor,
         )
+
+
+class Monster(Creation):
+    zvt = models.TextField()
+    uc = models.TextField()
+    oc = models.TextField()
+    odl = models.CharField(max_length=3)
+    inteligence = models.CharField(max_length=50, blank=True, null=True)
+    vel = models.CharField(max_length=20)
+    zran = models.TextField(blank=True, null=True)
+    poh = models.TextField(blank=True, null=True)
+    pres = models.TextField(blank=True, null=True)
+    pokl = models.TextField(blank=True, null=True)
+    zkus = models.CharField(max_length=50)
+    popis = models.TextField()
+    datum = models.DateTimeField()
+    skupina = models.TextField()
+    bojovnost = models.CharField(max_length=50, blank=True, null=True)
+    sm = models.CharField(db_column='SM', max_length=50)  # Field name made lowercase.
+    tisknuto = models.PositiveIntegerField()
+
+    class Meta:
+        db_table = 'bestiar'

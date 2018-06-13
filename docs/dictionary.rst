@@ -32,6 +32,7 @@ Creative Pages
 In this context, Crative Pages correspond to sections of the site where content is provided by our authors, after review. Creative page has Categories (= Sekce) that serve to further classify the Creations. 
 
 * Rubriky (= Creative Pages)
+* Bestiář (= Monsters)
 * Dlouhé příspěvky / Běžné příspěvky = Common Articles (not used publicly, but powers a lot of internal engine)
 
     * Články a Eseje = Articles and Essays

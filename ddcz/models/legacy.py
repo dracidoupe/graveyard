@@ -111,39 +111,6 @@ class BannedIp(models.Model):
         db_table = 'banned_ip'
 
 
-class Bestiar(models.Model):
-    jmeno = models.TextField()
-    zvt = models.TextField()
-    uc = models.TextField()
-    oc = models.TextField()
-    odl = models.CharField(max_length=3)
-    inteligence = models.CharField(max_length=50, blank=True, null=True)
-    vel = models.CharField(max_length=20)
-    zran = models.TextField(blank=True, null=True)
-    poh = models.TextField(blank=True, null=True)
-    pres = models.TextField(blank=True, null=True)
-    pokl = models.TextField(blank=True, null=True)
-    zkus = models.CharField(max_length=50)
-    popis = models.TextField()
-    autor = models.TextField(blank=True, null=True)
-    autmail = models.TextField(blank=True, null=True)
-    datum = models.DateTimeField()
-    pochvez = models.CharField(max_length=1, blank=True, null=True)
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.TextField(blank=True, null=True)
-    schvaleno = models.CharField(max_length=1)
-    skupina = models.TextField()
-    bojovnost = models.CharField(max_length=50, blank=True, null=True)
-    sm = models.CharField(db_column='SM', max_length=50)  # Field name made lowercase.
-    tisknuto = models.PositiveIntegerField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'bestiar'
-
-
 class Chat1Zaloha(models.Model):
     pro = models.IntegerField()
     od = models.IntegerField()
