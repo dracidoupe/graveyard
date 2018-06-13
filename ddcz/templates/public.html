@@ -6,7 +6,9 @@
         <meta charset="utf-8">
         <!-- Remove once this is _the_ main version -->
         <meta name="robots" content="noindex,nofollow">
+        <!--
         <link rel="alternate" href="http://www.dracidoupe.cz/rss/novinky.xml" type="application/rss+xml" title="Nové články ze všech rubrik" />
+        -->
         <link rel="stylesheet" href="{% static 'common.css' %}">
         <link rel="stylesheet" href="{{ skin_css_url }}">
     </head>
@@ -34,9 +36,9 @@
                                 <li><span class="list_subheading">Tvorba</span>
                                     <ul>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='clanky' %}">Články&amp;Eseje</a></li>
-                                        <li><a href="#">Galerie</a></li>
-                                        <li><a href="#">Fotogalerie</a></li>
-                                        <li><a href="#">Hřbitov</a></li>
+                                        <li>Galerie</li>
+                                        <li>Fotogalerie</li>
+                                        <li>Hřbitov</li>
                                     </ul>
                                 </li>
                             </ul>
