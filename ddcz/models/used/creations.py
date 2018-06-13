@@ -9,6 +9,7 @@ import re
 from unicodedata import normalize, combining
 
 from django.db import models
+from django.contrib.auth.models import User
 
 from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
 from ...commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
@@ -22,6 +23,21 @@ APPROVAL_CHOICES = (
 # Introduce an umbrella model for all Creations
 ###
 
+class CreativePage(models.Model):
+    """ I represent a Creative Page as a first-item concept to help with foreign keys, definitions etc. """
+    name = models.CharField(max_length=30)
+    slug = models.SlugField(max_length=30)
+    editors = models.ManyToManyField(User)
+
+class CreativePageSection(models.Model):
+    """ Section within a Creative Page """
+    name = models.CharField(max_length=30)
+    slug = models.SlugField(max_length=30)
+
+class CreativePageConcept(models.Model):
+    page = models.OneToOneField(CreativePage, on_delete=models.CASCADE)
+    text = models.TextField()
+    
 class Creation(models.Model):
     """
     Encapsulates common fields and actions for all creations. Please note:
@@ -49,6 +65,8 @@ class Creation(models.Model):
     pochvez = MisencodedIntegerField(max_length=5)
     precteno = models.IntegerField()
     tisknuto = models.IntegerField()
+
+    # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         abstract = True

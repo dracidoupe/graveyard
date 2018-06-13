@@ -124,6 +124,8 @@ def login(request):
     else:
         m = md5()
         #TODO: Encoding needs verification
+        # This needs to be done since passwords, of course, can contain
+        # non-ascii characters that affect hashing
         m.update(form.cleaned_data['password'].encode('cp1250'))
         old_insecure_hashed_password = m.hexdigest()
 
