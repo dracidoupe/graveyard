@@ -149,3 +149,11 @@ class Monster(Creation):
 
     class Meta:
         db_table = 'bestiar'
+        verbose_name = 'Nestvůra'
+        verbose_name_plural = 'Bestiář'
+
+    def __str__(self):
+        return "{} od {}".format(
+            self.jmeno,
+            self.autor,
+        )

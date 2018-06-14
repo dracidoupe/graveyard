@@ -1,0 +1,69 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+
+{% block content %}
+<div>
+    <h1 class="page-heading">{{ heading }}</h1>
+    <ul class="article-list">
+    {% for a in articles %}
+        <li class="creation-detail">
+            <h2><a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <div class="table-like">
+                <p><span class="label">Skupina:</span> <span class="value">{{ a.skupina }}</span></p>
+                {% if a.zvt %}
+                    <p><span class="label">Životaschopnost:</span> <span class="value">{{ a.zvt }}</span></p>
+                {% endif %}
+                {% if a.uc %}
+                    <p><span class="label">Útočné číslo:</span> <span class="value">{{ a.uc }}</span></p>
+                {% endif %}
+                {% if a.oc %}
+                    <p><span class="label">Obranné číslo:</span> <span class="value">{{ a.oc }}</span></p>
+                {% endif %}
+                {% if a.odl %}
+                    <p><span class="label">Odolnost:</span> <span class="value">{{ a.odl }}</span></p>
+                {% endif %}
+                {% if a.inteligence %}
+                    <p><span class="label">Inteligence:</span> <span class="value">{{ a.inteligence }}</span></p>
+                {% endif %}
+                {% if a.vel %}
+                    <p><span class="label">Velikost:</span> <span class="value">{{ a.vel }}</span></p>
+                {% endif %}
+                {% if a.zran %}
+                    <p><span class="label">Zranitelnost:</span> <span class="value">{{ a.zran }}</span></p>
+                {% endif %}
+                {% if a.poh %}
+                    <p><span class="label">Pohyblivost:</span> <span class="value">{{ a.poh }}</span></p>
+                {% endif %}
+                {% if a.pres %}
+                    <p><span class="label">Přesvědčení:</span> <span class="value">{{ a.pres }}</span></p>
+                {% endif %}
+                {% if a.pokl %}
+                    <p><span class="label">Poklady:</span> <span class="value">{{ a.pokl }}</span></p>
+                {% endif %}
+                {% if a.zkus %}
+                    <p><span class="label">Zkušenost:</span> <span class="value">{{ a.zkus }}</span></p>
+                {% endif %}
+                {% if a.bojovnost %}
+                    <p><span class="label">Bojovnost:</span> <span class="value">{{ a.bojovnost }}</span></p>
+                {% endif %}
+                {% if a.sm %}
+                    <p><span class="label">Síla mysli:</span> <span class="value">{{ a.sm }}</span></p>
+                {% endif %}
+
+                <p><span class="label">Popis:</span> <div class="value">{{ a.popis|render_html|safe }}</div></p>
+
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+                <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
+                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
+
+                <p><span class="label">Autor:</span> <span class="value"><a href="mailto:{{ a.autmail }}" class="author" rel="author">{{ a.autor }}</a></span></p>
+                <!--
+                <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
+                -->
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

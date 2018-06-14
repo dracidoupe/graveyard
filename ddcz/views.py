@@ -22,9 +22,15 @@ def index(request):
 def common_articles(request, creative_page_slug):
 
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
-    model_class = apps.get_model(*creative_page.model_class.split('.'))
+    app, model_class_name = creative_page.model_class.split('.')
+    model_class = apps.get_model(app, model_class_name)
 
-    articles = model_class.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:5]
+    # For Common Articles, Creative Page is stored in attribute 'rubrika' as slug
+    # For everything else, Creative Page is determined by its model class
+    if model_class_name == 'commonarticle':
+        articles = model_class.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:5]
+    else:
+        articles = model_class.objects.filter(schvaleno='a').order_by('-datum')[:5]
 
     return render(request, 'creative-pages/%s-list.html' % creative_page.model_class.split('.')[1], {
         'heading': creative_page.name,

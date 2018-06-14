@@ -20,16 +20,14 @@
     display: table-row;
 }
 
-.creation-detail span.label {
+.creation-detail .label {
     font-weight: bold;
     width: 25%;
 }
 
-.creation-detail span.label, .creation-detail span.value {
+.creation-detail .label, .creation-detail .value {
     display: table-cell;
 }
-
-
 
 /* Styling for dating section */
 
