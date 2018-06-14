@@ -1,0 +1,21 @@
+- model: ddcz.creativepage
+  pk: 1
+  fields:
+    name: Články&Eseje
+    slug: clanky
+    model_class: ddcz.commonarticles
+
+- model: ddcz.creativepage
+  pk: 2
+  fields:
+    name: Bestiář
+    slug: bestiar
+    model_class: ddcz.monster
+
+
+- model: ddcz.creativepage
+  pk: 3
+  fields:
+    name: Nová Povolání
+    slug: novapovolani
+    model_class: ddcz.commonarticles

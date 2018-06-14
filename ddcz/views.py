@@ -1,14 +1,15 @@
 from hashlib import md5
 
-from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
-from django.contrib import messages
-
+from django.apps import apps
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
+from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
+from django.contrib import messages
+
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm
-from .models import CommonArticles, News, Dating, UserProfile
+from .models import CommonArticles, News, Dating, UserProfile, CreativePage
 from .users import migrate_user
 
 VALID_SKINS = ['light', 'dark']
@@ -19,23 +20,16 @@ def index(request):
 
 
 def common_articles(request, creative_page_slug):
-    try:
-        en_slug = SLUG_NAME_TRANSLATION_FROM_CZ[creative_page_slug]
-    except KeyError:
-        raise Http404()
 
-    articles = CommonArticles.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:5]
+    creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
+    model_class = apps.get_model(*creative_page.model_class.split('.'))
 
-    # if request.GET['komp'] == '1':
-    #     template = 'common-articles/list-compact.html'
-    # else:
-    template = 'common-articles/list.html'
+    articles = model_class.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:5]
 
-    return render(request, template, {
-        'heading': COMMON_ARTICLES_CREATIVE_PAGES[creative_page_slug]['name'],
+    return render(request, 'creative-pages/%s-list.html' % creative_page.model_class.split('.')[1], {
+        'heading': creative_page.name,
         'articles': articles,
-        'creative_page_slug': creative_page_slug,
-        'creative_page_slug_en': en_slug,
+        'creative_page_slug': creative_page.slug,
     })
 
 
