@@ -12,7 +12,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
-from ...commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
 
 APPROVAL_CHOICES = (
     ('a', 'Schváleno'),
@@ -109,7 +108,7 @@ class CreationVotes(models.Model):
 # Particular models for all creations follow
 ###
 
-class CommonArticles(Creation):
+class CommonArticle(Creation):
     text = MisencodedTextField()
     skupina = MisencodedCharField(max_length=30, blank=True, null=True)
     anotace = MisencodedTextField(blank=True, null=True)

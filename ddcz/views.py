@@ -9,7 +9,7 @@ from django.contrib import messages
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm
-from .models import CommonArticles, News, Dating, UserProfile, CreativePage
+from .models import CommonArticle, News, Dating, UserProfile, CreativePage
 from .users import migrate_user
 
 VALID_SKINS = ['light', 'dark']

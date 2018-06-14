@@ -3,7 +3,7 @@
   fields:
     name: Články&Eseje
     slug: clanky
-    model_class: ddcz.commonarticles
+    model_class: ddcz.commonarticle
 
 - model: ddcz.creativepage
   pk: 2
@@ -18,4 +18,4 @@
   fields:
     name: Nová Povolání
     slug: novapovolani
-    model_class: ddcz.commonarticles
+    model_class: ddcz.commonarticle
