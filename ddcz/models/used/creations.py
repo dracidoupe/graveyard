@@ -27,7 +27,7 @@ class CreativePage(models.Model):
     """ I represent a Creative Page as a first-item concept to help with foreign keys, definitions etc. """
     name = MisencodedCharField(max_length=30)
     slug = models.SlugField(max_length=30)
-    editors = models.ManyToManyField(User)
+    # editors = models.ManyToManyField(User)
 
 class CreativePageSection(models.Model):
     """ Section within a Creative Page """
