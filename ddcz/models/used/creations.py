@@ -55,8 +55,8 @@ class Creation(models.Model):
             Be careful, don't lose aggregates!
     """
     jmeno = MisencodedTextField()
-    autor = MisencodedCharField(max_length=25, blank=True, null=True)
-    autmail = MisencodedCharField(max_length=30, blank=True, null=True)
+    autor = MisencodedCharField(max_length=50, blank=True, null=True)
+    autmail = MisencodedCharField(max_length=50, blank=True, null=True)
     schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES)
     zdroj = MisencodedTextField(blank=True, null=True)
     zdrojmail = MisencodedCharField(max_length=30, blank=True, null=True)

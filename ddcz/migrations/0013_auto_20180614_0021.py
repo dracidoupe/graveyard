@@ -19,12 +19,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='monster',
             name='autmail',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=30, null=True),
+            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
         ),
         migrations.AlterField(
             model_name='monster',
             name='autor',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=25, null=True),
+            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
         ),
         migrations.AlterField(
             model_name='monster',
