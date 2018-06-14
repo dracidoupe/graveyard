@@ -15,7 +15,6 @@ set -e
 
 curdir=`pwd`
 encryption_key=`makepasswd --chars=99`
-echo $encryption_key
 
 host=${DEPLOYMENT_HOST:-"revy"}
 user=${DEPLOYMENT_USERNAME:-"w-dracidoupe-cz"}
