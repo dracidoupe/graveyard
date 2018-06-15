@@ -19,3 +19,52 @@
     name: Nová Povolání
     slug: novapovolani
     model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 4
+  fields:
+    name: Nové Rasy
+    slug: noverasy
+    model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 5
+  fields:
+    name: Rozvoj DrD
+    slug: expanze
+    model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 6
+  fields:
+    name: Alchymista
+    slug: alchymistazvl
+    model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 7
+  fields:
+    name: Hraničář
+    slug: hranicar
+    model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 8
+  fields:
+    name: Kouzelník
+    slug: kouzelnikzvl
+    model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 9
+  fields:
+    name: Válečník
+    slug: valecnik
+    model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 10
+  fields:
+    name: Zloděj
+    slug: zlodej
+    model_class: ddcz.commonarticle
