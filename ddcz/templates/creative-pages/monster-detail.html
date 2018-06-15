@@ -1,0 +1,88 @@
+{% extends 'public.html' %}
+{% load html %}
+{% block content %}
+<div id="page-article-detail">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <article>
+        <header>
+            <h2>{{ article.jmeno }}</h2>
+            <!-- TODO
+            <p>Příprava pro tisk</p>
+            -->
+            <table>
+                <tr>
+                    <th>Autor:</th>
+                    <td><a href="{{ article.autmail }}" class="author" rel="author">{{ article.autor }}</a></td>
+                </tr>
+                <tr>
+                    <th>Přidáno:</th>
+                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></td>
+                </tr>
+                <tr>
+                    <th>Hlasovalo:</th>
+                    <td>{{ article.pocet_hlasujicich }}</td>
+                </tr>
+            </table>
+
+            <p><span class="label">Skupina:</span> <span class="value">{{ article.skupina }}</span></p>
+            {% if article.zvt %}
+                <p><span class="label">Životaschopnost:</span> <span class="value">{{ article.zvt }}</span></p>
+            {% endif %}
+            {% if article.uc %}
+                <p><span class="label">Útočné číslo:</span> <span class="value">{{ article.uc }}</span></p>
+            {% endif %}
+            {% if article.oc %}
+                <p><span class="label">Obranné číslo:</span> <span class="value">{{ article.oc }}</span></p>
+            {% endif %}
+            {% if article.odl %}
+                <p><span class="label">Odolnost:</span> <span class="value">{{ article.odl }}</span></p>
+            {% endif %}
+            {% if article.inteligence %}
+                <p><span class="label">Inteligence:</span> <span class="value">{{ article.inteligence }}</span></p>
+            {% endif %}
+            {% if article.vel %}
+                <p><span class="label">Velikost:</span> <span class="value">{{ article.vel }}</span></p>
+            {% endif %}
+            {% if article.zran %}
+                <p><span class="label">Zranitelnost:</span> <span class="value">{{ article.zran }}</span></p>
+            {% endif %}
+            {% if article.poh %}
+                <p><span class="label">Pohyblivost:</span> <span class="value">{{ article.poh }}</span></p>
+            {% endif %}
+            {% if article.pres %}
+                <p><span class="label">Přesvědčení:</span> <span class="value">{{ article.pres }}</span></p>
+            {% endif %}
+            {% if article.pokl %}
+                <p><span class="label">Poklady:</span> <span class="value">{{ article.pokl }}</span></p>
+            {% endif %}
+            {% if article.zkus %}
+                <p><span class="label">Zkušenost:</span> <span class="value">{{ article.zkus }}</span></p>
+            {% endif %}
+            {% if article.bojovnost %}
+                <p><span class="label">Bojovnost:</span> <span class="value">{{ article.bojovnost }}</span></p>
+            {% endif %}
+            {% if article.sm %}
+                <p><span class="label">Síla mysli:</span> <span class="value">{{ article.sm }}</span></p>
+            {% endif %}
+
+            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html|safe }}</div></p>
+
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+            <p><span class="label">Přečteno:</span> <span class="value">{{ article.precteno }}</span></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+
+            <p><span class="label">Autor:</span> <span class="value"><a href="mailto:{{ article.autmail }}" class="author" rel="author">{{ article.autor }}</a></span></p>
+
+
+        </header>
+
+        <div class="content">
+            {{ article.text|render_html|safe }}
+        </div>
+        <footer>
+            
+        </footer>
+    </article>
+
+</div>
+{% endblock %}

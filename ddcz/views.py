@@ -32,7 +32,7 @@ def creative_page_list(request, creative_page_slug):
     else:
         articles = model_class.objects.filter(schvaleno='a').order_by('-datum')[:5]
 
-    return render(request, 'creative-pages/%s-list.html' % creative_page.model_class.split('.')[1], {
+    return render(request, 'creative-pages/%s-list.html' % model_class_name, {
         'heading': creative_page.name,
         'articles': articles,
         'creative_page_slug': creative_page.slug,
@@ -41,23 +41,21 @@ def creative_page_list(request, creative_page_slug):
 
 def creation_detail(request, creative_page_slug, article_id, article_slug):
 
-    try:
-        en_slug = SLUG_NAME_TRANSLATION_FROM_CZ[creative_page_slug]
-    except KeyError:
-        raise Http404()
+    creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
+    app, model_class_name = creative_page.model_class.split('.')
+    model_class = apps.get_model(app, model_class_name)
 
-    article = get_object_or_404(CommonArticle, id=article_id)
+    article = get_object_or_404(model_class, id=article_id)
     if article.get_slug() != article_slug:
         raise NotImplementedError()
         # TODO: reverse url search in view
         # raise HttpResponseRedirect()
 
 
-    return render(request, 'common-articles/detail.html', {
-        'heading': COMMON_ARTICLES_CREATIVE_PAGES[creative_page_slug]['name'],
+    return render(request, 'creative-pages/%s-detail.html' % model_class_name, {
+        'heading': creative_page.name,
         'article': article,
         'creative_page_slug': creative_page_slug,
-        'creative_page_slug_en': en_slug,
     })
 
 def dating(request):
