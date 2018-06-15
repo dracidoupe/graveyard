@@ -52,6 +52,10 @@ You are all set. Afterwards, install database schema by running
 
 *  `docker-compose run web python3 manage.py migrate`
 
+and load data about pages
+
+*  `docker-compose run web python3 manage.py loaddata pages`
+
 You are done! Now you can just run the project and develop using
 
 *  `docker-compose start`
@@ -86,6 +90,7 @@ Destroying test database for alias 'default'...
 ```
 
 * Create the database schema: `python manage.py migrate`
+* Load data about pages to see what's on production: `python manage.py loaddata pages`
 * Run the thing! `python manage.py runserver`
 * Observe if you have contact at `http://localhost:8000`
 * Maybe create a superuser in order to enter admin: `python manage.py createsuperuser`
