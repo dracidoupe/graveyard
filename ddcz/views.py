@@ -19,7 +19,7 @@ def index(request):
     return render(request, 'news/list.html', {'news': news})
 
 
-def common_articles(request, creative_page_slug):
+def creative_page_list(request, creative_page_slug):
 
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split('.')
@@ -39,14 +39,14 @@ def common_articles(request, creative_page_slug):
     })
 
 
-def common_article_detail(request, creative_page_slug, article_id, article_slug):
+def creation_detail(request, creative_page_slug, article_id, article_slug):
 
     try:
         en_slug = SLUG_NAME_TRANSLATION_FROM_CZ[creative_page_slug]
     except KeyError:
         raise Http404()
 
-    article = get_object_or_404(CommonArticles, id=article_id)
+    article = get_object_or_404(CommonArticle, id=article_id)
     if article.get_slug() != article_slug:
         raise NotImplementedError()
         # TODO: reverse url search in view
