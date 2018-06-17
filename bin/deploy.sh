@@ -52,6 +52,7 @@ ssh $machine bash -c "'
     cp $remote_root/../production.py $remote_root/graveyard/settings/ && \
     $remote_venv/bin/python3 $remote_root/manage.py check --deploy && \
     $remote_venv/bin/python3 $remote_root/manage.py migrate && \
+    $remote_venv/bin/python3 $remote_root/manage.py loaddata pages && \
     $remote_venv/bin/python3 $remote_root/manage.py collectstatic --no-input
 '"
 
