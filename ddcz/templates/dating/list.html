@@ -1,9 +1,11 @@
 {% extends 'public.html' %}
 {% load html %}
 {% block content %}
+{% load pages %}
 <div id="page-news">
     <h1 class="page-heading">Seznamka</h1>
     <p>Seznamka slouží k seznamování hráčů a PJů. Pokud chcete něco prodat, nebo něco sháníte vkládejte inzeráty do inzerce.</p>
+    {% pagination items %}
     {% for i in items %}
         <article class="dating">
             <p>
@@ -49,5 +51,6 @@
 
         <hr>
     {% endfor %}
+    {% pagination items %}
 </div>
 {% endblock %}

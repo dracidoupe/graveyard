@@ -119,6 +119,11 @@ h1, h2, h3 {
   text-align: center;
 }
 
-.article-list li {
-  list-style: none;
+
+.pagination a::before {
+  content: "[";
+}
+
+.pagination a::after {
+  content: "]";
 }

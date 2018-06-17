@@ -1,10 +1,14 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load creations %}
+{% load pages %}
 
 {% block content %}
 <div id="page-common-article">
     <h1 class="page-heading">{{ heading }}</h1>
+
+    {% pagination articles %}
+
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
@@ -24,5 +28,8 @@
         </li>
     {% endfor %}
     </ul>
+
+    {% pagination articles %}
+
 </div>
 {% endblock %}

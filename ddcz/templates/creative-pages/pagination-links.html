@@ -1,0 +1,14 @@
+
+<div class="pagination">
+    {% if articles.has_previous %}
+        <span class="next">
+            <a href="?z_s={{ articles.previous_page_number }}">Další</a>
+        </span>
+    {% endif %}
+
+    {% if articles.has_next %}
+        <span class="previous">
+                <a href="?z_s={{ articles.next_page_number }}">Předchozí</a>
+        </span>
+    {% endif %}
+</div>

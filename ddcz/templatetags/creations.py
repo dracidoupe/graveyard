@@ -14,4 +14,3 @@ def creation_rating(rating, skin):
         'skin': skin,
         'skin_rating_star_url': staticfiles_storage.url("skins/%s/img/rating-star.gif" % skin),
     }
-

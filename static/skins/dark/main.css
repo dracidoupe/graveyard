@@ -120,3 +120,11 @@ input, textarea, select {
 h1, h2, h3 {
   text-align: center;
 }
+
+.pagination a::before {
+  content: "[";
+}
+
+.pagination a::after {
+  content: "]";
+}

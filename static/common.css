@@ -1,4 +1,27 @@
 
+/* Creative Pages list */
+
+.pagination {
+    width: 100%;
+    clear: both;
+}
+
+.pagination > .next {
+    float: left;
+}
+
+.pagination > .previous {
+    float: right;
+}
+
+.article-list li {
+    list-style: none;
+  }
+  
+.article-list {
+    clear: both;
+}
+
 /* Styling for main section of creations */
 
 .creation-detail {

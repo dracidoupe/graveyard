@@ -1,6 +1,7 @@
 from hashlib import md5
 
 from django.apps import apps
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
@@ -13,29 +14,41 @@ from .models import CommonArticle, News, Dating, UserProfile, CreativePage
 from .users import migrate_user
 
 VALID_SKINS = ['light', 'dark']
+DEFAULT_LIST_SIZE = 5
 
 def index(request):
-    news = News.objects.order_by('-datum')[:5]
+    news_list = News.objects.order_by('-datum')
+
+    paginator = Paginator(news_list, DEFAULT_LIST_SIZE)
+    page = request.GET.get('z_s', 1)
+
+    news = paginator.get_page(page)
+
     return render(request, 'news/list.html', {'news': news})
 
 
 def creative_page_list(request, creative_page_slug):
-
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split('.')
     model_class = apps.get_model(app, model_class_name)
 
-    if creative_page_slug in ['galerie', 'fotogalerie']:
-        default_limit = 18
-    else:
-        default_limit = 5
-
     # For Common Articles, Creative Page is stored in attribute 'rubrika' as slug
     # For everything else, Creative Page is determined by its model class
     if model_class_name == 'commonarticle':
-        articles = model_class.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:default_limit]
+        article_list = model_class.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')
     else:
-        articles = model_class.objects.filter(schvaleno='a').order_by('-datum')[:default_limit]
+        article_list = model_class.objects.filter(schvaleno='a').order_by('-datum')
+
+
+    if creative_page_slug in ['galerie', 'fotogalerie']:
+        default_limit = 18
+    else:
+        default_limit = DEFAULT_LIST_SIZE
+    
+    paginator = Paginator(article_list, default_limit)
+    page = request.GET.get('z_s', 1)
+
+    articles = paginator.get_page(page)
 
     return render(request, 'creative-pages/%s-list.html' % model_class_name, {
         'heading': creative_page.name,
@@ -65,7 +78,14 @@ def creation_detail(request, creative_page_slug, article_id, article_slug):
 
 def dating(request):
 
-    items = Dating.objects.order_by('-datum')[:5]
+    item_list = Dating.objects.order_by('-datum')
+
+    paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
+    page = request.GET.get('z_s', 1)
+
+    items = paginator.get_page(page)
+
+
 
     return render(request, 'dating/list.html', {
         'items': items
