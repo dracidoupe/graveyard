@@ -7,6 +7,7 @@ register = template.Library()
 
 @register.inclusion_tag('creations/rating.html')
 def creation_rating(rating, skin):
+    rating = int(rating or 0)
     return {
         'rating_description': "Hodnocení: %s" % RATING_DESCRIPTIONS[round(rating)],
         'rating': range(rating),

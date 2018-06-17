@@ -6,8 +6,10 @@
 # is strangled out of its existence
 
 import re
+from urllib.parse import urljoin
 from unicodedata import normalize, combining
 
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -36,7 +38,7 @@ class CreativePageSection(models.Model):
 
 class CreativePageConcept(models.Model):
     page = models.OneToOneField(CreativePage, on_delete=models.CASCADE)
-    text = MisencodedTextField()
+    text = models.TextField()
     
 class Creation(models.Model):
     """
@@ -129,6 +131,10 @@ class CommonArticle(Creation):
         )
 
 
+###
+# First, all "common" articles, just with extra fields
+###
+
 class Monster(Creation):
     zvt = MisencodedTextField()
     uc = MisencodedTextField()
@@ -145,7 +151,6 @@ class Monster(Creation):
     skupina = MisencodedTextField()
     bojovnost = MisencodedCharField(max_length=50, blank=True, null=True)
     sm = MisencodedCharField(db_column='SM', max_length=50)  # Field name made lowercase.
-    tisknuto = models.PositiveIntegerField()
 
     class Meta:
         db_table = 'bestiar'
@@ -157,3 +162,36 @@ class Monster(Creation):
             self.jmeno,
             self.autor,
         )
+
+
+###
+# Creations that handle uploaded content
+###
+
+
+class GalleryPicture(Creation):
+    """
+    In the g'old days, picture uploads has to be done manually.
+
+    Hence, this is a compatibility model to handle both old version
+    (path stored in `cesta`) as well as new version 
+    """
+    cesta = MisencodedTextField()
+    cestathumb = MisencodedTextField()
+
+    class Meta:
+        db_table = 'galerie'
+
+
+    def get_thumbnail_url(self):
+        return urljoin(
+            settings.GALLERY_MEDIA_ROOT_URL,
+            self.cestathumb
+        )
+
+    def get_picture_url(self):
+        return urljoin(
+            settings.GALLERY_MEDIA_ROOT_URL,
+            self.cesta
+        )
+        

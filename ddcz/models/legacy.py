@@ -482,24 +482,6 @@ class Fotogalerie(models.Model):
         db_table = 'fotogalerie'
 
 
-class Galerie(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
-    jmeno = models.TextField()
-    cesta = models.TextField()
-    pochvez = models.CharField(max_length=1)
-    autor = models.TextField(blank=True, null=True)
-    autmail = models.TextField(blank=True, null=True)
-    datum = models.DateTimeField()
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.TextField(blank=True, null=True)
-    schvaleno = models.CharField(max_length=1)
-    cestathumb = models.TextField()
-
-    class Meta:
-        managed = False
-        db_table = 'galerie'
-
-
 class Grouplimits(models.Model):
     id_uz = models.IntegerField()
     max_soukr = models.SmallIntegerField(blank=True, null=True)

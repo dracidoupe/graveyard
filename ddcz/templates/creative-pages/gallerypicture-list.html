@@ -1,0 +1,28 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+
+{% block content %}
+<div id="page-common-article">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <ul class="article-list gallery-list">
+    {% for a in articles %}
+        <li class="creation-detail gallery-item">
+            <h2><a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a></h2> 
+            <div class="table-like">
+                <p><span class="label">Autor:</span> <span class="value"><a href="mailto:{{ a.autmail }}" class="author" rel="author">{{ a.autor }}</a></span></p>
+                <p>
+                    <a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">
+                        <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.jmeno }}">
+                    </a>
+                </p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+                <!--
+                <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
+                -->
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

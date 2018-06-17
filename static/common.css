@@ -10,23 +10,66 @@
     transform: scale(1.5);
 }
 
-.creation-detail .table-like {
+.table-like {
     display: table;
     width: 100%;
     border-spacing: 0px 0.3em;
 }
 
-.creation-detail p {
-    display: table-row;
-}
-
-.creation-detail .label {
+.table-like .label {
     font-weight: bold;
     width: 25%;
 }
 
-.creation-detail .label, .creation-detail .value {
+.table-like .label, .table-like .value {
     display: table-cell;
+}
+
+.table-like p {
+    display: table-row;
+}
+
+
+
+/* (Photo)Gallery */
+
+/* Fieldset-like styling taken from https://stackoverflow.com/a/2213946 */
+/* Copyright Mathias Bynens, licensed under CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/ */
+
+.gallery-item {
+    float: left;
+    border: 2px groove threedface;
+    border-top: none;
+    padding: 0.5em;
+    margin: 1em 2px;
+}
+
+.gallery-item > h2 {
+    margin: -1em -0.5em 0;
+    font: 1em normal;
+}
+
+.gallery-item > h2 > a {
+    float: left;
+}
+
+.gallery-item > h2:before {
+    border-top: 2px groove threedface;
+    content: ' ';
+    float: left;
+    margin: 0.5em 2px 0 -1px;
+    width: 0.75em;
+}
+.gallery-item > h2:after {
+    border-top: 2px groove threedface;
+    content: ' ';
+    display: block;
+    height: 1.5em;
+    left: 2px;
+    margin: 0 1px 0 0;
+    overflow: hidden;
+    position: relative;
+    top: 0.5em;
 }
 
 /* Styling for dating section */
@@ -55,4 +98,5 @@ article.dating span.label {
 article.dating span.label, article.dating span.value {
     display: table-cell;
 }
+
 

@@ -25,12 +25,17 @@ def creative_page_list(request, creative_page_slug):
     app, model_class_name = creative_page.model_class.split('.')
     model_class = apps.get_model(app, model_class_name)
 
+    if creative_page_slug in ['galerie', 'fotogalerie']:
+        default_limit = 18
+    else:
+        default_limit = 5
+
     # For Common Articles, Creative Page is stored in attribute 'rubrika' as slug
     # For everything else, Creative Page is determined by its model class
     if model_class_name == 'commonarticle':
-        articles = model_class.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:5]
+        articles = model_class.objects.filter(schvaleno='a', rubrika=creative_page_slug).order_by('-datum')[:default_limit]
     else:
-        articles = model_class.objects.filter(schvaleno='a').order_by('-datum')[:5]
+        articles = model_class.objects.filter(schvaleno='a').order_by('-datum')[:default_limit]
 
     return render(request, 'creative-pages/%s-list.html' % model_class_name, {
         'heading': creative_page.name,

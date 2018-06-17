@@ -68,3 +68,10 @@
     name: Zloděj
     slug: zlodej
     model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 11
+  fields:
+    name: Galerie
+    slug: galerie
+    model_class: ddcz.gallerypicture

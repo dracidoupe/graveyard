@@ -111,7 +111,8 @@ APPEND_SLASH=True
 
 STATIC_URL = '/static/'
 
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+GALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/galerie/"
