@@ -195,3 +195,23 @@ class GalleryPicture(Creation):
             self.cesta
         )
         
+
+class Photo(Creation):
+    """ See GalleryPicture; just part of different Creation Page """
+    cesta = models.TextField()
+    cestathumb = models.TextField()
+
+    class Meta:
+        db_table = 'fotogalerie'
+
+    def get_thumbnail_url(self):
+        return urljoin(
+            settings.PHOTOGALLERY_MEDIA_ROOT_URL,
+            self.cestathumb
+        )
+
+    def get_picture_url(self):
+        return urljoin(
+            settings.PHOTOGALLERY_MEDIA_ROOT_URL,
+            self.cesta
+        )
