@@ -6,3 +6,4 @@ argon2-cffi
 bcrypt
 pytz
 pyyaml
+raven
