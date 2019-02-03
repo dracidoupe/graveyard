@@ -26,6 +26,7 @@ body.light nav {
     width: 15%;
     padding-left: 5%;
     padding-right: 5%;
+    max-width: 180px;
 }
 body.light nav ul {
   list-style-type: none;
