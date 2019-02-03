@@ -34,7 +34,7 @@
                         <li><span class="list_heading">Rubriky</span>
                             <ul>
                                 <li><span class="list_subheading">Tvorba</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='clanky' %}">Články&amp;Eseje</a></li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='galerie' %}">Galerie</a></li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='fotogalerie' %}">Fotogalerie</a></li>
@@ -44,7 +44,7 @@
                             </ul>
                             <ul>
                                 <li><span class="list_subheading">Doplňky</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li>Dovednosti</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='novapovolani' %}">Nová Povolání</a></li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='noverasy' %}">Nové Rasy</a></li>
@@ -53,7 +53,7 @@
                             </ul>
                             <ul>
                                 <li><span class="list_subheading">Pro PJ</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='bestiar' %}">Bestiář</a></li>
                                         <li>Dobrodružství</li>
                                         <li>Předměty</li>
@@ -62,7 +62,7 @@
                             </ul>
                             <ul>
                                 <li><span class="list_subheading">Všeobecné</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li>Downloady</li>
                                         <li>Linky</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='expanze' %}">Rozvoj DrD</a></li>
@@ -72,7 +72,7 @@
     
                             <ul>
                                 <li><span class="list_subheading">Postavy</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='alchymistazvl' %}">Alchymista</a></li>
                                         <li>Alchymistické předměty</li>
                                         <li><a href="{% url 'ddcz:common-article-list' creative_page_slug='hranicar' %}">Hraničář</a></li>
@@ -90,7 +90,7 @@
                         <li><span class="list_heading">Ostatní</span>
                             <ul>
                                 <li><span class="list_subheading">Hledat</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li>Vyhledávání</li>
                                         <li>Rekordy a statistiky</li>
                                     </ul>
@@ -98,7 +98,7 @@
                             </ul>
                             <ul>
                                 <li><span class="list_subheading">Hledat</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li>Co je to Dračí Doupě?</li>
                                         <li>Dračí manuál</li>
                                         <li>Otázky a Odpovědi</li>
@@ -107,7 +107,7 @@
                             </ul>
                             <ul>
                                 <li><span class="list_subheading">Kontakt</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li><a href="{% url 'ddcz:dating' %}">Seznamka</a></li>
                                         <li>Inzerce</li>
                                     </ul>
@@ -115,7 +115,7 @@
                             </ul>
                             <ul>
                                 <li><span class="list_subheading">Seznamy</span>
-                                    <ul>
+                                    <ul class="list_box">
                                         <li>Tvůrci a Redakce</li>
                                         <li>Čekající díla</li>
                                         <li>Dračí líheň</li>
@@ -130,7 +130,7 @@
                 <nav class="right">
                     <ul class="nav_border">
                         <li><span class="list_heading">Vzhled</span>
-                            <ul>
+                            <ul class="list_box">
                                 <li>Family Silver</li>
                                 <li>Historic</li>
                                 <li><a href="{% url 'ddcz:change-skin' %}?skin=light">Light</a></li>
@@ -141,14 +141,14 @@
                     </ul>
                     <ul class="nav_border">
                         <li><span class="list_heading">Novinky</span>
-                            <ul>
+                            <ul class="list_box">
                                 <li><a href="{% url 'ddcz:news' %}">Aktuality</a></li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="nav_border">
                         <li><span class="list_heading">Komunikace</span>
-                            <ul>
+                            <ul class="list_box">
                                 <li>Chat</li>
                                 <li><a href="http://www.dracidoupe.cz/moudrasova/">Moudrá Sova</a></li>
                                 <li>Fórum</li>
@@ -158,6 +158,7 @@
                     </ul>
                     <ul class="nav_border">
                         <li><span class="list_heading">Control</span>
+                            <div class="list_box">
                             {% if user.is_authenticated %}
                                 <div class="nick">{{ user.username }}</div>
                                 <div class="state">online</div>
@@ -181,11 +182,12 @@
                                 </form>
                                 <p>Zapomněl jsem heslo</p>
                             {% endif %}
+                            </div>
                         </li>
                     </ul>
                     <ul class="nav_border">
                         <li><span class="list_heading">Doupě jinde</span>
-                            <ul>
+                            <ul class="list_box">
                                 <li><a href="https://www.facebook.com/DraciDoupecz-47586881642/">Facebook</a></li>
                             </ul>
                         </li>
