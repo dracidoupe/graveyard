@@ -72,6 +72,7 @@ To use the project, clone this repository and:
 
 * Create a virtual environment: `python3 -m venv gvenv`
 * Enter it (on Mac OS X or Linux): `source gvenv/bin/activate`
+* Install dependencies within the 
 * Copy settings template: `cp graveyard/settings/local.example.py graveyard/settings/local.py`
 * Edit the settings above, especially enter credentials to your local MySQL
 * Verify you have correct installation and run tests with `python manage.py test`. You should see output like this:
@@ -96,4 +97,25 @@ Destroying test database for alias 'default'...
 * Maybe create a superuser in order to enter admin: `python manage.py createsuperuser`
 * Look around the administration interface at `http://localhost:8000/admin/`
 
+#### Installation issues
+
+*  Installation failes with "mysql_config not found" 
+
+If you get something like this:
+
+```
+    File "/tmp/pip-install-wfhe9zue/mysqlclient/setup_posix.py", line 29, in mysql_config
+        raise EnvironmentError("%s not found" % (_mysql_config_path,))
+    OSError: mysql_config not found
+```
+
+you may be using MariaDB fork of MySQL that the Python client is not equipped to talk to, installation-wise. You need to manually symlink the appropriate command:
+
+`ln -s /usr/bin/mariadb_config /usr/bin/mysql_config`
+
+If even `mysql_config` is not there, you have to install development headers for the database. That's `apt-get install libmariadbclient-dev` on Debian.
+
+* `error: invalid command 'bdist_wheel'`
+
+Old setuptools: `pip install setuptools -U`
 
