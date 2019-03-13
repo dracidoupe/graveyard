@@ -71,6 +71,7 @@ Graveyard is currently written in [Django](https://www.djangoproject.com/). Requ
 To use the project, clone this repository, enter its directory with `cd graveyard` and:
 
 * Create a virtual environment: `python3 -m venv gvenv`
+   * If this fails and you are on Ubuntu, you may need to `sudo apt-get update && sudo apt-get install python3-pip && sudo pip3 install virtualenv`
 * Enter it (on Mac OS X or Linux): `source gvenv/bin/activate`
 * Install dependencies within the `pip install -r requirements.txt`
 * Copy settings template: `cp graveyard/settings/local.example.py graveyard/settings/local.py`
