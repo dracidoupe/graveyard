@@ -68,11 +68,11 @@ Graveyard is currently written in [Django](https://www.djangoproject.com/). Requ
 * You have working Python 3 installation on your machine
 * You have working MySQL installation on your machine
 
-To use the project, clone this repository and:
+To use the project, clone this repository, enter its directory with `cd graveyard` and:
 
 * Create a virtual environment: `python3 -m venv gvenv`
 * Enter it (on Mac OS X or Linux): `source gvenv/bin/activate`
-* Install dependencies within the 
+* Install dependencies within the `pip install -r requirements.txt`
 * Copy settings template: `cp graveyard/settings/local.example.py graveyard/settings/local.py`
 * Edit the settings above, especially enter credentials to your local MySQL
 * Verify you have correct installation and run tests with `python manage.py test`. You should see output like this:
