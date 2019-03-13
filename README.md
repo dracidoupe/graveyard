@@ -75,7 +75,7 @@ To use the project, clone this repository, enter its directory with `cd graveyar
 * Enter it (on Mac OS X or Linux): `source gvenv/bin/activate`
 * Install dependencies within the `pip install -r requirements.txt`
 * Copy settings template: `cp graveyard/settings/local.example.py graveyard/settings/local.py`
-* Edit the settings above, especially enter credentials to your local MySQL
+* Edit the settings above, especially enter credentials to your local MySQL ([see Stack Overflow](https://stackoverflow.com/questions/1720244/create-new-user-in-mysql-and-give-it-full-access-to-one-database) on how to do that)
 * Verify you have correct installation and run tests with `python manage.py test`. You should see output like this:
 
 ```
