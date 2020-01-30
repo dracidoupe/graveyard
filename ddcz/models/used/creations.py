@@ -31,6 +31,16 @@ class CreativePage(models.Model):
     model_class = models.CharField(max_length=50)
     # editors = models.ManyToManyField(User)
 
+    class Meta:
+        verbose_name = 'Rubrika'
+        verbose_name_plural = 'Rubriky'
+
+    def __str__(self):
+        return "Rubrika {}".format(
+            self.name,
+        )
+
+
 class CreativePageSection(models.Model):
     """ Section within a Creative Page """
     name = models.CharField(max_length=30)
@@ -39,7 +49,16 @@ class CreativePageSection(models.Model):
 class CreativePageConcept(models.Model):
     page = models.OneToOneField(CreativePage, on_delete=models.CASCADE)
     text = models.TextField()
-    
+
+    class Meta:
+        verbose_name = 'Koncept rubriky'
+        verbose_name_plural = 'Koncepty rubriky'
+
+    def __str__(self):
+        return "Koncept rubriky {}".format(
+            self.page.name,
+        )
+
 class Creation(models.Model):
     """
     Encapsulates common fields and actions for all creations. Please note:

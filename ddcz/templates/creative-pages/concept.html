@@ -1,0 +1,15 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+{% load pages %}
+
+{% block content %}
+<div id="page-common-article">
+    <h1 class="page-heading">{{ concept }}</h1>
+    <article>
+        <div class="content">
+            {{ concept.text|render_html|safe }}
+        </div>
+    </article>
+</div>
+{% endblock %}
