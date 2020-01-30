@@ -15,6 +15,7 @@ Universal domain names
 * Nickname = nick (always shortened)
 * Anotace = synopsis
 * Prispevek = Creation
+* Koncepce (rubriky) = Charter
 
 *****
 Pages
