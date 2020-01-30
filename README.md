@@ -60,6 +60,11 @@ You are done! Now you can just run the project and develop using
 
 *  `docker-compose start`
 
+Verify your application works and open `http://localhost:8000` (`localhost` may be a different host if you are not working on linux). If so, create yourself a superuser
+
+*  `docker-compose run web python3 manage.py createsuperuser`
+
+and then review content at `http://localhost:8000/admin/`
 
 ### Installing on your machine
 
