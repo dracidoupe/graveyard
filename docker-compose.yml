@@ -10,6 +10,8 @@ services:
   #     - MYSQL_DATABASE=ddcz
   db:
     image: mysql:5.5
+    volumes:
+      - .db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=docker
       - MYSQL_DATABASE=dracidoupe_cz

@@ -332,7 +332,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Běžné příspěvky',
                 'verbose_name_plural': 'Běžné příspěvky',
                 'db_table': 'prispevky_dlouhe',
-                'managed': False,
+                'managed': not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
