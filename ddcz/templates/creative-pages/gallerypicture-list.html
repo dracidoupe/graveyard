@@ -6,6 +6,9 @@
 {% block content %}
 <div id="page-common-article">
     <h1 class="page-heading">{{ heading }}</h1>
+    {% if user.is_authenticated and concept %}
+        <p><a href="{% url 'ddcz:creative-page-concept' creative_page_slug %}">{{ concept }}</a></p>
+    {% endif %}
 
     {% pagination articles %}
     <div>

@@ -10,7 +10,7 @@ from django.contrib import messages
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm
-from .models import CommonArticle, News, Dating, UserProfile, CreativePage
+from .models import CommonArticle, News, Dating, UserProfile, CreativePage, CreativePageConcept
 from .users import migrate_user
 
 VALID_SKINS = ['light', 'dark']
@@ -50,10 +50,16 @@ def creative_page_list(request, creative_page_slug):
 
     articles = paginator.get_page(page)
 
+    try:
+        concept = creative_page.creativepageconcept
+    except CreativePageConcept.DoesNotExist:
+        concept = None
+
     return render(request, 'creative-pages/%s-list.html' % model_class_name, {
         'heading': creative_page.name,
         'articles': articles,
         'creative_page_slug': creative_page.slug,
+        'concept': concept,
     })
 
 
@@ -75,6 +81,20 @@ def creation_detail(request, creative_page_slug, article_id, article_slug):
         'article': article,
         'creative_page_slug': creative_page_slug,
     })
+
+def creative_page_concept(request, creative_page_slug):
+    creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
+    try:
+        concept = creative_page.creativepageconcept
+    except CreativePageConcept.DoesNotExist:
+        raise Http404
+
+    return render(request, 'creative-pages/concept.html', {
+        'heading': creative_page.name,
+        'creative_page_slug': creative_page_slug,
+        'concept': concept,
+    })
+
 
 def dating(request):
 
