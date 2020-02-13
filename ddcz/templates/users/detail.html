@@ -3,6 +3,7 @@
 {% block content %}
 <div id="page-news">
     <h1 class="page-heading">{{ profile.nick_uzivatele }}</h1>
+    {% if profile.icon_url %}<p><img src="{{ profile.icon_url }}" alt="Ikonka uživatele"></p>{% endif %}
     <p><span class="label">Popis:</span> <span class="value">{{ profile.popis_uzivatele }}</span></p>
 </div>
 {% endblock %}

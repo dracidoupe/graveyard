@@ -79,6 +79,10 @@ nav.right {
     order: 2;
 }
 
+.nav_border .user_icon {
+  text-align: center;
+}
+
 A:visited {
     color : #ff8c00;
 }

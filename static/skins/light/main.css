@@ -99,6 +99,10 @@ body.light a:hover{
   color: red;
 }
 
+.nav_border .user_icon {
+  text-align: center;
+}
+
 .nav_border form {
   text-align: center;
 }

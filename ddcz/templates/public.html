@@ -162,6 +162,9 @@
                             {% if user.is_authenticated %}
                                 <div class="nick">{{ user.username }}</div>
                                 <div class="state">online</div>
+                                {% if user.profile.icon_url %}
+                                    <p class="user_icon"><img src="{{ user.profile.icon_url }}" alt="Ikonka uživatele"></p>
+                                {% endif %}
                                 <p class="stats">
                                     Hlasů: {{ user.profile.reputace_rozdel }} <br>
                                     Reputace: {{ user.profile.reputace }}

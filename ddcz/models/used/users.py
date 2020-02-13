@@ -1,4 +1,6 @@
+from urllib.parse import urljoin
 
+from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -52,7 +54,19 @@ class UserProfile(models.Model):
             #TODO: log an error
         return slug
 
+    def get_icon_url(self):
+        if not self.ikonka_uzivatele:
+            return None
+        else:
+            return urljoin(
+                settings.USER_ICON_MEDIA_ROOT_URL,
+                self.ikonka_uzivatele
+            )
+
+    icon_url = property(get_icon_url)
     slug = property(get_slug)
+
+
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

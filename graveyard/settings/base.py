@@ -118,3 +118,4 @@ STATICFILES_DIRS = [
 
 GALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/galerie/"
 PHOTOGALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/fotogalerie/"
+USER_ICON_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/ikonky/"
