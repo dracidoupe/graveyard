@@ -1,0 +1,8 @@
+{% extends 'public.html' %}
+{% load html %}
+{% block content %}
+<div id="page-news">
+    <h1 class="page-heading">{{ profile.nick_uzivatele }}</h1>
+    <p><span class="label">Popis:</span> <span class="value">{{ profile.popis_uzivatele }}</span></p>
+</div>
+{% endblock %}

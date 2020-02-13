@@ -195,3 +195,10 @@ def login(request):
 
             return HttpResponseRedirect(referer)
 
+def user_profile(request, user_profile_id, nick_slug):
+
+    user_profile = get_object_or_404(UserProfile, id=user_profile_id)
+    
+    return render(request, 'users/detail.html', {
+        'profile': user_profile,
+    })

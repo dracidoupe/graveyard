@@ -12,7 +12,16 @@
             <table>
                 <tr>
                     <th>Autor:</th>
-                    <td><a href="#" class="author" rel="author">{{ article.autor }}</a></td>
+                    <td>
+                        {% if article.author_profile %}
+                            <a
+                                href="{% url 'ddcz:user-detail' user_profile_id=article.author_profile.id nick_slug=article.author_profile.slug %}"
+                                class="author"
+                                rel="author">{{ article.autor }}</a>
+                        {% else %}
+                            Neznámý
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Přidáno:</th>

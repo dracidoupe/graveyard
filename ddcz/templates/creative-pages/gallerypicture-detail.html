@@ -13,7 +13,16 @@
         </p>
 
         <footer class="table-like">
-            <p><span class="label">Autor:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.autor }}</a></span></p>
+            <p><span class="label">Autor:</span> <span class="value">
+                {% if article.author_profile %}
+                    <a
+                        href="{% url 'ddcz:user-detail' user_profile_id=article.author_profile.id nick_slug=article.author_profile.slug %}"
+                        class="author"
+                        rel="author">{{ article.autor }}</a>
+                {% else %}
+                    Neznámý
+                {% endif %}    
+            </span></p>
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
         </footer>
     </article>

@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 from django.contrib.auth.models import User
 
+from ...text import create_slug
 from ..magic import MisencodedCharField, MisencodedTextField
 
 
@@ -44,7 +45,18 @@ class UserProfile(models.Model):
     class Meta:
         db_table = 'uzivatele'
 
+    def get_slug(self):
+        slug = create_slug(self.nick_uzivatele)
+        if not slug:
+            slug = 'neznamy'
+            #TODO: log an error
+        return slug
+
+    slug = property(get_slug)
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

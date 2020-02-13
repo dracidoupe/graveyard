@@ -7,13 +7,14 @@
 
 import re
 from urllib.parse import urljoin
-from unicodedata import normalize, combining
 
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 
+from ...text import create_slug
 from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
+from .users import UserProfile
 
 APPROVAL_CHOICES = (
     ('a', 'Schváleno'),
@@ -93,14 +94,17 @@ class Creation(models.Model):
     class Meta:
         abstract = True
 
+    def get_author_profile(self):
+        try:
+            return UserProfile.objects.get(nick_uzivatele=self.autor)
+        except UserProfile.DoesNotExist:
+            return
+
+    author_profile = property(get_author_profile)
+
+
     def get_slug(self):
-        # slug = normalize('NKFD', self.jmeno)
-        slug = normalize('NFD', self.jmeno)
-        slug = ''.join([ch for ch in slug if not combining(ch)]).lower()
-        slug = re.sub("[^a-z0-9]+", "-", slug)
-        slug = re.sub("^([^a-z0-9])+", "", slug)
-        slug = re.sub("([^a-z0-9]+)$", "", slug)
-        return slug
+        return create_slug(self.jmeno)
 
 ###
 # Handle all models that should work with all creations.
