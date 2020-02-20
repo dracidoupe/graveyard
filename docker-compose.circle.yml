@@ -15,10 +15,25 @@ services:
       - CIRCLECI=true
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
+      - "32768-65535"
     depends_on:
       - db
-    links:
-      - db:db
+      - chrome
 
+  selenium-hub:
+    image: selenium/hub:3.141.59-zirconium
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:3.141.59-zirconium
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444

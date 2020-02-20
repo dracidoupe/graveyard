@@ -7,3 +7,4 @@ bcrypt
 pytz
 pyyaml
 raven
+selenium

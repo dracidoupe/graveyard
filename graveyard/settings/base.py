@@ -119,3 +119,10 @@ STATICFILES_DIRS = [
 GALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/galerie/"
 PHOTOGALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/fotogalerie/"
 USER_ICON_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/ikonky/"
+
+# Hostname for selenium hub for tests. None means running locally
+SELENIUM_HUB_HOST = None
+# Hostname to which to browser run by selenium hub should connect to
+# If none, rely on default Django settings as we are running locally
+SELENIUM_PROJECT_HOST=None
+SELENIUM_IMPLICIT_WAIT = 10
