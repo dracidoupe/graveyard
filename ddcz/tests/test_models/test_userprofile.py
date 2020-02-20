@@ -1,8 +1,8 @@
-from unittest import TestCase
+from django.test import SimpleTestCase
 
 from ddcz.models import UserProfile
 
-class TestSlugGenerator(TestCase):
+class TestSlugGenerator(SimpleTestCase):
     def test_simple(self):
         a = UserProfile(nick_uzivatele='ahoj a hola')
         self.assertEquals('ahoj-a-hola', a.slug)
