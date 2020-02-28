@@ -2,8 +2,12 @@ from hashlib import md5
 
 from django.apps import apps
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
+from django.http import (
+    HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect,
+    HttpResponseBadRequest, HttpResponseServerError, Http404,
+)
 from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.urls import reverse
 
 from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
 from django.contrib import messages
@@ -71,10 +75,13 @@ def creation_detail(request, creative_page_slug, article_id, article_slug):
 
     article = get_object_or_404(model_class, id=article_id)
     if article.get_slug() != article_slug:
-        raise NotImplementedError()
-        # TODO: reverse url search in view
-        # raise HttpResponseRedirect()
-
+        return HttpResponsePermanentRedirect(
+            reverse('ddcz:common-article-detail', kwargs={
+                'creative_page_slug': creative_page_slug,
+                'article_id': article.pk,
+                'article_slug': article.get_slug(),
+            })
+        )
 
     return render(request, 'creative-pages/%s-detail.html' % model_class_name, {
         'heading': creative_page.name,

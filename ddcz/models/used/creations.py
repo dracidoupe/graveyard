@@ -21,6 +21,8 @@ APPROVAL_CHOICES = (
     ('n', 'Neschváleno'),
 )
 
+EMPTY_SLUG_PLACEHOLDER = 'dilo'
+
 ###
 # Introduce an umbrella model for all Creations
 ###
@@ -104,7 +106,8 @@ class Creation(models.Model):
 
 
     def get_slug(self):
-        return create_slug(self.jmeno)
+        slug = create_slug(self.jmeno)
+        return slug or EMPTY_SLUG_PLACEHOLDER
 
 ###
 # Handle all models that should work with all creations.
