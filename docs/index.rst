@@ -38,7 +38,7 @@ It assumes you have local working copy of the site. If not, follow installation 
     migration
     design
     dictionary
-    production
+    infrastructure
 
 
 
