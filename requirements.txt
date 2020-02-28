@@ -7,4 +7,5 @@ bcrypt
 pytz
 pyyaml
 raven
+sentry-sdk>=0.14.1
 selenium

@@ -34,6 +34,19 @@ RAVEN_CONFIG = {
     'dsn': 'https://xoxo:xixi@sentry.io/12345678',
 }
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://xoxo@sentry.io/12345678",
+    integrations=[DjangoIntegration()],
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=False
+)
+
+
 # Security settings
 X_FRAME_OPTIONS="DENY"
 CSRF_COOKIE_SECURE=True
