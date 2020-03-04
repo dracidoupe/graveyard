@@ -143,7 +143,6 @@ class CommonArticle(Creation):
     rubrika = MisencodedCharField(max_length=30)
 
     class Meta:
-        managed = False
         db_table = 'prispevky_dlouhe'
         verbose_name = 'Běžné příspěvky'
         verbose_name_plural = 'Běžné příspěvky'
