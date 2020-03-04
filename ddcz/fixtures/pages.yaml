@@ -82,3 +82,10 @@
     name: Fotogalerie
     slug: fotogalerie
     model_class: ddcz.photo
+
+- model: ddcz.creativepage
+  pk: 13
+  fields:
+    name: Hřbitov
+    slug: hrbitov
+    model_class: ddcz.commonarticle
