@@ -93,5 +93,4 @@ class LevelSystemParams(models.Model):
     hodnota = models.CharField(max_length=30)
 
     class Meta:
-        managed = False
         db_table = 'level_parametry_2'
