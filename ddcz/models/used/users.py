@@ -89,8 +89,8 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 class LevelSystemParams(models.Model):
-    parametr = models.CharField(primary_key=True, max_length=40)
-    hodnota = models.CharField(max_length=30)
+    parametr = MisencodedCharField(primary_key=True, max_length=40)
+    hodnota = MisencodedCharField(max_length=30)
 
     class Meta:
         db_table = 'level_parametry_2'
