@@ -83,7 +83,7 @@ class Creation(models.Model):
     autmail = MisencodedCharField(max_length=50, blank=True, null=True)
     schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES)
     zdroj = MisencodedTextField(blank=True, null=True)
-    zdrojmail = MisencodedCharField(max_length=30, blank=True, null=True)
+    zdrojmail = MisencodedTextField(blank=True, null=True)
     pocet_hlasujicich = models.IntegerField(blank=True, null=True)
     hodnota_hlasovani = models.IntegerField(blank=True, null=True)
     pochvez = MisencodedIntegerField(max_length=5)
