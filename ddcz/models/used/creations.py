@@ -224,8 +224,8 @@ class GalleryPicture(Creation):
 
 class Photo(Creation):
     """ See GalleryPicture; just part of different Creation Page """
-    cesta = models.TextField()
-    cestathumb = models.TextField()
+    cesta = MisencodedTextField()
+    cestathumb = MisencodedTextField()
 
     class Meta:
         db_table = 'fotogalerie'
