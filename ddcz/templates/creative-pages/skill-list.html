@@ -1,0 +1,48 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+{% load pages %}
+
+{% block content %}
+<div>
+    <h1 class="page-heading">{{ heading }}</h1>
+    {% if user.is_authenticated and concept %}
+        <p><a href="{% url 'ddcz:creative-page-concept' creative_page_slug %}">{{ concept }}</a></p>
+    {% endif %}
+
+    {% pagination articles %}
+
+    <ul class="article-list">
+    {% for a in articles %}
+        <li class="creation-detail">
+            <h2><a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <div class="table-like">
+                <p><span class="label">Autor:</span> <span class="value">
+                    {% if a.author_profile %}
+                        <a
+                            href="{% url 'ddcz:user-detail' user_profile_id=a.author_profile.id nick_slug=a.author_profile.slug %}"
+                            class="author"
+                            rel="author">{{ a.autor }}</a>
+                    {% else %}
+                        Neznámý
+                    {% endif %}
+                </span></p>
+                {% if a.vlastnost %}
+                    <p><span class="label">Vlastnost:</span> <span class="value">{{ a.vlastnost }}</span></p>
+                {% endif %}
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+                <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
+                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
+
+                <!--
+                <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
+                -->
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% pagination articles %}
+
+</div>
+{% endblock %}

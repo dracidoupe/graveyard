@@ -1,0 +1,53 @@
+{% extends 'public.html' %}
+{% load html %}
+{% block content %}
+<div id="page-article-detail">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <article>
+        <header>
+            <h2>{{ article.jmeno }}</h2>
+            <!-- TODO
+            <p>Příprava pro tisk</p>
+            -->
+        </header>
+        <div class="content table-like">
+            {% if article.vlastnost %}
+                <p><span class="label">Vlastnost:</span> <span class="value">{{ article.vlastnost }}</span></p>
+            {% endif %}
+            {% if article.obtiznost %}
+                <p><span class="label">Obtížnost:</span> <span class="value">{{ article.obtiznost }}</span></p>
+            {% endif %}
+            {% if article.overovani %}
+                <p><span class="label">Ověřování:</span> <span class="value">{{ article.overovani }}</span></p>
+            {% endif %}
+            {% if article.totuspech %}
+                <p><span class="label">Totální úspěch:</span> <span class="value">{{ article.totuspech }}</span></p>
+            {% endif %}
+            {% if article.uspech %}
+                <p><span class="label">Úspěch:</span> <span class="value">{{ article.uspech }}</span></p>
+            {% endif %}
+            {% if article.neuspech %}
+                <p><span class="label">Neúspěch:</span> <span class="value">{{ article.neuspech }}</span></p>
+            {% endif %}
+            {% if article.fatneuspech %}
+                <p><span class="label">Fatální neúspěch:</span> <span class="value">{{ article.fatneuspech }}</span></p>
+            {% endif %}
+            <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.popis|render_html|safe }}</div></div>
+        </div>
+        <footer class="table-like">
+            <p><span class="label">Autor:</span> <span class="value">                        {% if article.author_profile %}
+                <a
+                    href="{% url 'ddcz:user-detail' user_profile_id=article.author_profile.id nick_slug=article.author_profile.slug %}"
+                    class="author"
+                    rel="author">{{ article.autor }}</a>
+            {% else %}
+                Neznámý
+            {% endif %}
+            </span></p>
+            <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H.i" }}</time></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+        </footer>
+    </article>
+
+</div>
+{% endblock %}

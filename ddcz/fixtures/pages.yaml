@@ -89,3 +89,10 @@
     name: Hřbitov
     slug: hrbitov
     model_class: ddcz.commonarticle
+
+- model: ddcz.creativepage
+  pk: 14
+  fields:
+    name: Dovednosti
+    slug: dovednosti
+    model_class: ddcz.skill

@@ -22,6 +22,12 @@
     clear: both;
 }
 
+/* Creative Pages details */
+
+article header .label {
+    font-weight: bold;
+}
+
 /* Styling for main section of creations */
 
 .creation-detail {
@@ -48,7 +54,7 @@
     display: table-cell;
 }
 
-.table-like p {
+.table-like > p, .table-like .description-row {
     display: table-row;
 }
 
