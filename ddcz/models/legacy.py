@@ -275,36 +275,6 @@ class Dobrodruzstvi(models.Model):
         managed = False
         db_table = 'dobrodruzstvi'
 
-
-class Dovednosti(models.Model):
-    jmeno = models.TextField()
-    vlastnost = models.TextField()
-    obtiznost = models.TextField()
-    overovani = models.TextField()
-    totuspech = models.TextField()
-    uspech = models.TextField()
-    neuspech = models.TextField()
-    fatneuspech = models.TextField()
-    popis = models.TextField()
-    autor = models.TextField()
-    autmail = models.TextField()
-    zdroj = models.TextField()
-    zdrojmail = models.TextField()
-    schvaleno = models.CharField(max_length=1)
-    datum = models.DateTimeField()
-    tisknuto = models.PositiveIntegerField()
-    pochvez = models.CharField(max_length=1)
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-    hlasoval = models.TextField(blank=True, null=True)
-    precteno = models.IntegerField()
-    skupina = models.CharField(max_length=30)
-
-    class Meta:
-        managed = False
-        db_table = 'dovednosti'
-
-
 class Downloady(models.Model):
     jmeno = models.TextField()
     cesta = models.TextField(blank=True, null=True)

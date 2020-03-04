@@ -240,3 +240,21 @@ class Photo(Creation):
             settings.PHOTOGALLERY_MEDIA_ROOT_URL,
             self.cesta
         )
+
+
+class Skill(Creation):
+    vlastnost = MisencodedTextField()
+    obtiznost = MisencodedTextField()
+    overovani = MisencodedTextField()
+    totuspech = MisencodedTextField()
+    uspech = MisencodedTextField()
+    neuspech = MisencodedTextField()
+    fatneuspech = MisencodedTextField()
+    popis = MisencodedTextField()
+    skupina = MisencodedCharField(max_length=30)
+    # TODO: No idea what this is used for, potentially drop
+    hlasoval = MisencodedTextField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'dovednosti'
+
