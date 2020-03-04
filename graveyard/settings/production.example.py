@@ -29,12 +29,6 @@ STATIC_ROOT = '/var/www/dracidoupe.cz/www_root/static/htdocs/'
 
 STATIC_URL = 'https://static.dracidoupe.cz/'
 
-import raven
-
-RAVEN_CONFIG = {
-    'dsn': 'https://xoxo:xixi@sentry.io/12345678',
-}
-
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
