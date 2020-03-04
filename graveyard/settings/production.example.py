@@ -7,6 +7,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dracidoupe_cz',
+        'CONN_MAX_AGE': 60,
         'OPTIONS': {
             'charset': 'latin2'
         }
