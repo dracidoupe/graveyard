@@ -8,4 +8,3 @@ pytz
 pyyaml
 sentry-sdk>=0.14.1
 selenium
-django-heroku
