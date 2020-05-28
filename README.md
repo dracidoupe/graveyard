@@ -4,6 +4,8 @@ Graveyard is an attempt at open-source reimplementation of [DraciDoupe.cz](https
 
 Developer's documentation is [at Read the Docs](https://ddcz.readthedocs.io/en/latest/). 
 
+Production will be running at http://nove.dracidoupe.cz/
+
 ## Contributions
 
 Contributions are welcome provided you agree your work will be shared under the same license as Graveyard (MIT).
