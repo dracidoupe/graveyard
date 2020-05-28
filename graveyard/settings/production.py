@@ -1,12 +1,26 @@
+import os
+
+DEBUG = False
+
+# This assumes the following environ vars to be configured:
+# DJANGO_SECRET_KEY
+# SENTRY_DSN
+# DB_NAME
+# DB_USERNAME
+# DB_PASSWORD
+# DB_PORT
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xoxo, but longer and on production'
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 DATABASE_IS_SEEDED = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dracidoupe_cz',
+        'NAME': os.environ['DB_NAME'], # original: dracidoupe_cz
+        'USER': os.environ['DB_USERNAME'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'PORT': os.environ['DB_PORT'],
         'CONN_MAX_AGE': 60,
         'OPTIONS': {
             'charset': 'latin2'
@@ -25,15 +39,15 @@ WSGI_APPLICATION = 'graveyard.wsgi.application'
 
 ALLOWED_HOSTS = ['nove.dracidoupe.cz']
 
-STATIC_ROOT = '/var/www/dracidoupe.cz/www_root/static/htdocs/'
-
+# FIXME: Migrate to whitenoise
+STATIC_ROOT = '/tmp/'
 STATIC_URL = 'https://static.dracidoupe.cz/'
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
-    dsn="https://xoxo@sentry.io/12345678",
+    dsn=os.environ['SENTRY_DSN'],
     integrations=[DjangoIntegration()],
 
     # If you wish to associate users to errors (assuming you are using

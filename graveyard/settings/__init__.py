@@ -2,15 +2,19 @@ import os
 
 from .base import *
 
-if 'CIRCLECI' in os.environ and os.environ['CIRCLECI'] == "true":
+if os.environ.get('CIRCLECI', False) == "true":
     print('CircleCI environment detected, importing circle settings...')
     from .circle import *
 
-try:
+
+runtime = os.environ.get('ENVIRONMENT', "local")
+
+if runtime == "production":
     from .production import *
-except ImportError:
+elif runtime == "local":
     try:
         from .local import *
     except ImportError:
         pass
-
+else:
+    raise ValueError("ENVIRONMENT (if set) should be set to 'production' or 'local'")
