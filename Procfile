@@ -1,1 +1,1 @@
-web: gunicorn graveyard.wsgi.application
+web: gunicorn graveyard.wsgi
