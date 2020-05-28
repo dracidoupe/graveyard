@@ -8,6 +8,7 @@ DEBUG = False
 # DB_NAME
 # DB_USERNAME
 # DB_PASSWORD
+# DB_HOST
 # DB_PORT
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -17,6 +18,7 @@ DATABASE_IS_SEEDED = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'HOST': os.environ['DB_HOST'],
         'NAME': os.environ['DB_NAME'], # original: dracidoupe_cz
         'USER': os.environ['DB_USERNAME'],
         'PASSWORD': os.environ['DB_PASSWORD'],
