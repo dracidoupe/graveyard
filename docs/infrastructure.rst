@@ -22,6 +22,17 @@ Graveyard is not yet intended to be universally installable, but it plans to be.
 Configuration
 -------------
 
+The application assumes following environment variables to be set in production (see settings directory for more info):
+
+* DJANGO_SECRET_KEY
+* SENTRY_DSN
+* DB_NAME
+* DB_USERNAME
+* DB_PASSWORD
+* DB_HOST
+* DB_PORT
+
+THE FOLLOWING IS LIKELY DEPRECATED:
 * Production code is currently copied into a directory (let's call it appdir)
 * In appdir's parent directory, ``production.py`` is assumed. That should contain all configuration directives from production's example file, but with correct secrets
 
