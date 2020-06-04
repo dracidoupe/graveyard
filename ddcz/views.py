@@ -1,4 +1,5 @@
 from hashlib import md5
+import logging
 
 from django.apps import apps
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -10,12 +11,16 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.urls import reverse
 
 from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
+from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm
 from .models import CommonArticle, News, Dating, UserProfile, CreativePage, CreativePageConcept
 from .users import migrate_user
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 VALID_SKINS = ['light', 'dark']
 DEFAULT_LIST_SIZE = 5
@@ -201,6 +206,30 @@ def login(request):
             #TODO: For first-time login, bunch of stuff happens. Inspect legacy login and reimplement
 
             return HttpResponseRedirect(referer)
+
+def password_reset(request):
+    if request.method == 'GET':
+        form = PasswordResetForm()
+    elif request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            try:
+                user = UserProfile.objects.get(
+                    email_uzivatele=form.cleaned_data['email']
+                )
+                form.save()
+                logger.info("Send password reset link to %s" % form.cleaned_data['email'])
+            except UserProfile.DoesNotExist:
+                logger.info("Not sending password reset for invalid email %s" % form.data['email'])
+            
+            messages.add_message(request, messages.SUCCESS, 'Pokud je e-mail platný, odeslali jsme na něj odkaz pro reset hesla.')
+
+    else:
+        return HttpResponseBadRequest("Use GET or POST")
+
+    return render(request, 'users/password-reset.html', {
+        'password_reset_form': form,
+    })
 
 def user_profile(request, user_profile_id, nick_slug):
 

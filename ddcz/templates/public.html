@@ -183,7 +183,7 @@
                                     {{ login_form }}
                                     <input type="submit" value="Přihlásit">
                                 </form>
-                                <p>Zapomněl jsem heslo</p>
+                                <p><a href="{% url 'ddcz:password-reset' %}">Zapomněl jsem heslo</a></p>
                             {% endif %}
                             </div>
                         </li>

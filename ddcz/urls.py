@@ -17,5 +17,6 @@ urlpatterns = [
     path('nastaveni/zmena-skinu/', views.change_skin, name='change-skin'),
     path('uzivatel/prihlaseni/', views.login, name='login-action'),
     path('uzivatel/odhlaseni/', views.logout, name='logout-action'),
+    path('uzivatel/reset-hesla/', views.password_reset, name='password-reset'),
     path('uzivatel/<int:user_profile_id>-<nick_slug>/', views.user_profile, name='user-detail'),
 ]
