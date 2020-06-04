@@ -60,6 +60,12 @@ sentry_sdk.init(
     send_default_pii=False
 )
 
+# Production way of sending email
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.getenv('SENDGRID_USERNAME', '')
+EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY', '')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Security settings
 X_FRAME_OPTIONS="DENY"
