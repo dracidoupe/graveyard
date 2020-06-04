@@ -1,4 +1,5 @@
 import os
+from .base import BASE_DIR
 
 DEBUG = False
 
@@ -42,8 +43,10 @@ WSGI_APPLICATION = 'graveyard.wsgi.application'
 ALLOWED_HOSTS = ['nove.dracidoupe.cz']
 
 # FIXME: Migrate to whitenoise
-STATIC_ROOT = '/tmp/'
-STATIC_URL = 'https://static.dracidoupe.cz/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'http://nove.dracidoupe.cz/staticfiles/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
