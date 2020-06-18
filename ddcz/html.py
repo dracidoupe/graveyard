@@ -4,8 +4,12 @@ Strings are stored with all HTML special character encoded to entities and
 has to be decoded on output into presentation layer. This module helps with
 both.
 
-For code archeologists, this roughly satisfies requirements of `funkceHTML.php`
+For code archeologists, this roughly satisfies requirements of `funkceHTML.php`.
+`unsafe_encode_valid_creation_html` on the other hand, handles `funkce.php` requirements
+
 """
+
+import re
 
 # Attributes refer to whitelisted attributes
 # Pair refers to whether tag requires corresponding and well-nested closing tag
@@ -74,6 +78,42 @@ RIGHT_ENTITY = "&gt;"
 MAX_LOOKAHEAD_FROM_LEFT = max(list(map(len, WHITELISTED_TAGS_LIST))) + len(RIGHT_ENTITY)
 
 MAX_ATTRIBUTE_LENGTH = 100
+
+def unsafe_encode_valid_creation_html(entity_string):
+    """
+    Takes string with HTML entities and naively turn all whitelisted
+    encoded HTML tags into their unencoded version. 
+
+    DOESN'T check for tag parity and doesn't accept any attributes.
+
+    Use only for CreationPages text that went through admin review
+    """
+
+    for tag in WHITELISTED_TAGS:
+        if WHITELISTED_TAGS[tag].get('pair', True):
+            entity_string = re.sub(
+                LEFT_ENTITY+tag+RIGHT_ENTITY,
+                '<'+tag+'>',
+                entity_string,
+                flags=re.I
+            )
+
+            entity_string = re.sub(
+                LEFT_ENTITY+'/'+tag+RIGHT_ENTITY,
+                '</'+tag+'>',
+                entity_string,
+                flags=re.I
+            )
+
+        else:
+            entity_string = re.sub(
+                LEFT_ENTITY+tag+'(\ )?(/)?'+RIGHT_ENTITY,
+                '<'+tag+'>',
+                entity_string,
+                flags=re.I
+            )
+
+    return entity_string
 
 def encode_valid_html(entity_string):
     """
