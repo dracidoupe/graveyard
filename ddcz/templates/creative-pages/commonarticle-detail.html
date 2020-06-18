@@ -36,7 +36,7 @@
         </header>
 
         <div class="content">
-            {{ article.text|render_html|safe }}
+            {{ article.text|render_html_insecurely|safe }}
         </div>
         <footer>
             

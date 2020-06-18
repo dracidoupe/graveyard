@@ -32,7 +32,7 @@
             {% if article.fatneuspech %}
                 <p><span class="label">Fatální neúspěch:</span> <span class="value">{{ article.fatneuspech }}</span></p>
             {% endif %}
-            <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.popis|render_html|safe }}</div></div>
+            <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></div>
         </div>
         <footer class="table-like">
             <p><span class="label">Autor:</span> <span class="value">                        {% if article.author_profile %}
