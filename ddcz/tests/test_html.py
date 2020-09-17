@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+from django.template import Context, Template
+
 from ddcz.html import encode_valid_html, unsafe_encode_valid_creation_html
 
 class TestHtmlRender(TestCase):
@@ -93,3 +95,28 @@ class TestUnsafeHtmlRender(TestCase):
         s = "text that has been &lt;BR /&gt;breaked"
         exp = "text that has been <br>breaked"
         self.assert_output(s, exp)
+
+    def test_empty_link(self):
+        s = "text with &lt;a&gt;empty link&lt;/a&gt;"
+        exp = "text with <a>empty link</a>"
+        self.assert_output(s, exp)
+
+    def test_empty_link_in_heading(self):
+        s = "&lt;h2&gt;&lt;a&gt;Mnich&lt;/a&gt;&lt;/h2&gt;"
+        exp = "<h2><a>Mnich</a></h2>"
+        self.assert_output(s, exp)
+
+
+class TestUnsafeHtmlRenderTemplate(TestCase):
+    def assert_output(self, entity_string, expected, template_str):
+        template = Template(template_str)
+        output = template.render(Context({
+            'entity_string' : entity_string
+        }))
+        self.assertEqual(expected, output)
+
+    def test_easy_template(self):
+        entity_string = "&lt;h2&gt;&lt;a&gt;Mnich&lt;/a&gt;&lt;/h2&gt;"
+        exp = "<h2><a>Mnich</a></h2>"
+        t = "{% load html %}{{ entity_string|render_html_insecurely|safe }}"
+        self.assert_output(entity_string, exp, t)
