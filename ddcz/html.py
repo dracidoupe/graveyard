@@ -81,6 +81,11 @@ MAX_ATTRIBUTE_LENGTH = 100
 
 def unsafe_encode_valid_creation_html(entity_string):
     """
+    ###
+    DEPRECATED: Doesn't do attributes properly. May be used as an transition
+    function when cleaning up source on original site.
+    ###
+
     Takes string with HTML entities and naively turn all whitelisted
     encoded HTML tags into their unencoded version. 
 
@@ -90,9 +95,16 @@ def unsafe_encode_valid_creation_html(entity_string):
     """
 
     for tag in WHITELISTED_TAGS:
+        if WHITELISTED_TAGS[tag].get('attributes', False):
+            tag_start_regexp_string = tag
+            for attr in WHITELISTED_TAGS[tag]['attributes']:
+                tag_start_regexp_string += r'(\ ' + attr + r'=\&quot;\S\&quot;)?'
+        else:
+            tag_start_regexp_string = tag
+
         if WHITELISTED_TAGS[tag].get('pair', True):
             entity_string = re.sub(
-                LEFT_ENTITY+tag+RIGHT_ENTITY,
+                LEFT_ENTITY+tag_start_regexp_string+RIGHT_ENTITY,
                 '<'+tag+'>',
                 entity_string,
                 flags=re.I
@@ -107,13 +119,59 @@ def unsafe_encode_valid_creation_html(entity_string):
 
         else:
             entity_string = re.sub(
-                LEFT_ENTITY+tag+'(\ )?(/)?'+RIGHT_ENTITY,
+                LEFT_ENTITY+tag_start_regexp_string+'(\ )?(/)?'+RIGHT_ENTITY,
                 '<'+tag+'>',
                 entity_string,
                 flags=re.I
             )
 
     return entity_string
+
+
+def unsafe_encode_any_creation_html(entity_string):
+    """
+    VERY INSECURE AND SHOULD BE REPLACED AS SOON AS THE ORIGINAL VERSION IS GONE
+
+    Temporary replacement for this function used in original site:
+
+        function replace_tags($text){
+            $text=ereg_replace("&quot;", "\"", $text);
+            $text=ereg_replace("&lt;", "<", $text);
+            $text=ereg_replace("&gt;",">", $text);
+            //$text=strip_tags($text,"<UL><LI><OL><B><STRONG><BIG><EM><I><P><BR><TABLE><TR><TD><IMG><CENTER><FONT><TH><CAPTION><HR><A><H1><H2><H3><H4><H5><SUP>");
+            $text=ereg_replace("&amp;nbsp;","&nbsp;", $text);
+            echo $text;
+        }
+
+    This function relied on proper HTML editorial review.
+    """
+
+    entity_string = re.sub(
+        r"\&quot\;",
+        "\"",
+        entity_string
+    )
+
+    entity_string = re.sub(
+        LEFT_ENTITY,
+        "<",
+        entity_string
+    )
+
+    entity_string = re.sub(
+        RIGHT_ENTITY,
+        ">",
+        entity_string
+    )
+
+    entity_string = re.sub(
+        r"\&amp\;nbsp\;",
+        "&nbsp;",
+        entity_string
+    )
+
+    return entity_string
+
 
 def encode_valid_html(entity_string):
     """

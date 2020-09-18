@@ -1,6 +1,6 @@
 from django import template
 
-from ..html import encode_valid_html, unsafe_encode_valid_creation_html
+from ..html import encode_valid_html, unsafe_encode_any_creation_html
 
 register = template.Library()
 
@@ -10,6 +10,6 @@ def render_html(value):
 register.filter('render_html', render_html)
 
 def render_html_insecurely(value):
-    return unsafe_encode_valid_creation_html(value)
+    return unsafe_encode_any_creation_html(value)
 
-register.filter('render_html_insecurely', unsafe_encode_valid_creation_html)
+register.filter('render_html_insecurely', render_html_insecurely)
