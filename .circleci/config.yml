@@ -6,7 +6,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.1
+      - image: circleci/python:3.6.11
       - image: circleci/mysql:5.5
       
     working_directory: ~/repo
