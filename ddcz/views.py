@@ -11,9 +11,9 @@ from django.http import (
     HttpResponseBadRequest, HttpResponseServerError, Http404,
 )
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
-from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
+from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth, views as authviews
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
 
@@ -210,42 +210,14 @@ def login(request):
 
             return HttpResponseRedirect(referer)
 
-def password_reset(request):
-    if request.method == 'GET':
-        form = PasswordResetForm()
-    elif request.method == 'POST':
-        form = PasswordResetForm(request.POST)
-        if form.is_valid():
-            try:
-                user = UserProfile.objects.get(
-                    email_uzivatele=form.cleaned_data['email']
-                )
-                form.save()
+class PasswordResetView(authviews.PasswordResetView):
+     template_name = 'users/password-reset.html'
+     success_url = reverse_lazy('ddcz:password-reset-done')
+     from_email = settings.DDCZ_TRANSACTION_EMAIL_FROM
 
-                send_mail(
-                    'Reset hesla',
-                    'Password reset link: TODO',
-                    settings.DDCZ_TRANSACTION_EMAIL_FROM,
-                    [form.cleaned_data['email']],
-                    fail_silently=settings.EMAIL_FAIL_SILENTLY,
-                )
+class PasswordResetDoneView(authviews.PasswordResetDoneView):
+     template_name = 'users/password-reset-done.html'
 
-                #TODO: GDPR, obfuscate e-mail
-                logger.info("Send password reset link to %s" % form.cleaned_data['email'])
-            except UserProfile.DoesNotExist:
-                logger.info("Not sending password reset for invalid email %s" % form.data['email'])
-            except SMTPException as e:
-                logger.exception("Error when sending email %s:" % form.data['email'], e)
-
-            # We don't want to disclose if email does exist, so send the success message even for failures            
-            messages.add_message(request, messages.SUCCESS, 'Pokud je e-mail platný, odeslali jsme na něj odkaz pro reset hesla.')
-
-    else:
-        return HttpResponseBadRequest("Use GET or POST")
-
-    return render(request, 'users/password-reset.html', {
-        'password_reset_form': form,
-    })
 
 def user_profile(request, user_profile_id, nick_slug):
 

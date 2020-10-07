@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic.base import RedirectView
 
+
 from . import views
 
 app_name='ddcz'
@@ -17,6 +18,7 @@ urlpatterns = [
     path('nastaveni/zmena-skinu/', views.change_skin, name='change-skin'),
     path('uzivatel/prihlaseni/', views.login, name='login-action'),
     path('uzivatel/odhlaseni/', views.logout, name='logout-action'),
-    path('uzivatel/reset-hesla/', views.password_reset, name='password-reset'),
+    path('uzivatel/reset-hesla/', views.PasswordResetView.as_view(), name='password-reset'),
+    path('uzivatel/reset-hesla/hotovo/', views.PasswordResetDoneView.as_view(), name='password-reset-done'),
     path('uzivatel/<int:user_profile_id>-<nick_slug>/', views.user_profile, name='user-detail'),
 ]
