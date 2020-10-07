@@ -2,8 +2,9 @@
 Django settings for DDCZ project.
 """
 
-import os
+import os, os.path
 import sys
+from tempfile import gettempdir, mkdtemp
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
@@ -127,6 +128,22 @@ if ENVIRONMENT == "production":
     EMAIL_FAIL_SILENTLY = False
 else:
     EMAIL_FAIL_SILENTLY = True
+
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    
+    maildir = os.path.join(gettempdir(), 'ddcz-devserver-emails')
+    if not os.path.exists(maildir):
+        try:
+            os.mkdir(maildir)
+        except BaseException:
+            maildir = None
+    elif not os.access(maildir, os.W_OK):
+        maildir = None
+
+    if not maildir:
+        maildir = mkdtemp(prefix='ddcz-devserver-emails-')
+
+    EMAIL_FILE_PATH = maildir
 
 
 # Hostname for selenium hub for tests. None means running locally

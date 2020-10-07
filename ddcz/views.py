@@ -211,12 +211,20 @@ def login(request):
             return HttpResponseRedirect(referer)
 
 class PasswordResetView(authviews.PasswordResetView):
-     template_name = 'users/password-reset.html'
-     success_url = reverse_lazy('ddcz:password-reset-done')
-     from_email = settings.DDCZ_TRANSACTION_EMAIL_FROM
+    template_name = 'users/password-reset.html'
+    success_url = reverse_lazy('ddcz:password-reset-done')
+    from_email = settings.DDCZ_TRANSACTION_EMAIL_FROM
+    email_template_name = 'users/password-reset-email.html'
 
 class PasswordResetDoneView(authviews.PasswordResetDoneView):
-     template_name = 'users/password-reset-done.html'
+    template_name = 'users/password-reset-done.html'
+
+class PasswordResetConfirmView(authviews.PasswordResetConfirmView):
+    template_name = 'users/password-change.html'
+    success_url = reverse_lazy('ddcz:password-change-done')
+
+class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
+    template_name = 'users/password-change-done.html'
 
 
 def user_profile(request, user_profile_id, nick_slug):
