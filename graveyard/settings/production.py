@@ -66,7 +66,7 @@ EMAIL_PORT = os.environ.get('MAILGUN_SMTP_PORT', '')
 EMAIL_HOST_USER = os.environ.get('MAILGUN_SMTP_LOGIN', '')
 EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD', '')
 EMAIL_USE_TLS = True
-
+DDCZ_TRANSACTION_EMAIL_FROM = os.environ.get('DDCZ_TRANSACTION_EMAIL_FROM', 'noreply@example.com')
 
 # Security settings
 X_FRAME_OPTIONS="DENY"

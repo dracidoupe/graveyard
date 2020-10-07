@@ -1,7 +1,10 @@
 from hashlib import md5
 import logging
+from smtplib import SMTPException 
 
 from django.apps import apps
+from django.conf import settings
+from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import (
     HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect,
@@ -218,10 +221,23 @@ def password_reset(request):
                     email_uzivatele=form.cleaned_data['email']
                 )
                 form.save()
+
+                send_mail(
+                    'Reset hesla',
+                    'Password reset link: TODO',
+                    settings.DDCZ_TRANSACTION_EMAIL_FROM,
+                    [form.cleaned_data['email']],
+                    fail_silently=settings.EMAIL_FAIL_SILENTLY,
+                )
+
+                #TODO: GDPR, obfuscate e-mail
                 logger.info("Send password reset link to %s" % form.cleaned_data['email'])
             except UserProfile.DoesNotExist:
                 logger.info("Not sending password reset for invalid email %s" % form.data['email'])
-            
+            except SMTPException as e:
+                logger.exception("Error when sending email %s:" % form.data['email'], e)
+
+            # We don't want to disclose if email does exist, so send the success message even for failures            
             messages.add_message(request, messages.SUCCESS, 'Pokud je e-mail platný, odeslali jsme na něj odkaz pro reset hesla.')
 
     else:

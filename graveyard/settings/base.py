@@ -8,6 +8,7 @@ import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
 
+ENVIRONMENT = os.environ.get('ENVIRONMENT', "local")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -119,6 +120,14 @@ STATICFILES_DIRS = [
 GALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/galerie/"
 PHOTOGALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/fotogalerie/"
 USER_ICON_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/ikonky/"
+
+# Which email address we are sending transaction emails from
+DDCZ_TRANSACTION_EMAIL_FROM = 'noreply@example.com'
+if ENVIRONMENT == "production":
+    EMAIL_FAIL_SILENTLY = False
+else:
+    EMAIL_FAIL_SILENTLY = True
+
 
 # Hostname for selenium hub for tests. None means running locally
 SELENIUM_HUB_HOST = None
