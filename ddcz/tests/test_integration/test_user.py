@@ -33,4 +33,4 @@ class PasswordResetTestCase(TestCase):
             'email': self.valid_email
         })
 
-        self.assertEquals(200, res.status_code)
+        self.assertEquals(302, res.status_code)
