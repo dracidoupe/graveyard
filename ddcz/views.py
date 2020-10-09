@@ -18,7 +18,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
-from .forms import LoginForm
+from .forms import LoginForm, PasswordResetForm
 from .models import CommonArticle, News, Dating, UserProfile, CreativePage, CreativePageConcept
 from .users import migrate_user
 
@@ -215,6 +215,8 @@ class PasswordResetView(authviews.PasswordResetView):
     success_url = reverse_lazy('ddcz:password-reset-done')
     from_email = settings.DDCZ_TRANSACTION_EMAIL_FROM
     email_template_name = 'users/password-reset-email.html'
+    form_class = PasswordResetForm
+
 
 class PasswordResetDoneView(authviews.PasswordResetDoneView):
     template_name = 'users/password-reset-done.html'
