@@ -1,7 +1,11 @@
+import logging
+
 from django import forms
 from django.contrib.auth import forms as authforms
 
 from .models import UserProfile
+
+logger = logging.getLogger(__name__)
 
 
 class LoginForm(forms.Form):
@@ -20,7 +24,13 @@ class PasswordResetForm(authforms.PasswordResetForm):
             email_uzivatele__iexact = email
         )
 
-        return (
+        users = tuple(list(
             up.user for up in user_profiles 
             if up.user.has_usable_password() and up.user.is_active
-        )
+        ))
+
+        logger.info("Selected users for password reset: %s" % ', '.join([
+            str(u.pk) for u in users
+        ]))
+
+        return users

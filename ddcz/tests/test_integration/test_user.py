@@ -1,5 +1,6 @@
 from django.test import Client, TestCase
 
+from django.core import mail
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -12,11 +13,11 @@ class PasswordResetTestCase(TestCase):
         super().setUp()
         self.client = Client()
 
-        self.valid_password = 'xoxo'
+        self.valid_password = 'c1QoUGFss5K6ozi'
         self.valid_email = 'test@example.com'
         self.nick = 'integration test user'
 
-        self.valid_user = User.objects.create(
+        self.valid_user = User.objects.create_user(
             username = self.nick,
             password = self.valid_password
         )
@@ -29,8 +30,11 @@ class PasswordResetTestCase(TestCase):
 
 
     def test_sending_form(self):
+        self.assertEqual(len(mail.outbox), 0)
+
         res = self.client.post(reverse('ddcz:password-reset'), {
             'email': self.valid_email
         })
 
+        self.assertEqual(len(mail.outbox), 1)
         self.assertEquals(302, res.status_code)

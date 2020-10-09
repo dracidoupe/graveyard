@@ -89,15 +89,16 @@ LOGGING = {
                         'funcname=%(funcName)s %(message)s'),
             'datefmt': '%Y-%m-%d %H:%M:%S'
         },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
+        'prod': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
         }
     },
     'handlers': {
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': 'prod'
         },
     },
     'root': {
