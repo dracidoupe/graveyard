@@ -542,24 +542,6 @@ class Limity(models.Model):
         managed = False
         db_table = 'limity'
 
-
-class Linky(models.Model):
-    nazev = models.TextField()
-    adresa = models.TextField()
-    popis = models.TextField()
-    pochvez = models.CharField(max_length=1)
-    schvaleno = models.CharField(max_length=1)
-    datum = models.DateTimeField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'linky'
-
-
-
-
 class Mailgroups(models.Model):
     verejna = models.CharField(max_length=3)
     nazev_skupiny = models.CharField(unique=True, max_length=30)
