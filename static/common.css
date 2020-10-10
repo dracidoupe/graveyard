@@ -128,4 +128,24 @@ article.dating span.label, article.dating span.value {
     display: table-cell;
 }
 
+/* Stylink for links */
 
+article.link {
+    margin-bottom: 7%;
+}
+
+article.link header {
+    margin-bottom: 1vh;
+}
+
+article.link footer {
+    margin-top: 1vh;
+    display: block;
+    width: 100%;
+
+}
+
+article.link span.actuallink {
+    text-align: right;
+    float: right; 
+}

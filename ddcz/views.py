@@ -19,7 +19,11 @@ from django.contrib import messages
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm, PasswordResetForm
-from .models import CommonArticle, News, Dating, UserProfile, CreativePage, CreativePageConcept
+from .models import (
+    CommonArticle, CreativePage, CreativePageConcept,
+    Dating, Link, News,
+    UserProfile
+)
 from .users import migrate_user
 
 # Get an instance of a logger
@@ -110,6 +114,18 @@ def creative_page_concept(request, creative_page_slug):
         'concept': concept,
     })
 
+
+def links(request):
+    item_list = Link.objects.filter(schvaleno='a').order_by('-datum')
+
+    paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
+    page = request.GET.get('z_s', 1)
+
+    items = paginator.get_page(page)
+
+    return render(request, 'links/list.html', {
+        'items': items
+    })
 
 def dating(request):
 
