@@ -258,3 +258,16 @@ class Skill(Creation):
     class Meta:
         db_table = 'dovednosti'
 
+
+class Link(models.Model):
+    nazev = MisencodedTextField()
+    adresa = MisencodedTextField()
+    popis = MisencodedTextField()
+    pochvez = MisencodedCharField(max_length=1)
+    schvaleno = MisencodedCharField(max_length=1)
+    datum = models.DateTimeField()
+    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
+    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'linky'
