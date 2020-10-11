@@ -28,6 +28,11 @@ article header .label {
     font-weight: bold;
 }
 
+#page-article-detail th {
+    text-align: left;
+}
+
+
 /* Styling for main section of creations */
 
 .creation-detail {

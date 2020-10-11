@@ -1,0 +1,89 @@
+{% extends 'public.html' %}
+{% load html %}
+{% block content %}
+<div id="page-article-detail">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <article>
+        <header>
+            <h2>{{ article.jmeno }}</h2>
+            <!-- TODO
+            <p>Příprava pro tisk</p>
+            -->
+            <table>
+                <tr>
+                    <th>Autor:</th>
+                    <td>
+                        {% if article.author_profile %}
+                            <a
+                                href="{% url 'ddcz:user-detail' user_profile_id=article.author_profile.id nick_slug=article.author_profile.slug %}"
+                                class="author"
+                                rel="author">{{ article.autor }}</a>
+                        {% else %}
+                            Neznámý
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Přidáno:</th>
+                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></td>
+                </tr>
+                <tr>
+                    <th>Hlasovalo:</th>
+                    <td>{{ article.pocet_hlasujicich }}</td>
+                </tr>
+            </table>
+
+            <p><span class="label">Skupina:</span> <span class="value">{{ article.skupina }}</span></p>
+            {% if article.mag %}
+                <p><span class="label">Magenergie:</span> <span class="value">{{ article.mag }}</span></p>
+              {% endif %}
+            {% if article.suroviny %}
+                <p><span class="label">Suroviny:</span> <span class="value">{{ article.suroviny }}</span></p>
+            {% endif %}
+            {% if article.zaklad %}
+                <p><span class="label">Základ:</span> <span class="value">{{ article.zaklad }}</span></p>
+            {% endif %}
+            {% if article.nalezeni %}
+                <p><span class="label">Nalezení:</span> <span class="value">{{ article.nalezeni }}</span></p>
+            {% endif %}
+            {% if article.trvani %}
+                <p><span class="label">Trvání:</span> <span class="value">{{ article.trvani }}</span></p>
+            {% endif %}
+            {% if article.vyroba %}
+                <p><span class="label">Výroba:</span> <span class="value">{{ article.vyroba }}</span></p>
+            {% endif %}
+            {% if article.nebezpecnost %}
+                <p><span class="label">Nebezpečnost:</span> <span class="value">{{ article.nebezpecnost }}</span></p>
+            {% endif %}
+            {% if article.sila %}
+                <p><span class="label">Síla:</span> <span class="value">{{ article.sila }}</span></p>
+            {% endif %}
+            {% if article.bcz %}
+                <p><span class="label">Barva/chuť/zápach:</span> <span class="value">{{ article.bcz }}</span></p>
+            {% endif %}
+            {% if article.denmag %}
+                <p><span class="label">Magy/den:</span> <span class="value">{{ article.denmag }}</span></p>
+            {% endif %}
+
+
+            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+            <p><span class="label">Přečteno:</span> <span class="value">{{ article.precteno }}</span></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+
+            <p><span class="label">Autor:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.autor }}</a></span></p>
+
+
+        </header>
+
+        <div class="content">
+            {{ article.text|render_html|safe }}
+        </div>
+        <footer>
+            
+        </footer>
+    </article>
+
+</div>
+{% endblock %}

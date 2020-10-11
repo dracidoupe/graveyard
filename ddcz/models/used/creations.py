@@ -258,7 +258,7 @@ class Skill(Creation):
     class Meta:
         db_table = 'dovednosti'
 
-class AlchemistTools(Creation):
+class AlchemistTool(Creation):
     mag = models.IntegerField(blank=True, null=True)
     suroviny = models.SmallIntegerField(blank=True, null=True)
     zaklad = MisencodedCharField(max_length=150, blank=True, null=True)
@@ -277,6 +277,12 @@ class AlchemistTools(Creation):
 
     class Meta:
         db_table = 'alchpredmety'
+
+    def __str__(self):
+        return "{} od {}".format(
+            self.jmeno,
+            self.autor,
+        )
 
 
 class Link(models.Model):
