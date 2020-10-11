@@ -297,3 +297,9 @@ class Link(models.Model):
 
     class Meta:
         db_table = 'linky'
+
+    def __str__(self):
+        return "{} {}".format(
+            self.nazev,
+            self.adresa
+        )
