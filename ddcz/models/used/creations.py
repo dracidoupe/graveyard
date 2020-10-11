@@ -258,6 +258,26 @@ class Skill(Creation):
     class Meta:
         db_table = 'dovednosti'
 
+class AlchemistTools(Creation):
+    mag = models.IntegerField(blank=True, null=True)
+    suroviny = models.SmallIntegerField(blank=True, null=True)
+    zaklad = MisencodedCharField(max_length=150, blank=True, null=True)
+    nalezeni = MisencodedCharField(max_length=150, blank=True, null=True)
+    trvani = MisencodedCharField(max_length=30, blank=True, null=True)
+    vyroba = MisencodedCharField(max_length=30, blank=True, null=True)
+    nebezpecnost = MisencodedCharField(max_length=30, blank=True, null=True)
+    sila = MisencodedCharField(max_length=30, blank=True, null=True)
+    bcz = MisencodedCharField(max_length=30, blank=True, null=True)
+    denmag = models.IntegerField(blank=True, null=True)
+    dosah_ucinku = MisencodedCharField(max_length=20, blank=True, null=True)
+    uroven_vyrobce = MisencodedCharField(max_length=10)
+    sfera = MisencodedCharField(max_length=20)
+    popis = MisencodedTextField()
+    skupina = MisencodedCharField(max_length=30)
+
+    class Meta:
+        db_table = 'alchpredmety'
+
 
 class Link(models.Model):
     nazev = MisencodedTextField()

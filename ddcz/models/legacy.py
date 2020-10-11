@@ -23,41 +23,6 @@ class AktivniUzivatele(models.Model):
         managed = False
         db_table = 'aktivni_uzivatele'
 
-
-
-class Alchpredmety(models.Model):
-    jmeno = models.CharField(max_length=30)
-    mag = models.IntegerField(blank=True, null=True)
-    suroviny = models.SmallIntegerField(blank=True, null=True)
-    zaklad = models.CharField(max_length=150, blank=True, null=True)
-    nalezeni = models.CharField(max_length=150, blank=True, null=True)
-    trvani = models.CharField(max_length=30, blank=True, null=True)
-    vyroba = models.CharField(max_length=30, blank=True, null=True)
-    nebezpecnost = models.CharField(max_length=30, blank=True, null=True)
-    sila = models.CharField(max_length=30, blank=True, null=True)
-    bcz = models.CharField(max_length=30, blank=True, null=True)
-    denmag = models.IntegerField(blank=True, null=True)
-    dosah_ucinku = models.CharField(max_length=20, blank=True, null=True)
-    uroven_vyrobce = models.CharField(max_length=10)
-    sfera = models.CharField(max_length=20)
-    popis = models.TextField()
-    pochvez = models.CharField(max_length=1)
-    autor = models.CharField(max_length=25, blank=True, null=True)
-    autmail = models.CharField(max_length=30, blank=True, null=True)
-    zdroj = models.CharField(max_length=100, blank=True, null=True)
-    zdrojmail = models.CharField(max_length=40, blank=True, null=True)
-    datum = models.DateTimeField()
-    schvaleno = models.CharField(max_length=1)
-    skupina = models.CharField(max_length=30)
-    tisknuto = models.SmallIntegerField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'alchpredmety'
-
-
 class Ankety(models.Model):
     otazka = models.TextField(blank=True, null=True)
     odp1 = models.CharField(max_length=250)
