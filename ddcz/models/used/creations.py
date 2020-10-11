@@ -290,7 +290,7 @@ class Link(models.Model):
     adresa = MisencodedTextField()
     popis = MisencodedTextField()
     pochvez = MisencodedCharField(max_length=1)
-    schvaleno = MisencodedCharField(max_length=1)
+    schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES)
     datum = models.DateTimeField()
     pocet_hlasujicich = models.IntegerField(blank=True, null=True)
     hodnota_hlasovani = models.IntegerField(blank=True, null=True)
