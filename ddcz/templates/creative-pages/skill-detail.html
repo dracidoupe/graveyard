@@ -1,11 +1,12 @@
 {% extends 'public.html' %}
 {% load html %}
+{% load creations %}
 {% block content %}
 <div id="page-article-detail">
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2>{{ article.jmeno }}</h2>
+            <h2>{{ article.jmeno }}{% creation_rating article.pochvez skin %}</h2>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->
