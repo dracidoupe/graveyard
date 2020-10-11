@@ -96,3 +96,10 @@
     name: Dovednosti
     slug: dovednosti
     model_class: ddcz.skill
+
+- model: ddcz.creativepage
+  pk: 15
+  fields:
+    name: Alchymistické Předměty
+    slug: alchpredmety
+    model_class: ddcz.alchemisttool
