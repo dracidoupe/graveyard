@@ -103,3 +103,10 @@
     name: Alchymistické Předměty
     slug: alchpredmety
     model_class: ddcz.alchemisttool
+
+- model: ddcz.creativepage
+  pk: 16
+  fields:
+    name: Hraničářská Kouzla
+    slug: hranicarkouzla
+    model_class: ddcz.rangerspell
