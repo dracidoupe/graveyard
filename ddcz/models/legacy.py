@@ -419,38 +419,6 @@ class Groupmembers(models.Model):
         managed = False
         db_table = 'groupmembers'
 
-
-class Hranicarkouzla(models.Model):
-    jmeno = models.TextField()
-    mag = models.SmallIntegerField()
-    magpop = models.TextField()
-    dosah = models.SmallIntegerField(blank=True, null=True)
-    dosahpop = models.TextField(blank=True, null=True)
-    rozsah = models.SmallIntegerField(blank=True, null=True)
-    rozsahpop = models.TextField(blank=True, null=True)
-    vyvolani = models.SmallIntegerField(blank=True, null=True)
-    vyvolanipop = models.TextField(blank=True, null=True)
-    druh = models.TextField(blank=True, null=True)
-    skupina = models.TextField()
-    cetnost = models.TextField(blank=True, null=True)
-    pomucky = models.TextField(blank=True, null=True)
-    autor = models.TextField(blank=True, null=True)
-    autmail = models.TextField(blank=True, null=True)
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.TextField(blank=True, null=True)
-    schvaleno = models.CharField(max_length=1)
-    datum = models.DateTimeField()
-    pochvez = models.CharField(max_length=1)
-    popis = models.TextField()
-    tisknuto = models.IntegerField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'hranicarkouzla'
-
-
 class Inzerce(models.Model):
     sekce = models.CharField(max_length=20)
     jmeno = models.CharField(max_length=30, blank=True, null=True)

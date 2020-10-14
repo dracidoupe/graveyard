@@ -37,6 +37,7 @@ In this context, Crative Pages correspond to sections of the site where content 
 * Dovednosti (= Skills)
 * Hřbitov (= Graveyard)
 * Alchymistické Předměty (= Alchemist Tools)
+* Hraničářská Kouzla (= Ranger Spell)
 * Dlouhé příspěvky / Běžné příspěvky = Common Articles (not used publicly, but powers a lot of internal engine)
 
     * Články a Eseje = Articles and Essays

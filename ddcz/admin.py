@@ -3,7 +3,8 @@ from django.contrib import admin
 from .models import (
     AlchemistTool,
     CommonArticle, CreativePageConcept,
-    Link, Monster, News, Skill
+    Link, Monster, News, Skill,
+    RangerSpell
 )
 
 admin.site.site_header = "Administrace pro DraciDoupe.cz"
@@ -22,4 +23,5 @@ admin.site.register(CreativePageConcept)
 admin.site.register(Link)
 admin.site.register(Monster)
 admin.site.register(News)
+admin.site.register(RangerSpell)
 admin.site.register(Skill)

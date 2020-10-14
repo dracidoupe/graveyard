@@ -303,3 +303,29 @@ class Link(models.Model):
             self.nazev,
             self.adresa
         )
+
+
+class RangerSpell(Creation):
+    mag = models.SmallIntegerField()
+    magpop = MisencodedTextField()
+    dosah = models.SmallIntegerField(blank=True, null=True)
+    dosahpop = MisencodedTextField(blank=True, null=True)
+    rozsah = models.SmallIntegerField(blank=True, null=True)
+    rozsahpop = MisencodedTextField(blank=True, null=True)
+    vyvolani = models.SmallIntegerField(blank=True, null=True)
+    vyvolanipop = MisencodedTextField(blank=True, null=True)
+    druh = MisencodedTextField(blank=True, null=True)
+    skupina = MisencodedTextField()
+    cetnost = MisencodedTextField(blank=True, null=True)
+    pomucky = MisencodedTextField(blank=True, null=True)
+    popis = MisencodedTextField()
+
+    class Meta:
+        db_table = 'hranicarkouzla'
+
+
+    def __str__(self):
+        return "{} od {}".format(
+            self.jmeno,
+            self.autor
+        )
