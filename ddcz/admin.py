@@ -4,7 +4,7 @@ from .models import (
     AlchemistTool,
     CommonArticle, CreativePageConcept,
     Link, Monster, News, Skill,
-    RangerSpell
+    RangerSpell, WizardSpell
 )
 
 admin.site.site_header = "Administrace pro DraciDoupe.cz"
@@ -25,3 +25,4 @@ admin.site.register(Monster)
 admin.site.register(News)
 admin.site.register(RangerSpell)
 admin.site.register(Skill)
+admin.site.register(WizardSpell)

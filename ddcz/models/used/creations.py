@@ -109,6 +109,13 @@ class Creation(models.Model):
         slug = create_slug(self.jmeno)
         return slug or EMPTY_SLUG_PLACEHOLDER
 
+    def __str__(self):
+        return "{} od {}".format(
+            self.jmeno,
+            self.autor
+        )
+
+
 ###
 # Handle all models that should work with all creations.
 # Do note that for backward compatibility, all relations to creations
@@ -329,3 +336,23 @@ class RangerSpell(Creation):
             self.jmeno,
             self.autor
         )
+
+
+class WizardSpell(Creation):
+    kouzsl = MisencodedTextField()
+    mag = models.SmallIntegerField()
+    magpop = MisencodedTextField()
+    past = MisencodedTextField(blank=True, null=True)
+    dosah = models.IntegerField(blank=True, null=True)
+    dosahpop = MisencodedTextField(blank=True, null=True)
+    rozsah = models.IntegerField()
+    rozsahpop = MisencodedTextField(blank=True, null=True)
+    vyvolani = models.IntegerField()
+    vyvolanipop = MisencodedTextField()
+    trvani = models.IntegerField()
+    trvanipop = MisencodedTextField(blank=True, null=True)
+    popis = MisencodedTextField()
+    skupina = MisencodedTextField()
+
+    class Meta:
+        db_table = 'kouzla'
