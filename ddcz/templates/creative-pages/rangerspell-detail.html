@@ -1,0 +1,79 @@
+{% extends 'public.html' %}
+{% load creations %}
+{% load html %}
+{% block content %}
+<div id="page-article-detail">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <article>
+        <header>
+            <h2>{{ article.jmeno }}{% creation_rating article.pochvez skin %}</h2>
+            <!-- TODO
+            <p>Příprava pro tisk</p>
+            -->
+            <table>
+                <tr>
+                    <th>Autor:</th>
+                    <td>
+                        {% if article.author_profile %}
+                            <a
+                                href="{% url 'ddcz:user-detail' user_profile_id=article.author_profile.id nick_slug=article.author_profile.slug %}"
+                                class="author"
+                                rel="author">{{ article.autor }}</a>
+                        {% else %}
+                            Neznámý
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Přidáno:</th>
+                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></td>
+                </tr>
+                <tr>
+                    <th>Hlasovalo:</th>
+                    <td>{{ article.pocet_hlasujicich }}</td>
+                </tr>
+            </table>
+
+            {% if article.mag %}
+                <p><span class="label">Magenergie:</span> <span class="value">{{ article.mag }} {{ article.magpop }}</span></p>
+            {% endif %}
+            {% if article.dosah %}
+                <p><span class="label">Dosah:</span> <span class="value">{{ article.dosah }} {{ article.dosahpop }}</span></p>
+            {% endif %}
+            {% if article.rozsah %}
+                <p><span class="label">Rozsah:</span> <span class="value">{{ article.rozsah }} {{ article.rozsahpop }}</span></p>
+            {% endif %}
+            {% if article.vyvolani %}
+                <p><span class="label">Vyvolání:</span> <span class="value">{{ article.vyvolani }} {{ article.vyvolanipop }}</span></p>
+            {% endif %}
+            {% if article.druh %}
+                <p><span class="label">Druh:</span> <span class="value">{{ article.druh }}</span></p>
+            {% endif %}
+            {% if article.cetnost %}
+                <p><span class="label">Četnost:</span> <span class="value">{{ article.cetnost }}</span></p>
+            {% endif %}
+            {% if article.pomucky %}
+                <p><span class="label">Pomůcky:</span> <span class="value">{{ article.pomucky }}</span></p>
+            {% endif %}
+
+            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+            <p><span class="label">Přečteno:</span> <span class="value">{{ article.precteno }}</span></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+
+            <p><span class="label">Autor:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.autor }}</a></span></p>
+
+
+        </header>
+
+        <div class="content">
+            {{ article.text|render_html|safe }}
+        </div>
+        <footer>
+            
+        </footer>
+    </article>
+
+</div>
+{% endblock %}
