@@ -110,3 +110,10 @@
     name: Hraničářská Kouzla
     slug: hranicarkouzla
     model_class: ddcz.rangerspell
+
+- model: ddcz.creativepage
+  pk: 17
+  fields:
+    name: Kouzelnická Kouzla
+    slug: kouzla
+    model_class: ddcz.wizardspell

@@ -433,38 +433,6 @@ class Inzerce(models.Model):
         managed = False
         db_table = 'inzerce'
 
-class Kouzla(models.Model):
-    jmeno = models.TextField()
-    kouzsl = models.TextField()
-    mag = models.SmallIntegerField()
-    magpop = models.TextField()
-    past = models.TextField(blank=True, null=True)
-    dosah = models.IntegerField(blank=True, null=True)
-    dosahpop = models.TextField(blank=True, null=True)
-    rozsah = models.IntegerField()
-    rozsahpop = models.TextField(blank=True, null=True)
-    vyvolani = models.IntegerField()
-    vyvolanipop = models.TextField()
-    trvani = models.IntegerField()
-    trvanipop = models.TextField(blank=True, null=True)
-    popis = models.TextField()
-    skupina = models.TextField()
-    pochvez = models.CharField(max_length=1)
-    datum = models.DateTimeField()
-    autor = models.TextField(blank=True, null=True)
-    autmail = models.TextField(blank=True, null=True)
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.TextField(blank=True, null=True)
-    schvaleno = models.CharField(max_length=1)
-    tisknuto = models.PositiveIntegerField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'kouzla'
-
-
 class Limity(models.Model):
     oprava_hlasovani_po = models.PositiveIntegerField(primary_key=True)
     platnost = models.CharField(max_length=1)
