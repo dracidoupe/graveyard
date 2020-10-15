@@ -29,6 +29,10 @@ Requirements:
 * You have [Docker CE installed](https://www.docker.com/community-edition)
 * You have [installed docker-compose](https://docs.docker.com/compose/install/)
 
+* Create your own copy of [local configuration](graveyard/settings/local.example.py)
+
+  * `cp graveyard/settings/local.example.py graveyard/settings/local.py`
+
 Verify you have everything ready by running the test suite:
 
 * `docker-compose run web python3 manage.py test`
