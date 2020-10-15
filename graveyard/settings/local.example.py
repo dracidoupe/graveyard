@@ -7,7 +7,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dracidoupe_cz',
         'USER': 'root',
-        'PASSWORD': 'xxx',
+        'HOST': 'db',
+        'PASSWORD': 'docker',
         'OPTIONS': {
             'charset': 'latin2'
         },
