@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import (
     AlchemistTool,
     CommonArticle, CreativePageConcept,
-    Link, Monster, News, Skill,
+    Item, Link, Monster, News, Skill,
     RangerSpell, WizardSpell
 )
 
@@ -20,6 +20,7 @@ class AlchemistToolAdmin(admin.ModelAdmin):
 admin.site.register(AlchemistTool, AlchemistToolAdmin)
 admin.site.register(CommonArticle, CommonArticleAdmin)
 admin.site.register(CreativePageConcept)
+admin.site.register(Item)
 admin.site.register(Link)
 admin.site.register(Monster)
 admin.site.register(News)
