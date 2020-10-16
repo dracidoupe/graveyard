@@ -13,6 +13,8 @@ urlpatterns = [
     path('rubriky/<creative_page_slug>/koncepce/', views.creative_page_concept, name='creative-page-concept'),
     path('rubriky/<creative_page_slug>/<int:article_id>-<article_slug>/', views.creation_detail, name='common-article-detail'),
 
+    path('download/<int:download_id>/', views.download_file, name='download-file'),
+
     path('seznamka/', views.dating, name='dating'),
 
     path('linky/', views.links, name='links-list'),

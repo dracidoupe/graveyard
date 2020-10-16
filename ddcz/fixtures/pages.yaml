@@ -124,3 +124,10 @@
     name: Předměty
     slug: predmety
     model_class: ddcz.item
+
+- model: ddcz.creativepage
+  pk: 19
+  fields:
+    name: Downloady
+    slug: downloady
+    model_class: ddcz.downloaditem
