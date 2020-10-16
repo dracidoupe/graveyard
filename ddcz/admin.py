@@ -10,20 +10,17 @@ from .models import (
 admin.site.site_header = "Administrace pro DraciDoupe.cz"
 admin.site.site_title = admin.site.site_header
 
-class CommonArticleAdmin(admin.ModelAdmin):
-    search_fields = ('jmeno',)
-
-class AlchemistToolAdmin(admin.ModelAdmin):
+class SearchableAdmin(admin.ModelAdmin):
     search_fields = ('jmeno',)
 
 
-admin.site.register(AlchemistTool, AlchemistToolAdmin)
-admin.site.register(CommonArticle, CommonArticleAdmin)
-admin.site.register(CreativePageConcept)
-admin.site.register(Item)
-admin.site.register(Link)
-admin.site.register(Monster)
-admin.site.register(News)
-admin.site.register(RangerSpell)
-admin.site.register(Skill)
-admin.site.register(WizardSpell)
+admin.site.register(AlchemistTool, SearchableAdmin)
+admin.site.register(CommonArticle, SearchableAdmin)
+admin.site.register(CreativePageConcept, SearchableAdmin)
+admin.site.register(Item, SearchableAdmin)
+admin.site.register(Link, SearchableAdmin)
+admin.site.register(Monster, SearchableAdmin)
+admin.site.register(News, SearchableAdmin)
+admin.site.register(RangerSpell, SearchableAdmin)
+admin.site.register(Skill, SearchableAdmin)
+admin.site.register(WizardSpell, SearchableAdmin)
