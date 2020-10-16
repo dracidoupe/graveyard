@@ -240,28 +240,6 @@ class Dobrodruzstvi(models.Model):
         managed = False
         db_table = 'dobrodruzstvi'
 
-class Downloady(models.Model):
-    jmeno = models.TextField()
-    cesta = models.TextField(blank=True, null=True)
-    pochvez = models.CharField(max_length=1)
-    autor = models.TextField(blank=True, null=True)
-    autmail = models.TextField(blank=True, null=True)
-    datum = models.DateTimeField()
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.TextField(blank=True, null=True)
-    schvaleno = models.CharField(max_length=1)
-    format = models.TextField()
-    popis = models.TextField()
-    velikost = models.IntegerField()
-    skupina = models.TextField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'downloady'
-
-
 class Duchovo(models.Model):
     datum = models.IntegerField()
     param = models.CharField(max_length=15)

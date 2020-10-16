@@ -372,3 +372,14 @@ class Item(Creation):
 
     class Meta:
         db_table = 'predmety'
+
+class DownloadItem(Creation):
+    cesta = models.TextField(blank=True, null=True)
+    format = models.TextField()
+    popis = models.TextField()
+    velikost = models.IntegerField()
+    skupina = models.TextField()
+
+    class Meta:
+        db_table = 'downloady'
+        verbose_name_plural = 'Downloads'

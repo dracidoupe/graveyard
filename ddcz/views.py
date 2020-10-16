@@ -21,7 +21,7 @@ from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREAT
 from .forms import LoginForm, PasswordResetForm
 from .models import (
     CommonArticle, CreativePage, CreativePageConcept,
-    Dating, Link, News,
+    DownloadItem, Dating, Link, News,
     UserProfile
 )
 from .users import migrate_user
@@ -114,6 +114,10 @@ def creative_page_concept(request, creative_page_slug):
         'concept': concept,
     })
 
+
+def download_file(request, download_id):
+    download_item = get_object_or_404(DownloadItem, pk=download_id)
+    return "WIP"
 
 def links(request):
     item_list = Link.objects.filter(schvaleno='a').order_by('-datum')
