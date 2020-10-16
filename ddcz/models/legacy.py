@@ -879,35 +879,6 @@ class Pravomoci(models.Model):
         db_table = 'pravomoci'
         unique_together = (('id_user', 'funkce'),)
 
-
-class Predmety(models.Model):
-    jmeno = models.TextField()
-    uc = models.TextField(db_column='UC', blank=True, null=True)  # Field name made lowercase.
-    kz = models.CharField(db_column='KZ', max_length=3, blank=True, null=True)  # Field name made lowercase.
-    delka = models.CharField(max_length=3, blank=True, null=True)
-    cena = models.IntegerField()
-    popis = models.TextField()
-    autor = models.TextField(blank=True, null=True)
-    autmail = models.TextField(blank=True, null=True)
-    datum = models.DateTimeField()
-    pochvez = models.CharField(max_length=1)
-    malydostrel = models.IntegerField(blank=True, null=True)
-    strednidostrel = models.IntegerField(blank=True, null=True)
-    velkydostrel = models.IntegerField(blank=True, null=True)
-    sfera = models.IntegerField(blank=True, null=True)
-    vaha = models.IntegerField()
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.TextField(blank=True, null=True)
-    schvaleno = models.CharField(max_length=1)
-    skupina = models.TextField()
-    tisknuto = models.SmallIntegerField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'predmety'
-
 class PsiSmecka(models.Model):
     id_uz = models.IntegerField(primary_key=True)
     cizi_tbl = models.CharField(max_length=20)

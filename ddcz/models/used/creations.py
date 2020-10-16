@@ -356,3 +356,19 @@ class WizardSpell(Creation):
 
     class Meta:
         db_table = 'kouzla'
+
+class Item(Creation):
+    uc = MisencodedTextField(db_column='UC', blank=True, null=True)  # Field name made lowercase.
+    kz = MisencodedCharField(db_column='KZ', max_length=3, blank=True, null=True)  # Field name made lowercase.
+    delka = MisencodedCharField(max_length=3, blank=True, null=True)
+    cena = models.IntegerField()
+    popis = MisencodedTextField()
+    malydostrel = models.IntegerField(blank=True, null=True)
+    strednidostrel = models.IntegerField(blank=True, null=True)
+    velkydostrel = models.IntegerField(blank=True, null=True)
+    sfera = models.IntegerField(blank=True, null=True)
+    vaha = models.IntegerField()
+    skupina = MisencodedTextField()
+
+    class Meta:
+        db_table = 'predmety'
