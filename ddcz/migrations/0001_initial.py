@@ -1356,7 +1356,6 @@ class Migration(migrations.Migration):
                 ('schvaleno', models.CharField(max_length=1)),
                 ('skupina', models.TextField()),
                 ('tisknuto', models.SmallIntegerField()),
-                ('precteno', models.SmallIntegerField()),
                 ('pocet_hlasujicich', models.IntegerField(blank=True, null=True)),
                 ('hodnota_hlasovani', models.IntegerField(blank=True, null=True)),
             ],
