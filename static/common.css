@@ -14,7 +14,7 @@
     float: right;
 }
 
-.article-list li {
+.article-list li.creation-detail {
     list-style: none;
   }
   

@@ -117,3 +117,10 @@
     name: Kouzelnická Kouzla
     slug: kouzla
     model_class: ddcz.wizardspell
+
+- model: ddcz.creativepage
+  pk: 18
+  fields:
+    name: Předměty
+    slug: predmety
+    model_class: ddcz.item
