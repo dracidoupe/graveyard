@@ -385,3 +385,11 @@ class DownloadItem(Creation):
     class Meta:
         db_table = 'downloady'
         verbose_name_plural = 'Downloads'
+
+class Quest(Creation):
+    anotace = models.TextField()
+    cesta = models.TextField(blank=True, null=True)
+    klicsl = models.TextField()
+
+    class Meta:
+        db_table = 'dobrodruzstvi'

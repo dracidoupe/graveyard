@@ -220,26 +220,6 @@ class DiskuzeMaillist(models.Model):
         unique_together = (('id_uz', 'id_cizi', 'cizi_tbl'),)
 
 
-class Dobrodruzstvi(models.Model):
-    jmeno = models.TextField()
-    anotace = models.TextField()
-    cesta = models.TextField(blank=True, null=True)
-    klicsl = models.TextField()
-    pochvez = models.CharField(max_length=1)
-    autor = models.TextField(blank=True, null=True)
-    autmail = models.TextField(blank=True, null=True)
-    datum = models.DateTimeField()
-    zdroj = models.TextField(blank=True, null=True)
-    zdrojmail = models.TextField(blank=True, null=True)
-    schvaleno = models.CharField(max_length=1)
-    pocet_hlasujicich = models.IntegerField()
-    hodnota_hlasovani = models.IntegerField()
-    precteno = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'dobrodruzstvi'
-
 class Duchovo(models.Model):
     datum = models.IntegerField()
     param = models.CharField(max_length=15)
