@@ -391,5 +391,8 @@ class Quest(Creation):
     cesta = models.TextField(blank=True, null=True)
     klicsl = models.TextField()
 
+    def get_final_url(self):
+        return urljoin(urljoin(settings.QUEST_MEDIA_ROOT_URL, str(self.pk))+'/', self.cesta)
+
     class Meta:
         db_table = 'dobrodruzstvi'

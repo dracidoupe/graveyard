@@ -15,6 +15,8 @@ urlpatterns = [
 
     path('download/<int:download_id>/', views.download_file, name='download-file'),
 
+    path('dobrodruzstvi/<int:quest_id>/', views.quest_view_redirect, name='quest-view'),
+
     path('seznamka/', views.dating, name='dating'),
 
     path('linky/', views.links, name='links-list'),
