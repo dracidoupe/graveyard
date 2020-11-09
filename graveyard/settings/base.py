@@ -122,6 +122,15 @@ GALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/galerie/"
 PHOTOGALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/fotogalerie/"
 USER_ICON_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/ikonky/"
 
+# File Storage, used for Downloady, Dobrodruzstvi etc.
+# TODO: Potentially make different backend default,
+# see https://github.com/dracidoupe/graveyard/issues/98
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_STORAGE_BUCKET_NAME = 'uploady.dracidoupe.cz'
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_CUSTOM_DOMAIN = 'uploady.dracidoupe.cz'
+AWS_S3_SECURE_URLS = False
+
 # Which email address we are sending transaction emails from
 DDCZ_TRANSACTION_EMAIL_FROM = 'noreply@example.com'
 if ENVIRONMENT == "production":
