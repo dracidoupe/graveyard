@@ -380,6 +380,7 @@ class DownloadItem(Creation):
     velikost = models.IntegerField()
     skupina = models.TextField()
     item = models.FileField(upload_to='soub', null=True)
+    download_counter = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'downloady'

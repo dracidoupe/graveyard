@@ -18,7 +18,7 @@
             <h2><a href="{% url 'ddcz:download-file' download_id=a.id %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
 
             <div class="table-like">
-                <p><span class="label">Stáhnuto:</span> <span class="value">TODO</span></p>
+                <p><span class="label">Stáhnuto:</span> <span class="value">{{ a.download_counter }}</span></p>
                 <p><span class="label">Formát:</span> <span class="value">{{ a.format }}</span></p>
                 <p><span class="label">Autor:</span> <span class="value">
                     {% if a.author_profile %}

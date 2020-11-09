@@ -117,6 +117,8 @@ def creative_page_concept(request, creative_page_slug):
 
 def download_file(request, download_id):
     download_item = get_object_or_404(DownloadItem, pk=download_id)
+    download_item.download_counter += 1
+    download_item.save()
     return HttpResponseRedirect(download_item.item.url)
 
 def links(request):
