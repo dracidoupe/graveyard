@@ -131,3 +131,10 @@
     name: Downloady
     slug: downloady
     model_class: ddcz.downloaditem
+
+- model: ddcz.creativepage
+  pk: 20
+  fields:
+    name: Dobrodružství
+    slug: dobrodruzstvi
+    model_class: ddcz.quest

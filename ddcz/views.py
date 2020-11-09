@@ -21,7 +21,7 @@ from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREAT
 from .forms import LoginForm, PasswordResetForm
 from .models import (
     CommonArticle, CreativePage, CreativePageConcept,
-    DownloadItem, Dating, Link, News,
+    DownloadItem, Dating, Link, News, Quest,
     UserProfile
 )
 from .users import migrate_user
@@ -120,6 +120,12 @@ def download_file(request, download_id):
     download_item.download_counter += 1
     download_item.save()
     return HttpResponseRedirect(download_item.item.url)
+
+def quest_view_redirect(request, quest_id):
+    quest = get_object_or_404(Quest, pk=quest_id)
+    quest.precteno += 1
+    quest.save()
+    return HttpResponseRedirect(quest.get_final_url())
 
 def links(request):
     item_list = Link.objects.filter(schvaleno='a').order_by('-datum')
