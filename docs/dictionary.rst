@@ -39,6 +39,8 @@ In this context, Crative Pages correspond to sections of the site where content 
 * Alchymistické Předměty (= Alchemist Tools)
 * Hraničářská Kouzla (= Ranger Spell)
 * Předměty (= Items)
+* Downloady (= Downloads and DownloadItem)
+* Dobrodružství (= Quest)
 
 * Dlouhé příspěvky / Běžné příspěvky = Common Articles (not used publicly, but powers a lot of internal engine)
 
