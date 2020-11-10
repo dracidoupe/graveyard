@@ -87,6 +87,8 @@ class Creation(models.Model):
     pocet_hlasujicich = models.IntegerField(blank=True, null=True)
     hodnota_hlasovani = models.IntegerField(blank=True, null=True)
     pochvez = MisencodedIntegerField(max_length=5)
+    # dubious usage, probably used only by Quest, may be worth
+    # removing in the future from other creations
     precteno = models.IntegerField(default=0)
     tisknuto = models.IntegerField(default=0)
     datum = models.DateTimeField(auto_now_add=True)
