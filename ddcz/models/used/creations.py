@@ -62,6 +62,33 @@ class CreativePageConcept(models.Model):
             self.page.name,
         )
 
+class Author(models.Model):
+    USER_TYPE = 'u'
+    WEBSITE_TYPE = 'w'
+    ANONYMOUS_USER_TYPE = 'a'
+
+    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
+    website = models.CharField(blank=True, null=True, max_length=255)
+    website_email = models.CharField(blank=True, null=True, max_length=255)
+    anonymous_user_nick = models.CharField(blank=True, null=True, max_length=255)
+
+    author_type = models.CharField(max_length=1, choices=[
+        (USER_TYPE, "Uživatel"),
+        (WEBSITE_TYPE, "Webová Stránka"),
+        (ANONYMOUS_USER_TYPE, "Anonymní Uživatel"),
+    ], default=None)
+
+    @property
+    def name(self):
+        if self.author_type == self.USER_TYPE:
+            return self.user.nick_uzivatele
+        elif self.author_type == self.WEBSITE_TYPE:
+            return self.website
+        elif self.author_type == self.ANONYMOUS_USER_TYPE:
+            return self.anonymous_user_nick
+        else:
+            raise AttributeError("Unknown type '%s'" % self.author_type)
+
 class Creation(models.Model):
     """
     Encapsulates common fields and actions for all creations. Please note:
@@ -92,6 +119,11 @@ class Creation(models.Model):
     precteno = models.IntegerField(default=0)
     tisknuto = models.IntegerField(default=0)
     datum = models.DateTimeField(auto_now_add=True)
+    
+    # Careful about difference from "Czech" `autor`, which is a text field
+    # with a nickname that relies on being string equal with `UserProfile.nick_uzivatele`
+    # Should be NOT NULL in the future, null allowed for transition period
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True)
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
 

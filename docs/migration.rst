@@ -26,6 +26,11 @@ This is transparently handled by ``ddcz.models.magic``; for original tables, `Mi
 
 New models respect the connection setting and store data as latin2. Once the old application is shut down, everything should be recoded in a way 21st century people store data (UTF-8). 
 
+.. warning::
+    While encoding is handled transparently on the model level, it isn't so during database lookup.
+
+    All string lookups on a MisencodedCharField (or MisencodedTextField) has to use a ``Model.objects.get(field=value.encode("cp1250").decode("latin2"))`` syntax.
+
 
 .. _db-migration:
 
@@ -63,3 +68,16 @@ Original data is stored in ``uzivatele`` table. For usability, this is exposed a
 
 
 During the initial setup, the arbitrary value of 20000 has been selected for `django.auth.models.User`'s auto_increment value to distinguish between users from pre-migration to post-migration and to allow old users to retain their IDs.
+
+Author Model
+============
+
+In order to bridge the confusion between article source (zdroj, zdrojmail) and author writing (autor, autmail), we are creating a new model, Author. This contains foreign keys if discovered and allows future normalization of data. 
+
+
+
+Random discoveries in the legacy data model
+===========================================
+
+* `autor` and `autmail` attribute for authors are denormalized. Author's email in `autmail` is never updated if user changes their email in settings
+
