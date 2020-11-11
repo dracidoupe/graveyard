@@ -20,6 +20,7 @@ from django.contrib import messages
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm, PasswordResetForm
 from .models import (
+    Author,
     CommonArticle, CreativePage, CreativePageConcept,
     DownloadItem, Dating, Link, News, Quest,
     UserProfile
@@ -263,4 +264,13 @@ def user_profile(request, user_profile_id, nick_slug):
     
     return render(request, 'users/detail.html', {
         'profile': user_profile,
+    })
+
+
+def author_profile(request, author_id, slug):
+
+    author = get_object_or_404(Author, id=author_id)
+    
+    return render(request, 'creations/author-detail.html', {
+        'author': 'author'
     })

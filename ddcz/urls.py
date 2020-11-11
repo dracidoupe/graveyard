@@ -22,6 +22,10 @@ urlpatterns = [
     path('linky/', views.links, name='links-list'),
 
     path('nastaveni/zmena-skinu/', views.change_skin, name='change-skin'),
+
+    path('autor/<int:author_id>-<slug>/', views.author_profile, name='author-detail'),
+
+
     path('uzivatel/prihlaseni/', views.login, name='login-action'),
     path('uzivatel/odhlaseni/', views.logout, name='logout-action'),
     path('uzivatel/reset-hesla/', views.PasswordResetView.as_view(), name='password-reset'),
