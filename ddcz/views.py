@@ -267,10 +267,17 @@ def user_profile(request, user_profile_id, nick_slug):
     })
 
 
-def author_profile(request, author_id, slug):
+def author_detail(request, author_id, slug):
 
     author = get_object_or_404(Author, id=author_id)
-    
+
+    if author.slug != slug:
+        return HttpResponsePermanentRedirect(reverse('ddcz:author-detail', kwargs={
+            'author_id': author.pk,
+            'slug': author.slug,
+        }))
+
     return render(request, 'creations/author-detail.html', {
-        'author': 'author'
+        'author': author,
+        'pages_with_creations': author.get_all_creations(),
     })

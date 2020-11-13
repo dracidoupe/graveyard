@@ -1,7 +1,11 @@
+import logging
+
 from django import template
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 from ..creations import RATING_DESCRIPTIONS
+
+logger = logging.getLogger(__name__)
 
 register = template.Library()
 
@@ -13,4 +17,25 @@ def creation_rating(rating, skin):
         'rating': range(rating),
         'skin': skin,
         'skin_rating_star_url': staticfiles_storage.url("skins/%s/img/rating-star.gif" % skin),
+    }
+
+
+@register.inclusion_tag('creations/author-display-link.html')
+def author_display(creation_subclass):
+    try:
+        author = creation_subclass.author
+        if not author:
+            raise ValueError()
+
+    except Exception:
+        author_url = '#'
+        author_name = 'Neznámý'
+        logger.exception("Author not found, data migration error for creation %s" % creation_subclass)
+    else:
+        author_url = author.profile_url
+        author_name = author.name
+
+    return {
+        'author_url': author_url,
+        'author_name': author_name
     }

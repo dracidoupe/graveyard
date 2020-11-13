@@ -23,7 +23,7 @@ urlpatterns = [
 
     path('nastaveni/zmena-skinu/', views.change_skin, name='change-skin'),
 
-    path('autor/<int:author_id>-<slug>/', views.author_profile, name='author-detail'),
+    path('autor/<int:author_id>-<slug>/', views.author_detail, name='author-detail'),
 
 
     path('uzivatel/prihlaseni/', views.login, name='login-action'),

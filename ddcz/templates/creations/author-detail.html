@@ -1,7 +1,30 @@
 {% extends 'public.html' %}
-{% load html %}
+{% load creations %}
+
 {% block content %}
 <div id="page-author">
     <h1 class="page-heading">{{ author.name }}</h1>
+    <div>
+        {% if author.author_type == author.USER_TYPE %}
+            <a href="{% url 'ddcz:user-detail' author.user.pk author.user.slug %}">Registrovaný uživatel</a>
+        {% elif author.author_type == author.ANONYMOUS_USER_TYPE %}
+            Negistrovaný uživatel
+        {% elif author.author_type == author.WEBSITE_TYPE %}
+            <a href="{{ author.website }}">Webová stránka</a>, která nám laskavě svolila publikovat její obsah. 
+        {% else %}
+            Neznámý typ autora, pravděpodobně došlo k chybě při migraci. Prosím dejte vědět autorům webu.
+        {% endif %}
+    </div>
+    <h2>Publikovaná díla</h2>
+
+    {% for slug, page_dict in pages_with_creations.items %}
+        <h3>{{ page_dict.page.name }}</h3>
+        <ul>
+        {% for creation in page_dict.creations %}
+            <li>{{ creation.jmeno }} {% creation_rating creation.pochvez skin %}</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+
 </div>
 {% endblock %}
