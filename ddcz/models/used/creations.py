@@ -8,9 +8,11 @@
 import re
 from urllib.parse import urljoin
 
+from django.apps import apps
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from ...text import create_slug
 from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
@@ -43,6 +45,21 @@ class CreativePage(models.Model):
             self.name,
         )
 
+    @classmethod
+    def get_all_models(cls):
+        models = []
+        for page in cls.objects.all():
+            app, model_class_name = page.model_class.split('.')
+            model_class = apps.get_model(app, model_class_name)
+            models.append({
+                'model': model_class,
+                'page': page
+            })
+
+        if len(models) == 0:
+            raise ValueError("No models set up, run manage.py loaddata pages")
+
+        return models
 
 class CreativePageSection(models.Model):
     """ Section within a Creative Page """
@@ -78,6 +95,41 @@ class Author(models.Model):
         (ANONYMOUS_USER_TYPE, "Anonymní Uživatel"),
     ], default=None)
 
+    def get_all_creations(self):
+        """ Returns a dictionary with all creations in the following format:
+        {
+            'creativepage_slug': {
+                'creations': [CreationSubclassInstance]
+                'page': [CreationPageInstance]
+            }
+        }
+
+        Only creative pages where user published are included. Only approved creations
+        are included in the result. 
+        """
+        models = CreativePage.get_all_models()
+        creations = {}
+
+        for model_info in models:
+            filters = {
+                'author': self,
+                'schvaleno': Creation.CREATION_APPROVED
+            }
+            if model_info['model'].SHARED_BETWEEN_CREATIVE_PAGES:
+                filters['rubrika'] = model_info['page'].slug
+
+            page_creations = model_info['model'].objects.filter(
+                **filters
+            ).order_by('-datum')
+
+            if len(page_creations) > 0:
+                creations[model_info['page'].slug] = {
+                    'creations': list(page_creations),
+                    'page': model_info['page'],
+                }
+        
+        return creations
+
     @property
     def name(self):
         if self.author_type == self.USER_TYPE:
@@ -88,6 +140,33 @@ class Author(models.Model):
             return self.anonymous_user_nick
         else:
             raise AttributeError("Unknown type '%s'" % self.author_type)
+    
+    @property
+    def slug(self):
+        return create_slug(self.name)
+
+    @property
+    def profile_url(self):
+        if self.author_type == self.USER_TYPE:
+            display_name = self.user.nick_uzivatele
+        elif self.author_type == self.WEBSITE_TYPE:
+            display_name = 'web'
+        elif self.author_type == self.ANONYMOUS_USER_TYPE:
+            display_name = self.anonymous_user_nick
+        else:
+            raise AttributeError("Unknown type '%s'" % self.author_type)
+
+        if not display_name:
+            logger.error('MIGRATION_ERROR no display_name for author ID %s' % self.pk)
+        
+        return reverse('ddcz:author-detail', kwargs={
+            'author_id': self.pk,
+            'slug': create_slug(display_name)
+        })
+
+    def __str__(self):
+        return self.name
+
 
 class Creation(models.Model):
     """
@@ -105,6 +184,13 @@ class Creation(models.Model):
             Neither of those is tracked in database very well and such information is lost.
             Be careful, don't lose aggregates!
     """
+    CREATION_APPROVED = 'a'
+    CREATION_NOT_APPROVED_YET = 'n'
+    # Flag to special-case handling of submodels shared beetween
+    # multiple CreativePages -- see CommonArticle. For them,
+    # filter based on `rubrika` attribute is needed
+    SHARED_BETWEEN_CREATIVE_PAGES = False
+
     jmeno = MisencodedTextField()
     autor = MisencodedCharField(max_length=50, blank=True, null=True)
     autmail = MisencodedCharField(max_length=50, blank=True, null=True)
@@ -178,6 +264,17 @@ class CreationVotes(models.Model):
 ###
 
 class CommonArticle(Creation):
+    """
+    Represent "Common" article, covers a large proportion of site.
+    It would be consistent to have subclasses per CreativePage, but that
+    wouldn't map back to original structure.
+
+    This is the only model that represents multiple CreativePages and hence
+    needs to be special-cased for that purpose. Mapping to CreativePages
+    is done based on `rubrika` attribute. 
+    """
+    SHARED_BETWEEN_CREATIVE_PAGES = True
+
     text = MisencodedTextField()
     skupina = MisencodedCharField(max_length=30, blank=True, null=True)
     anotace = MisencodedTextField(blank=True, null=True)
@@ -196,10 +293,6 @@ class CommonArticle(Creation):
             self.autor,
         )
 
-
-###
-# First, all "common" articles, just with extra fields
-###
 
 class Monster(Creation):
     zvt = MisencodedTextField()
