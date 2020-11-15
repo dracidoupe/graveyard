@@ -1,5 +1,6 @@
 {% extends 'public.html' %}
 {% load html %}
+{% load creations %}
 {% block content %}
 <div id="page-article-detail">
     <h1 class="page-heading">{{ heading }}</h1>
@@ -9,11 +10,11 @@
         </header>
 
         <p class="content">
-            <img src="{{ article.get_picture_url }}" alt="Obrázek {{ a.jmeno }}">
+            <img src="{{ article.get_picture_url }}" alt="Obrázek {{ article.jmeno }}">
         </p>
 
         <footer class="table-like">
-            <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
+            <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
         </footer>
     </article>

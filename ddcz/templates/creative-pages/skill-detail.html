@@ -36,7 +36,7 @@
             <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></div>
         </div>
         <footer class="table-like">
-            <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
+            <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
             <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H.i" }}</time></p>
             <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
         </footer>
