@@ -36,15 +36,7 @@
             <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></div>
         </div>
         <footer class="table-like">
-            <p><span class="label">Autor:</span> <span class="value">                        {% if article.author_profile %}
-                <a
-                    href="{% url 'ddcz:user-detail' user_profile_id=article.author_profile.id nick_slug=article.author_profile.slug %}"
-                    class="author"
-                    rel="author">{{ article.autor }}</a>
-            {% else %}
-                Neznámý
-            {% endif %}
-            </span></p>
+            <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
             <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H.i" }}</time></p>
             <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
         </footer>
