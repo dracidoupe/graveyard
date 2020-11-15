@@ -64,3 +64,13 @@ class TestAuthorCretionsList(TestCase):
         author_creations = self.author_user.get_all_creations()
 
         self.assertEqual('clanky', author_creations['clanky']['page'].slug)
+
+class TestAnoymousAuthorTranslates(TestCase):
+    def setUp(self):
+        # Pathological date found in the wild
+        self.author = Author.objects.create(
+            author_type = Author.ANONYMOUS_USER_TYPE,
+        )
+
+    def test_anonymous_type_recognized_from_data(self):
+        self.assertEqual('a', Author.objects.all()[0].author_type)

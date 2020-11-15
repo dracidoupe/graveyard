@@ -5,6 +5,7 @@
 # "rooms for improvement" that can be done once the original application
 # is strangled out of its existence
 
+import logging
 import re
 from urllib.parse import urljoin
 
@@ -24,6 +25,9 @@ APPROVAL_CHOICES = (
 )
 
 EMPTY_SLUG_PLACEHOLDER = 'dilo'
+
+logger = logging.getLogger(__name__)
+
 
 ###
 # Introduce an umbrella model for all Creations
@@ -133,14 +137,20 @@ class Author(models.Model):
     @property
     def name(self):
         if self.author_type == self.USER_TYPE:
-            return self.user.nick_uzivatele
+            display_name = self.user.nick_uzivatele
         elif self.author_type == self.WEBSITE_TYPE:
-            return self.website
+            display_name = self.website
         elif self.author_type == self.ANONYMOUS_USER_TYPE:
-            return self.anonymous_user_nick
+            display_name = self.anonymous_user_nick
         else:
             raise AttributeError("Unknown type '%s'" % self.author_type)
-    
+
+        if not display_name:
+            logger.error('MIGRATION_ERROR no display_name for author ID %s' % self.pk)
+            display_name = 'Neznámý'
+
+        return display_name
+
     @property
     def slug(self):
         return create_slug(self.name)
@@ -152,12 +162,13 @@ class Author(models.Model):
         elif self.author_type == self.WEBSITE_TYPE:
             display_name = 'web'
         elif self.author_type == self.ANONYMOUS_USER_TYPE:
-            display_name = self.anonymous_user_nick
+            display_name = self.name
         else:
             raise AttributeError("Unknown type '%s'" % self.author_type)
 
         if not display_name:
             logger.error('MIGRATION_ERROR no display_name for author ID %s' % self.pk)
+            display_name = 'Neznámý'
         
         return reverse('ddcz:author-detail', kwargs={
             'author_id': self.pk,

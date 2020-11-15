@@ -17,16 +17,7 @@
         <li class="creation-detail gallery-item">
             <h2><a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a></h2> 
             <div class="table-like">
-                <p><span class="label">Autor:</span> <span class="value">
-                    {% if a.author_profile %}
-                        <a
-                            href="{% url 'ddcz:user-detail' user_profile_id=a.author_profile.id nick_slug=a.author_profile.slug %}"
-                            class="author"
-                            rel="author">{{ a.autor }}</a>
-                    {% else %}
-                        Neznámý
-                    {% endif %}
-                </span></p>
+                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
                 <p>
                     <a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">
                         <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.jmeno }}">

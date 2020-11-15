@@ -47,16 +47,7 @@
                 <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
                 <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
 
-                <p><span class="label">Autor:</span> <span class="value">
-                    {% if a.author_profile %}
-                        <a
-                            href="{% url 'ddcz:user-detail' user_profile_id=a.author_profile.id nick_slug=a.author_profile.slug %}"
-                            class="author"
-                            rel="author">{{ a.autor }}</a>
-                    {% else %}
-                        Neznámý
-                    {% endif %}
-                </span></p>
+                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
                 <!--
                 <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
                 -->
