@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
                     author = Author.objects.create(
                         author_type = author_type,
-                        anonymous_user_nick = creation.author
+                        anonymous_user_nick = creation.autor
                     )
                     
 
