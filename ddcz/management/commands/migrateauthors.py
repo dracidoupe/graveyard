@@ -9,7 +9,7 @@ from ddcz.text import misencode
 class Command(BaseCommand):
     help = 'Denormalizes authors from legacy tables to Author table'
 
-    def get_author(self, creation):
+    def get_author(self, creation, creation_model):
         if creation.autor:
             author_type = Author.USER_TYPE
             author_name = creation.autor.lower()
@@ -43,9 +43,18 @@ class Command(BaseCommand):
                 except UserProfile.DoesNotExist as err:
                     author_type = Author.ANONYMOUS_USER_TYPE
 
+                    try:
+                        author_encoded = creation.autor.encode('latin2')
+                    except UnicodeEncodeError:
+                        print("Can't do standalone encoding, attempting skipping bad characters")
+                        print("This is for creation %s from model %s" % (creation, creation_model))
+                        
+                        author_encoded = creation.autor.encode('latin2', 'ignore')
+                        print("Author's name replaced from %s to %s" % (creation.autor, author_encoded.decode('latin2')))
+
                     author = Author.objects.create(
                         author_type = author_type,
-                        anonymous_user_nick = creation.autor
+                        anonymous_user_nick = author_encoded.decode('latin2')
                     )
                     
 
@@ -68,5 +77,5 @@ class Command(BaseCommand):
         for creation_model in creation_models:
             for creation in creation_model.objects.all():
                 if not creation.author:
-                    creation.author = self.get_author(creation)
+                    creation.author = self.get_author(creation, creation_model=creation_model)
                     creation.save()
