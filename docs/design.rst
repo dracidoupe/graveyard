@@ -78,3 +78,13 @@ Now simply know as "Dragon" in order to distinguish from Admin, which has now mo
 * Head of Gold Dragon award management
 
 * Level system adjustments
+
+************
+Model Design
+************
+
+All Creations have ``Creation`` abstract model as a simplification. Unfortunately, it doesn't provide unified interface since because of legacy database design, there are no relation captured. 
+
+Hence, the creation instances of all subclases are not treated as entirely standalone as we can't do Creation unified queries anyway. For all practical purposes, creations has to be treated as (``CreationPage``, ``Creation``) pair.
+
+

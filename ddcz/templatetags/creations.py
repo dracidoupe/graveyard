@@ -39,3 +39,7 @@ def author_display(creation_subclass):
         'author_url': author_url,
         'author_name': author_name
     }
+
+@register.simple_tag
+def creation_canonical_url(page, creation):
+    return page.get_creation_canonical_url(creation)

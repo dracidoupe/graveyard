@@ -21,7 +21,7 @@
         <h3>{{ page_dict.page.name }}</h3>
         <ul>
         {% for creation in page_dict.creations %}
-            <li>{{ creation.jmeno }} {% creation_rating creation.pochvez skin %}</li>
+            <li><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a> {% creation_rating creation.pochvez skin %}</li>
         {% endfor %}
         </ul>
     {% endfor %}
