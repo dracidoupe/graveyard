@@ -65,6 +65,18 @@ class CreativePage(models.Model):
 
         return models
 
+    def get_creation_canonical_url(self, creation):
+        try:
+            return reverse('ddcz:common-article-detail', kwargs={
+                'creative_page_slug': self.slug,
+                'article_id': creation.pk,
+                'article_slug': creation.get_slug(),
+            })
+        except Exception:
+            logger.error("Can't create slug, returning #")
+            return '#'
+
+# TODO: Not populated yet, not used, and under scrutiny
 class CreativePageSection(models.Model):
     """ Section within a Creative Page """
     name = models.CharField(max_length=30)
