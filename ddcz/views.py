@@ -80,19 +80,19 @@ def creative_page_list(request, creative_page_slug):
     })
 
 
-def creation_detail(request, creative_page_slug, article_id, article_slug):
+def creation_detail(request, creative_page_slug, creation_id, creation_slug):
 
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split('.')
     model_class = apps.get_model(app, model_class_name)
 
-    article = get_object_or_404(model_class, id=article_id)
-    if article.get_slug() != article_slug:
+    article = get_object_or_404(model_class, id=creation_id)
+    if article.get_slug() != creation_slug:
         return HttpResponsePermanentRedirect(
-            reverse('ddcz:common-article-detail', kwargs={
+            reverse('ddcz:creation-detail', kwargs={
                 'creative_page_slug': creative_page_slug,
-                'article_id': article.pk,
-                'article_slug': article.get_slug(),
+                'creation_id': article.pk,
+                'creation_slug': article.get_slug(),
             })
         )
 
