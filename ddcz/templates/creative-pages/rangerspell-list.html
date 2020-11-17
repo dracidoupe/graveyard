@@ -15,7 +15,7 @@
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:common-article-detail' creative_page_slug=creative_page_slug article_id=a.id article_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
             <div class="table-like">
                 <p><span class="label">Skupina:</span> <span class="value">{{ a.skupina }}</span></p>
                 {% if a.mag %}

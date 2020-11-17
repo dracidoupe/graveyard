@@ -67,10 +67,10 @@ class CreativePage(models.Model):
 
     def get_creation_canonical_url(self, creation):
         try:
-            return reverse('ddcz:common-article-detail', kwargs={
+            return reverse('ddcz:creation-detail', kwargs={
                 'creative_page_slug': self.slug,
-                'article_id': creation.pk,
-                'article_slug': creation.get_slug(),
+                'creation_id': creation.pk,
+                'creation_slug': creation.get_slug(),
             })
         except Exception:
             logger.error("Can't create slug, returning #")
