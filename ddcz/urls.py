@@ -9,12 +9,13 @@ app_name='ddcz'
 urlpatterns = [
     path('', RedirectView.as_view(url='aktuality/', permanent=True)),
     path('aktuality/', views.index, name='news'),
-    path('rubriky/<creative_page_slug>/', views.creative_page_list, name='common-article-list'),
+    path('rubriky/<creative_page_slug>/', views.creative_page_list, name='creation-list'),
     path('rubriky/<creative_page_slug>/koncepce/', views.creative_page_concept, name='creative-page-concept'),
     path('rubriky/<creative_page_slug>/<int:creation_id>-<creation_slug>/', views.creation_detail, name='creation-detail'),
 
+    # Standard list and detail are under creation pages above,
+    # Those are for executing redirect to download/quest location
     path('download/<int:download_id>/', views.download_file, name='download-file'),
-
     path('dobrodruzstvi/<int:quest_id>/', views.quest_view_redirect, name='quest-view'),
 
     path('seznamka/', views.dating, name='dating'),
