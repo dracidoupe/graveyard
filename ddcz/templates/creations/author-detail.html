@@ -3,7 +3,7 @@
 
 {% block content %}
 <div id="page-author">
-    <h1 class="page-heading">{{ author.name }}</h1>
+    <h1 class="page-heading">Autor{% if profile.is_female %}ka{% endif %} {{ author.name }}</h1>
     <div>
         {% if author.author_type == author.USER_TYPE %}
             <a href="{% url 'ddcz:user-detail' author.user.pk author.user.slug %}">Registrovaný uživatel</a>

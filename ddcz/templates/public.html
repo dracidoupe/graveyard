@@ -170,9 +170,11 @@
                                     Hlasů: {{ user.profile.reputace_rozdel }} <br>
                                     Reputace: {{ user.profile.reputace }}
                                 </p>
+                                <p class="admin_link"><a href="{% url 'ddcz:user-detail' user.profile.pk user.profile.slug %}">Statistiky</a>
                                 {% if user.is_staff %}
-                                    <p class="admin_link"><a href="{% url 'dragon:dashboard' %}">Správa</a></p>
+                                    <a href="{% url 'dragon:dashboard' %}">Správa</a>
                                 {% endif %}
+                                </p>
                                 <form method="post" action="{% url 'ddcz:logout-action' %}">
                                     {% csrf_token %}
                                     <input type="submit" value="Odhlaš">

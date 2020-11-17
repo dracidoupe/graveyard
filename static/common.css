@@ -32,6 +32,12 @@ article header .label {
     text-align: left;
 }
 
+/* User profile */
+
+span.label {
+    font-weight: bold;
+}
+
 
 /* Styling for main section of creations */
 
