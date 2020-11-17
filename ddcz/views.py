@@ -23,6 +23,7 @@ from .models import (
     Author,
     CommonArticle, CreativePage, CreativePageConcept,
     DownloadItem, Dating, Link, News, Quest,
+    Phorum,
     UserProfile
 )
 from .users import migrate_user
@@ -280,4 +281,17 @@ def author_detail(request, author_id, slug):
     return render(request, 'creations/author-detail.html', {
         'author': author,
         'pages_with_creations': author.get_all_creations(),
+    })
+
+def phorum(request):
+    default_limit = 20
+    discussions = Phorum.objects.all().order_by('-datum')
+
+    paginator = Paginator(discussions, default_limit)
+    page = request.GET.get('z_s', 1)
+
+    discussions = paginator.get_page(page)
+
+    return render(request, 'discussions/phorum-list.html', {
+        'discussions': discussions,
     })

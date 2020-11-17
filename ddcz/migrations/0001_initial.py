@@ -485,7 +485,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'forum',
-                'managed': False,
+                'managed': not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(

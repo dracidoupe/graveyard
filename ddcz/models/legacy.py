@@ -240,19 +240,6 @@ class Duchovo1(models.Model):
         db_table = 'duchovo1'
 
 
-class Forum(models.Model):
-    nickname = models.CharField(max_length=64)
-    email = models.TextField(blank=True, null=True)
-    datum = models.DateTimeField()
-    text = models.TextField()
-    reg = models.CharField(max_length=50)
-    reputace = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'forum'
-
-
 class Forums(models.Model):
     name = models.CharField(max_length=50)
     active = models.SmallIntegerField()
