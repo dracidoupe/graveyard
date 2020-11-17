@@ -63,6 +63,18 @@ class UserProfile(models.Model):
                 self.ikonka_uzivatele
             )
 
+    @property
+    def is_author(self):
+        return self.author is not None
+
+    @property
+    def is_female(self):
+        return self.pohlavi_uzivatele in ['Žena', '®ena']
+
+    @property
+    def author_url(self):
+        return self.author.profile_url
+
     icon_url = property(get_icon_url)
     slug = property(get_slug)
 
