@@ -4,6 +4,7 @@ from ..magic import MisencodedCharField, MisencodedTextField
 
 
 from .creations import *
+from .discussion import *
 from .social import *
 from .users import *
 

@@ -1,4 +1,3 @@
-
 from django.db import models
 
 from ..magic import MisencodedCharField, MisencodedTextField

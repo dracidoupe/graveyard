@@ -1,0 +1,37 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load pages %}
+{% block content %}
+<div id="page-phorum">
+    <h1 class="page-heading">Fórum</h1>
+
+<p>Fórum slouží především pro informace masového charakteru a informace obecně 
+zajímavé, zvláště ty, co se nedají moc rozumně umístit jinam. 
+Např. pozdravy z Conů, oznamení o významných novinkách na tematicky příbuzných 
+serverech, informace o akcích komunitního charakteru (Jdeme s Pepou do kina na 
+Narnii, chcete taky?) atp. Toto fórum slouží i jako guestbook.<br />Nachází se zde 
+také rozcestník k několika nejzákladnějším stolům, které by měly Fóru ulehčit, 
+a proto je prosím používejte, stejně jako mnoho dalších v Putyce 
+(nikdo vám hlavu neutrhne, když tak neučiníte, ale tady vaše oznámení rychleji 
+zapadne).<br /> Za obsah příspěvku ručí autor, nikoli vlastník serveru nebo redakce 
+DraciDoupe.cz. Toto ovšem neznamená, že nevhodné (např. vulgární) příspěvky 
+nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případech.<br />
+<b>Mějte na paměti, že Fórum je viditelné pro kohokoliv &mdash; je to naše vizitka.</b></p>
+
+    {% pagination discussions %}
+    <div class="article-list">
+    {% for comment in discussions %}
+        <div class="comment">
+            <div class="user_icon"></div>
+            <div>
+                <span class="nick">{{ comment.nickname }} {{ comment.render_user_star }}</span>
+                <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | date:"j. n. Y v H:i:s" }}</time>                
+            </div>
+            <p>{{ comment.text|render_html|safe }}
+        </div>
+        <hr>
+    {% endfor %}
+    </div>
+    {% pagination discussions %}
+</div>
+{% endblock %}

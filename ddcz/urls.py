@@ -26,7 +26,6 @@ urlpatterns = [
 
     path('autor/<int:author_id>-<slug>/', views.author_detail, name='author-detail'),
 
-
     path('uzivatel/prihlaseni/', views.login, name='login-action'),
     path('uzivatel/odhlaseni/', views.logout, name='logout-action'),
     path('uzivatel/reset-hesla/', views.PasswordResetView.as_view(), name='password-reset'),
@@ -34,4 +33,7 @@ urlpatterns = [
     path('uzivatel/zmena-hesla/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password-change'),
     path('uzivatel/zmena-hesla/hotovo/', views.PasswordResetCompleteView.as_view(), name='password-change-done'),
     path('uzivatel/<int:user_profile_id>-<nick_slug>/', views.user_profile, name='user-detail'),
+
+    path('forum/', views.phorum, name='phorum-list'),
+
 ]
