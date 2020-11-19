@@ -232,13 +232,24 @@ def encode_valid_html(entity_string):
                     #FIXME: Doesn't support <br/> variants
                     #FIXME: Doesn't support </end of tags>
                     #FIXME: Doesn't support tag attributes
-                    tag_candidate_string = entity_string[i+4:i+3+MAX_LOOKAHEAD_FROM_LEFT+1].split('&gt;')[0].lower()
+                    tag_candidate_string = entity_string[i+4:i+3+MAX_LOOKAHEAD_FROM_LEFT+3].split('&gt;')[0].lower()
+                    additional_skip = 0
+
+                    if tag_candidate_string.endswith('/'):
+                        tag_candidate_string = tag_candidate_string.rstrip('/')
+                        additional_skip +=1 
+
+                    if tag_candidate_string.endswith(' '):
+                        tag_candidate_string = tag_candidate_string.rstrip(' ')
+                        additional_skip +=1 
+                        
                     if tag_candidate_string in WHITELISTED_TAGS_LIST:
                         # Tag detected: render it and move after the tag
                         encoded_safe_string += "<%s>" % tag_candidate_string
 
                         i += 4 # &lt;
                         i += len(tag_candidate_string)
+                        i += additional_skip # account for potential "<tag />" variants
                         i += 4 # &gt;
 
                         # If it also is a pair tag, put it on stack
@@ -247,6 +258,7 @@ def encode_valid_html(entity_string):
 
                         continue
                     else:
+
                         encoded_safe_string += char
                         i += 1
                         continue

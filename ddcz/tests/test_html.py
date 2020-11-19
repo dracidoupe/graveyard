@@ -87,15 +87,15 @@ class TestUserHtmlRender(TestCase):
         exp = "text that has been <br>breaked"
         self.assert_output(s, exp)
 
-    # def test_break_variant_2(self):
-    #     s = "text that has been &lt;BR/&gt;breaked"
-    #     exp = "text that has been <br>breaked"
-    #     self.assert_output(s, exp)
+    def test_break_variant_2(self):
+        s = "text that has been &lt;BR/&gt;breaked"
+        exp = "text that has been <br>breaked"
+        self.assert_output(s, exp)
 
-    # def test_break_variant_1(self):
-    #     s = "text that has been &lt;BR /&gt;breaked"
-    #     exp = "text that has been <br>breaked"
-    #     self.assert_output(s, exp)
+    def test_break_variant_1(self):
+        s = "text that has been &lt;BR /&gt;breaked"
+        exp = "text that has been <br>breaked"
+        self.assert_output(s, exp)
 
 
 
