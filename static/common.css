@@ -168,3 +168,35 @@ article.link span.actuallink {
     text-align: right;
     float: right; 
 }
+
+/* Discussion */
+.comment {
+    display: flex;
+}
+
+.user_icon {
+    width: 40px;
+    order: 0;
+    padding: 2px;
+    flex-shrink: 0;
+}
+
+.comment_main {
+    order: 1;
+    flex-grow: 1;
+}
+
+.comment_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment_header time {
+    display: inline-flex;
+    order: 1;
+}
+
+.comment_header span.nick {
+    display: inline-flex;
+    order: 0;
+}
