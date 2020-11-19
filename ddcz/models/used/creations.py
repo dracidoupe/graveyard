@@ -176,19 +176,11 @@ class Author(models.Model):
 
     @property
     def profile_url(self):
-        if self.author_type == self.USER_TYPE:
-            display_name = self.user.nick_uzivatele
-        elif self.author_type == self.WEBSITE_TYPE:
+        if self.author_type == self.WEBSITE_TYPE:
             display_name = 'web'
-        elif self.author_type == self.ANONYMOUS_USER_TYPE:
-            display_name = self.name
         else:
-            raise AttributeError("Unknown type '%s'" % self.author_type)
+            display_name = self.name
 
-        if not display_name:
-            logger.error('MIGRATION_ERROR no display_name for author ID %s' % self.pk)
-            display_name = 'Neznámý'
-        
         return reverse('ddcz:author-detail', kwargs={
             'author_id': self.pk,
             'slug': create_slug(display_name)
