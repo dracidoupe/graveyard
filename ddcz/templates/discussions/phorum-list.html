@@ -23,11 +23,13 @@ nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případe
     {% for comment in discussions %}
         <div class="comment">
             <div class="user_icon"></div>
-            <div>
-                <span class="nick">{{ comment.nickname }} {{ comment.render_user_star }}</span>
-                <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | date:"j. n. Y v H:i:s" }}</time>                
+            <div class="comment_main">
+                <div class="comment_header">
+                    <span class="nick">{{ comment.nickname }} {{ comment.render_user_star }}</span>
+                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | date:"j. n. Y v H:i:s" }}</time>                
+                </div>
+                <p>{{ comment.text|render_html|safe }}</p>
             </div>
-            <p>{{ comment.text|render_html|safe }}
         </div>
         <hr>
     {% endfor %}

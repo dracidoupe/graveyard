@@ -11,6 +11,11 @@ body {
     width: 100%;
     text-align: center;
 }
+
+hr {
+  color: #AB8A3F;
+}
+
 body.light h1.page-heading {
   width: 100%;
   font-weight: bold;
