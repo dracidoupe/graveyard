@@ -21,3 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('sprava/', include('dragon.urls', namespace='dragon')),
 ]
+
