@@ -170,7 +170,7 @@
                                     Hlasů: {{ user.profile.reputace_rozdel }} <br>
                                     Reputace: {{ user.profile.reputace }}
                                 </p>
-                                <p class="admin_link"><a href="{% url 'ddcz:user-detail' user.profile.pk user.profile.slug %}">Statistiky</a>
+                                <p class="admin_link"><a href="{{ user.profile.profile_url }}">Statistiky</a>
                                 {% if user.is_staff %}
                                     <a href="{% url 'dragon:dashboard' %}">Správa</a>
                                 {% endif %}

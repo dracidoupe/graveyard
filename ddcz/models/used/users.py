@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 from django.contrib.auth.models import User
 
@@ -74,6 +75,17 @@ class UserProfile(models.Model):
     @property
     def author_url(self):
         return self.author.profile_url
+
+    @property
+    def nick(self):
+        return self.nick_uzivatele
+
+    @property
+    def profile_url(self):
+        return reverse('ddcz:user-detail', kwargs={
+            'user_profile_id': self.pk, 
+            'nick_slug': self.slug
+        })
 
     icon_url = property(get_icon_url)
     slug = property(get_slug)
