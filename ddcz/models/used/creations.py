@@ -104,6 +104,7 @@ class Author(models.Model):
     website = models.CharField(blank=True, null=True, max_length=255)
     website_email = models.CharField(blank=True, null=True, max_length=255)
     anonymous_user_nick = models.CharField(blank=True, null=True, max_length=255)
+    user_nick = models.CharField(blank=True, null=True, max_length=255)
 
     author_type = models.CharField(max_length=1, choices=[
         (USER_TYPE, "Uživatel"),
@@ -149,7 +150,13 @@ class Author(models.Model):
     @property
     def name(self):
         if self.author_type == self.USER_TYPE:
-            display_name = self.user.nick_uzivatele
+            # This could potentially drop once author data is realiable
+            #TODO: Verify nick updates propagate
+            if self.user_nick:
+                display_name = self.user_nick
+            else:
+                display_name = self.user.nick_uzivatele
+
         elif self.author_type == self.WEBSITE_TYPE:
             display_name = self.website
         elif self.author_type == self.ANONYMOUS_USER_TYPE:

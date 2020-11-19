@@ -35,9 +35,18 @@ class Command(BaseCommand):
                     try:
                         author = Author.objects.get(user=profile, author_type=author_type)
                     except Author.DoesNotExist:
+
+                        try:
+                            author_encoded = creation.autor.encode('latin2')
+                        except UnicodeEncodeError:
+                            print("Can't do standalone encoding for registered user, attempting skipping bad characters")
+                            author_encoded = creation.autor.encode('latin2', 'ignore')
+                            print("Author's name replaced from %s to %s" % (creation.autor, author_encoded.decode('latin2')))
+
                         author = Author.objects.create(
                             user = profile,
-                            author_type = author_type
+                            author_type = author_type,
+                            user_nick = creation.autor
                         )
 
                 except UserProfile.DoesNotExist as err:
@@ -46,7 +55,7 @@ class Command(BaseCommand):
                     try:
                         author_encoded = creation.autor.encode('latin2')
                     except UnicodeEncodeError:
-                        print("Can't do standalone encoding, attempting skipping bad characters")
+                        print("Can't do standalone encoding for anonymous user, attempting skipping bad characters")
                         print("This is for creation %s from model %s" % (creation, creation_model))
                         
                         author_encoded = creation.autor.encode('latin2', 'ignore')
