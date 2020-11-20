@@ -1,6 +1,7 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load pages %}
+{% load users %}
 {% block content %}
 <div id="page-phorum">
     <h1 class="page-heading">Fórum</h1>
@@ -25,7 +26,7 @@ nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případe
             <div class="user_icon"></div>
             <div class="comment_main">
                 <div class="comment_header">
-                    {% if comment.by_registered_user %}<span class="nick"><a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a> {{ comment.render_user_star }}</span>
+                    {% if comment.by_registered_user %}<span class="nick"><a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}</span>
                     {% else %}<span class="nick">{{ comment.nickname }}</span>{% endif %}
                     <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | date:"j. n. Y v H:i:s" }}</time>                
                 </div>
