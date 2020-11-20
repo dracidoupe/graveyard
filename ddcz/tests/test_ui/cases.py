@@ -15,7 +15,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     @classproperty
     def live_server_url(cls):
         return 'http://%s:%s' % (
-            socket.gethostname(),
+            getattr(settings, 'TEST_LIVE_SERVER_HOST', None) or socket.gethostname(),
             cls.server_thread.port
         )
 
