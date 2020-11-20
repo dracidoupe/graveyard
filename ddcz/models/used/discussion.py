@@ -25,4 +25,4 @@ class Phorum(models.Model):
 
     @property
     def by_registered_user(self):
-        return self.reg == '1'
+        return self.reg == '1' and self.user
