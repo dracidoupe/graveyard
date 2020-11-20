@@ -29,7 +29,7 @@ nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případe
                     {% else %}<span class="nick">{{ comment.nickname }}</span>{% endif %}
                     <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | date:"j. n. Y v H:i:s" }}</time>                
                 </div>
-                <p>{{ comment.text|render_html|safe }}</p>
+                <p class="comment_text">{{ comment.text|render_html|safe }}</p>
             </div>
         </div>
         <hr>
