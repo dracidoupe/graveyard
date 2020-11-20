@@ -33,7 +33,7 @@ class TestPhorum(SeleniumTestCase):
         self.assertEquals('Fórum', text)
 
     def test_author_rendered(self):
-        text = self.selenium.find_element_by_xpath('//div[@id="page-phorum"]//span[@class="nick"]').text
+        text = self.selenium.find_element_by_xpath('//div[@id="page-phorum"]//span[@class="nick"]').text.strip()
         self.assertEquals('Author', text)
 
     def test_comment_text_rendered(self):

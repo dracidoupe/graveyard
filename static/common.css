@@ -181,6 +181,10 @@ article.link span.actuallink {
     flex-shrink: 0;
 }
 
+.star_level {
+    width: 15px;
+}
+
 .comment_main {
     order: 1;
     flex-grow: 1;
