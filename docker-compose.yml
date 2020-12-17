@@ -1,13 +1,6 @@
 version: '3'
 
-services:
-  # db:
-  #   build: ./db-image/.
-  #   image: mysql:5.5
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=docker
-  #     - MYSQL_DATABASE=ddcz
+services:  
   db:
     image: mysql:5.5
     volumes:
