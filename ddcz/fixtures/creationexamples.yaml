@@ -1,0 +1,16 @@
+- model: ddcz.author
+  pk: 1
+  fields:
+    anonymous_user_nick: Ukázkový Anonymní Author
+    author_type: a
+
+- model: ddcz.commonarticle
+  pk: 1
+  fields:
+    jmeno: Ukázkový Článek
+    author: Ukázkový Anonymní Author
+    autmail: autor@example.com
+    schvaleno: a
+    text: Ukázkový text článku, bez HTML co může být použito.
+    rubrika: clanky
+    skupina: Poezie

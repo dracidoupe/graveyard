@@ -131,3 +131,8 @@ If even `mysql_config` is not there, you have to install development headers for
 
 Old setuptools: `pip install setuptools -U`
 
+## Setup
+
+### Create user account
+
+Use ``python manage.py registeruser`` command, see ``manage.py registeruser --help`` for parameters. 
