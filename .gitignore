@@ -13,3 +13,4 @@ __pycache__
 /graveyard/settings/local.py
 /graveyard/settings/production.py
 
+.DS_store
