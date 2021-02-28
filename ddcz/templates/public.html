@@ -134,8 +134,8 @@
                             <ul class="list_box">
                                 <li>Family Silver</li>
                                 <li>Historic</li>
-                                <li><a href="{% url 'ddcz:change-skin' %}?skin=light">Light</a></li>
-                                <li><a href="{% url 'ddcz:change-skin' %}?skin=dark">Dark</a></li>
+                                <li><a href="{% url 'ddcz:change-skin' %}?skin=light&redirect={{ request.get_full_path }}">Light</a></li>
+                                <li><a href="{% url 'ddcz:change-skin' %}?skin=dark&redirect={{ request.get_full_path }}">Dark</a></li>
                                 <li>Timmothy Gold</li>
                             </ul>
                         </li>
