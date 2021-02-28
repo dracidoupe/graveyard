@@ -5,13 +5,15 @@ from smtplib import SMTPException
 from django.apps import apps
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import (
     HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect,
     HttpResponseBadRequest, HttpResponseServerError, Http404,
 )
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy, resolve, Resolver404
 
 from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth, views as authviews
 from django.contrib.auth.forms import PasswordResetForm
@@ -129,6 +131,7 @@ def quest_view_redirect(request, quest_id):
     quest.save()
     return HttpResponseRedirect(quest.get_final_url())
 
+
 def links(request):
     item_list = Link.objects.filter(schvaleno='a').order_by('-datum')
 
@@ -141,6 +144,7 @@ def links(request):
         'items': items
     })
 
+
 def dating(request):
 
     item_list = Dating.objects.order_by('-datum')
@@ -150,20 +154,24 @@ def dating(request):
 
     items = paginator.get_page(page)
 
-
-
     return render(request, 'dating/list.html', {
         'items': items
     })
+
 
 def change_skin(request):
     new_skin = request.GET.get('skin', 'light')
     if new_skin not in VALID_SKINS:
         return HttpResponseBadRequest("Nerozpoznán skin, který bych mohl nastavit.")
-
     request.session['skin'] = new_skin
 
-    return HttpResponseRedirect("/")
+    try:
+        redirect_url = request.GET.get('redirect', '/')
+        resolve(redirect_url)
+    except Resolver404:
+        redirect_url = '/'
+
+    return HttpResponseRedirect(redirect_url)
 
 
 def logout(request):
