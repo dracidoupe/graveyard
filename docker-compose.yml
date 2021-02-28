@@ -17,4 +17,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
-
+  adminer:
+    image: adminer
+    links:
+      - db
+    ports:
+      - 81:80
