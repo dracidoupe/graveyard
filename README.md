@@ -29,6 +29,11 @@ Requirements:
 * You have [Docker CE installed](https://www.docker.com/community-edition)
 * You have [installed docker-compose](https://docs.docker.com/compose/install/)
 
+* Createyour own copy of [docker-compose configuration](docker-compose.example.yml)
+
+  * `cp docker-compose.example.yml docker-compose.yml`
+  * You can locally change your port if you do not want to run it at 8000
+
 * Create your own copy of [local configuration](graveyard/settings/local.example.py)
 
   * `cp graveyard/settings/local.example.py graveyard/settings/local.py`
