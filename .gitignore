@@ -15,4 +15,4 @@ __pycache__
 
 .DS_store
 
-docker-compose.yml
+/docker-compose.yml
