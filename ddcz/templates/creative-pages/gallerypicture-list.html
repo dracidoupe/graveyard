@@ -2,6 +2,7 @@
 {% load html %}
 {% load creations %}
 {% load pages %}
+{% load datetime %}
 
 {% block content %}
 <div id="page-common-article">
@@ -23,7 +24,7 @@
                         <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.jmeno }}">
                     </a>
                 </p>
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | articleTime}}</time></span></p>
                 <!--
                 <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
                 -->

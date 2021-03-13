@@ -2,6 +2,7 @@
 {% load html %}
 {% block content %}
 {% load pages %}
+{% load datetime %}
 <div id="page-news">
     <h1 class="page-heading">Seznamka</h1>
     <p>Seznamka slouží k seznamování hráčů a PJů. Pokud chcete něco prodat, nebo něco sháníte vkládejte inzeráty do inzerce.</p>
@@ -42,7 +43,7 @@
             </p>
             {% endif %}
             <p>
-                <span class="label">Přidáno:</span><span class="value"><time datetime={{ i.datum | date:"r"  }}>{{ i.datum | date:"j. n. Y v H:i:s" }}</time></span>
+                <span class="label">Přidáno:</span><span class="value"><time datetime={{ i.datum | date:"r"  }}>{{ i.datum | articleTime }}</time></span>
             </p>
             <p>
                 <span class="label">Text:</span><span class="value">{{ i.text|render_html|safe }}</span>

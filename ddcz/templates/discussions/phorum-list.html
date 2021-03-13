@@ -1,6 +1,7 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load pages %}
+{% load datetime %}
 {% load users %}
 {% block content %}
 <div id="page-phorum">
@@ -28,7 +29,7 @@ nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případe
                 <div class="comment_header">
                     {% if comment.by_registered_user %}<span class="nick"><a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}</span>
                     {% else %}<span class="nick">{{ comment.nickname }}</span>{% endif %}
-                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | date:"j. n. Y v H:i:s" }}</time>                
+                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
                 </div>
                 <p class="comment_text">{{ comment.text|render_html|safe }}</p>
             </div>

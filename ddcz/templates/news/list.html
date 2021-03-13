@@ -1,6 +1,8 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load pages %}
+{% load datetime %}
+
 {% block content %}
 <div id="page-news">
     <h1 class="page-heading">Aktuality</h1>
@@ -10,7 +12,7 @@
     {% for n in news %}
         <article>
             <header>
-                <p><time datetime={{ n.datum | date:"r"  }}>{{ n.datum | date:"j. n. Y v H:i:s" }}</time></p>
+                <p><time datetime={{ n.datum | date:"r"  }}>{{ n.datum | articleTime }}</time></p>
             </header>
             <div class="content">
                 {{ n.text|render_html|safe }}
