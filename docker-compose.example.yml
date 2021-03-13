@@ -1,0 +1,25 @@
+version: '3'
+
+services:  
+  db:
+    image: mysql:5.5
+    volumes:
+      - .db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_DATABASE=dracidoupe_cz
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  adminer:
+    image: adminer
+    links:
+      - db
+    ports:
+      - 81:80
