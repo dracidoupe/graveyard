@@ -3,6 +3,7 @@
 {% load creations %}
 {% load pages %}
 
+
 {% block content %}
 <div>
     <h1 class="page-heading">{{ heading }}</h1>
@@ -60,7 +61,7 @@
 
                 <p><span class="label">Popis:</span> <div class="value">{{ a.popis|render_html|safe }}</div></p>
 
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | articleTime }}</time></span></p>
                 <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
                 <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
 
