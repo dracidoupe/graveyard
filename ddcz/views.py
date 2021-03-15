@@ -2,6 +2,8 @@ from hashlib import md5
 import logging
 from smtplib import SMTPException 
 
+from pprint import pprint
+
 from django.apps import apps
 from django.conf import settings
 from django.core.mail import send_mail
@@ -21,6 +23,7 @@ from django.contrib import messages
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
 from .forms import LoginForm, PasswordResetForm
+from .models.used.Forms.forms import PhorumCommentaryForm
 from .models import (
     Author,
     CommonArticle, CreativePage, CreativePageConcept,
@@ -292,6 +295,12 @@ def author_detail(request, author_id, slug):
     })
 
 def phorum(request):
+    if request.method == "POST":
+        form = PhorumCommentaryForm(request.POST)
+
+        return HttpResponseRedirect('')
+
+
     default_limit = 20
     discussions = Phorum.objects.all().order_by('-datum')
 
@@ -302,4 +311,5 @@ def phorum(request):
 
     return render(request, 'discussions/phorum-list.html', {
         'discussions': discussions,
+        'phorumCommentaryForm': PhorumCommentaryForm()
     })
