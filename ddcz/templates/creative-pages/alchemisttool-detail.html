@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <th>Přidáno:</th>
-                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></td>
+                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></td>
                 </tr>
                 <tr>
                     <th>Hlasovalo:</th>
@@ -60,7 +60,7 @@
 
             <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
 
-            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H:i:s" }}</time></span></p>
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></span></p>
             <p><span class="label">Přečteno:</span> <span class="value">{{ article.precteno }}</span></p>
             <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
 

@@ -43,3 +43,12 @@ def author_display(creation_subclass):
 @register.simple_tag
 def creation_canonical_url(page, creation):
     return page.get_creation_canonical_url(creation)
+
+
+@register.filter
+def articleTime(datetime):
+    return datetime.strftime("%-d. %-m. %Y v %-H:%M")
+
+@register.filter
+def articleTimeAlternative(datetime):
+    return datetime.strftime("%-H:%M, %-d. %-m. %Y")
