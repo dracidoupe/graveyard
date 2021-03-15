@@ -170,8 +170,22 @@ article.link span.actuallink {
 }
 
 /* Discussion */
-.comment {
+.omment {
     display: flex;
+}
+
+.Comment--TextArea{
+    display: flex;
+    width: 90%;
+    height: 13rem;
+    margin: 15px auto;
+}
+
+.Comment--Submit{
+    display: flex;
+    max-width: 10rem;
+    margin: 0px auto;
+    padding: 0.1rem 2rem
 }
 
 .user_icon {

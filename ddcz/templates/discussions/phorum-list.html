@@ -20,22 +20,28 @@ nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případe
 <b>Mějte na paměti, že Fórum je viditelné pro kohokoliv &mdash; je to naše vizitka.</b></p>
 
     {% pagination discussions %}
-    <div class="article-list">
+    <section class="article-list">
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'ddcz:phorum-list' %}">
+            {% csrf_token %}
+            {{ phorumCommentaryForm }}
+            <input type="submit" name="addPhorumComment" value="Přidej" class="Comment--Submit">
+        </form>
+        {% endif %}
     {% for comment in discussions %}
-        <div class="comment">
-            <div class="user_icon"></div>
-            <div class="comment_main">
+        <section class="comment">
+            <picture class="user_icon"></picture>
+            <comment class="comment_main">
                 <div class="comment_header">
                     {% if comment.by_registered_user %}<span class="nick"><a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}</span>
                     {% else %}<span class="nick">{{ comment.nickname }}</span>{% endif %}
-                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | date:"j. n. Y v H:i:s" }}</time>                
+                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
                 </div>
                 <p class="comment_text">{{ comment.text|render_html|safe }}</p>
-            </div>
-        </div>
-        <hr>
+            </comment>
+        </section>
     {% endfor %}
-    </div>
+    </section>
     {% pagination discussions %}
 </div>
 {% endblock %}
