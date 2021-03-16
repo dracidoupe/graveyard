@@ -170,7 +170,12 @@ article.link span.actuallink {
 }
 
 /* Discussion */
-.omment {
+
+p.annotation{
+    font-size: 0.95rem
+}
+
+.comment {
     display: flex;
 }
 
