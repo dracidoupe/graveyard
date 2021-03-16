@@ -1,6 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-from .forms import LoginForm
+from .forms.authenticationForms import LoginForm
 
 def common_variables(request):
     skin = request.session.get("skin", "light")

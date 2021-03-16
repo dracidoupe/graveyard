@@ -1,8 +1,6 @@
 from hashlib import md5
 import logging
-from smtplib import SMTPException 
-
-from pprint import pprint
+from smtplib import SMTPException
 
 from django.apps import apps
 from django.conf import settings
@@ -22,8 +20,8 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
 
 from .commonarticles import SLUG_NAME_TRANSLATION_FROM_CZ, COMMON_ARTICLES_CREATIVE_PAGES
-from .forms import LoginForm, PasswordResetForm
-from .models.used.Forms.forms import PhorumCommentaryForm
+from .forms.authenticationForms import LoginForm, PasswordResetForm
+from .forms.commentForms import PhorumCommentForm
 from .models import (
     Author,
     CommonArticle, CreativePage, CreativePageConcept,
@@ -38,6 +36,7 @@ logger = logging.getLogger(__name__)
 
 VALID_SKINS = ['light', 'dark']
 DEFAULT_LIST_SIZE = 5
+
 
 def index(request):
     news_list = News.objects.order_by('-datum')
@@ -62,12 +61,11 @@ def creative_page_list(request, creative_page_slug):
     else:
         article_list = model_class.objects.filter(schvaleno='a').order_by('-datum')
 
-
     if creative_page_slug in ['galerie', 'fotogalerie']:
         default_limit = 18
     else:
         default_limit = DEFAULT_LIST_SIZE
-    
+
     paginator = Paginator(article_list, default_limit)
     page = request.GET.get('z_s', 1)
 
@@ -87,7 +85,6 @@ def creative_page_list(request, creative_page_slug):
 
 
 def creation_detail(request, creative_page_slug, creation_id, creation_slug):
-
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split('.')
     model_class = apps.get_model(app, model_class_name)
@@ -108,6 +105,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
         'creative_page_slug': creative_page_slug,
     })
 
+
 def creative_page_concept(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     try:
@@ -127,6 +125,7 @@ def download_file(request, download_id):
     download_item.download_counter += 1
     download_item.save()
     return HttpResponseRedirect(download_item.item.url)
+
 
 def quest_view_redirect(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
@@ -149,7 +148,6 @@ def links(request):
 
 
 def dating(request):
-
     item_list = Dating.objects.order_by('-datum')
 
     paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
@@ -185,7 +183,7 @@ def logout(request):
 
     logout_auth(request)
     return HttpResponseRedirect(referer)
-    
+
 
 def login(request):
     """
@@ -222,7 +220,7 @@ def login(request):
         return HttpResponseRedirect(referer)
     else:
         m = md5()
-        #TODO: Encoding needs verification
+        # TODO: Encoding needs verification
         # This needs to be done since passwords, of course, can contain
         # non-ascii characters that affect hashing
         m.update(form.cleaned_data['password'].encode('cp1250'))
@@ -247,9 +245,10 @@ def login(request):
 
             login_auth(request, user)
 
-            #TODO: For first-time login, bunch of stuff happens. Inspect legacy login and reimplement
+            # TODO: For first-time login, bunch of stuff happens. Inspect legacy login and reimplement
 
             return HttpResponseRedirect(referer)
+
 
 class PasswordResetView(authviews.PasswordResetView):
     template_name = 'users/password-reset.html'
@@ -262,25 +261,25 @@ class PasswordResetView(authviews.PasswordResetView):
 class PasswordResetDoneView(authviews.PasswordResetDoneView):
     template_name = 'users/password-reset-done.html'
 
+
 class PasswordResetConfirmView(authviews.PasswordResetConfirmView):
     template_name = 'users/password-change.html'
     success_url = reverse_lazy('ddcz:password-change-done')
+
 
 class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
     template_name = 'users/password-change-done.html'
 
 
 def user_profile(request, user_profile_id, nick_slug):
-
     user_profile = get_object_or_404(UserProfile, id=user_profile_id)
-    
+
     return render(request, 'users/detail.html', {
         'profile': user_profile,
     })
 
 
 def author_detail(request, author_id, slug):
-
     author = get_object_or_404(Author, id=author_id)
 
     if author.slug != slug:
@@ -294,12 +293,15 @@ def author_detail(request, author_id, slug):
         'pages_with_creations': author.get_all_creations(),
     })
 
+
 def phorum(request):
-    if request.method == "POST":
-        form = PhorumCommentaryForm(request.POST)
-
+    if request.method == "POST":        
+        form = PhorumCommentForm(request.POST)
+        user = get_object_or_404(UserProfile, nick_uzivatele=request.user)
+        if form.is_valid():
+            phorum_object = Phorum()
+            phorum_object.createNewCommentFromForm(form, user)
         return HttpResponseRedirect('')
-
 
     default_limit = 20
     discussions = Phorum.objects.all().order_by('-datum')
@@ -311,5 +313,5 @@ def phorum(request):
 
     return render(request, 'discussions/phorum-list.html', {
         'discussions': discussions,
-        'phorumCommentaryForm': PhorumCommentaryForm()
+        'phorumCommentaryForm': PhorumCommentForm()
     })

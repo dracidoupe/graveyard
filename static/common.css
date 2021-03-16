@@ -179,14 +179,14 @@ p.annotation{
     display: flex;
 }
 
-.Comment--TextArea{
+.comment__textarea{
     display: flex;
     width: 90%;
     height: 13rem;
     margin: 15px auto;
 }
 
-.Comment--Submit{
+.comment__submit{
     display: flex;
     max-width: 10rem;
     margin: 0px auto;

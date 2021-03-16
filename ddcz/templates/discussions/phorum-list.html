@@ -36,7 +36,7 @@
         <form method="post" action="{% url 'ddcz:phorum-list' %}">
             {% csrf_token %}
             {{ phorumCommentaryForm }}
-            <input type="submit" name="addPhorumComment" value="Přidej" class="Comment--Submit">
+            <input type="submit" name="addPhorumComment" value="Přidej" class="comment__submit">
         </form>
         {% endif %}
     {% for comment in discussions %}
