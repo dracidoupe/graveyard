@@ -8,20 +8,20 @@
 from django.db import models
 
 
-
 class AktivniUzivatele(models.Model):
     relid = models.CharField(primary_key=True, max_length=32)
     id_uzivatele = models.IntegerField()
     lastused = models.PositiveIntegerField()
     agend = models.CharField(max_length=100)
-    ip = models.CharField(db_column='IP', max_length=15)  # Field name made lowercase.
+    ip = models.CharField(db_column="IP", max_length=15)  # Field name made lowercase.
     nck = models.CharField(max_length=50)
     timelimit = models.IntegerField()
     relid_cookie = models.CharField(max_length=32, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'aktivni_uzivatele'
+        db_table = "aktivni_uzivatele"
+
 
 class Ankety(models.Model):
     otazka = models.TextField(blank=True, null=True)
@@ -52,7 +52,7 @@ class Ankety(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ankety'
+        db_table = "ankety"
 
 
 class AnketyHlasy(models.Model):
@@ -63,8 +63,8 @@ class AnketyHlasy(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ankety_hlasy'
-        unique_together = (('anketa_id', 'user_id'),)
+        db_table = "ankety_hlasy"
+        unique_together = (("anketa_id", "user_id"),)
 
 
 class BannedIp(models.Model):
@@ -73,7 +73,7 @@ class BannedIp(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'banned_ip'
+        db_table = "banned_ip"
 
 
 class Chat1Zaloha(models.Model):
@@ -85,7 +85,7 @@ class Chat1Zaloha(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat1_zaloha'
+        db_table = "chat1_zaloha"
 
 
 class Chat1Zaloha2(models.Model):
@@ -97,7 +97,7 @@ class Chat1Zaloha2(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat1_zaloha2'
+        db_table = "chat1_zaloha2"
 
 
 class Chat1(models.Model):
@@ -109,7 +109,7 @@ class Chat1(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_1'
+        db_table = "chat_1"
 
 
 class Chat2(models.Model):
@@ -121,7 +121,7 @@ class Chat2(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_2'
+        db_table = "chat_2"
 
 
 class Chat3(models.Model):
@@ -133,7 +133,7 @@ class Chat3(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_3'
+        db_table = "chat_3"
 
 
 class Chat4(models.Model):
@@ -145,7 +145,7 @@ class Chat4(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_4'
+        db_table = "chat_4"
 
 
 class ChatAktivni(models.Model):
@@ -155,7 +155,7 @@ class ChatAktivni(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_aktivni'
+        db_table = "chat_aktivni"
 
 
 class ChatMistnosti(models.Model):
@@ -171,7 +171,7 @@ class ChatMistnosti(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_mistnosti'
+        db_table = "chat_mistnosti"
 
 
 class ChatPristupy(models.Model):
@@ -180,8 +180,8 @@ class ChatPristupy(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_pristupy'
-        unique_together = (('mistnost_id', 'nick'),)
+        db_table = "chat_pristupy"
+        unique_together = (("mistnost_id", "nick"),)
 
 
 class ChatProperties(models.Model):
@@ -191,7 +191,7 @@ class ChatProperties(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'chat_properties'
+        db_table = "chat_properties"
 
 
 class Diskuze(models.Model):
@@ -205,7 +205,7 @@ class Diskuze(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'diskuze'
+        db_table = "diskuze"
 
 
 class DiskuzeMaillist(models.Model):
@@ -216,8 +216,8 @@ class DiskuzeMaillist(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'diskuze_maillist'
-        unique_together = (('id_uz', 'id_cizi', 'cizi_tbl'),)
+        db_table = "diskuze_maillist"
+        unique_together = (("id_uz", "id_cizi", "cizi_tbl"),)
 
 
 class Duchovo(models.Model):
@@ -227,7 +227,7 @@ class Duchovo(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'duchovo'
+        db_table = "duchovo"
 
 
 class Duchovo1(models.Model):
@@ -237,7 +237,7 @@ class Duchovo1(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'duchovo1'
+        db_table = "duchovo1"
 
 
 class Forums(models.Model):
@@ -287,7 +287,7 @@ class Forums(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'forums'
+        db_table = "forums"
 
 
 class ForumsAuth(models.Model):
@@ -312,7 +312,7 @@ class ForumsAuth(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'forums_auth'
+        db_table = "forums_auth"
 
 
 class ForumsForum2Group(models.Model):
@@ -321,8 +321,8 @@ class ForumsForum2Group(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'forums_forum2group'
-        unique_together = (('group_id', 'forum_id'),)
+        db_table = "forums_forum2group"
+        unique_together = (("group_id", "forum_id"),)
 
 
 class ForumsGroups(models.Model):
@@ -331,7 +331,7 @@ class ForumsGroups(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'forums_groups'
+        db_table = "forums_groups"
 
 
 class ForumsModerators(models.Model):
@@ -340,8 +340,8 @@ class ForumsModerators(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'forums_moderators'
-        unique_together = (('user_id', 'forum_id'),)
+        db_table = "forums_moderators"
+        unique_together = (("user_id", "forum_id"),)
 
 
 class Grouplimits(models.Model):
@@ -351,7 +351,7 @@ class Grouplimits(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'grouplimits'
+        db_table = "grouplimits"
 
 
 class Groupmembers(models.Model):
@@ -362,7 +362,8 @@ class Groupmembers(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'groupmembers'
+        db_table = "groupmembers"
+
 
 class Inzerce(models.Model):
     sekce = models.CharField(max_length=20)
@@ -376,7 +377,8 @@ class Inzerce(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'inzerce'
+        db_table = "inzerce"
+
 
 class Limity(models.Model):
     oprava_hlasovani_po = models.PositiveIntegerField(primary_key=True)
@@ -386,7 +388,8 @@ class Limity(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'limity'
+        db_table = "limity"
+
 
 class Mailgroups(models.Model):
     verejna = models.CharField(max_length=3)
@@ -394,7 +397,7 @@ class Mailgroups(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'mailgroups'
+        db_table = "mailgroups"
 
 
 class MaillistCeka(models.Model):
@@ -405,7 +408,7 @@ class MaillistCeka(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'maillist_ceka'
+        db_table = "maillist_ceka"
 
 
 class MentatNewbie(models.Model):
@@ -418,8 +421,8 @@ class MentatNewbie(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'mentat_newbie'
-        unique_together = (('newbie_id', 'mentat_id'),)
+        db_table = "mentat_newbie"
+        unique_together = (("newbie_id", "mentat_id"),)
 
 
 class MentatsAvail(models.Model):
@@ -429,7 +432,7 @@ class MentatsAvail(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'mentats_avail'
+        db_table = "mentats_avail"
 
 
 class MsDilna(models.Model):
@@ -450,7 +453,7 @@ class MsDilna(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_dilna'
+        db_table = "ms_dilna"
 
 
 class MsDilnaAttachments(models.Model):
@@ -459,8 +462,8 @@ class MsDilnaAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_dilna_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_dilna_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsDilnaBodies(models.Model):
@@ -469,7 +472,7 @@ class MsDilnaBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_dilna_bodies'
+        db_table = "ms_dilna_bodies"
 
 
 class MsDracidoupecz(models.Model):
@@ -490,7 +493,7 @@ class MsDracidoupecz(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_dracidoupecz'
+        db_table = "ms_dracidoupecz"
 
 
 class MsDracidoupeczBodies(models.Model):
@@ -499,7 +502,7 @@ class MsDracidoupeczBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_dracidoupecz_bodies'
+        db_table = "ms_dracidoupecz_bodies"
 
 
 class MsGalerieDilna(models.Model):
@@ -520,7 +523,7 @@ class MsGalerieDilna(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_galerie_dilna'
+        db_table = "ms_galerie_dilna"
 
 
 class MsGalerieDilnaAttachments(models.Model):
@@ -529,8 +532,8 @@ class MsGalerieDilnaAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_galerie_dilna_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_galerie_dilna_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsGalerieDilnaBodies(models.Model):
@@ -539,7 +542,7 @@ class MsGalerieDilnaBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_galerie_dilna_bodies'
+        db_table = "ms_galerie_dilna_bodies"
 
 
 class MsHtmldilna(models.Model):
@@ -560,7 +563,7 @@ class MsHtmldilna(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_htmldilna'
+        db_table = "ms_htmldilna"
 
 
 class MsHtmldilnaAttachments(models.Model):
@@ -569,8 +572,8 @@ class MsHtmldilnaAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_htmldilna_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_htmldilna_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsHtmldilnaBodies(models.Model):
@@ -579,7 +582,7 @@ class MsHtmldilnaBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_htmldilna_bodies'
+        db_table = "ms_htmldilna_bodies"
 
 
 class MsOstatni(models.Model):
@@ -600,7 +603,7 @@ class MsOstatni(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_ostatni'
+        db_table = "ms_ostatni"
 
 
 class MsOstatniAttachments(models.Model):
@@ -609,8 +612,8 @@ class MsOstatniAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_ostatni_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_ostatni_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsOstatniBodies(models.Model):
@@ -619,7 +622,7 @@ class MsOstatniBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_ostatni_bodies'
+        db_table = "ms_ostatni_bodies"
 
 
 class MsPj(models.Model):
@@ -640,7 +643,7 @@ class MsPj(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_pj'
+        db_table = "ms_pj"
 
 
 class MsPjAttachments(models.Model):
@@ -649,8 +652,8 @@ class MsPjAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_pj_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_pj_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsPjBodies(models.Model):
@@ -659,7 +662,7 @@ class MsPjBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_pj_bodies'
+        db_table = "ms_pj_bodies"
 
 
 class MsPravidla(models.Model):
@@ -680,7 +683,7 @@ class MsPravidla(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_pravidla'
+        db_table = "ms_pravidla"
 
 
 class MsPravidlaAttachments(models.Model):
@@ -689,8 +692,8 @@ class MsPravidlaAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_pravidla_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_pravidla_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsPravidlaBodies(models.Model):
@@ -699,7 +702,7 @@ class MsPravidlaBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_pravidla_bodies'
+        db_table = "ms_pravidla_bodies"
 
 
 class MsRing(models.Model):
@@ -720,7 +723,7 @@ class MsRing(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_ring'
+        db_table = "ms_ring"
 
 
 class MsRingAttachments(models.Model):
@@ -729,8 +732,8 @@ class MsRingAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_ring_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_ring_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsRingBodies(models.Model):
@@ -739,7 +742,7 @@ class MsRingBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_ring_bodies'
+        db_table = "ms_ring_bodies"
 
 
 class MsRoleplaying(models.Model):
@@ -760,7 +763,7 @@ class MsRoleplaying(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_roleplaying'
+        db_table = "ms_roleplaying"
 
 
 class MsRoleplayingAttachments(models.Model):
@@ -769,8 +772,8 @@ class MsRoleplayingAttachments(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_roleplaying_attachments'
-        unique_together = (('id', 'message_id'),)
+        db_table = "ms_roleplaying_attachments"
+        unique_together = (("id", "message_id"),)
 
 
 class MsRoleplayingBodies(models.Model):
@@ -779,7 +782,7 @@ class MsRoleplayingBodies(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'ms_roleplaying_bodies'
+        db_table = "ms_roleplaying_bodies"
 
 
 class Navstevnost(models.Model):
@@ -788,7 +791,7 @@ class Navstevnost(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'navstevnost'
+        db_table = "navstevnost"
 
 
 # class Pomocnici(models.Model):
@@ -811,7 +814,7 @@ class Posta(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'posta'
+        db_table = "posta"
 
 
 class Pravomoci(models.Model):
@@ -821,8 +824,9 @@ class Pravomoci(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'pravomoci'
-        unique_together = (('id_user', 'funkce'),)
+        db_table = "pravomoci"
+        unique_together = (("id_user", "funkce"),)
+
 
 class PsiSmecka(models.Model):
     id_uz = models.IntegerField(primary_key=True)
@@ -833,8 +837,8 @@ class PsiSmecka(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'psi_smecka'
-        unique_together = (('id_uz', 'cizi_tbl', 'id_dilo'),)
+        db_table = "psi_smecka"
+        unique_together = (("id_uz", "cizi_tbl", "id_dilo"),)
 
 
 class PutykaBook(models.Model):
@@ -843,8 +847,8 @@ class PutykaBook(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_book'
-        unique_together = (('id_stolu', 'id_uz'),)
+        db_table = "putyka_book"
+        unique_together = (("id_stolu", "id_uz"),)
 
 
 class PutykaLinky(models.Model):
@@ -853,8 +857,8 @@ class PutykaLinky(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_linky'
-        unique_together = (('id_stolu', 'id_linku'),)
+        db_table = "putyka_linky"
+        unique_together = (("id_stolu", "id_linku"),)
 
 
 class PutykaNastenky(models.Model):
@@ -866,7 +870,7 @@ class PutykaNastenky(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_nastenky'
+        db_table = "putyka_nastenky"
 
 
 class PutykaNavstevnost(models.Model):
@@ -876,8 +880,8 @@ class PutykaNavstevnost(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_navstevnost'
-        unique_together = (('cas', 'misto'),)
+        db_table = "putyka_navstevnost"
+        unique_together = (("cas", "misto"),)
 
 
 class PutykaNeoblibene(models.Model):
@@ -886,7 +890,7 @@ class PutykaNeoblibene(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_neoblibene'
+        db_table = "putyka_neoblibene"
 
 
 class PutykaPrispevky(models.Model):
@@ -898,7 +902,7 @@ class PutykaPrispevky(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_prispevky'
+        db_table = "putyka_prispevky"
 
 
 class PutykaPristup(models.Model):
@@ -908,8 +912,8 @@ class PutykaPristup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_pristup'
-        unique_together = (('id_stolu', 'typ_pristupu', 'nick_usera'),)
+        db_table = "putyka_pristup"
+        unique_together = (("id_stolu", "typ_pristupu", "nick_usera"),)
 
 
 class PutykaSekce(models.Model):
@@ -920,7 +924,7 @@ class PutykaSekce(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_sekce'
+        db_table = "putyka_sekce"
 
 
 class PutykaSlucovani(models.Model):
@@ -931,7 +935,7 @@ class PutykaSlucovani(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_slucovani'
+        db_table = "putyka_slucovani"
 
 
 class PutykaStoly(models.Model):
@@ -947,7 +951,7 @@ class PutykaStoly(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_stoly'
+        db_table = "putyka_stoly"
 
 
 class PutykaUzivatele(models.Model):
@@ -961,8 +965,8 @@ class PutykaUzivatele(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'putyka_uzivatele'
-        unique_together = (('id_stolu', 'id_uzivatele'),)
+        db_table = "putyka_uzivatele"
+        unique_together = (("id_stolu", "id_uzivatele"),)
 
 
 class ReklamaBanneryZasobnik(models.Model):
@@ -972,7 +976,7 @@ class ReklamaBanneryZasobnik(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reklama_bannery_zasobnik'
+        db_table = "reklama_bannery_zasobnik"
 
 
 class ReklamaKampaneBannery(models.Model):
@@ -986,7 +990,7 @@ class ReklamaKampaneBannery(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reklama_kampane_bannery'
+        db_table = "reklama_kampane_bannery"
 
 
 class ReklamaKampaneText(models.Model):
@@ -1001,7 +1005,7 @@ class ReklamaKampaneText(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reklama_kampane_text'
+        db_table = "reklama_kampane_text"
 
 
 class ReklamaMail(models.Model):
@@ -1011,7 +1015,7 @@ class ReklamaMail(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reklama_mail'
+        db_table = "reklama_mail"
 
 
 class ReklamaUkoncene(models.Model):
@@ -1024,7 +1028,7 @@ class ReklamaUkoncene(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reklama_ukoncene'
+        db_table = "reklama_ukoncene"
 
 
 class ReklamaUsers(models.Model):
@@ -1037,7 +1041,7 @@ class ReklamaUsers(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reklama_users'
+        db_table = "reklama_users"
 
 
 class ReputaceLog(models.Model):
@@ -1051,7 +1055,7 @@ class ReputaceLog(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reputace_log'
+        db_table = "reputace_log"
 
 
 class ReputaceSpecial(models.Model):
@@ -1061,7 +1065,7 @@ class ReputaceSpecial(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'reputace_special'
+        db_table = "reputace_special"
 
 
 class RubrikyPristup(models.Model):
@@ -1072,8 +1076,8 @@ class RubrikyPristup(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'rubriky_pristup'
-        unique_together = (('id_usr', 'id_cizi', 'rubrika'),)
+        db_table = "rubriky_pristup"
+        unique_together = (("id_usr", "id_cizi", "rubrika"),)
 
 
 class Runy(models.Model):
@@ -1088,7 +1092,7 @@ class Runy(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'runy'
+        db_table = "runy"
 
 
 class Skiny(models.Model):
@@ -1100,7 +1104,7 @@ class Skiny(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'skiny'
+        db_table = "skiny"
 
 
 class Slovnicek(models.Model):
@@ -1114,7 +1118,7 @@ class Slovnicek(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'slovnicek'
+        db_table = "slovnicek"
 
 
 class SortPrim(models.Model):
@@ -1128,12 +1132,14 @@ class SortPrim(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'sort_prim'
+        db_table = "sort_prim"
 
 
 class Spravci(models.Model):
     loginname = models.CharField(max_length=200)
-    pass_field = models.CharField(db_column='pass', max_length=32)  # Field renamed because it was a Python reserved word.
+    pass_field = models.CharField(
+        db_column="pass", max_length=32
+    )  # Field renamed because it was a Python reserved word.
     rubaktuality = models.CharField(max_length=1)
     hrbitov = models.CharField(max_length=1)
     rubdobrodruzstvi = models.CharField(max_length=1)
@@ -1159,12 +1165,14 @@ class Spravci(models.Model):
     kkouzla = models.CharField(max_length=1)
     rubputyka = models.CharField(max_length=1)
     rubprogram = models.CharField(max_length=1)
-    rubms = models.CharField(db_column='rubMS', max_length=1)  # Field name made lowercase.
+    rubms = models.CharField(
+        db_column="rubMS", max_length=1
+    )  # Field name made lowercase.
     rubfotogalerie = models.CharField(max_length=1)
 
     class Meta:
         managed = False
-        db_table = 'spravci'
+        db_table = "spravci"
 
 
 class StatistikyAutori(models.Model):
@@ -1174,8 +1182,8 @@ class StatistikyAutori(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'statistiky_autori'
-        unique_together = (('autor', 'rubrika'),)
+        db_table = "statistiky_autori"
+        unique_together = (("autor", "rubrika"),)
 
 
 class StatistikyDila(models.Model):
@@ -1187,7 +1195,7 @@ class StatistikyDila(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'statistiky_dila'
+        db_table = "statistiky_dila"
 
 
 # class Temptable(models.Model):
@@ -1204,15 +1212,15 @@ class StatistikyDila(models.Model):
 class UserRatings(models.Model):
     record_id = models.AutoField(primary_key=True)
     rating_time = models.IntegerField()
-    byfk = models.IntegerField(db_column='byFK')  # Field name made lowercase.
-    forfk = models.IntegerField(db_column='forFK')  # Field name made lowercase.
+    byfk = models.IntegerField(db_column="byFK")  # Field name made lowercase.
+    forfk = models.IntegerField(db_column="forFK")  # Field name made lowercase.
     visible = models.SmallIntegerField()
     rating_text = models.TextField()
 
     class Meta:
         managed = False
-        db_table = 'user_ratings'
-        unique_together = (('byfk', 'forfk'),)
+        db_table = "user_ratings"
+        unique_together = (("byfk", "forfk"),)
 
 
 class UserStats(models.Model):
@@ -1221,7 +1229,7 @@ class UserStats(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'user_stats'
+        db_table = "user_stats"
 
 
 class UzivateleCekajici(models.Model):
@@ -1239,8 +1247,8 @@ class UzivateleCekajici(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'uzivatele_cekajici'
-        unique_together = (('jmeno', 'prijmeni'),)
+        db_table = "uzivatele_cekajici"
+        unique_together = (("jmeno", "prijmeni"),)
 
 
 class UzivateleFiltry(models.Model):
@@ -1251,20 +1259,22 @@ class UzivateleFiltry(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'uzivatele_filtry'
-        unique_together = (('id_uz', 'rubrika', 'filtr'),)
+        db_table = "uzivatele_filtry"
+        unique_together = (("id_uz", "rubrika", "filtr"),)
 
 
 class UzivateleMaillist(models.Model):
     id_uz = models.IntegerField(primary_key=True)
     rubrika = models.CharField(max_length=20)
     email_uz = models.CharField(max_length=40)
-    mime = models.CharField(db_column='MIME', max_length=1)  # Field name made lowercase.
+    mime = models.CharField(
+        db_column="MIME", max_length=1
+    )  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'uzivatele_maillist'
-        unique_together = (('id_uz', 'rubrika'),)
+        db_table = "uzivatele_maillist"
+        unique_together = (("id_uz", "rubrika"),)
 
 
 class UzivateleZamitnuti(models.Model):
@@ -1277,7 +1287,7 @@ class UzivateleZamitnuti(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'uzivatele_zamitnuti'
+        db_table = "uzivatele_zamitnuti"
 
 
 class ZldHlasovani(models.Model):
@@ -1289,8 +1299,11 @@ class ZldHlasovani(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_hlasovani'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika', 'rocnik'), ('id_usr', 'id_prispevku', 'rubrika', 'rocnik'),)
+        db_table = "zld_hlasovani"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika", "rocnik"),
+            ("id_usr", "id_prispevku", "rubrika", "rocnik"),
+        )
 
 
 class ZldMain(models.Model):
@@ -1299,7 +1312,7 @@ class ZldMain(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_main'
+        db_table = "zld_main"
 
 
 class ZldNominace(models.Model):
@@ -1310,7 +1323,7 @@ class ZldNominace(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace'
+        db_table = "zld_nominace"
 
 
 class ZldNominace20012(models.Model):
@@ -1320,7 +1333,7 @@ class ZldNominace20012(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2001_2'
+        db_table = "zld_nominace_2001_2"
 
 
 class ZldNominace20012Hlasoval(models.Model):
@@ -1331,8 +1344,11 @@ class ZldNominace20012Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2001_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2001_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20021(models.Model):
@@ -1342,7 +1358,7 @@ class ZldNominace20021(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2002_1'
+        db_table = "zld_nominace_2002_1"
 
 
 class ZldNominace20021Hlasoval(models.Model):
@@ -1353,8 +1369,11 @@ class ZldNominace20021Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2002_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2002_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20022(models.Model):
@@ -1364,7 +1383,7 @@ class ZldNominace20022(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2002_2'
+        db_table = "zld_nominace_2002_2"
 
 
 class ZldNominace20022Hlasoval(models.Model):
@@ -1375,8 +1394,11 @@ class ZldNominace20022Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2002_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2002_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20031(models.Model):
@@ -1386,7 +1408,7 @@ class ZldNominace20031(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2003_1'
+        db_table = "zld_nominace_2003_1"
 
 
 class ZldNominace20031Hlasoval(models.Model):
@@ -1397,8 +1419,11 @@ class ZldNominace20031Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2003_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2003_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20032(models.Model):
@@ -1408,7 +1433,7 @@ class ZldNominace20032(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2003_2'
+        db_table = "zld_nominace_2003_2"
 
 
 class ZldNominace20032Hlasoval(models.Model):
@@ -1419,8 +1444,11 @@ class ZldNominace20032Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2003_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2003_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20041(models.Model):
@@ -1430,7 +1458,7 @@ class ZldNominace20041(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2004_1'
+        db_table = "zld_nominace_2004_1"
 
 
 class ZldNominace20041Hlasoval(models.Model):
@@ -1441,8 +1469,11 @@ class ZldNominace20041Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2004_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2004_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20042(models.Model):
@@ -1452,7 +1483,7 @@ class ZldNominace20042(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2004_2'
+        db_table = "zld_nominace_2004_2"
 
 
 class ZldNominace20042Hlasoval(models.Model):
@@ -1463,8 +1494,11 @@ class ZldNominace20042Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2004_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2004_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20051(models.Model):
@@ -1474,7 +1508,7 @@ class ZldNominace20051(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2005_1'
+        db_table = "zld_nominace_2005_1"
 
 
 class ZldNominace20051Hlasoval(models.Model):
@@ -1485,8 +1519,11 @@ class ZldNominace20051Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2005_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2005_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20052(models.Model):
@@ -1496,7 +1533,7 @@ class ZldNominace20052(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2005_2'
+        db_table = "zld_nominace_2005_2"
 
 
 class ZldNominace20052Hlasoval(models.Model):
@@ -1507,8 +1544,8 @@ class ZldNominace20052Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2005_2_hlasoval'
-        unique_together = (('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2005_2_hlasoval"
+        unique_together = (("id_usr", "id_prispevku", "rubrika"),)
 
 
 class ZldNominace20061(models.Model):
@@ -1518,7 +1555,7 @@ class ZldNominace20061(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2006_1'
+        db_table = "zld_nominace_2006_1"
 
 
 class ZldNominace20061Hlasoval(models.Model):
@@ -1529,8 +1566,11 @@ class ZldNominace20061Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2006_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2006_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20062(models.Model):
@@ -1540,7 +1580,7 @@ class ZldNominace20062(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2006_2'
+        db_table = "zld_nominace_2006_2"
 
 
 class ZldNominace20062Hlasoval(models.Model):
@@ -1551,8 +1591,11 @@ class ZldNominace20062Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2006_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2006_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20071(models.Model):
@@ -1562,7 +1605,7 @@ class ZldNominace20071(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2007_1'
+        db_table = "zld_nominace_2007_1"
 
 
 class ZldNominace20071Hlasoval(models.Model):
@@ -1573,8 +1616,11 @@ class ZldNominace20071Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2007_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2007_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20072(models.Model):
@@ -1584,7 +1630,7 @@ class ZldNominace20072(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2007_2'
+        db_table = "zld_nominace_2007_2"
 
 
 class ZldNominace20072Hlasoval(models.Model):
@@ -1595,8 +1641,11 @@ class ZldNominace20072Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2007_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2007_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20081(models.Model):
@@ -1606,7 +1655,7 @@ class ZldNominace20081(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2008_1'
+        db_table = "zld_nominace_2008_1"
 
 
 class ZldNominace20081Hlasoval(models.Model):
@@ -1617,8 +1666,11 @@ class ZldNominace20081Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2008_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2008_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20082(models.Model):
@@ -1628,7 +1680,7 @@ class ZldNominace20082(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2008_2'
+        db_table = "zld_nominace_2008_2"
 
 
 class ZldNominace20082Hlasoval(models.Model):
@@ -1639,8 +1691,11 @@ class ZldNominace20082Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2008_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2008_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20091(models.Model):
@@ -1650,7 +1705,7 @@ class ZldNominace20091(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2009_1'
+        db_table = "zld_nominace_2009_1"
 
 
 class ZldNominace20091Hlasoval(models.Model):
@@ -1661,8 +1716,11 @@ class ZldNominace20091Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2009_1_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2009_1_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldNominace20092(models.Model):
@@ -1672,7 +1730,7 @@ class ZldNominace20092(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2009_2'
+        db_table = "zld_nominace_2009_2"
 
 
 class ZldNominace20092Hlasoval(models.Model):
@@ -1683,8 +1741,11 @@ class ZldNominace20092Hlasoval(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_nominace_2009_2_hlasoval'
-        unique_together = (('id_usr', 'pocet_bodu', 'rubrika'), ('id_usr', 'id_prispevku', 'rubrika'),)
+        db_table = "zld_nominace_2009_2_hlasoval"
+        unique_together = (
+            ("id_usr", "pocet_bodu", "rubrika"),
+            ("id_usr", "id_prispevku", "rubrika"),
+        )
 
 
 class ZldPocitam20012(models.Model):
@@ -1694,7 +1755,7 @@ class ZldPocitam20012(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2001_2'
+        db_table = "zld_pocitam_2001_2"
 
 
 class ZldPocitam20021(models.Model):
@@ -1704,7 +1765,7 @@ class ZldPocitam20021(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2002_1'
+        db_table = "zld_pocitam_2002_1"
 
 
 class ZldPocitam20022(models.Model):
@@ -1714,7 +1775,7 @@ class ZldPocitam20022(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2002_2'
+        db_table = "zld_pocitam_2002_2"
 
 
 class ZldPocitam20031(models.Model):
@@ -1724,7 +1785,7 @@ class ZldPocitam20031(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2003_1'
+        db_table = "zld_pocitam_2003_1"
 
 
 class ZldPocitam20032(models.Model):
@@ -1734,7 +1795,7 @@ class ZldPocitam20032(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2003_2'
+        db_table = "zld_pocitam_2003_2"
 
 
 class ZldPocitam20041(models.Model):
@@ -1744,7 +1805,7 @@ class ZldPocitam20041(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2004_1'
+        db_table = "zld_pocitam_2004_1"
 
 
 class ZldPocitam20042(models.Model):
@@ -1754,7 +1815,7 @@ class ZldPocitam20042(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2004_2'
+        db_table = "zld_pocitam_2004_2"
 
 
 class ZldPocitam20051(models.Model):
@@ -1764,7 +1825,7 @@ class ZldPocitam20051(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2005_1'
+        db_table = "zld_pocitam_2005_1"
 
 
 class ZldPocitam20052(models.Model):
@@ -1774,7 +1835,7 @@ class ZldPocitam20052(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2005_2'
+        db_table = "zld_pocitam_2005_2"
 
 
 class ZldPocitam20061(models.Model):
@@ -1788,7 +1849,7 @@ class ZldPocitam20061(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2006_1'
+        db_table = "zld_pocitam_2006_1"
 
 
 class ZldPocitam20062(models.Model):
@@ -1802,7 +1863,7 @@ class ZldPocitam20062(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2006_2'
+        db_table = "zld_pocitam_2006_2"
 
 
 class ZldPocitam20071(models.Model):
@@ -1816,7 +1877,7 @@ class ZldPocitam20071(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2007_1'
+        db_table = "zld_pocitam_2007_1"
 
 
 class ZldPocitam20072(models.Model):
@@ -1830,7 +1891,7 @@ class ZldPocitam20072(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2007_2'
+        db_table = "zld_pocitam_2007_2"
 
 
 class ZldPocitam20081(models.Model):
@@ -1844,7 +1905,7 @@ class ZldPocitam20081(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2008_1'
+        db_table = "zld_pocitam_2008_1"
 
 
 class ZldPocitam20082(models.Model):
@@ -1858,7 +1919,7 @@ class ZldPocitam20082(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2008_2'
+        db_table = "zld_pocitam_2008_2"
 
 
 class ZldPocitam20091(models.Model):
@@ -1872,7 +1933,7 @@ class ZldPocitam20091(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2009_1'
+        db_table = "zld_pocitam_2009_1"
 
 
 class ZldPocitam20092(models.Model):
@@ -1886,7 +1947,7 @@ class ZldPocitam20092(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2009_2'
+        db_table = "zld_pocitam_2009_2"
 
 
 class ZldPocitam2010(models.Model):
@@ -1900,7 +1961,7 @@ class ZldPocitam2010(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2010'
+        db_table = "zld_pocitam_2010"
 
 
 class ZldPocitam2011(models.Model):
@@ -1914,7 +1975,7 @@ class ZldPocitam2011(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2011'
+        db_table = "zld_pocitam_2011"
 
 
 class ZldPocitam2012(models.Model):
@@ -1928,7 +1989,7 @@ class ZldPocitam2012(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2012'
+        db_table = "zld_pocitam_2012"
 
 
 class ZldPocitam2013(models.Model):
@@ -1942,7 +2003,7 @@ class ZldPocitam2013(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_pocitam_2013'
+        db_table = "zld_pocitam_2013"
 
 
 class ZldVitezove(models.Model):
@@ -1954,8 +2015,8 @@ class ZldVitezove(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove'
-        unique_together = (('cizi_id', 'rubrika', 'rocnik'),)
+        db_table = "zld_vitezove"
+        unique_together = (("cizi_id", "rubrika", "rocnik"),)
 
 
 class ZldVitezove20012(models.Model):
@@ -1966,8 +2027,8 @@ class ZldVitezove20012(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2001_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2001_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20021(models.Model):
@@ -1978,8 +2039,8 @@ class ZldVitezove20021(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2002_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2002_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20022(models.Model):
@@ -1990,8 +2051,8 @@ class ZldVitezove20022(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2002_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2002_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20031(models.Model):
@@ -2002,8 +2063,8 @@ class ZldVitezove20031(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2003_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2003_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20032(models.Model):
@@ -2014,8 +2075,8 @@ class ZldVitezove20032(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2003_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2003_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20041(models.Model):
@@ -2026,8 +2087,8 @@ class ZldVitezove20041(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2004_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2004_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20042(models.Model):
@@ -2038,8 +2099,8 @@ class ZldVitezove20042(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2004_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2004_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20051(models.Model):
@@ -2050,8 +2111,8 @@ class ZldVitezove20051(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2005_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2005_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20052(models.Model):
@@ -2062,8 +2123,8 @@ class ZldVitezove20052(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2005_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2005_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20061(models.Model):
@@ -2074,8 +2135,8 @@ class ZldVitezove20061(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2006_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2006_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20062(models.Model):
@@ -2086,8 +2147,8 @@ class ZldVitezove20062(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2006_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2006_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20071(models.Model):
@@ -2098,8 +2159,8 @@ class ZldVitezove20071(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2007_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2007_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20072(models.Model):
@@ -2110,8 +2171,8 @@ class ZldVitezove20072(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2007_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2007_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20081(models.Model):
@@ -2122,8 +2183,8 @@ class ZldVitezove20081(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2008_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2008_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20082(models.Model):
@@ -2134,8 +2195,8 @@ class ZldVitezove20082(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2008_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2008_2"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20091(models.Model):
@@ -2146,8 +2207,8 @@ class ZldVitezove20091(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2009_1'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2009_1"
+        unique_together = (("cizi_id", "rubrika"),)
 
 
 class ZldVitezove20092(models.Model):
@@ -2158,5 +2219,5 @@ class ZldVitezove20092(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'zld_vitezove_2009_2'
-        unique_together = (('cizi_id', 'rubrika'),)
+        db_table = "zld_vitezove_2009_2"
+        unique_together = (("cizi_id", "rubrika"),)

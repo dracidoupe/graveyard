@@ -9,10 +9,10 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0001_initial'),
+        ("ddcz", "0001_initial"),
     ]
 
     operations = [
-        migrations.RenameModel('Uzivatele', 'UserProfile'),
-        migrations.RenameModel('Seznamka', 'Dating'),
+        migrations.RenameModel("Uzivatele", "UserProfile"),
+        migrations.RenameModel("Seznamka", "Dating"),
     ]

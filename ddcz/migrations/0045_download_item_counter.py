@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0044_download_item_data'),
+        ("ddcz", "0044_download_item_data"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='downloaditem',
-            name='download_counter',
+            model_name="downloaditem",
+            name="download_counter",
             field=models.IntegerField(default=0),
         ),
     ]

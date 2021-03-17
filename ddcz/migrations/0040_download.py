@@ -7,92 +7,104 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0039_item_read'),
+        ("ddcz", "0039_item_read"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='downloady',
+            name="downloady",
             options={},
         ),
         migrations.AddField(
-            model_name='downloady',
-            name='precteno',
+            model_name="downloady",
+            name="precteno",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='downloady',
-            name='tisknuto',
+            model_name="downloady",
+            name="tisknuto",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='autmail',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="downloady",
+            name="autmail",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='autor',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="downloady",
+            name="autor",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='datum',
+            model_name="downloady",
+            name="datum",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='jmeno',
+            model_name="downloady",
+            name="jmeno",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='pochvez',
+            model_name="downloady",
+            name="pochvez",
             field=ddcz.models.magic.MisencodedIntegerField(max_length=5),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='schvaleno',
-            field=ddcz.models.magic.MisencodedCharField(choices=[('a', 'Schváleno'), ('n', 'Neschváleno')], max_length=1),
+            model_name="downloady",
+            name="schvaleno",
+            field=ddcz.models.magic.MisencodedCharField(
+                choices=[("a", "Schváleno"), ("n", "Neschváleno")], max_length=1
+            ),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='zdroj',
+            model_name="downloady",
+            name="zdroj",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='downloady',
-            name='zdrojmail',
+            model_name="downloady",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='delka',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=3, null=True),
+            model_name="item",
+            name="delka",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=3, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='kz',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, db_column='KZ', max_length=3, null=True),
+            model_name="item",
+            name="kz",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, db_column="KZ", max_length=3, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='popis',
+            model_name="item",
+            name="popis",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='precteno',
+            model_name="item",
+            name="precteno",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='skupina',
+            model_name="item",
+            name="skupina",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='uc',
-            field=ddcz.models.magic.MisencodedTextField(blank=True, db_column='UC', null=True),
+            model_name="item",
+            name="uc",
+            field=ddcz.models.magic.MisencodedTextField(
+                blank=True, db_column="UC", null=True
+            ),
         ),
     ]

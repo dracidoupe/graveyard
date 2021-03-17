@@ -7,113 +7,117 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0013_auto_20180614_0021'),
+        ("ddcz", "0013_auto_20180614_0021"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='creationvotes',
-            name='opraveno',
+            model_name="creationvotes",
+            name="opraveno",
             field=ddcz.models.magic.MisencodedCharField(max_length=1),
         ),
         migrations.AlterField(
-            model_name='creationvotes',
-            name='rubrika',
+            model_name="creationvotes",
+            name="rubrika",
             field=ddcz.models.magic.MisencodedCharField(max_length=20),
         ),
         migrations.AlterField(
-            model_name='creativepage',
-            name='name',
+            model_name="creativepage",
+            name="name",
             field=ddcz.models.magic.MisencodedCharField(max_length=30),
         ),
         migrations.AlterField(
-            model_name='creativepageconcept',
-            name='text',
+            model_name="creativepageconcept",
+            name="text",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='creativepagesection',
-            name='name',
+            model_name="creativepagesection",
+            name="name",
             field=ddcz.models.magic.MisencodedCharField(max_length=30),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='bojovnost',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="monster",
+            name="bojovnost",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='datum',
+            model_name="monster",
+            name="datum",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='inteligence',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="monster",
+            name="inteligence",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='oc',
+            model_name="monster",
+            name="oc",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='odl',
+            model_name="monster",
+            name="odl",
             field=ddcz.models.magic.MisencodedCharField(max_length=3),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='poh',
+            model_name="monster",
+            name="poh",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='pokl',
+            model_name="monster",
+            name="pokl",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='popis',
+            model_name="monster",
+            name="popis",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='pres',
+            model_name="monster",
+            name="pres",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='skupina',
+            model_name="monster",
+            name="skupina",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='sm',
-            field=ddcz.models.magic.MisencodedCharField(db_column='SM', max_length=50),
+            model_name="monster",
+            name="sm",
+            field=ddcz.models.magic.MisencodedCharField(db_column="SM", max_length=50),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='uc',
+            model_name="monster",
+            name="uc",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='vel',
+            model_name="monster",
+            name="vel",
             field=ddcz.models.magic.MisencodedCharField(max_length=20),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='zkus',
+            model_name="monster",
+            name="zkus",
             field=ddcz.models.magic.MisencodedCharField(max_length=50),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='zran',
+            model_name="monster",
+            name="zran",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='zvt',
+            model_name="monster",
+            name="zvt",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
     ]

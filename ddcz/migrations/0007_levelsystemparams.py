@@ -6,9 +6,9 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0006_auto_20180609_1941'),
+        ("ddcz", "0006_auto_20180609_1941"),
     ]
 
     operations = [
-        migrations.RenameModel('LevelParametry2', 'LevelSystemParams'),
+        migrations.RenameModel("LevelParametry2", "LevelSystemParams"),
     ]

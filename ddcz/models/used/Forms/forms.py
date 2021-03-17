@@ -4,7 +4,9 @@ from ..discussion import Phorum
 
 
 class PhorumCommentaryForm(forms.Form):
-    text = forms.CharField(label='', widget=forms.Textarea(attrs={'class': 'Comment--TextArea'}))
+    text = forms.CharField(
+        label="", widget=forms.Textarea(attrs={"class": "Comment--TextArea"})
+    )
     username = forms.HiddenInput()
 
     @staticmethod
@@ -16,5 +18,5 @@ class PhorumCommentaryForm(forms.Form):
                 text=form.cleaned_data["text"],
                 reg=1,
                 reputace=reputation,
-                user=user
+                user=user,
             )

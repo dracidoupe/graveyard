@@ -7,37 +7,37 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0048_author_squashed_0050_author_anonymous'),
+        ("ddcz", "0048_author_squashed_0050_author_anonymous"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='forum',
+            name="forum",
             options={},
         ),
         migrations.AlterField(
-            model_name='forum',
-            name='datum',
+            model_name="forum",
+            name="datum",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='forum',
-            name='email',
+            model_name="forum",
+            name="email",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='forum',
-            name='nickname',
+            model_name="forum",
+            name="nickname",
             field=ddcz.models.magic.MisencodedCharField(max_length=64),
         ),
         migrations.AlterField(
-            model_name='forum',
-            name='reg',
+            model_name="forum",
+            name="reg",
             field=ddcz.models.magic.MisencodedCharField(max_length=50),
         ),
         migrations.AlterField(
-            model_name='forum',
-            name='text',
+            model_name="forum",
+            name="text",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
     ]

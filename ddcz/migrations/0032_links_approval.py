@@ -7,13 +7,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0031_alchtools_signular'),
+        ("ddcz", "0031_alchtools_signular"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='link',
-            name='schvaleno',
-            field=ddcz.models.magic.MisencodedCharField(choices=[('a', 'Schváleno'), ('n', 'Neschváleno')], max_length=1),
+            model_name="link",
+            name="schvaleno",
+            field=ddcz.models.magic.MisencodedCharField(
+                choices=[("a", "Schváleno"), ("n", "Neschváleno")], max_length=1
+            ),
         ),
     ]

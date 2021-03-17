@@ -7,115 +7,129 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0005_auto_20180608_2236'),
+        ("ddcz", "0005_auto_20180608_2236"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='dating',
-            options={'verbose_name': 'Seznamka', 'verbose_name_plural': 'Seznamky'},
+            name="dating",
+            options={"verbose_name": "Seznamka", "verbose_name_plural": "Seznamky"},
         ),
         migrations.AlterModelOptions(
-            name='news',
-            options={'verbose_name': 'Aktuality', 'verbose_name_plural': 'Aktuality'},
+            name="news",
+            options={"verbose_name": "Aktuality", "verbose_name_plural": "Aktuality"},
         ),
         migrations.AlterModelOptions(
-            name='userprofile',
+            name="userprofile",
             options={},
         ),
         migrations.AlterField(
-            model_name='dating',
-            name='doba',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=20, null=True),
+            model_name="dating",
+            name="doba",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=20, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dating',
-            name='email',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=40, null=True),
+            model_name="dating",
+            name="email",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=40, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dating',
-            name='jmeno',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=40, null=True),
+            model_name="dating",
+            name="jmeno",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=40, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dating',
-            name='mobil',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=20, null=True),
+            model_name="dating",
+            name="mobil",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=20, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dating',
-            name='okres',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=40, null=True),
+            model_name="dating",
+            name="okres",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=40, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dating',
-            name='sekce',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=20, null=True),
+            model_name="dating",
+            name="sekce",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=20, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dating',
-            name='telefon',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=20, null=True),
+            model_name="dating",
+            name="telefon",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=20, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='chat_filtr_zobrazit',
+            model_name="userprofile",
+            name="chat_filtr_zobrazit",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='chat_pismo',
+            model_name="userprofile",
+            name="chat_pismo",
             field=models.IntegerField(default=12),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='chat_reload',
+            model_name="userprofile",
+            name="chat_reload",
             field=models.IntegerField(default=15),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='chat_zprav',
+            model_name="userprofile",
+            name="chat_zprav",
             field=models.IntegerField(default=20),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='icq_uzivatele',
+            model_name="userprofile",
+            name="icq_uzivatele",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='indexhodnotitele',
+            model_name="userprofile",
+            name="indexhodnotitele",
             field=models.DecimalField(decimal_places=2, default=-99.99, max_digits=4),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='nova_posta',
+            model_name="userprofile",
+            name="nova_posta",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='pospristup',
+            model_name="userprofile",
+            name="pospristup",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='reg_schval_datum',
+            model_name="userprofile",
+            name="reg_schval_datum",
             field=models.DateTimeField(auto_now_add=True, null=True),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='reputace',
+            model_name="userprofile",
+            name="reputace",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='reputace_rozdel',
+            model_name="userprofile",
+            name="reputace_rozdel",
             field=models.PositiveIntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='vek_uzivatele',
+            model_name="userprofile",
+            name="vek_uzivatele",
             field=models.IntegerField(default=0),
         ),
     ]

@@ -7,20 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0002_dating_userprofile'),
+        ("ddcz", "0002_dating_userprofile"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='userprofile',
-            options={
-                'managed': True
-            },
+            name="userprofile",
+            options={"managed": True},
         ),
         migrations.AlterModelOptions(
-            name='dating',
-            options={
-                'managed': True
-            },
+            name="dating",
+            options={"managed": True},
         ),
     ]

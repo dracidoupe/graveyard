@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0021_commonarticle_attr_migration'),
+        ("ddcz", "0021_commonarticle_attr_migration"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='levelsystemparams',
+            name="levelsystemparams",
             options={},
         ),
     ]

@@ -21,14 +21,12 @@ class MisencodedTextField(models.TextField):
             return value
 
 
-
 class MisencodedCharField(models.CharField):
     def from_db_value(self, value, expression, connection):
         if isinstance(value, str):
             return value.encode("latin2").decode("cp1250")
         else:
             return value
-
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if isinstance(value, str) and not prepared:
@@ -38,7 +36,7 @@ class MisencodedCharField(models.CharField):
 
 
 class MisencodedIntegerField(models.CharField):
-    """ 
+    """
     This represents a field that should be integer, but somehow ended up being
     VARCHAR() on database level. For one reason or another, data integrity problems
     DO exist there.
@@ -56,7 +54,7 @@ class MisencodedIntegerField(models.CharField):
         try:
             return int(value)
         except ValueError:
-            #TODO: Logging infrastructure
+            # TODO: Logging infrastructure
             return 0
 
     def get_db_prep_value(self, value, connection, prepared=False):

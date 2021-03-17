@@ -40,29 +40,28 @@ class UserProfile(models.Model):
     reputace_rozdel = models.PositiveIntegerField(default=0)
     status = MisencodedCharField(max_length=1)
     reg_schval_datum = models.DateTimeField(blank=True, null=True, auto_now_add=True)
-    indexhodnotitele = models.DecimalField(max_digits=4, decimal_places=2, default=-99.99)
+    indexhodnotitele = models.DecimalField(
+        max_digits=4, decimal_places=2, default=-99.99
+    )
     reload = MisencodedCharField(max_length=1)
     max_level = models.IntegerField(blank=True, null=True)
     api_key = MisencodedCharField(unique=True, max_length=40, blank=True, null=True)
 
     class Meta:
-        db_table = 'uzivatele'
+        db_table = "uzivatele"
 
     def get_slug(self):
         slug = create_slug(self.nick_uzivatele)
         if not slug:
-            slug = 'neznamy'
-            #TODO: log an error
+            slug = "neznamy"
+            # TODO: log an error
         return slug
 
     def get_icon_url(self):
         if not self.ikonka_uzivatele:
             return None
         else:
-            return urljoin(
-                settings.USER_ICON_MEDIA_ROOT_URL,
-                self.ikonka_uzivatele
-            )
+            return urljoin(settings.USER_ICON_MEDIA_ROOT_URL, self.ikonka_uzivatele)
 
     @property
     def is_author(self):
@@ -70,7 +69,7 @@ class UserProfile(models.Model):
 
     @property
     def is_female(self):
-        return self.pohlavi_uzivatele in ['Žena', '®ena']
+        return self.pohlavi_uzivatele in ["Žena", "®ena"]
 
     @property
     def author_url(self):
@@ -82,18 +81,16 @@ class UserProfile(models.Model):
 
     @property
     def profile_url(self):
-        return reverse('ddcz:user-detail', kwargs={
-            'user_profile_id': self.pk, 
-            'nick_slug': self.slug
-        })
+        return reverse(
+            "ddcz:user-detail",
+            kwargs={"user_profile_id": self.pk, "nick_slug": self.slug},
+        )
 
     icon_url = property(get_icon_url)
     slug = property(get_slug)
 
 
-
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
-
 
 
 @receiver(post_save, sender=User)
@@ -111,10 +108,9 @@ def create_user_profile(sender, instance, created, **kwargs):
         instance.profile.save()
 
 
-
 class LevelSystemParams(models.Model):
     parametr = MisencodedCharField(primary_key=True, max_length=40)
     hodnota = MisencodedCharField(max_length=30)
 
     class Meta:
-        db_table = 'level_parametry_2'
+        db_table = "level_parametry_2"

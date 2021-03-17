@@ -7,72 +7,78 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0045_download_item_counter'),
+        ("ddcz", "0045_download_item_counter"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='dobrodruzstvi',
+            name="dobrodruzstvi",
             options={},
         ),
         migrations.AddField(
-            model_name='dobrodruzstvi',
-            name='tisknuto',
+            model_name="dobrodruzstvi",
+            name="tisknuto",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='autmail',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="dobrodruzstvi",
+            name="autmail",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='autor',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="dobrodruzstvi",
+            name="autor",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='datum',
+            model_name="dobrodruzstvi",
+            name="datum",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='hodnota_hlasovani',
+            model_name="dobrodruzstvi",
+            name="hodnota_hlasovani",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='jmeno',
+            model_name="dobrodruzstvi",
+            name="jmeno",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='pocet_hlasujicich',
+            model_name="dobrodruzstvi",
+            name="pocet_hlasujicich",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='pochvez',
+            model_name="dobrodruzstvi",
+            name="pochvez",
             field=ddcz.models.magic.MisencodedIntegerField(max_length=5),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='precteno',
+            model_name="dobrodruzstvi",
+            name="precteno",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='schvaleno',
-            field=ddcz.models.magic.MisencodedCharField(choices=[('a', 'Schváleno'), ('n', 'Neschváleno')], max_length=1),
+            model_name="dobrodruzstvi",
+            name="schvaleno",
+            field=ddcz.models.magic.MisencodedCharField(
+                choices=[("a", "Schváleno"), ("n", "Neschváleno")], max_length=1
+            ),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='zdroj',
+            model_name="dobrodruzstvi",
+            name="zdroj",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='dobrodruzstvi',
-            name='zdrojmail',
+            model_name="dobrodruzstvi",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
     ]

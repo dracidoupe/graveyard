@@ -20,11 +20,11 @@ from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerF
 from .users import UserProfile
 
 APPROVAL_CHOICES = (
-    ('a', 'Schváleno'),
-    ('n', 'Neschváleno'),
+    ("a", "Schváleno"),
+    ("n", "Neschváleno"),
 )
 
-EMPTY_SLUG_PLACEHOLDER = 'dilo'
+EMPTY_SLUG_PLACEHOLDER = "dilo"
 
 logger = logging.getLogger(__name__)
 
@@ -33,16 +33,18 @@ logger = logging.getLogger(__name__)
 # Introduce an umbrella model for all Creations
 ###
 
+
 class CreativePage(models.Model):
     """ I represent a Creative Page as a first-item concept to help with foreign keys, definitions etc. """
+
     name = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
     model_class = models.CharField(max_length=50)
     # editors = models.ManyToManyField(User)
 
     class Meta:
-        verbose_name = 'Rubrika'
-        verbose_name_plural = 'Rubriky'
+        verbose_name = "Rubrika"
+        verbose_name_plural = "Rubriky"
 
     def __str__(self):
         return "Rubrika {}".format(
@@ -53,12 +55,9 @@ class CreativePage(models.Model):
     def get_all_models(cls):
         models = []
         for page in cls.objects.all():
-            app, model_class_name = page.model_class.split('.')
+            app, model_class_name = page.model_class.split(".")
             model_class = apps.get_model(app, model_class_name)
-            models.append({
-                'model': model_class,
-                'page': page
-            })
+            models.append({"model": model_class, "page": page})
 
         if len(models) == 0:
             raise ValueError("No models set up, run manage.py loaddata pages")
@@ -67,53 +66,66 @@ class CreativePage(models.Model):
 
     def get_creation_canonical_url(self, creation):
         try:
-            return reverse('ddcz:creation-detail', kwargs={
-                'creative_page_slug': self.slug,
-                'creation_id': creation.pk,
-                'creation_slug': creation.get_slug(),
-            })
+            return reverse(
+                "ddcz:creation-detail",
+                kwargs={
+                    "creative_page_slug": self.slug,
+                    "creation_id": creation.pk,
+                    "creation_slug": creation.get_slug(),
+                },
+            )
         except Exception:
             logger.error("Can't create slug, returning #")
-            return '#'
+            return "#"
+
 
 # TODO: Not populated yet, not used, and under scrutiny
 class CreativePageSection(models.Model):
     """ Section within a Creative Page """
+
     name = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
+
 
 class CreativePageConcept(models.Model):
     page = models.OneToOneField(CreativePage, on_delete=models.CASCADE)
     text = models.TextField()
 
     class Meta:
-        verbose_name = 'Koncept rubriky'
-        verbose_name_plural = 'Koncepty rubriky'
+        verbose_name = "Koncept rubriky"
+        verbose_name_plural = "Koncepty rubriky"
 
     def __str__(self):
         return "Koncept rubriky {}".format(
             self.page.name,
         )
 
-class Author(models.Model):
-    USER_TYPE = 'u'
-    WEBSITE_TYPE = 'w'
-    ANONYMOUS_USER_TYPE = 'a'
 
-    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
+class Author(models.Model):
+    USER_TYPE = "u"
+    WEBSITE_TYPE = "w"
+    ANONYMOUS_USER_TYPE = "a"
+
+    user = models.OneToOneField(
+        UserProfile, on_delete=models.CASCADE, blank=True, null=True
+    )
     website = models.CharField(blank=True, null=True, max_length=255)
     website_email = models.CharField(blank=True, null=True, max_length=255)
     anonymous_user_nick = models.CharField(blank=True, null=True, max_length=255)
     user_nick = models.CharField(blank=True, null=True, max_length=255)
 
-    author_type = models.CharField(max_length=1, choices=[
-        (USER_TYPE, "Uživatel"),
-        (WEBSITE_TYPE, "Webová Stránka"),
-        (ANONYMOUS_USER_TYPE, "Anonymní Uživatel"),
-    ], default=None)
+    author_type = models.CharField(
+        max_length=1,
+        choices=[
+            (USER_TYPE, "Uživatel"),
+            (WEBSITE_TYPE, "Webová Stránka"),
+            (ANONYMOUS_USER_TYPE, "Anonymní Uživatel"),
+        ],
+        default=None,
+    )
 
     def get_all_creations(self):
-        """ Returns a dictionary with all creations in the following format:
+        """Returns a dictionary with all creations in the following format:
         {
             'creativepage_slug': {
                 'creations': [CreationSubclassInstance]
@@ -122,36 +134,33 @@ class Author(models.Model):
         }
 
         Only creative pages where user published are included. Only approved creations
-        are included in the result. 
+        are included in the result.
         """
         models = CreativePage.get_all_models()
         creations = {}
 
         for model_info in models:
-            filters = {
-                'author': self,
-                'schvaleno': Creation.CREATION_APPROVED
-            }
-            if model_info['model'].SHARED_BETWEEN_CREATIVE_PAGES:
-                filters['rubrika'] = model_info['page'].slug
+            filters = {"author": self, "schvaleno": Creation.CREATION_APPROVED}
+            if model_info["model"].SHARED_BETWEEN_CREATIVE_PAGES:
+                filters["rubrika"] = model_info["page"].slug
 
-            page_creations = model_info['model'].objects.filter(
-                **filters
-            ).order_by('-datum')
+            page_creations = (
+                model_info["model"].objects.filter(**filters).order_by("-datum")
+            )
 
             if len(page_creations) > 0:
-                creations[model_info['page'].slug] = {
-                    'creations': list(page_creations),
-                    'page': model_info['page'],
+                creations[model_info["page"].slug] = {
+                    "creations": list(page_creations),
+                    "page": model_info["page"],
                 }
-        
+
         return creations
 
     @property
     def name(self):
         if self.author_type == self.USER_TYPE:
             # This could potentially drop once author data is realiable
-            #TODO: Verify nick updates propagate
+            # TODO: Verify nick updates propagate
             if self.user_nick:
                 display_name = self.user_nick
             else:
@@ -165,8 +174,8 @@ class Author(models.Model):
             raise AttributeError("Unknown type '%s'" % self.author_type)
 
         if not display_name:
-            logger.error('MIGRATION_ERROR no display_name for author ID %s' % self.pk)
-            display_name = 'Neznámý'
+            logger.error("MIGRATION_ERROR no display_name for author ID %s" % self.pk)
+            display_name = "Neznámý"
 
         return display_name
 
@@ -177,14 +186,14 @@ class Author(models.Model):
     @property
     def profile_url(self):
         if self.author_type == self.WEBSITE_TYPE:
-            display_name = 'web'
+            display_name = "web"
         else:
             display_name = self.name
 
-        return reverse('ddcz:author-detail', kwargs={
-            'author_id': self.pk,
-            'slug': create_slug(display_name)
-        })
+        return reverse(
+            "ddcz:author-detail",
+            kwargs={"author_id": self.pk, "slug": create_slug(display_name)},
+        )
 
     def __str__(self):
         return self.name
@@ -206,8 +215,9 @@ class Creation(models.Model):
             Neither of those is tracked in database very well and such information is lost.
             Be careful, don't lose aggregates!
     """
-    CREATION_APPROVED = 'a'
-    CREATION_NOT_APPROVED_YET = 'n'
+
+    CREATION_APPROVED = "a"
+    CREATION_NOT_APPROVED_YET = "n"
     # Flag to special-case handling of submodels shared beetween
     # multiple CreativePages -- see CommonArticle. For them,
     # filter based on `rubrika` attribute is needed
@@ -227,7 +237,7 @@ class Creation(models.Model):
     precteno = models.IntegerField(default=0)
     tisknuto = models.IntegerField(default=0)
     datum = models.DateTimeField(auto_now_add=True)
-    
+
     # Careful about difference from "Czech" `autor`, which is a text field
     # with a nickname that relies on being string equal with `UserProfile.nick_uzivatele`
     # Should be NOT NULL in the future, null allowed for transition period
@@ -246,16 +256,12 @@ class Creation(models.Model):
 
     author_profile = property(get_author_profile)
 
-
     def get_slug(self):
         slug = create_slug(self.jmeno)
         return slug or EMPTY_SLUG_PLACEHOLDER
 
     def __str__(self):
-        return "{} od {}".format(
-            self.jmeno,
-            self.autor
-        )
+        return "{} od {}".format(self.jmeno, self.autor)
 
 
 ###
@@ -268,7 +274,7 @@ class Creation(models.Model):
 
 class CreationVotes(models.Model):
     # creation = models.OneToMany(Creation) -- to be introduced later
-    #TODO: Would conversion to ForeignKey work..and would it work to User?
+    # TODO: Would conversion to ForeignKey work..and would it work to User?
     id_uz = models.IntegerField(primary_key=True)
     id_cizi = models.IntegerField()
     rubrika = MisencodedCharField(max_length=20)
@@ -277,13 +283,14 @@ class CreationVotes(models.Model):
     opraveno = MisencodedCharField(max_length=1)
 
     class Meta:
-        db_table = 'hlasovani_prispevky'
-        unique_together = (('id_uz', 'id_cizi', 'rubrika'),)
+        db_table = "hlasovani_prispevky"
+        unique_together = (("id_uz", "id_cizi", "rubrika"),)
 
 
 ###
 # Particular models for all creations follow
 ###
+
 
 class CommonArticle(Creation):
     """
@@ -293,8 +300,9 @@ class CommonArticle(Creation):
 
     This is the only model that represents multiple CreativePages and hence
     needs to be special-cased for that purpose. Mapping to CreativePages
-    is done based on `rubrika` attribute. 
+    is done based on `rubrika` attribute.
     """
+
     SHARED_BETWEEN_CREATIVE_PAGES = True
 
     text = MisencodedTextField()
@@ -303,9 +311,9 @@ class CommonArticle(Creation):
     rubrika = MisencodedCharField(max_length=30)
 
     class Meta:
-        db_table = 'prispevky_dlouhe'
-        verbose_name = 'Běžné příspěvky'
-        verbose_name_plural = 'Běžné příspěvky'
+        db_table = "prispevky_dlouhe"
+        verbose_name = "Běžné příspěvky"
+        verbose_name_plural = "Běžné příspěvky"
 
     def __str__(self):
         return "{}: {} od {}".format(
@@ -331,12 +339,14 @@ class Monster(Creation):
     popis = MisencodedTextField()
     skupina = MisencodedTextField()
     bojovnost = MisencodedCharField(max_length=50, blank=True, null=True)
-    sm = MisencodedCharField(db_column='SM', max_length=50)  # Field name made lowercase.
+    sm = MisencodedCharField(
+        db_column="SM", max_length=50
+    )  # Field name made lowercase.
 
     class Meta:
-        db_table = 'bestiar'
-        verbose_name = 'Nestvůra'
-        verbose_name_plural = 'Bestiář'
+        db_table = "bestiar"
+        verbose_name = "Nestvůra"
+        verbose_name_plural = "Bestiář"
 
     def __str__(self):
         return "{} od {}".format(
@@ -355,47 +365,36 @@ class GalleryPicture(Creation):
     In the g'old days, picture uploads has to be done manually.
 
     Hence, this is a compatibility model to handle both old version
-    (path stored in `cesta`) as well as new version 
+    (path stored in `cesta`) as well as new version
     """
+
     cesta = MisencodedTextField()
     cestathumb = MisencodedTextField()
 
     class Meta:
-        db_table = 'galerie'
-
+        db_table = "galerie"
 
     def get_thumbnail_url(self):
-        return urljoin(
-            settings.GALLERY_MEDIA_ROOT_URL,
-            self.cestathumb
-        )
+        return urljoin(settings.GALLERY_MEDIA_ROOT_URL, self.cestathumb)
 
     def get_picture_url(self):
-        return urljoin(
-            settings.GALLERY_MEDIA_ROOT_URL,
-            self.cesta
-        )
-        
+        return urljoin(settings.GALLERY_MEDIA_ROOT_URL, self.cesta)
+
 
 class Photo(Creation):
     """ See GalleryPicture; just part of different Creation Page """
+
     cesta = MisencodedTextField()
     cestathumb = MisencodedTextField()
 
     class Meta:
-        db_table = 'fotogalerie'
+        db_table = "fotogalerie"
 
     def get_thumbnail_url(self):
-        return urljoin(
-            settings.PHOTOGALLERY_MEDIA_ROOT_URL,
-            self.cestathumb
-        )
+        return urljoin(settings.PHOTOGALLERY_MEDIA_ROOT_URL, self.cestathumb)
 
     def get_picture_url(self):
-        return urljoin(
-            settings.PHOTOGALLERY_MEDIA_ROOT_URL,
-            self.cesta
-        )
+        return urljoin(settings.PHOTOGALLERY_MEDIA_ROOT_URL, self.cesta)
 
 
 class Skill(Creation):
@@ -412,7 +411,8 @@ class Skill(Creation):
     hlasoval = MisencodedTextField(blank=True, null=True)
 
     class Meta:
-        db_table = 'dovednosti'
+        db_table = "dovednosti"
+
 
 class AlchemistTool(Creation):
     mag = models.IntegerField(blank=True, null=True)
@@ -432,7 +432,7 @@ class AlchemistTool(Creation):
     skupina = MisencodedCharField(max_length=30)
 
     class Meta:
-        db_table = 'alchpredmety'
+        db_table = "alchpredmety"
 
     def __str__(self):
         return "{} od {}".format(
@@ -452,13 +452,10 @@ class Link(models.Model):
     hodnota_hlasovani = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        db_table = 'linky'
+        db_table = "linky"
 
     def __str__(self):
-        return "{} {}".format(
-            self.nazev,
-            self.adresa
-        )
+        return "{} {}".format(self.nazev, self.adresa)
 
 
 class RangerSpell(Creation):
@@ -477,14 +474,10 @@ class RangerSpell(Creation):
     popis = MisencodedTextField()
 
     class Meta:
-        db_table = 'hranicarkouzla'
-
+        db_table = "hranicarkouzla"
 
     def __str__(self):
-        return "{} od {}".format(
-            self.jmeno,
-            self.autor
-        )
+        return "{} od {}".format(self.jmeno, self.autor)
 
 
 class WizardSpell(Creation):
@@ -504,11 +497,16 @@ class WizardSpell(Creation):
     skupina = MisencodedTextField()
 
     class Meta:
-        db_table = 'kouzla'
+        db_table = "kouzla"
+
 
 class Item(Creation):
-    uc = MisencodedTextField(db_column='UC', blank=True, null=True)  # Field name made lowercase.
-    kz = MisencodedCharField(db_column='KZ', max_length=3, blank=True, null=True)  # Field name made lowercase.
+    uc = MisencodedTextField(
+        db_column="UC", blank=True, null=True
+    )  # Field name made lowercase.
+    kz = MisencodedCharField(
+        db_column="KZ", max_length=3, blank=True, null=True
+    )  # Field name made lowercase.
     delka = MisencodedCharField(max_length=3, blank=True, null=True)
     cena = models.IntegerField()
     popis = MisencodedTextField()
@@ -520,7 +518,8 @@ class Item(Creation):
     skupina = MisencodedTextField()
 
     class Meta:
-        db_table = 'predmety'
+        db_table = "predmety"
+
 
 class DownloadItem(Creation):
     cesta = models.TextField(blank=True, null=True)
@@ -528,12 +527,13 @@ class DownloadItem(Creation):
     popis = models.TextField()
     velikost = models.IntegerField()
     skupina = models.TextField()
-    item = models.FileField(upload_to='soub', null=True)
+    item = models.FileField(upload_to="soub", null=True)
     download_counter = models.IntegerField(default=0)
 
     class Meta:
-        db_table = 'downloady'
-        verbose_name_plural = 'Downloads'
+        db_table = "downloady"
+        verbose_name_plural = "Downloads"
+
 
 class Quest(Creation):
     anotace = models.TextField()
@@ -541,7 +541,9 @@ class Quest(Creation):
     klicsl = models.TextField()
 
     def get_final_url(self):
-        return urljoin(urljoin(settings.QUEST_MEDIA_ROOT_URL, str(self.pk))+'/', self.cesta)
+        return urljoin(
+            urljoin(settings.QUEST_MEDIA_ROOT_URL, str(self.pk)) + "/", self.cesta
+        )
 
     class Meta:
-        db_table = 'dobrodruzstvi'
+        db_table = "dobrodruzstvi"

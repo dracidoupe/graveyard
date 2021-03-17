@@ -6,20 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0019_photogallery'),
+        ("ddcz", "0019_photogallery"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='commonarticle',
-            options={'verbose_name': 'Běžné příspěvky', 'verbose_name_plural': 'Běžné příspěvky'},
+            name="commonarticle",
+            options={
+                "verbose_name": "Běžné příspěvky",
+                "verbose_name_plural": "Běžné příspěvky",
+            },
         ),
         migrations.AlterModelOptions(
-            name='creativepage',
-            options={'verbose_name': 'Rubrika', 'verbose_name_plural': 'Rubriky'},
+            name="creativepage",
+            options={"verbose_name": "Rubrika", "verbose_name_plural": "Rubriky"},
         ),
         migrations.AlterModelOptions(
-            name='creativepageconcept',
-            options={'verbose_name': 'Koncept rubriky', 'verbose_name_plural': 'Koncepty rubriky'},
+            name="creativepageconcept",
+            options={
+                "verbose_name": "Koncept rubriky",
+                "verbose_name_plural": "Koncepty rubriky",
+            },
         ),
     ]

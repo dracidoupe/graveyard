@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0008_auto_20180610_2246'),
+        ("ddcz", "0008_auto_20180610_2246"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='HlasovaniPrispevky',
-            new_name='CreationVotes',
+            old_name="HlasovaniPrispevky",
+            new_name="CreationVotes",
         ),
         migrations.AlterUniqueTogether(
-            name='creationvotes',
-            unique_together={('id_uz', 'id_cizi', 'rubrika')},
+            name="creationvotes",
+            unique_together={("id_uz", "id_cizi", "rubrika")},
         ),
     ]

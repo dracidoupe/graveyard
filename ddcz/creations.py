@@ -1,4 +1,3 @@
-
 RATING_DESCRIPTIONS = {
     0: "Nepovedené",
     1: "Nic moc",
@@ -6,5 +5,5 @@ RATING_DESCRIPTIONS = {
     3: "Průměr",
     4: "Kvalita",
     5: "Geniální",
-    6: "Vítěz soutěže"
+    6: "Vítěz soutěže",
 }
