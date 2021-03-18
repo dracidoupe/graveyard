@@ -7,57 +7,63 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0036_wizard_spells_rename'),
+        ("ddcz", "0036_wizard_spells_rename"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='predmety',
+            name="predmety",
             options={},
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='autmail',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="predmety",
+            name="autmail",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='autor',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="predmety",
+            name="autor",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='datum',
+            model_name="predmety",
+            name="datum",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='jmeno',
+            model_name="predmety",
+            name="jmeno",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='pochvez',
+            model_name="predmety",
+            name="pochvez",
             field=ddcz.models.magic.MisencodedIntegerField(max_length=5),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='schvaleno',
-            field=ddcz.models.magic.MisencodedCharField(choices=[('a', 'Schváleno'), ('n', 'Neschváleno')], max_length=1),
+            model_name="predmety",
+            name="schvaleno",
+            field=ddcz.models.magic.MisencodedCharField(
+                choices=[("a", "Schváleno"), ("n", "Neschváleno")], max_length=1
+            ),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='tisknuto',
+            model_name="predmety",
+            name="tisknuto",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='zdroj',
+            model_name="predmety",
+            name="zdroj",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='predmety',
-            name='zdrojmail',
+            model_name="predmety",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
     ]

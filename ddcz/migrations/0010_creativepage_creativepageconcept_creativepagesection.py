@@ -9,33 +9,63 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('ddcz', '0009_auto_20180610_2246'),
+        ("ddcz", "0009_auto_20180610_2246"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CreativePage',
+            name="CreativePage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30)),
-                ('slug', models.SlugField(max_length=30)),
-                ('model_class', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=30)),
+                ("slug", models.SlugField(max_length=30)),
+                ("model_class", models.CharField(max_length=50)),
             ],
         ),
         migrations.CreateModel(
-            name='CreativePageConcept',
+            name="CreativePageConcept",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField()),
-                ('page', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='ddcz.CreativePage')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.TextField()),
+                (
+                    "page",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="ddcz.CreativePage",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='CreativePageSection',
+            name="CreativePageSection",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30)),
-                ('slug', models.SlugField(max_length=30)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=30)),
+                ("slug", models.SlugField(max_length=30)),
             ],
         ),
     ]

@@ -9,18 +9,21 @@ logger = logging.getLogger(__name__)
 
 register = template.Library()
 
-@register.inclusion_tag('creations/rating.html')
+
+@register.inclusion_tag("creations/rating.html")
 def creation_rating(rating, skin):
     rating = int(rating or 0)
     return {
-        'rating_description': "Hodnocení: %s" % RATING_DESCRIPTIONS[round(rating)],
-        'rating': range(rating),
-        'skin': skin,
-        'skin_rating_star_url': staticfiles_storage.url("skins/%s/img/rating-star.gif" % skin),
+        "rating_description": "Hodnocení: %s" % RATING_DESCRIPTIONS[round(rating)],
+        "rating": range(rating),
+        "skin": skin,
+        "skin_rating_star_url": staticfiles_storage.url(
+            "skins/%s/img/rating-star.gif" % skin
+        ),
     }
 
 
-@register.inclusion_tag('creations/author-display-link.html')
+@register.inclusion_tag("creations/author-display-link.html")
 def author_display(creation_subclass):
     try:
         author = creation_subclass.author
@@ -28,17 +31,17 @@ def author_display(creation_subclass):
             raise ValueError()
 
     except Exception:
-        author_url = '#'
-        author_name = 'Neznámý'
-        logger.exception("Author not found, data migration error for creation %s" % creation_subclass)
+        author_url = "#"
+        author_name = "Neznámý"
+        logger.exception(
+            "Author not found, data migration error for creation %s" % creation_subclass
+        )
     else:
         author_url = author.profile_url
         author_name = author.name
 
-    return {
-        'author_url': author_url,
-        'author_name': author_name
-    }
+    return {"author_url": author_url, "author_name": author_name}
+
 
 @register.simple_tag
 def creation_canonical_url(page, creation):
@@ -48,6 +51,7 @@ def creation_canonical_url(page, creation):
 @register.filter
 def articleTime(datetime):
     return datetime.strftime("%-d. %-m. %Y v %-H:%M")
+
 
 @register.filter
 def articleTimeAlternative(datetime):

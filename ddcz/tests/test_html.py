@@ -5,8 +5,9 @@ from django.template import Context, Template
 from ddcz.html import (
     encode_valid_html,
     unsafe_encode_valid_creation_html,
-    unsafe_encode_any_creation_html
+    unsafe_encode_any_creation_html,
 )
+
 
 class TestInsecureHtmlRender(TestCase):
     def assert_output(self, entity_string, expected):
@@ -41,9 +42,7 @@ class TestInsecureHtmlRender(TestCase):
 class TestUnsafeHtmlRenderTemplate(TestCase):
     def assert_output(self, entity_string, expected, template_str):
         template = Template(template_str)
-        output = template.render(Context({
-            'entity_string' : entity_string
-        }))
+        output = template.render(Context({"entity_string": entity_string}))
         self.assertEqual(expected, output)
 
     def test_easy_template(self):
@@ -52,8 +51,8 @@ class TestUnsafeHtmlRenderTemplate(TestCase):
         t = "{% load html %}{{ entity_string|render_html_insecurely|safe }}"
         self.assert_output(entity_string, exp, t)
 
-class TestUserHtmlRender(TestCase):
 
+class TestUserHtmlRender(TestCase):
     def assert_output(self, entity_string, expected):
         output = encode_valid_html(entity_string)
         self.assertEqual(expected, output)
@@ -98,9 +97,7 @@ class TestUserHtmlRender(TestCase):
         self.assert_output(s, exp)
 
 
-
 class TestDeprecatedUnsafeHtmlRender(TestCase):
-
     def assert_output(self, entity_string, expected):
         output = unsafe_encode_valid_creation_html(entity_string)
         self.assertEqual(expected, output)
@@ -121,7 +118,9 @@ class TestDeprecatedUnsafeHtmlRender(TestCase):
 
     def test_attributes_unsupported_without_pair_check(self):
         s = "simple &lt;B onclick=&quot;javascript:script(alert)&quot;&gt;bold&lt;/B&gt; text"
-        exp = "simple &lt;B onclick=&quot;javascript:script(alert)&quot;&gt;bold</b> text"
+        exp = (
+            "simple &lt;B onclick=&quot;javascript:script(alert)&quot;&gt;bold</b> text"
+        )
         self.assert_output(s, exp)
 
     def test_nonpair_accepted(self):

@@ -7,33 +7,33 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0024_skills_name'),
+        ("ddcz", "0024_skills_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='commonarticle',
-            name='zdrojmail',
+            model_name="commonarticle",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='zdrojmail',
+            model_name="gallerypicture",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='zdrojmail',
+            model_name="monster",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='photo',
-            name='zdrojmail',
+            model_name="photo",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='skill',
-            name='zdrojmail',
+            model_name="skill",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
     ]

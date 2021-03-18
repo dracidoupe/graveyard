@@ -6,9 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0004_userprofile_user'),
+        ("ddcz", "0004_userprofile_user"),
     ]
 
     operations = [
-        migrations.RunSQL("ALTER TABLE auth_user AUTO_INCREMENT=20000") # yup, hardcoded. Deal with it.
+        migrations.RunSQL(
+            "ALTER TABLE auth_user AUTO_INCREMENT=20000"
+        )  # yup, hardcoded. Deal with it.
     ]

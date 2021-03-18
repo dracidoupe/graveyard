@@ -7,13 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0051_author_cache_nick'),
+        ("ddcz", "0051_author_cache_nick"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='phorum',
-            name='user',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='ddcz.UserProfile'),
+            model_name="phorum",
+            name="user",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="ddcz.UserProfile",
+            ),
         ),
     ]

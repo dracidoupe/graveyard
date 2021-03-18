@@ -7,33 +7,33 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0027_links_rename'),
+        ("ddcz", "0027_links_rename"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='link',
-            name='adresa',
+            model_name="link",
+            name="adresa",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='link',
-            name='nazev',
+            model_name="link",
+            name="nazev",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='link',
-            name='pochvez',
+            model_name="link",
+            name="pochvez",
             field=ddcz.models.magic.MisencodedCharField(max_length=1),
         ),
         migrations.AlterField(
-            model_name='link',
-            name='popis',
+            model_name="link",
+            name="popis",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='link',
-            name='schvaleno',
+            model_name="link",
+            name="schvaleno",
             field=ddcz.models.magic.MisencodedCharField(max_length=1),
         ),
     ]

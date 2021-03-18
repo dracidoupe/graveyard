@@ -2,28 +2,32 @@
 
 from django.db import migrations
 
+
 class FakeFile:
     """ Faking django.core.files.File interface in a way sufficent for one-time data migration"""
+
     def __init__(self, name, size):
         self.name = name
         self.size = size
         self._committed = True
 
     def __str__(self):
-        return self.name or ''
+        return self.name or ""
+
 
 def migrate_item_path(apps, schema_editor):
-    DownloadItem = apps.get_model('ddcz', 'DownloadItem')
+    DownloadItem = apps.get_model("ddcz", "DownloadItem")
 
     for item in DownloadItem.objects.all():
         # 'soub/' hardcoded because that's a constant from the original site
         item.item = FakeFile(name="soub/{0}.zip".format(item.pk), size=item.velikost)
-        item.save(update_fields=['item'])
+        item.save(update_fields=["item"])
+
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0043_download_item_filefield'),
+        ("ddcz", "0043_download_item_filefield"),
     ]
 
     operations = [

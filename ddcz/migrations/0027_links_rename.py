@@ -7,12 +7,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0026_links'),
+        ("ddcz", "0026_links"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Linky',
-            new_name='Link',
+            old_name="Linky",
+            new_name="Link",
         ),
     ]

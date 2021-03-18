@@ -15,9 +15,7 @@ import re
 # Pair refers to whether tag requires corresponding and well-nested closing tag
 #      Defaults to True
 WHITELISTED_TAGS = {
-    "a": {
-        "attributes": ["href", "target"]
-    },
+    "a": {"attributes": ["href", "target"]},
     "b": {},
     "i": {},
     "h1": {},
@@ -35,9 +33,7 @@ WHITELISTED_TAGS = {
     "q": {},
     "cite": {},
     "strong": {},
-    "table": {
-        "attributes": ["border"]
-    },
+    "table": {"attributes": ["border"]},
     "tr": {
         "attributes": ["colspan", "rowspan"],
         "parent_tags": ["table"],
@@ -50,9 +46,7 @@ WHITELISTED_TAGS = {
         "attributes": ["colspan", "rowspan"],
         "parent_tags": ["tr"],
     },
-    "ul": {
-        "attributes": ["type"]
-    },
+    "ul": {"attributes": ["type"]},
     "ol": {},
     "li": {
         "parent_tags": ["ul", "ol"],
@@ -61,13 +55,8 @@ WHITELISTED_TAGS = {
         "pair": False,
         "attributes": ["src", "width", "height"],
     },
-    "br": {
-        "pair": False
-    },
-    "hr": {
-        "attributes": ["width"],
-        "pair": False
-    },
+    "br": {"pair": False},
+    "hr": {"attributes": ["width"], "pair": False},
 }
 
 WHITELISTED_TAGS_LIST = WHITELISTED_TAGS.keys()
@@ -79,6 +68,7 @@ MAX_LOOKAHEAD_FROM_LEFT = max(list(map(len, WHITELISTED_TAGS_LIST))) + len(RIGHT
 
 MAX_ATTRIBUTE_LENGTH = 100
 
+
 def unsafe_encode_valid_creation_html(entity_string):
     """
     ###
@@ -87,7 +77,7 @@ def unsafe_encode_valid_creation_html(entity_string):
     ###
 
     Takes string with HTML entities and naively turn all whitelisted
-    encoded HTML tags into their unencoded version. 
+    encoded HTML tags into their unencoded version.
 
     DOESN'T check for tag parity and doesn't accept any attributes.
 
@@ -95,34 +85,34 @@ def unsafe_encode_valid_creation_html(entity_string):
     """
 
     for tag in WHITELISTED_TAGS:
-        if WHITELISTED_TAGS[tag].get('attributes', False):
+        if WHITELISTED_TAGS[tag].get("attributes", False):
             tag_start_regexp_string = tag
-            for attr in WHITELISTED_TAGS[tag]['attributes']:
-                tag_start_regexp_string += r'(\ ' + attr + r'=\&quot;\S\&quot;)?'
+            for attr in WHITELISTED_TAGS[tag]["attributes"]:
+                tag_start_regexp_string += r"(\ " + attr + r"=\&quot;\S\&quot;)?"
         else:
             tag_start_regexp_string = tag
 
-        if WHITELISTED_TAGS[tag].get('pair', True):
+        if WHITELISTED_TAGS[tag].get("pair", True):
             entity_string = re.sub(
-                LEFT_ENTITY+tag_start_regexp_string+RIGHT_ENTITY,
-                '<'+tag+'>',
+                LEFT_ENTITY + tag_start_regexp_string + RIGHT_ENTITY,
+                "<" + tag + ">",
                 entity_string,
-                flags=re.I
+                flags=re.I,
             )
 
             entity_string = re.sub(
-                LEFT_ENTITY+'/'+tag+RIGHT_ENTITY,
-                '</'+tag+'>',
+                LEFT_ENTITY + "/" + tag + RIGHT_ENTITY,
+                "</" + tag + ">",
                 entity_string,
-                flags=re.I
+                flags=re.I,
             )
 
         else:
             entity_string = re.sub(
-                LEFT_ENTITY+tag_start_regexp_string+'(\ )?(/)?'+RIGHT_ENTITY,
-                '<'+tag+'>',
+                LEFT_ENTITY + tag_start_regexp_string + "(\ )?(/)?" + RIGHT_ENTITY,
+                "<" + tag + ">",
                 entity_string,
-                flags=re.I
+                flags=re.I,
             )
 
     return entity_string
@@ -146,29 +136,13 @@ def unsafe_encode_any_creation_html(entity_string):
     This function relied on proper HTML editorial review.
     """
 
-    entity_string = re.sub(
-        r"\&quot\;",
-        "\"",
-        entity_string
-    )
+    entity_string = re.sub(r"\&quot\;", '"', entity_string)
 
-    entity_string = re.sub(
-        LEFT_ENTITY,
-        "<",
-        entity_string
-    )
+    entity_string = re.sub(LEFT_ENTITY, "<", entity_string)
 
-    entity_string = re.sub(
-        RIGHT_ENTITY,
-        ">",
-        entity_string
-    )
+    entity_string = re.sub(RIGHT_ENTITY, ">", entity_string)
 
-    entity_string = re.sub(
-        r"\&amp\;nbsp\;",
-        "&nbsp;",
-        entity_string
-    )
+    entity_string = re.sub(r"\&amp\;nbsp\;", "&nbsp;", entity_string)
 
     return entity_string
 
@@ -197,24 +171,27 @@ def encode_valid_html(entity_string):
         char = entity_string[i]
 
         # TODO: in_tag_braces recognition will be needed with support for tag
-        # attributes, now we can just skip by        
+        # attributes, now we can just skip by
         # if not in_tag_braces:
         if char != "&":
             encoded_safe_string += char
             i += 1
             continue
         else:
-            if entity_string[i:i+4] == "&lt;":
-                if entity_string[i+4] == "/":
+            if entity_string[i : i + 4] == "&lt;":
+                if entity_string[i + 4] == "/":
                     # Looks like a closing of the tag. Do we have tag on stack?
                     if len(tag_stack) > 0:
-                        if entity_string[i+5:i+5+len(tag_stack[-1])].lower() == tag_stack[-1]:
+                        if (
+                            entity_string[i + 5 : i + 5 + len(tag_stack[-1])].lower()
+                            == tag_stack[-1]
+                        ):
                             # yup, our tag -- remove, render and move on
                             tag = tag_stack.pop()
                             encoded_safe_string += "</%s>" % tag
-                            i += 5 # &lt;/
+                            i += 5  # &lt;/
                             i += len(tag)
-                            i += 4 # &gt;
+                            i += 4  # &gt;
                             continue
                         else:
                             encoded_safe_string += char
@@ -229,28 +206,32 @@ def encode_valid_html(entity_string):
                 else:
                     # Looks like an opening of the tag. Do lookeahead and try
                     # to decide whether it's valid tag
-                    #FIXME: Doesn't support <br/> variants
-                    #FIXME: Doesn't support </end of tags>
-                    #FIXME: Doesn't support tag attributes
-                    tag_candidate_string = entity_string[i+4:i+3+MAX_LOOKAHEAD_FROM_LEFT+3].split('&gt;')[0].lower()
+                    # FIXME: Doesn't support <br/> variants
+                    # FIXME: Doesn't support </end of tags>
+                    # FIXME: Doesn't support tag attributes
+                    tag_candidate_string = (
+                        entity_string[i + 4 : i + 3 + MAX_LOOKAHEAD_FROM_LEFT + 3]
+                        .split("&gt;")[0]
+                        .lower()
+                    )
                     additional_skip = 0
 
-                    if tag_candidate_string.endswith('/'):
-                        tag_candidate_string = tag_candidate_string.rstrip('/')
-                        additional_skip +=1 
+                    if tag_candidate_string.endswith("/"):
+                        tag_candidate_string = tag_candidate_string.rstrip("/")
+                        additional_skip += 1
 
-                    if tag_candidate_string.endswith(' '):
-                        tag_candidate_string = tag_candidate_string.rstrip(' ')
-                        additional_skip +=1 
-                        
+                    if tag_candidate_string.endswith(" "):
+                        tag_candidate_string = tag_candidate_string.rstrip(" ")
+                        additional_skip += 1
+
                     if tag_candidate_string in WHITELISTED_TAGS_LIST:
                         # Tag detected: render it and move after the tag
                         encoded_safe_string += "<%s>" % tag_candidate_string
 
-                        i += 4 # &lt;
+                        i += 4  # &lt;
                         i += len(tag_candidate_string)
-                        i += additional_skip # account for potential "<tag />" variants
-                        i += 4 # &gt;
+                        i += additional_skip  # account for potential "<tag />" variants
+                        i += 4  # &gt;
 
                         # If it also is a pair tag, put it on stack
                         if not WHITELISTED_TAGS.get(tag_candidate_string, False):
@@ -262,7 +243,7 @@ def encode_valid_html(entity_string):
                         encoded_safe_string += char
                         i += 1
                         continue
-                        
+
             else:
                 encoded_safe_string += char
                 i += 1
