@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0015_auto_20180614_2308'),
+        ("ddcz", "0015_auto_20180614_2308"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='monster',
-            options={'verbose_name': 'Nestvůra', 'verbose_name_plural': 'Bestiář'},
+            name="monster",
+            options={"verbose_name": "Nestvůra", "verbose_name_plural": "Bestiář"},
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='tisknuto',
+            model_name="monster",
+            name="tisknuto",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='creativepageconcept',
-            name='text',
+            model_name="creativepageconcept",
+            name="text",
             field=models.TextField(),
         ),
-        migrations.RenameModel('Galerie', 'GalleryPicture'),
+        migrations.RenameModel("Galerie", "GalleryPicture"),
     ]

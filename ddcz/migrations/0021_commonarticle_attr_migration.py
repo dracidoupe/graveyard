@@ -7,38 +7,42 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0020_verbose_names'),
+        ("ddcz", "0020_verbose_names"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='commonarticle',
-            name='autmail',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="commonarticle",
+            name="autmail",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='commonarticle',
-            name='autor',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="commonarticle",
+            name="autor",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='commonarticle',
-            name='datum',
+            model_name="commonarticle",
+            name="datum",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='commonarticle',
-            name='pochvez',
+            model_name="commonarticle",
+            name="pochvez",
             field=ddcz.models.magic.MisencodedIntegerField(max_length=5),
         ),
         migrations.AlterField(
-            model_name='commonarticle',
-            name='precteno',
+            model_name="commonarticle",
+            name="precteno",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='commonarticle',
-            name='tisknuto',
+            model_name="commonarticle",
+            name="tisknuto",
             field=models.IntegerField(default=0),
         ),
     ]

@@ -7,12 +7,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0037_item'),
+        ("ddcz", "0037_item"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Predmety',
-            new_name='Item',
+            old_name="Predmety",
+            new_name="Item",
         ),
     ]

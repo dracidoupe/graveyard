@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0025_properencodingscatchup'),
+        ("ddcz", "0025_properencodingscatchup"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='linky',
+            name="linky",
             options={},
         ),
     ]

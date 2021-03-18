@@ -4,40 +4,42 @@ from ..model_generator import get_valid_article_chain
 
 from ddcz.models import Author, CommonArticle, UserProfile, Quest
 
+
 class TestAuthorLinkRender(SimpleTestCase):
     def setUp(self):
         super().setUp()
 
         data = get_valid_article_chain()
 
-        self.user = data['user']
-        self.author_user = data['author']
-        self.article = data['article']
+        self.user = data["user"]
+        self.author_user = data["author"]
+        self.article = data["article"]
 
     def test_name_inferred(self):
-        self.assertEqual('Author', self.author_user.name)
+        self.assertEqual("Author", self.author_user.name)
 
     def test_profile_url_inferred(self):
-        self.assertEqual('/autor/1-author/', self.author_user.profile_url)
+        self.assertEqual("/autor/1-author/", self.author_user.profile_url)
+
 
 class TestAuthorCretionsList(TestCase):
-    fixtures = ['pages']
+    fixtures = ["pages"]
 
     def setUp(self):
         super().setUp()
 
         data = get_valid_article_chain()
 
-        self.user = data['user']
-        self.author_user = data['author']
-        self.article = data['article']
+        self.user = data["user"]
+        self.author_user = data["author"]
+        self.article = data["article"]
 
         self.quest = Quest(
-            jmeno = 'Example Quest',
-            author = self.author_user,
-            autor = self.user.nick_uzivatele,
-            autmail = self.user.email_uzivatele,
-            schvaleno = Quest.CREATION_APPROVED
+            jmeno="Example Quest",
+            author=self.author_user,
+            autor=self.user.nick_uzivatele,
+            autmail=self.user.email_uzivatele,
+            schvaleno=Quest.CREATION_APPROVED,
         )
 
         self.user.save()
@@ -52,25 +54,30 @@ class TestAuthorCretionsList(TestCase):
     def test_author_creations_pages_returned(self):
         author_creations = self.author_user.get_all_creations()
 
-        self.assertEqual(['clanky', 'dobrodruzstvi'], list(author_creations))
+        self.assertEqual(["clanky", "dobrodruzstvi"], list(author_creations))
 
     def test_author_creations_returned(self):
         author_creations = self.author_user.get_all_creations()
 
-        self.assertEqual('Example Quest', author_creations['dobrodruzstvi']['creations'][0].jmeno)
-        self.assertEqual('Test Article', author_creations['clanky']['creations'][0].jmeno)
+        self.assertEqual(
+            "Example Quest", author_creations["dobrodruzstvi"]["creations"][0].jmeno
+        )
+        self.assertEqual(
+            "Test Article", author_creations["clanky"]["creations"][0].jmeno
+        )
 
     def test_author_pages_returned(self):
         author_creations = self.author_user.get_all_creations()
 
-        self.assertEqual('clanky', author_creations['clanky']['page'].slug)
+        self.assertEqual("clanky", author_creations["clanky"]["page"].slug)
+
 
 class TestAnoymousAuthorTranslates(TestCase):
     def setUp(self):
         # Pathological date found in the wild
         self.author = Author.objects.create(
-            author_type = Author.ANONYMOUS_USER_TYPE,
+            author_type=Author.ANONYMOUS_USER_TYPE,
         )
 
     def test_anonymous_type_recognized_from_data(self):
-        self.assertEqual('a', Author.objects.all()[0].author_type)
+        self.assertEqual("a", Author.objects.all()[0].author_type)

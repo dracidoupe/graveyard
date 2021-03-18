@@ -6,19 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0014_auto_20180614_0032'),
+        ("ddcz", "0014_auto_20180614_0032"),
     ]
 
     operations = [
-        migrations.RenameModel('CommonArticles', 'CommonArticle'),
+        migrations.RenameModel("CommonArticles", "CommonArticle"),
         migrations.AlterField(
-            model_name='creativepage',
-            name='name',
+            model_name="creativepage",
+            name="name",
             field=models.CharField(max_length=30),
         ),
         migrations.AlterField(
-            model_name='creativepagesection',
-            name='name',
+            model_name="creativepagesection",
+            name="name",
             field=models.CharField(max_length=30),
         ),
     ]

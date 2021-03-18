@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0010_creativepage_creativepageconcept_creativepagesection'),
+        ("ddcz", "0010_creativepage_creativepageconcept_creativepagesection"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='bestiar',
+            name="bestiar",
             options={},
         ),
     ]

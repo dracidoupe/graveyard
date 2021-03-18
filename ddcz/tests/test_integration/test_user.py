@@ -6,35 +6,34 @@ from django.contrib.auth.models import User
 
 from ddcz.models import UserProfile
 
+
 class PasswordResetTestCase(TestCase):
-    fixtures = ['pages']
+    fixtures = ["pages"]
 
     def setUp(self):
         super().setUp()
         self.client = Client()
 
-        self.valid_password = 'c1QoUGFss5K6ozi'
-        self.valid_email = 'test@example.com'
-        self.nick = 'integration test user'
+        self.valid_password = "c1QoUGFss5K6ozi"
+        self.valid_email = "test@example.com"
+        self.nick = "integration test user"
 
         self.valid_user = User.objects.create_user(
-            username = self.nick,
-            password = self.valid_password
+            username=self.nick, password=self.valid_password
         )
 
         self.valid_profile = UserProfile.objects.create(
-            nick_uzivatele = self.nick,
-            email_uzivatele = self.valid_email,
-            user = self.valid_user
+            nick_uzivatele=self.nick,
+            email_uzivatele=self.valid_email,
+            user=self.valid_user,
         )
-
 
     def test_sending_form(self):
         self.assertEqual(len(mail.outbox), 0)
 
-        res = self.client.post(reverse('ddcz:password-reset'), {
-            'email': self.valid_email
-        })
+        res = self.client.post(
+            reverse("ddcz:password-reset"), {"email": self.valid_email}
+        )
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEquals(302, res.status_code)

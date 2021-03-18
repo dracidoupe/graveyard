@@ -7,63 +7,73 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0017_auto_20180617_1604'),
+        ("ddcz", "0017_auto_20180617_1604"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='gallerypicture',
-            name='hodnota_hlasovani',
+            model_name="gallerypicture",
+            name="hodnota_hlasovani",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='gallerypicture',
-            name='pocet_hlasujicich',
+            model_name="gallerypicture",
+            name="pocet_hlasujicich",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='gallerypicture',
-            name='precteno',
+            model_name="gallerypicture",
+            name="precteno",
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
-            model_name='gallerypicture',
-            name='tisknuto',
+            model_name="gallerypicture",
+            name="tisknuto",
             field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='autmail',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="gallerypicture",
+            name="autmail",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='autor',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=50, null=True),
+            model_name="gallerypicture",
+            name="autor",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=50, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='datum',
+            model_name="gallerypicture",
+            name="datum",
             field=models.DateTimeField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            model_name="gallerypicture",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='schvaleno',
-            field=ddcz.models.magic.MisencodedCharField(choices=[('a', 'Schváleno'), ('n', 'Neschváleno')], max_length=1),
+            model_name="gallerypicture",
+            name="schvaleno",
+            field=ddcz.models.magic.MisencodedCharField(
+                choices=[("a", "Schváleno"), ("n", "Neschváleno")], max_length=1
+            ),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='zdrojmail',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=30, null=True),
+            model_name="gallerypicture",
+            name="zdrojmail",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=30, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='pochvez',
+            model_name="gallerypicture",
+            name="pochvez",
             field=ddcz.models.magic.MisencodedIntegerField(max_length=5),
         ),
     ]

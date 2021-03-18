@@ -7,57 +7,57 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0016_auto_20180617_1602'),
+        ("ddcz", "0016_auto_20180617_1602"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='gallerypicture',
+            name="gallerypicture",
             options={},
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='autmail',
+            model_name="gallerypicture",
+            name="autmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='autor',
+            model_name="gallerypicture",
+            name="autor",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='cesta',
+            model_name="gallerypicture",
+            name="cesta",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='cestathumb',
+            model_name="gallerypicture",
+            name="cestathumb",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='jmeno',
+            model_name="gallerypicture",
+            name="jmeno",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='pochvez',
+            model_name="gallerypicture",
+            name="pochvez",
             field=ddcz.models.magic.MisencodedCharField(max_length=1),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='schvaleno',
+            model_name="gallerypicture",
+            name="schvaleno",
             field=ddcz.models.magic.MisencodedCharField(max_length=1),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='zdroj',
+            model_name="gallerypicture",
+            name="zdroj",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='gallerypicture',
-            name='zdrojmail',
+            model_name="gallerypicture",
+            name="zdrojmail",
             field=ddcz.models.magic.MisencodedTextField(blank=True, null=True),
         ),
-     ]
+    ]

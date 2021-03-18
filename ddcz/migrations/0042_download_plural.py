@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0041_download_rename'),
+        ("ddcz", "0041_download_rename"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='downloaditem',
-            options={'verbose_name_plural': 'Downloads'},
+            name="downloaditem",
+            options={"verbose_name_plural": "Downloads"},
         ),
     ]
