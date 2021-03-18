@@ -1,6 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-from .forms.authenticationForms import LoginForm
+from .forms.authentication import LoginForm
 
 
 def common_variables(request):

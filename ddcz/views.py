@@ -32,8 +32,8 @@ from .commonarticles import (
     SLUG_NAME_TRANSLATION_FROM_CZ,
     COMMON_ARTICLES_CREATIVE_PAGES,
 )
-from .forms.authenticationForms import LoginForm, PasswordResetForm
-from .forms.commentForms import PhorumCommentForm
+from .forms.authentication import LoginForm, PasswordResetForm
+from .forms.comments import PhorumCommentForm
 from .models import (
     Author,
     CommonArticle,
@@ -365,5 +365,5 @@ def phorum(request):
     return render(
         request,
         "discussions/phorum-list.html",
-        {"discussions": discussions, "phorumCommentaryForm": PhorumCommentForm()},
+        {"discussions": discussions, "phorumCommentForm": PhorumCommentForm()},
     )

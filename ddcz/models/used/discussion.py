@@ -3,8 +3,6 @@ from django.db import models
 from ..magic import MisencodedCharField, MisencodedTextField
 from .users import UserProfile
 
-from pprint import pprint
-
 
 class Phorum(models.Model):
     nickname = MisencodedCharField(max_length=64)
