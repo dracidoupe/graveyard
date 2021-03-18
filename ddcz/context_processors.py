@@ -3,6 +3,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from .forms.authentication import LoginForm
 
 
+
 def common_variables(request):
     skin = request.session.get("skin", "light")
     return {
