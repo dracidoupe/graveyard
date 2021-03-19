@@ -348,10 +348,16 @@ def author_detail(request, author_id, slug):
 def phorum(request):
     if request.method == "POST":
         form = PhorumCommentForm(request.POST)
-        user = get_object_or_404(UserProfile, nick_uzivatele=request.user)
-        if form.is_valid():
-            phorum_object = Phorum()
-            phorum_object.createNewCommentFromForm(form, user)
+        if form.is_valid() and request.user:
+            user = get_object_or_404(UserProfile, nick_uzivatele=request.user)
+            Phorum(
+                reputace=0,
+                reg=1,
+                user=user,
+                text=form.cleaned_data["text"],
+                nickname=user.nick_uzivatele,
+                email=user.email_uzivatele,
+            ).save()
         return HttpResponseRedirect("")
 
     default_limit = 20
