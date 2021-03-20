@@ -14,6 +14,35 @@ Production
 This section contains production-specific information and runbook. 
 
 
+Architecture and Setup
+======================
+
+We are using:
+
+* Heroku for hosting the main application process
+* [AWS RDS](https://aws.amazon.com/rds/) for hosting database
+* [AWS S3](https://aws.amazon.com/s3/) for hosting static data and uploaded content
+
+Old version is running on [EC2 instance](https://aws.amazon.com/ec2/). 
+
+User Content Hosting
+--------------------
+
+User-uploaded content (user icons, gallery pictures etc.) is hosted on S3 im the `uploady.dracidoupe.cz` budket/domain.
+
+There is no sharing with the old version: content from current production needs to be uploaded/synchronized manually. This needs to happen on a bastion host as the EC2 instance can't talk to Amazon APIs because of obsoleted openssl. Use [aws s3 sync . s3://uploady.dracidoupe.cz/whatever](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html) command. 
+
+Static File Hosting
+--------------------
+
+Static files (like CSS) are now hosted from within Heroku [using whitenoise](http://whitenoise.evans.io/en/stable/django.html). They [should be migrated to CDN](https://github.com/dracidoupe/graveyard/issues/2). 
+
+
+Error Reporting
+---------------
+
+Exceptions are sent to [Sentry](https://sentry.io/welcome/). Sentry is configured to push information about new exceptions into [#serverove-novinky Slack channel](https://dracidoupe.slack.com/archives/C7FMV74DT). 
+
 Installation
 ============
 
