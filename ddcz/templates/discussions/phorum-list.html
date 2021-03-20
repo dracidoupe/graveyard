@@ -13,32 +13,38 @@
         Např. pozdravy z Conů, oznamení o významných novinkách na tematicky příbuzných
         serverech, informace o akcích komunitního charakteru (Jdeme s Pepou do kina na
         Narnii, chcete taky?) atp. Toto fórum slouží i jako guestbook.
-        <br>
-
+    </p>
+    <p>
         Nachází se zde
         také rozcestník k několika nejzákladnějším stolům, které by měly Fóru ulehčit,
         a proto je prosím používejte, stejně jako mnoho dalších v Putyce
         (nikdo vám hlavu neutrhne, když tak neučiníte, ale tady vaše oznámení rychleji
         zapadne).
-        <br>
-
+    </p>
+    <p>
         Za obsah příspěvku ručí autor, nikoli vlastník serveru nebo redakce
         DraciDoupe.cz. Toto ovšem neznamená, že nevhodné (např. vulgární) příspěvky
         nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případech.
-        <br>
-
+    </p>
+    <p>
         <b>Mějte na paměti, že Fórum je viditelné pro kohokoliv &mdash; je to naše vizitka.</b>
     </p>
 
-    {% pagination discussions %}
-    <section class="article-list">
-        {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
         <form method="post" action="{% url 'ddcz:phorum-list' %}">
             {% csrf_token %}
             {{ phorumCommentForm }}
             <input type="submit" name="addPhorumComment" value="Přidej" class="comment__submit">
         </form>
-        {% endif %}
+
+    {% else %}
+        <p class="phorum-anonymous-text">
+            Omlouváme se, ale anonymní přispívání bylo zrušeno kvůli některým bezohledným spammerům. Děkujeme za pochopení.
+        </p>
+    {% endif %}
+
+    {% pagination discussions %}
+    <section class="article-list">        
     {% for comment in discussions %}
         <section class="comment">
             <picture class="user_icon"></picture>

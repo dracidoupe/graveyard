@@ -171,8 +171,17 @@ article.link span.actuallink {
 
 /* Discussion */
 
-p.annotation{
-    font-size: 0.95rem
+#page-phorum > p{    
+    text-indent: 1.5rem;
+    font-size: .95rem
+}
+
+.phorum-anonymous-text{
+    margin: 2rem auto;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    max-width: 60%;    
 }
 
 .comment {
@@ -180,10 +189,15 @@ p.annotation{
 }
 
 .comment__textarea{
+    background-color: rgba(255, 255, 255, 0.082);
     display: flex;
     width: 90%;
     height: 13rem;
-    margin: 15px auto;
+    margin: 50px auto;
+    margin-bottom: 15px;
+
+    font-size: 1.3rem;
+    
 }
 
 .comment__submit{

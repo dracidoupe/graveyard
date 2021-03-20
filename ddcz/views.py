@@ -349,15 +349,14 @@ def phorum(request):
     if request.method == "POST":
         form = PhorumCommentForm(request.POST)
         if form.is_valid() and request.user:
-            user = get_object_or_404(UserProfile, nick_uzivatele=request.user)
-            Phorum(
+            Phorum.objects.create(
                 reputace=0,
                 reg=1,
-                user=user,
+                user=request.user.profile,
                 text=form.cleaned_data["text"],
-                nickname=user.nick_uzivatele,
-                email=user.email_uzivatele,
-            ).save()
+                nickname=request.user.profile.nick_uzivatele,
+                email=request.user.profile.email_uzivatele,
+            )
         return HttpResponseRedirect("")
 
     default_limit = 20

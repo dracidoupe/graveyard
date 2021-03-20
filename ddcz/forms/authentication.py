@@ -3,7 +3,7 @@ import logging
 from django import forms
 from django.contrib.auth import forms as authforms
 
-from ddcz.models import UserProfile
+from ..models import UserProfile
 
 logger = logging.getLogger(__name__)
 

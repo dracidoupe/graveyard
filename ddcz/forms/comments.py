@@ -1,4 +1,3 @@
-from ..models.used.discussion import Phorum
 from django import forms
 
 
