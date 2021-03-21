@@ -357,7 +357,7 @@ def phorum(request):
                 nickname=request.user.profile.nick_uzivatele,
                 email=request.user.profile.email_uzivatele,
             )
-        return HttpResponseRedirect("")
+        return HttpResponseRedirect(reverse("ddcz:phorum-list"))
 
     default_limit = 20
     discussions = Phorum.objects.all().order_by("-datum")
