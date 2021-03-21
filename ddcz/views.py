@@ -32,7 +32,8 @@ from .commonarticles import (
     SLUG_NAME_TRANSLATION_FROM_CZ,
     COMMON_ARTICLES_CREATIVE_PAGES,
 )
-from .forms import LoginForm, PasswordResetForm
+from .forms.authentication import LoginForm, PasswordResetForm
+from .forms.comments import PhorumCommentForm
 from .models import (
     Author,
     CommonArticle,
@@ -108,7 +109,6 @@ def creative_page_list(request, creative_page_slug):
 
 
 def creation_detail(request, creative_page_slug, creation_id, creation_slug):
-
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split(".")
     model_class = apps.get_model(app, model_class_name)
@@ -181,7 +181,6 @@ def links(request):
 
 
 def dating(request):
-
     item_list = Dating.objects.order_by("-datum")
 
     paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
@@ -311,7 +310,6 @@ class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
 
 
 def user_profile(request, user_profile_id, nick_slug):
-
     user_profile = get_object_or_404(UserProfile, id=user_profile_id)
 
     return render(
@@ -324,7 +322,6 @@ def user_profile(request, user_profile_id, nick_slug):
 
 
 def author_detail(request, author_id, slug):
-
     author = get_object_or_404(Author, id=author_id)
 
     if author.slug != slug:
@@ -349,6 +346,19 @@ def author_detail(request, author_id, slug):
 
 
 def phorum(request):
+    if request.method == "POST":
+        form = PhorumCommentForm(request.POST)
+        if form.is_valid() and request.user:
+            Phorum.objects.create(
+                reputace=0,
+                reg=1,
+                user=request.user.profile,
+                text=form.cleaned_data["text"],
+                nickname=request.user.profile.nick_uzivatele,
+                email=request.user.profile.email_uzivatele,
+            )
+        return HttpResponseRedirect("")
+
     default_limit = 20
     discussions = Phorum.objects.all().order_by("-datum")
 
@@ -360,7 +370,5 @@ def phorum(request):
     return render(
         request,
         "discussions/phorum-list.html",
-        {
-            "discussions": discussions,
-        },
+        {"discussions": discussions, "phorumCommentForm": PhorumCommentForm()},
     )

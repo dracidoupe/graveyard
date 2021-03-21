@@ -170,8 +170,41 @@ article.link span.actuallink {
 }
 
 /* Discussion */
+
+#page-phorum > p{    
+    text-indent: 1.5rem;
+    font-size: .95rem
+}
+
+.phorum-anonymous-text{
+    margin: 2rem auto;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    max-width: 60%;    
+}
+
 .comment {
     display: flex;
+}
+
+.comment__textarea{
+    background-color: rgba(255, 255, 255, 0.082);
+    display: flex;
+    width: 90%;
+    height: 13rem;
+    margin: 50px auto;
+    margin-bottom: 15px;
+
+    font-size: 1.3rem;
+    
+}
+
+.comment__submit{
+    display: flex;
+    max-width: 10rem;
+    margin: 0px auto;
+    padding: 0.1rem 2rem
 }
 
 .user_icon {
