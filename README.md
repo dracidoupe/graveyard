@@ -14,7 +14,7 @@ If you don't know where to start, take a look at issues or ask Almad on [develop
 
 ## Installation
 
-You can run Graveyard either directly on your machine or inside [Docker](https://www.docker.com/).
+You can run Graveyard either directly on your machine or inside [Docker](https://www.docker.com/). Arm64 systems (like M1 Mac) are supported. 
 
 Installing and running Graveyard directly is faster (on some systems) and removes one lever of indirection, but it makes the setup more complicated. 
 
@@ -107,7 +107,7 @@ OK
 Destroying test database for alias 'default'...
 (graveyard-venv) almad@zeruel:~/projects/graveyard$ 
 ```
-
+  * If you see error like `selenium.common.exceptions.WebDriverException: Message: 'chromedriver' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home`, you have to go to [the linked page](https://sites.google.com/a/chromium.org/chromedriver/home) and download the chromedriver to your computer. Place it somewhere in `$PATH` like `/usr/local/bin`
 * Create the database schema: `python manage.py migrate`
 * Load data about pages to see what's on production: `python manage.py loaddata pages`
 * Run the thing! `python manage.py runserver`
