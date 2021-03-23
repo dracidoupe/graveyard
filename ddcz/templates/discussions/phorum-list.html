@@ -33,7 +33,7 @@
     {% if user.is_authenticated %}
         <form method="post" action="{% url 'ddcz:phorum-list' %}">
             {% csrf_token %}
-            {{ phorumCommentForm }}
+            {{ phorumCommentForm.as_p }}
             <input type="submit" name="addPhorumComment" value="Přidej" class="comment__submit">
         </form>
 
@@ -50,8 +50,21 @@
             <picture class="user_icon"></picture>
             <comment class="comment_main">
                 <div class="comment_header">
-                    {% if comment.by_registered_user %}<span class="nick"><a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}</span>
-                    {% else %}<span class="nick">{{ comment.nickname }}</span>{% endif %}
+                    {% if comment.by_registered_user %}
+                        <span class="nick">
+                            <a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}
+                        </span>
+                    {% else %}
+                        <span class="nick">{{ comment.nickname }}</span>
+                    {% endif %}
+                    {% if user.is_authenticated and comment.nickname == user.profile.nick_uzivatele %}
+                        <form action="{% url 'ddcz:phorum-list' %}" method="post">
+                            {% csrf_token %}
+                            {{ deleteForm.post_type }}
+                            <input type="hidden" name="post_id" value="{{ comment.id }}">
+                            <input type="submit" value="Smazat" class="phorum-delete">
+                        </form>
+                    {% endif %}
                     <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
                 </div>
                 <p class="comment_text">{{ comment.text|render_html|safe }}</p>

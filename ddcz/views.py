@@ -33,7 +33,7 @@ from .commonarticles import (
     COMMON_ARTICLES_CREATIVE_PAGES,
 )
 from .forms.authentication import LoginForm, PasswordResetForm
-from .forms.comments import PhorumCommentForm
+from .forms.comments import PhorumCommentForm, DeletePhorumCommentForm
 from .models import (
     Author,
     CommonArticle,
@@ -346,17 +346,23 @@ def author_detail(request, author_id, slug):
 
 
 def phorum(request):
-    if request.method == "POST":
-        form = PhorumCommentForm(request.POST)
-        if form.is_valid() and request.user:
-            Phorum.objects.create(
-                reputace=0,
-                reg=1,
-                user=request.user.profile,
-                text=form.cleaned_data["text"],
-                nickname=request.user.profile.nick_uzivatele,
-                email=request.user.profile.email_uzivatele,
-            )
+    if request.method == "POST" and request.POST["post_type"] and request.user:
+        if request.POST["post_type"] == "d":
+            db_data = Phorum.objects.get(id=request.POST["post_id"])
+            if db_data.nickname == request.user.profile.nick_uzivatele:
+                db_data.delete()
+        elif request.POST["post_type"] == "a":
+            form = PhorumCommentForm(request.POST)
+            if form.is_valid():
+                Phorum.objects.create(
+                    reputace=0,
+                    reg=1,
+                    user=request.user.profile,
+                    text=form.cleaned_data["text"],
+                    nickname=request.user.profile.nick_uzivatele,
+                    email=request.user.profile.email_uzivatele,
+                )
+
         return HttpResponseRedirect(reverse("ddcz:phorum-list"))
 
     default_limit = 20
@@ -370,5 +376,9 @@ def phorum(request):
     return render(
         request,
         "discussions/phorum-list.html",
-        {"discussions": discussions, "phorumCommentForm": PhorumCommentForm()},
+        {
+            "discussions": discussions,
+            "phorumCommentForm": PhorumCommentForm(),
+            "deleteForm": DeletePhorumCommentForm(),
+        },
     )

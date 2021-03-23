@@ -237,3 +237,12 @@ article.link span.actuallink {
     display: inline-flex;
     order: 0;
 }
+
+.phorum-delete{
+    border: none;
+}
+
+.phorum-delete:hover{
+    cursor: pointer;
+    color: red;
+}
