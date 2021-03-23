@@ -20,7 +20,7 @@ class PhorumCommentTestCase(TestCase):
         )
 
         self.valid_user = User.objects.create_user(
-            username=self.nickname, password='almad'
+            username=self.nickname, password="almad"
         )
 
         self.user = UserProfile.objects.create(
@@ -30,12 +30,24 @@ class PhorumCommentTestCase(TestCase):
         )
 
     def test_comment_present(self):
-        res = self.client.get("/forum")
+        res = self.client.get("/forum/")
         self.assertInHTML(self.message, res.content.decode("utf-8"))
 
     def test_add_comment(self):
-        message = "Moje"
-        self.client.force_login(user=self.valid_user)        
-        res = self.client.post("/forum", {"id_text": message}, follow=True)        
+        self.client.force_login(user=self.valid_user)
+        
+        message = "Na Moravě krásně je, kdy jsou v Praze závěje."
+        res = self.client.post(
+            "/forum/", {"text": message, "post_type": "a"}, follow=True
+        )
         self.assertEquals(200, res.status_code)
         self.assertInHTML(message, res.content.decode("utf-8"))
+
+    def test_delete_comment(self):
+        self.client.force_login(user=self.valid_user)
+        post_id = self.comment.id
+        html1 = self.client.get("/forum/").content.decode("utf-8")
+        res = self.client.post(
+            "/forum/", {"post_id": post_id, "post_type": "d"}, follow=True
+        )
+        self.assertHTMLNotEqual(html1, res.content.decode("utf-8"))
