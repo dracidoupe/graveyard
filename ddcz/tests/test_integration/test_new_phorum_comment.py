@@ -35,10 +35,7 @@ class PhorumCommentTestCase(TestCase):
 
     def test_add_comment(self):
         message = "Moje"
-
-        self.client.force_login(user=self.valid_user)
-        
-        res = self.client.post("/forum", {"id_text": message}, follow=True)
-        
+        self.client.force_login(user=self.valid_user)        
+        res = self.client.post("/forum", {"id_text": message}, follow=True)        
         self.assertEquals(200, res.status_code)
         self.assertInHTML(message, res.content.decode("utf-8"))
