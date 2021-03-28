@@ -347,11 +347,16 @@ def author_detail(request, author_id, slug):
 
 def phorum(request):
     if request.method == "POST" and request.POST["post_type"] and request.user:
-        if request.POST["post_type"] == "d":
-            db_data = Phorum.objects.get(id=request.POST["post_id"])
-            if db_data.nickname == request.user.profile.nick_uzivatele:
-                db_data.delete()
-        elif request.POST["post_type"] == "a":
+        if request.POST["post_type"] == "d" and request.POST["submit"] == "Smazat":
+            try: 
+                Phorum.objects.get(
+                    id=request.POST["post_id"], nickname=request.user.profile.nick_uzivatele
+                ).delete()
+            except Phorum.DoesNotExist as e:
+                messages.error(request, "Zprávu se nepodařilo smazat.")
+                return HttpResponseRedirect(reverse("ddcz:phorum-list"))
+
+        elif request.POST["post_type"] == "a" and request.POST["submit"] == "Přidej":
             form = PhorumCommentForm(request.POST)
             if form.is_valid():
                 Phorum.objects.create(
@@ -378,7 +383,7 @@ def phorum(request):
         "discussions/phorum-list.html",
         {
             "discussions": discussions,
-            "phorumCommentForm": PhorumCommentForm(),
-            "deleteForm": DeletePhorumCommentForm(),
+            "phorum_comment_form": PhorumCommentForm(),
+            "delete_form": DeletePhorumCommentForm(),
         },
     )
