@@ -115,6 +115,14 @@ Destroying test database for alias 'default'...
 * Maybe create a superuser in order to enter admin: `python manage.py createsuperuser`
 * Look around the administration interface at `http://localhost:8000/admin/`
 
+### Installing on Windows
+
+Follow the list above, except:
+
+* It is strongly recommended to use Python 3.7 and MySQL 8, otherwise you'll have to compile mysqlclient manually
+* Activate virtualenv using `gvenv\Scripts\activate` instaed of `source gvenv/bin/activate`
+
+
 #### Installation issues
 
 *  Installation failes with "mysql_config not found" 
