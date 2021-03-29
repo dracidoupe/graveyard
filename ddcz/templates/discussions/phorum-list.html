@@ -26,17 +26,17 @@
         DraciDoupe.cz. Toto ovšem neznamená, že nevhodné (např. vulgární) příspěvky
         nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případech.
     </p>
-    <p>
-        <b>Mějte na paměti, že Fórum je viditelné pro kohokoliv &mdash; je to naše vizitka.</b>
-    </p>
+    
 
     {% if user.is_authenticated %}
+        <p>
+            <b>Mějte na paměti, že Fórum je viditelné pro kohokoliv &mdash; je to naše vizitka.</b>
+        </p>
         <form method="post" action="{% url 'ddcz:phorum-list' %}">
             {% csrf_token %}
-            {{ phorumCommentForm }}
-            <input type="submit" name="addPhorumComment" value="Přidej" class="comment__submit">
+            {{ phorum_comment_form.as_p }}
+            <input type="submit" name="submit" value="Přidej" class="comment__submit">
         </form>
-
     {% else %}
         <p class="phorum-anonymous-text">
             Omlouváme se, ale anonymní přispívání bylo zrušeno kvůli některým bezohledným spammerům. Děkujeme za pochopení.
@@ -50,8 +50,21 @@
             <picture class="user_icon"></picture>
             <comment class="comment_main">
                 <div class="comment_header">
-                    {% if comment.by_registered_user %}<span class="nick"><a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}</span>
-                    {% else %}<span class="nick">{{ comment.nickname }}</span>{% endif %}
+                    {% if comment.by_registered_user %}
+                        <span class="nick">
+                            <a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}
+                        </span>
+                    {% else %}
+                        <span class="nick">{{ comment.nickname }}</span>
+                    {% endif %}
+                    {% if user.is_authenticated and comment.nickname == user.profile.nick_uzivatele %}
+                        <form action="{% url 'ddcz:phorum-list' %}" method="post">
+                            {% csrf_token %}
+                            {{ delete_form.post_type }}
+                            <input type="hidden" name="post_id" value="{{ comment.id }}">
+                            <input type="submit" name="submit" value="Smazat" class="phorum-delete">
+                        </form>
+                    {% endif %}
                     <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
                 </div>
                 <p class="comment_text">{{ comment.text|render_html|safe }}</p>
