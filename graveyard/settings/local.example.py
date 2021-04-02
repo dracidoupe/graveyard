@@ -1,6 +1,6 @@
 DEBUG = True
 
-ALLOWED_HOSTS = ['yourcomputer', 'yourcomputer.local', 'localhost', '127.0.0.1', '::1']
+ALLOWED_HOSTS = ["yourcomputer", "yourcomputer.local", "localhost", "127.0.0.1", "::1"]
 
 DATABASES = {
     "default": {
