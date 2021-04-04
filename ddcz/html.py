@@ -259,7 +259,7 @@ class HtmlChecker(HTMLParser):
         self.opened_tags = []
 
     def handle_starttag(self, tag, attrs):
-        if tag not in ['br']:
+        if tag not in ['br', 'hr', 'img']:
             self.opened_tags.append(tag)
 
     def handle_endtag(self, tag):
