@@ -9,6 +9,7 @@ For code archeologists, this roughly satisfies requirements of `funkceHTML.php`.
 
 """
 
+from html.parser import HTMLParser
 import re
 
 # Attributes refer to whitelisted attributes
@@ -250,3 +251,35 @@ def encode_valid_html(entity_string):
                 continue
 
     return encoded_safe_string
+
+
+class HtmlChecker(HTMLParser):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.opened_tags = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag not in ['br']:
+            self.opened_tags.append(tag)
+
+    def handle_endtag(self, tag):
+        if len(self.opened_tags) == 0:
+            raise HtmlTagMismatchException(
+                f"Attempt to close tag {tag} when no tags are open"
+            )
+
+        if self.opened_tags[-1] != tag:
+            raise HtmlTagMismatchException(
+                f"Unclosed tag {self.opened_tags[-1]} when tag {tag} encountered"
+            )
+        del self.opened_tags[-1]
+
+
+class HtmlTagMismatchException(Exception):
+    """ Pairing of the tags is not done properly """
+
+
+def check_creation_html(entity_string):
+    html_string = unsafe_encode_any_creation_html(entity_string)
+    parser = HtmlChecker()
+    parser.feed(entity_string)

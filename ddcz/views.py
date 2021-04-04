@@ -348,9 +348,10 @@ def author_detail(request, author_id, slug):
 def phorum(request):
     if request.method == "POST" and request.POST["post_type"] and request.user:
         if request.POST["post_type"] == "d" and request.POST["submit"] == "Smazat":
-            try: 
+            try:
                 Phorum.objects.get(
-                    id=request.POST["post_id"], nickname=request.user.profile.nick_uzivatele
+                    id=request.POST["post_id"],
+                    nickname=request.user.profile.nick_uzivatele,
                 ).delete()
             except Phorum.DoesNotExist as e:
                 messages.error(request, "Zprávu se nepodařilo smazat.")

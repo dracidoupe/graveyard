@@ -244,6 +244,8 @@ class Creation(models.Model):
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True)
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
+    # Should be overwritten by models who want their legacy HTML checked
+    legacy_html_attributes = []
 
     class Meta:
         abstract = True
@@ -310,6 +312,8 @@ class CommonArticle(Creation):
     anotace = MisencodedTextField(blank=True, null=True)
     rubrika = MisencodedCharField(max_length=30)
 
+    legacy_html_attributes = ["text"]
+
     class Meta:
         db_table = "prispevky_dlouhe"
         verbose_name = "Běžné příspěvky"
@@ -342,6 +346,8 @@ class Monster(Creation):
     sm = MisencodedCharField(
         db_column="SM", max_length=50
     )  # Field name made lowercase.
+
+    legacy_html_attributes = ["popis"]
 
     class Meta:
         db_table = "bestiar"
@@ -410,6 +416,8 @@ class Skill(Creation):
     # TODO: No idea what this is used for, potentially drop
     hlasoval = MisencodedTextField(blank=True, null=True)
 
+    legacy_html_attributes = ["totuspech", "uspech", "neuspech", "fatneuspech", "popis"]
+
     class Meta:
         db_table = "dovednosti"
 
@@ -431,6 +439,8 @@ class AlchemistTool(Creation):
     popis = MisencodedTextField()
     skupina = MisencodedCharField(max_length=30)
 
+    legacy_html_attributes = ["popis"]
+
     class Meta:
         db_table = "alchpredmety"
 
@@ -450,6 +460,8 @@ class Link(models.Model):
     datum = models.DateTimeField()
     pocet_hlasujicich = models.IntegerField(blank=True, null=True)
     hodnota_hlasovani = models.IntegerField(blank=True, null=True)
+
+    legacy_html_attributes = ["popis"]
 
     class Meta:
         db_table = "linky"
@@ -472,6 +484,8 @@ class RangerSpell(Creation):
     cetnost = MisencodedTextField(blank=True, null=True)
     pomucky = MisencodedTextField(blank=True, null=True)
     popis = MisencodedTextField()
+
+    legacy_html_attributes = ["popis", "pomucky"]
 
     class Meta:
         db_table = "hranicarkouzla"
@@ -496,6 +510,8 @@ class WizardSpell(Creation):
     popis = MisencodedTextField()
     skupina = MisencodedTextField()
 
+    legacy_html_attributes = ["popis"]
+
     class Meta:
         db_table = "kouzla"
 
@@ -517,6 +533,8 @@ class Item(Creation):
     vaha = models.IntegerField()
     skupina = MisencodedTextField()
 
+    legacy_html_attributes = ["popis"]
+
     class Meta:
         db_table = "predmety"
 
@@ -529,6 +547,8 @@ class DownloadItem(Creation):
     skupina = models.TextField()
     item = models.FileField(upload_to="soub", null=True)
     download_counter = models.IntegerField(default=0)
+
+    legacy_html_attributes = ["popis"]
 
     class Meta:
         db_table = "downloady"
