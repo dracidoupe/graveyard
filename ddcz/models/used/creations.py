@@ -434,8 +434,8 @@ class AlchemistTool(Creation):
     bcz = MisencodedCharField(max_length=30, blank=True, null=True)
     denmag = models.IntegerField(blank=True, null=True)
     dosah_ucinku = MisencodedCharField(max_length=20, blank=True, null=True)
-    uroven_vyrobce = MisencodedCharField(max_length=10)
-    sfera = MisencodedCharField(max_length=20)
+    uroven_vyrobce = MisencodedCharField(max_length=10, null=True, blank=True)
+    sfera = MisencodedCharField(max_length=20, null=True, blank=True)
     popis = MisencodedTextField()
     skupina = MisencodedCharField(max_length=30)
 
