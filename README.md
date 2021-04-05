@@ -8,9 +8,9 @@ Production will be running at http://nove.dracidoupe.cz/
 
 ## Contributions
 
-Contributions are welcome provided you agree your work will be shared under the same license as Graveyard (MIT).
+Contributions are welcome provided you agree your work will be shared under the same license as Graveyard (MIT). Please use [black](https://pypi.org/project/black/) for code formatting. 
 
-If you don't know where to start, take a look at issues or ask Almad on [development Slack](https://dracidoupe.slack.com/messages/C7F0YCTFU) or in Pošta on [DraciDoupe.cz](https://www.dracidoupe.cz/). 
+If you don't know where to start, take a look [at the roadmap](https://github.com/dracidoupe/graveyard/milestones) or ask Almad on [development Slack](https://dracidoupe.slack.com/messages/C7F0YCTFU) or in Pošta on [DraciDoupe.cz](https://www.dracidoupe.cz/).
 
 ## Installation
 
