@@ -257,22 +257,27 @@ class HtmlChecker(HTMLParser):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.opened_tags = []
+        # Those tags appear as start- or end-only depending on the syntax they
+        # are written in. Given they are harmless from the layout perspective,
+        # we let them be for time being
+        self.ignored_tags = ["br", "hr", "img"]
 
     def handle_starttag(self, tag, attrs):
-        if tag not in ['br', 'hr', 'img']:
+        if tag not in self.ignored_tags:
             self.opened_tags.append(tag)
 
     def handle_endtag(self, tag):
-        if len(self.opened_tags) == 0:
-            raise HtmlTagMismatchException(
-                f"Attempt to close tag {tag} when no tags are open"
-            )
+        if tag not in self.ignored_tags:
+            if len(self.opened_tags) == 0:
+                raise HtmlTagMismatchException(
+                    f"Attempt to close tag {tag} when no tags are open"
+                )
 
-        if self.opened_tags[-1] != tag:
-            raise HtmlTagMismatchException(
-                f"Unclosed tag {self.opened_tags[-1]} when tag {tag} encountered"
-            )
-        del self.opened_tags[-1]
+            if self.opened_tags[-1] != tag:
+                raise HtmlTagMismatchException(
+                    f"Unclosed tag {self.opened_tags[-1]} when tag {tag} encountered"
+                )
+            del self.opened_tags[-1]
 
 
 class HtmlTagMismatchException(Exception):

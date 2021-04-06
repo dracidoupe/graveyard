@@ -1,0 +1,21 @@
+{% extends 'public.html' %}
+{% load creations %}
+{% load html %}
+{% block content %}
+<div id="page-article-detail">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <h2>Příspěvky s chybným HTML</h2>
+    <table>
+        <tr>
+            <th>Příspěvek</th>
+            <th>Chyba</th>
+        </tr>
+        {% for result in bad_creations %}
+            <tr>
+                <td><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=result.creation.id creation_slug=result.creation.get_slug %}">{{ result.creation.jmeno }}</a></td>
+                <td>{{ result.message}}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

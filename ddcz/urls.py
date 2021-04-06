@@ -18,6 +18,11 @@ urlpatterns = [
         name="creative-page-concept",
     ),
     path(
+        "rubriky/<creative_page_slug>/kontrola-html/",
+        views.creative_page_html_check,
+        name="creative_page_html_check",
+    ),
+    path(
         "rubriky/<creative_page_slug>/<int:creation_id>-<creation_slug>/",
         views.creation_detail,
         name="creation-detail",
