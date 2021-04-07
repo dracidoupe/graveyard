@@ -5,25 +5,25 @@
 
 {% pagination comments %}
 <section class="comments">
-    <h3>Diskuze</h3>     
-{% for comment in comments %}
-    <article class="comment">
-        <picture class="user_icon"></picture>
-        <comment class="comment_main">
-            <div class="comment_header">
-                {% if comment.by_registered_user %}
-                    <span class="nick">
-                        <a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}
-                    </span>
-                {% else %}
-                    <span class="nick">{{ comment.nickname }}</span>
-                {% endif %}
-                <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
-            </div>
-            <p class="comment_text">{{ comment.text|render_html|safe }}</p>
-        </comment>
-    </article>
-    {% if not forloop.last %}<hr>{% endif %}
-{% endfor %}
+    <h3>Diskuze</h3>
+    {% for comment in comments %}
+        <article class="comment">
+            <picture class="user_icon"></picture>
+            <comment class="comment_main">
+                <div class="comment_header">
+                    {% if comment.by_registered_user %}
+                        <span class="nick">
+                            <a href="{{ comment.user_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}
+                        </span>
+                    {% else %}
+                        <span class="nick">{{ comment.nickname }}</span>
+                    {% endif %}
+                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
+                </div>
+                <p class="comment_text">{{ comment.text|render_html|safe }}</p>
+            </comment>
+        </article>
+        {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
 </section>
 {% pagination comments %}

@@ -5,11 +5,8 @@ from smtplib import SMTPException
 from django.apps import apps
 from django.conf import settings
 from django.core.mail import send_mail
-from django.core.validators import URLValidator
-from django.core.exceptions import ValidationError
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 from django.http import (
-    HttpResponse,
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
     HttpResponseBadRequest,
@@ -135,6 +132,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
             "heading": creative_page.name,
             "article": article,
             "creative_page_slug": creative_page_slug,
+            "comment_page": request.GET.get("z_s", 1),
         },
     )
 
