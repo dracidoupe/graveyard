@@ -194,20 +194,6 @@ class ChatProperties(models.Model):
         db_table = "chat_properties"
 
 
-class Diskuze(models.Model):
-    id_cizi = models.IntegerField()
-    nickname = models.CharField(max_length=25)
-    email = models.CharField(max_length=40)
-    text = models.TextField()
-    datum = models.DateTimeField()
-    cizi_tbl = models.CharField(max_length=20)
-    reputace = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = "diskuze"
-
-
 class DiskuzeMaillist(models.Model):
     id_uz = models.IntegerField(primary_key=True)
     id_cizi = models.IntegerField()

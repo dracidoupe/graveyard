@@ -46,7 +46,7 @@
     {% pagination discussions %}
     <section class="article-list">        
     {% for comment in discussions %}
-        <section class="comment">
+        <article class="comment">
             <picture class="user_icon"></picture>
             <comment class="comment_main">
                 <div class="comment_header">
@@ -69,7 +69,7 @@
                 </div>
                 <p class="comment_text">{{ comment.text|render_html|safe }}</p>
             </comment>
-        </section>
+        </article>
         {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
     </section>
