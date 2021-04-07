@@ -1,6 +1,8 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load creations %}
+{% load comments %}
+
 {% block content %}
 <div id="page-article-detail">
     <h1 class="page-heading">{{ heading }}</h1>
@@ -27,13 +29,16 @@
             <p class="synopsis">{{ article.anotace }}</p>
         </header>
 
-        <div class="content">
+        <section class="content">
             {{ article.text|render_html_insecurely|safe }}
-        </div>
+        </section>
         <footer>
-            
         </footer>
+        
+        {% creation_comments creative_page_slug article.pk %}
+
     </article>
+
 
 </div>
 {% endblock %}
