@@ -35,8 +35,11 @@ class CreationComment(models.Model):
     nickname = MisencodedCharField(max_length=25)
     email = MisencodedCharField(max_length=40)
     text = MisencodedTextField()
-    datum = models.DateTimeField()
+    datum = models.DateTimeField(auto_now_add=True)
     reputace = models.IntegerField()
+    user = models.ForeignKey(
+        UserProfile, on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     # This is taken from the previous version. In order to minimize the amount of migrations,
     # it's used as it is. Once the old version is done, the `cizi_tbl` (Foreign Table) should

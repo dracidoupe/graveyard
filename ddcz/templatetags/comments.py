@@ -26,4 +26,4 @@ def creation_comments(context, creative_page_slug, creation_pk):
     paginator = Paginator(comments, default_limit)
     comments = paginator.get_page(context["comment_page"])
 
-    return {"comments": comments, "user": context["user"]}
+    return {"comments": comments, "user": context["user"], "skin": context["skin"]}
