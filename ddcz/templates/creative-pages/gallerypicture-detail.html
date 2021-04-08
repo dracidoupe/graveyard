@@ -1,5 +1,6 @@
 {% extends 'public.html' %}
 {% load html %}
+{% load comments %}
 {% load creations %}
 {% block content %}
 <div id="page-article-detail">
@@ -17,7 +18,8 @@
             <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></span></p>
         </footer>
-    </article>
+        {% creation_comments creative_page_slug article.pk %}
 
+    </article>
 </div>
 {% endblock %}
