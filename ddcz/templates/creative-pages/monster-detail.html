@@ -1,5 +1,6 @@
 {% extends 'public.html' %}
 {% load html %}
+{% load comments %}
 {% load creations %}
 {% block content %}
 <div id="page-article-detail">
@@ -83,6 +84,8 @@
         <footer>
             
         </footer>
+        {% creation_comments creative_page_slug article.pk %}
+
     </article>
 
 </div>
