@@ -4,6 +4,7 @@ from .models import (
     AlchemistTool,
     CommonArticle,
     CreativePageConcept,
+    EditorArticle,
     Item,
     Link,
     Monster,
@@ -31,3 +32,5 @@ admin.site.register(News, SearchableAdmin)
 admin.site.register(RangerSpell, SearchableAdmin)
 admin.site.register(Skill, SearchableAdmin)
 admin.site.register(WizardSpell, SearchableAdmin)
+
+admin.site.register(EditorArticle)

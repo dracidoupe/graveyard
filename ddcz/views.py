@@ -40,6 +40,7 @@ from .models import (
     CreativePageConcept,
     DownloadItem,
     Dating,
+    EditorArticle,
     Link,
     News,
     Quest,
@@ -437,4 +438,14 @@ def phorum(request):
             "phorum_comment_form": PhorumCommentForm(),
             "delete_form": DeletePhorumCommentForm(),
         },
+    )
+
+
+def editor_article(request, slug):
+    article = get_object_or_404(EditorArticle, slug=slug)
+
+    return render(
+        request,
+        "info/editor-article.html",
+        {"article": article},
     )

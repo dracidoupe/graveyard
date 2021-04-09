@@ -63,4 +63,23 @@ urlpatterns = [
         name="user-detail",
     ),
     path("forum/", views.phorum, name="phorum-list"),
+    # Static pages. Would be easier to give them /static prefix, but it makes for ugly URL
+    path(
+        "co-je-draci-doupe/",
+        views.editor_article,
+        name="about-drd",
+        kwargs={"slug": "co-je-draci-doupe"},
+    ),
+    path(
+        "draci-manual/",
+        views.editor_article,
+        name="website-manual",
+        kwargs={"slug": "draci-manual"},
+    ),
+    path(
+        "otazky-a-odpovedi/",
+        views.editor_article,
+        name="faq",
+        kwargs={"slug": "otazky-a-odpovedi"},
+    ),
 ]

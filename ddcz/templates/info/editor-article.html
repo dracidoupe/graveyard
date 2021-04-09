@@ -1,0 +1,11 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load pages %}
+{% load creations %}
+
+{% block content %}
+<article id="page-editor-article">
+    <h1 class="page-heading">{{ article.title }}</h1>
+    {{ article.text|render_html_insecurely|safe }}
+</article>
+{% endblock %}

@@ -71,11 +71,9 @@ You are done! Now you can just run the project and develop using
 
 *  `docker-compose start`
 
-Verify your application works and open `http://localhost:8000` (`localhost` may be a different host if you are not working on linux). If so, create yourself a superuser
+Verify your application works and open `http://localhost:8000` (`localhost` may be a different host if you are not working on linux). If so, create yourself a superuser.
 
-*  `docker-compose run web python3 manage.py createsuperuser`
-
-and then review content at `http://localhost:8000/admin/`
+For all commands in the manual that ask for `python manage.py command`, run `docker-compose run web python3 manage.py command` instead
 
 ### Installing on your machine
 
@@ -112,8 +110,6 @@ Destroying test database for alias 'default'...
 * Load data about pages to see what's on production: `python manage.py loaddata pages`
 * Run the thing! `python manage.py runserver`
 * Observe if you have contact at `http://localhost:8000`
-* Maybe create a superuser in order to enter admin: `python manage.py createsuperuser`
-* Look around the administration interface at `http://localhost:8000/admin/`
 
 ### Installing on Windows
 
@@ -121,6 +117,13 @@ Follow the list above, except:
 
 * It is strongly recommended to use Python 3.7 and MySQL 8, otherwise you'll have to compile mysqlclient manually
 * Activate virtualenv using `gvenv\Scripts\activate` instaed of `source gvenv/bin/activate`
+
+
+## After Installation
+
+* Load initial version of editorial articles: `python manage.py loaddata editorarticles`
+* Create a superuser for yourself: `python manage.py createsuperuser`
+* Look around the administration interface at `http://localhost:8000/admin/`
 
 
 #### Installation issues
