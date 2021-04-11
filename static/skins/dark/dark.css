@@ -3,20 +3,20 @@
 :root{
     --debug_bg_color: rgba(255, 255, 255, 0);
 
-    --page_bg_color: #c0c0c0;
-    --page_txt_color: #000000;
+    --page_bg_color: #000000;
+    --page_txt_color: #c0c0c0;
 
-    --heading_color: #ffffff;
-    --heading_bg_color: #2f4f4f;
-    --subheading_bg_color: #aaaaaa;
+    --heading_color: white;
+    --heading_bg_color: #808080;
+    --subheading_bg_color: #505050;
 
-    --hr_color: #ab8a3f;
-    --input-bg-color: #c0c0c0;
+    --hr_color: #808080;
+    --input-bg-color: #000000;
 
-    --link-color: #2f4f4f;
-    --link-color-hover: #0d2d2d;
+    --link-color: #ff8c00;
+    --link-color-hover: #ffffff;
 
-    --navbox-border-color: #000000;
+    --navbox-border-color: #ff8c00;
     --nick_color: #ff0000;
 }
 
@@ -159,7 +159,7 @@ nav ul li a{
 }
 
 nav ul li a::first-letter {
-    color: #000050;
+    color: #c0b0a0;
 }
 
 
