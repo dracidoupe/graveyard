@@ -1,20 +1,23 @@
+@import url('http://fonts.googleapis.com/css?family=Jim+Nightshade&subset=latin,latin-ext');
+
 @import "../common.css";
 
 :root{
-    --debug_bg_color: rgba(255, 255, 255, 01);
+    --debug_bg_color: rgba(255, 255, 255, 0);
 
     --page_bg_color: #000;
     --page_txt_color: gray;
 
-    --heading_color: #ffffff;
-    --heading_bg_color: #2f4f4f;
+    --heading_color: gold;
+    --heading_bg_color: #000;
     --subheading_bg_color: #aaaaaa;
 
     --hr_color: #ab8a3f;
-    --input-bg-color: #c0c0c0;
+    --input-color: gold;
+    --input-bg-color: #000;
 
-    --link-color: #2f4f4f;
-    --link-color-hover: #0d2d2d;
+    --link-color: #ab8a3f;
+    --link-color-hover: gold;
 
     --navbox-border-color: #000000;
     --nick_color: #ff0000;
@@ -25,7 +28,8 @@
 body{
     background-color: var(--page_bg_color);
     color: var(--page_txt_color);
-    font-family: Verdana, Arial, sans-serif;
+    font-size: 10pt;
+    font-family: "Tahoma CE", "Tahoma", sans-serif;
 }
 
 h1, 
@@ -34,9 +38,11 @@ h3{
     text-align: center;
 }
 
+
 input,
 textarea,
 select{
+    color: var(--input-color);
     background-color: var(--input-bg-color);
 }
 
@@ -114,10 +120,12 @@ footer#page_footer{
 /* =========== HEADER ============ */
 header#page_header h1{
     text-align: center;
+    margin: 0rem;
 }
 
 header#page_header h1 img{
     width: 475px;
+    margin: 0px;    
 }
 
 
@@ -129,11 +137,11 @@ nav ul{
 
 nav ul.nav_border{
     display: block;
-    border: 1px solid var(--navbox-border-color);
+    
 }
 
 nav .list_heading{
-    display: block;
+    display: none;
     background-color: var(--heading_bg_color);
     color: var(--heading_color);
     text-align: center;
@@ -142,7 +150,7 @@ nav .list_heading{
 }
 
 nav .list_subheading{
-    display: block;
+    display: none;
     background-color: var(--subheading_bg_color);
     text-align: center;
     font-weight: bold;
@@ -161,14 +169,27 @@ nav .list_box{
     padding: 5px;
 }
 
-nav ul li a{
+nav#left_menu ul li a,
+nav#right_menu ul li a{
     display: block;
+    font-size: 1.8rem;
     font-weight: bold;
+    font-family: 'Jim Nightshade', monospace;
 }
 
-nav ul li a::first-letter {
-    color: #000050;
+nav#top_menu{
+    text-align: center;
 }
+
+nav#top_menu ul{
+    list-style-type: "\00A4";
+}
+
+nav#top_menu ul li{   
+    display: inline;
+    padding: 0rem .5rem;    
+}
+
 
 
 .nav_border .nick, 
@@ -196,15 +217,24 @@ nav ul li a::first-letter {
 
 /* =========== MAIN CONTENT ============ */
 h1.page-heading{
-    width: 100%;
-    font-weight: bold;
+    width: 100%;    
     border-top: 0px;
     border-bottom: 0px;
     background-color: var(--heading_bg_color);
     color: var(--heading_color);
     text-align: center;
-    font-size: 1.55rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: 'Jim Nightshade', monospace;
+    letter-spacing: .1rem;
     padding: 3px 0px;
+}
+
+
+main p{
+    text-indent: 1.5rem;
+    word-spacing: 0rem;
+    margin-bottom: 0rem;
 }
 
 .pagination a::before{
