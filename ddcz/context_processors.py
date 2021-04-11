@@ -9,7 +9,7 @@ def common_variables(request):
         "user": request.user,
         "skin": skin,
         "skin_css_url": staticfiles_storage.url(
-            "skins/%(skin)s/main.css" % {"skin": skin}
+            "skins/%(skin)s/%(skin)s.css" % {"skin": skin}
         ),
         "skin_favico_url": staticfiles_storage.url(
             "skins/%(skin)s/img/drak.svg" % {"skin": skin}
