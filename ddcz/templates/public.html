@@ -28,6 +28,12 @@
                 </h1>
             </header>
 
+            {% if skin == "historic" %}
+                <nav id="top_menu">
+                    {% include "base/top_menu_historic.html" %}    
+                </nav>
+            {% endif %}
+
             <nav id="left_menu">
                 {% include "base/left_menu.html" %}
             </nav>

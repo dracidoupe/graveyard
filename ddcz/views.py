@@ -52,7 +52,7 @@ from .users import migrate_user
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-VALID_SKINS = ["light", "dark"]
+VALID_SKINS = ["light", "dark", "historic"]
 DEFAULT_LIST_SIZE = 5
 
 
