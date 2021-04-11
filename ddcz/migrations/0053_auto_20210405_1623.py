@@ -7,18 +7,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0052_phorum_user_ref'),
+        ("ddcz", "0052_phorum_user_ref"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='alchemisttool',
-            name='sfera',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=20, null=True),
+            model_name="alchemisttool",
+            name="sfera",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=20, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='alchemisttool',
-            name='uroven_vyrobce',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, max_length=10, null=True),
+            model_name="alchemisttool",
+            name="uroven_vyrobce",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, max_length=10, null=True
+            ),
         ),
     ]
