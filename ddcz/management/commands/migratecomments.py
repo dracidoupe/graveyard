@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         i = 0
-        for comment in CreationComment.objects.all():
+        for comment in CreationComment.objects.filter(user__isnull=True):
             i += 1
             if i % 100 == 0:
                 sys.stdout.write(".")

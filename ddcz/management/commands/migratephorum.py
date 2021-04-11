@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         i = 0
-        for comment in Phorum.objects.all():
+        for comment in Phorum.objects.filter(user__isnull=True):
             i += 1
             if i % 100 == 0:
                 sys.stdout.write(".")
