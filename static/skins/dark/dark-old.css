@@ -1,0 +1,134 @@
+body {
+    background-color: #000000;
+    font-family: "MS Sans Serif", Geneva, sans-serif;
+    color: gray;
+}
+.logo {
+    width: 100%;
+    text-align: center;
+}
+
+#app div.flex{
+    display: flex;
+}
+
+h1.page-heading {
+  width: 100%;
+  font-weight: bold;
+  border-top: 0px;
+  border-bottom: 0px;
+  background-color: #808080;
+  color: white;
+  text-align: center;
+  font-size: 150%;
+  padding: 3px;
+}
+nav {
+    width: 15%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul.nav_border {
+  display: block;
+  border: solid 1px;
+}
+nav .list_heading {
+
+    font-weight: bold;
+  background-color: #808080;
+  color: white;
+  text-align: center;
+  width: 100%;
+  display: block;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+nav .list_subheading {
+background-color: #505050;
+color: #c0c0c0;
+  display: block;
+  text-align: center;
+  padding: 3px;
+  font-weight: bold;
+}
+nav .list_subheading::before {
+  content: "- ";
+}
+nav .list_subheading::after {
+  content: " -";
+}
+nav ul li a {
+  font-weight: bold;
+  display: block;
+}
+nav ul li a::first-letter {
+  color: #c0b0a0;
+}
+nav.left {
+    order: 0;
+}
+main {
+    width: 70%;
+    order: 1;
+}
+nav.right {
+    order: 2;
+}
+
+.nav_border .user_icon {
+  text-align: center;
+}
+
+A:visited {
+    color : #ff8c00;
+}
+    
+A:active{
+    color : #ff8c00;
+}
+    
+A:hover{
+    color : #ffffff;
+}
+    
+A {
+    font-family: "MS Sans Serif", Geneva, sans-serif;
+    text-decoration:none;
+    color: #ff8c00;
+}
+    
+
+#page-news header time {
+  font-weight: bold;
+}
+#page-news footer {
+  width: 100%;
+  text-align: right;
+}
+
+#global-footer {
+  width: 60%;
+  font-size: 80%;
+  text-align: center;
+}
+
+input, textarea, select {
+  background-color: #000000;
+  color : #ff8c00;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+.pagination a::before {
+  content: "[";
+}
+
+.pagination a::after {
+  content: "]";
+}
