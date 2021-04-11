@@ -92,17 +92,17 @@
                             <ul>
                                 <li><span class="list_subheading">Hledat</span>
                                     <ul class="list_box">
-                                        <li>Vyhledávání</li>
+                                        <li><a href="https://www.google.com/?q=site:www.dracidoupe.cz">Vyhledávání</a></li>
                                         <li>Rekordy a statistiky</li>
                                     </ul>
                                 </li>
                             </ul>
                             <ul>
-                                <li><span class="list_subheading">Hledat</span>
+                                <li><span class="list_subheading">Nápověda</span>
                                     <ul class="list_box">
-                                        <li>Co je to Dračí Doupě?</li>
-                                        <li>Dračí manuál</li>
-                                        <li>Otázky a Odpovědi</li>
+                                        <li><a href="{% url 'ddcz:about-drd' %}">Co je to Dračí Doupě?</a></li>
+                                        <li><a href="{% url 'ddcz:website-manual' %}">Dračí manuál</a></li>
+                                        <li><a href="{% url 'ddcz:faq' %}">Otázky a Odpovědi</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -194,6 +194,7 @@
                     <ul class="nav_border">
                         <li><span class="list_heading">Doupě jinde</span>
                             <ul class="list_box">
+                                <li><a href="https://discord.gg/U6TEhAKV">Discord</a></li>
                                 <li><a href="https://www.facebook.com/DraciDoupecz-47586881642/">Facebook</a></li>
                             </ul>
                         </li>
@@ -202,8 +203,8 @@
             </div>
         </div>
         <footer id="global-footer">
-            <p>© 2018 Almad, design © 2002 a 2018 by Almad. DrD, Dračí doupě a Altar jsou ochranné známky společnosti ALTAR. Všechna práva vyhrazena. Žádná část těchto stránek nesmí být reprodukována, publikována ani jinak využita bez svolení Redakce serveru DraciDoupe.cz nebo svolení autorů jednotlivých příspěvků.</p>
-            <p>Tato verze stránek je open source a <a href="https://github.com/dracidoupe/graveyard/">je možné přispět k jejímu vývoji</a> podle <a href="https://ddcz.readthedocs.io/en/latest/">její dokumentace</a>.</p>
+            <p>© 2018-2021 Almad, design © 2002 a 2018-21 by Almad <a href="https://github.com/dracidoupe/graveyard/graphs/contributors">a ostatní přispěvatelé</a>. DrD, Dračí doupě a Altar jsou ochranné známky společnosti ALTAR. Všechna práva vyhrazena. Žádná část těchto stránek nesmí být reprodukována, publikována ani jinak využita bez svolení Redakce serveru DraciDoupe.cz nebo svolení autorů jednotlivých příspěvků.</p>
+            <p>Tato verze stránek je open source a <a href="https://github.com/dracidoupe/graveyard/">je možné přispět k jejímu vývoji</a> podle <a href="https://ddcz.readthedocs.io/en/latest/">dokumentace</a>.</p>
         </footer>
     </body>
 </html>
