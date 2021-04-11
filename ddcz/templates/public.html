@@ -10,32 +10,32 @@
         <link rel="alternate" href="http://www.dracidoupe.cz/rss/novinky.xml" type="application/rss+xml" title="Nové články ze všech rubrik" />
         -->
         <link rel="stylesheet" href="{% static 'common.css' %}">
-        
+
         <link rel="stylesheet" href="/static/css/skin/light/light.css">
         <link rel="shortcut icon" type="image/svg" href="{{ skin_favico_url }}"/>
     </head>
     <body class="{{ skin }}" lang="cs">
-     
-     
-     
-     
-     
+
+
+
+
+
         <div id="container">
-            
+
             <header id="page_header">
                 <h1>
                     <a href="/" rel="home"><img src="{{ skin_logo_url }}" alt="DraciDoupe.cz"></a>
                 </h1>
             </header>
-    
-            <nav id="left_menu">    
+
+            <nav id="left_menu">
                 {% include "base/left_menu.html" %}
             </nav>
-         
+
             <nav id="right_menu">
                 {% include "base/right_menu.html" %}
             </nav>
-    
+
             <main id="page_content">
                 {% if messages %}
                     <ul class="messages">
@@ -43,21 +43,17 @@
                             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                         {% endfor %}
                     </ul>
-                {% endif %}                
+                {% endif %}
                 {% block content %}{% endblock %}
             </main>
-         
+
             <footer id="page_footer">
-                <p>
-                    © 2018 Almad, design © 2002 a 2018 by Almad. DrD, Dračí doupě a Altar jsou ochranné známky společnosti ALTAR. Všechna práva vyhrazena. Žádná část těchto stránek nesmí být reprodukována, publikována ani jinak využita bez svolení Redakce serveru DraciDoupe.cz nebo svolení autorů jednotlivých příspěvků.
-                </p>
-                <p>
-                    Tato verze stránek je open source a <a href="https://github.com/dracidoupe/graveyard/">je možné přispět k jejímu vývoji</a> podle <a href="https://ddcz.readthedocs.io/en/latest/">její dokumentace</a>.
-                </p>
+                <p>© 2018-2021 Almad, design © 2002 a 2018-21 by Almad <a href="https://github.com/dracidoupe/graveyard/graphs/contributors">a ostatní přispěvatelé</a>. DrD, Dračí doupě a Altar jsou ochranné známky společnosti ALTAR. Všechna práva vyhrazena. Žádná část těchto stránek nesmí být reprodukována, publikována ani jinak využita bez svolení Redakce serveru DraciDoupe.cz nebo svolení autorů jednotlivých příspěvků.</p>
+                <p>Tato verze stránek je open source a <a href="https://github.com/dracidoupe/graveyard/">je možné přispět k jejímu vývoji</a> podle <a href="https://ddcz.readthedocs.io/en/latest/">dokumentace</a>.</p>
             </footer>
-        </div>   
-     
-     
-     
+        </div>
+
+
+
     </body>
 </html>

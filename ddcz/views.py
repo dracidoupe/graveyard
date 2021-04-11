@@ -5,11 +5,8 @@ from smtplib import SMTPException
 from django.apps import apps
 from django.conf import settings
 from django.core.mail import send_mail
-from django.core.validators import URLValidator
-from django.core.exceptions import ValidationError
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 from django.http import (
-    HttpResponse,
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
     HttpResponseBadRequest,
@@ -43,6 +40,7 @@ from .models import (
     CreativePageConcept,
     DownloadItem,
     Dating,
+    EditorArticle,
     Link,
     News,
     Quest,
@@ -135,6 +133,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
             "heading": creative_page.name,
             "article": article,
             "creative_page_slug": creative_page_slug,
+            "comment_page": request.GET.get("z_s", 1),
         },
     )
 
@@ -439,4 +438,14 @@ def phorum(request):
             "phorum_comment_form": PhorumCommentForm(),
             "delete_form": DeletePhorumCommentForm(),
         },
+    )
+
+
+def editor_article(request, slug):
+    article = get_object_or_404(EditorArticle, slug=slug)
+
+    return render(
+        request,
+        "info/editor-article.html",
+        {"article": article},
     )

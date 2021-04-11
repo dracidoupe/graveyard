@@ -1,0 +1,31 @@
+{% load comments %}
+{% load html %}
+{% load pages %}
+{% load users %}
+
+<section class="comments">
+    {% pagination comments %}
+    <h3>Diskuze</h3>
+
+    {% for comment in comments %}
+        <article class="comment">
+            <picture class="user_icon"></picture>
+            <comment class="comment_main">
+                <div class="comment_header">
+                    <span class="nick">
+                        {% if comment.user %}
+                            <a href="{{ comment.user.profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}
+                        {% else %}
+                            {# In theory, this should never happen. In practice, it does because of bad data quality and because of migration windows. Better to display something rather than bail out with 500 #}
+                            {{ comment.nickname }}
+                        {% endif %}
+                    </span>
+                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
+                </div>
+                <p class="comment_text">{{ comment.text|render_html|safe }}</p>
+            </comment>
+        </article>
+        {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+    {% pagination comments %}
+</section>

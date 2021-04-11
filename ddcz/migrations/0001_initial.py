@@ -514,7 +514,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "diskuze",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
