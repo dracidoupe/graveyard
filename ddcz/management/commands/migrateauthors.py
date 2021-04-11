@@ -1,3 +1,5 @@
+import sys
+
 from django.apps import apps
 from django.core.management.base import BaseCommand, CommandError
 
@@ -98,8 +100,13 @@ class Command(BaseCommand):
             model_class = apps.get_model(app, model_class_name)
             creation_models.append(model_class)
 
+        i = 0
         for creation_model in creation_models:
             for creation in creation_model.objects.all():
+                i += 1
+                if i % 100 == 0:
+                    sys.stdout.write(".")
+                    sys.stdout.flush()
                 if not creation.author:
                     creation.author = self.get_author(
                         creation, creation_model=creation_model
