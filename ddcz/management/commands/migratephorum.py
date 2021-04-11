@@ -1,4 +1,5 @@
 import logging
+import sys
 
 from django.apps import apps
 from django.core.management.base import BaseCommand, CommandError
@@ -14,7 +15,12 @@ class Command(BaseCommand):
     help = "Fills in reference to User object into Phorum"
 
     def handle(self, *args, **options):
+        i = 0
         for comment in Phorum.objects.all():
+            i += 1
+            if i % 100 == 0:
+                sys.stdout.write(".")
+                sys.stdout.flush()
             if comment.by_registered_user:
                 try:
                     comment.user = UserProfile.objects.get(
