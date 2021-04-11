@@ -1,14 +1,37 @@
 @import "../common.css";
 
 :root{
+    --debug_bg_color: rgba(255, 255, 255, 0);
+
     --page_bg_color: #c0c0c0;
+    --page_txt_color: #000000;
+
+    --heading_color: #ffffff;
+    --heading_bg_color: #2f4f4f;
+    --subheading_bg_color: #aaaaaa;
+
+    --hr_color: #ab8a3f;
 }
 
 
 /* =========== BASIC SETTINGS ============ */
-body {
+body{
     background-color: var(--page_bg_color);
+    color: var(--page_txt_color);
     font-family: Verdana, Arial, sans-serif;
+}
+
+a {
+    color: #2f4f4f;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #0d2d2d;
+}
+
+hr{
+    color: var(--hr_color);
 }
 
 /* =========== GRID LAYOUT ============ */
@@ -26,25 +49,25 @@ body {
 
 header#page_header{
     grid-area: header;
-    background-color: var(--bg_color);
+    background-color: var(--debug_bg_color);
 }
 
 nav#left_menu{
     grid-area: left_menu;
     width: 100%;
-    background-color: lightblue;
+    background-color: var(--debug_bg_color);
 }
 
 nav#right_menu{
     grid-area: right_menu;
     width: 100%;
-    background-color: lightblue;
+    background-color: var(--debug_bg_color);
 }
 
 main#page_content{
     grid-area: main;
     width: 100%;
-    background-color: lightgreen;
+    background-color: var(--debug_bg_color);
 }
 
 footer#page_footer{
@@ -53,6 +76,7 @@ footer#page_footer{
     grid-area: footer;
     font-size: 0.8rem;
     text-align: center;
+    background-color: var(--debug_bg_color);
 }
 
 
@@ -63,4 +87,78 @@ header#page_header h1{
 
 header#page_header h1 img{
     width: 600px;
+}
+
+
+/* =========== MENU ============ */
+nav ul{
+    list-style-type: none;
+    padding: 0rem; 
+}
+
+nav ul.nav_border{
+    display: block;
+    border: 1px solid #000000;
+}
+
+nav .list_heading{
+    display: block;
+    background-color: var(--heading_bg_color);
+    color: var(--heading_color);
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 0px;
+}
+
+nav .list_subheading{
+    display: block;
+    background-color: var(--subheading_bg_color);
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 0px;
+}
+
+nav .list_subheading::before {
+    content: "- ";
+}
+
+nav .list_subheading::after {
+    content: " -";
+}
+
+nav .list_box{
+    padding: 5px;
+}
+
+nav ul li a{
+    display: block;
+    font-weight: bold;
+}
+
+nav ul li a::first-letter {
+    color: #000050;
+}
+
+
+.nav_border .nick, 
+.nav_border .state, 
+.nav_border .stats, 
+.nav_border .admin_link {
+    text-align: center;
+    font-weight: bold;
+ }
+
+
+
+/* =========== MAIN CONTENT ============ */
+h1.page-heading{
+    width: 100%;
+    font-weight: bold;
+    border-top: 0px;
+    border-bottom: 0px;
+    background-color: var(--heading_bg_color);
+    color: var(--heading_color);
+    text-align: center;
+    font-size: 1.55rem;
+    padding: 3px 0px;
 }
