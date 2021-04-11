@@ -41,6 +41,7 @@ In this context, Crative Pages correspond to sections of the site where content 
 * Předměty (= Items)
 * Downloady (= Downloads and DownloadItem)
 * Dobrodružství (= Quest)
+* Putyka (= Tavern)
 
 * Dlouhé příspěvky / Běžné příspěvky = Common Articles (not used publicly, but powers a lot of internal engine)
 
