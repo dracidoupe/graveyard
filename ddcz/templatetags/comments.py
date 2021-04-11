@@ -14,7 +14,6 @@ def commentTime(datetime):
         return datetime.strftime("%d. %m. %Y v %H:%M:%S")
 
 
-
 @register.inclusion_tag("discussions/creation-comments.html", takes_context=True)
 def creation_comments(context, creative_page_slug, creation_pk):
     comments = CreationComment.objects.filter(
