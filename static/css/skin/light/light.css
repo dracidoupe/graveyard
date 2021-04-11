@@ -1,5 +1,15 @@
 @import "../common.css";
 
+:root{
+    --page_bg_color: #c0c0c0;
+}
+
+
+/* =========== BASIC SETTINGS ============ */
+body {
+    background-color: var(--page_bg_color);
+    font-family: Verdana, Arial, sans-serif;
+}
 
 /* =========== GRID LAYOUT ============ */
 
@@ -16,6 +26,7 @@
 
 header#page_header{
     grid-area: header;
+    background-color: var(--bg_color);
 }
 
 nav#left_menu{
@@ -37,8 +48,11 @@ main#page_content{
 }
 
 footer#page_footer{
+    margin: 0rem auto;
+    width: 60%;
     grid-area: footer;
-    background-color: darkcyan;
+    font-size: 0.8rem;
+    text-align: center;
 }
 
 
