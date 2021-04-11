@@ -1,0 +1,52 @@
+@import "../common.css";
+
+
+/* =========== GRID LAYOUT ============ */
+
+#container{
+    display: grid;
+    grid-template-areas: 
+        'header         header      header'
+        'left_menu      main        right_menu'
+        'footer         footer      footer'
+    ;
+    grid-template-columns: 175px auto 200px;
+    gap: 10px 50px;
+}
+
+header#page_header{
+    grid-area: header;
+}
+
+nav#left_menu{
+    grid-area: left_menu;
+    width: 100%;
+    background-color: lightblue;
+}
+
+nav#right_menu{
+    grid-area: right_menu;
+    width: 100%;
+    background-color: lightblue;
+}
+
+main#page_content{
+    grid-area: main;
+    width: 100%;
+    background-color: lightgreen;
+}
+
+footer#page_footer{
+    grid-area: footer;
+    background-color: darkcyan;
+}
+
+
+/* =========== HEADER ============ */
+header#page_header h1{    
+    text-align: center;
+}
+
+header#page_header h1 img{
+    width: 600px;
+}
