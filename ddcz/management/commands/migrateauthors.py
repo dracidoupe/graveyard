@@ -102,7 +102,7 @@ class Command(BaseCommand):
 
         i = 0
         for creation_model in creation_models:
-            for creation in creation_model.objects.all():
+            for creation in creation_model.objects.filter(user__isnull=True):
                 i += 1
                 if i % 100 == 0:
                     sys.stdout.write(".")
