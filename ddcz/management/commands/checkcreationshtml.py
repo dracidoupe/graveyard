@@ -39,4 +39,6 @@ class Command(BaseCommand):
             sys.stdout.flush()
         else:
             sys.stderr.flush()
-            raise CommandError(f"HTML is not fixed everywhere yet: {errors_no} remaining. Check stderr output.")
+            raise CommandError(
+                f"HTML is not fixed everywhere yet: {errors_no} remaining. Check stderr output."
+            )
