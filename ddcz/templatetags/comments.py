@@ -8,12 +8,11 @@ register = template.Library()
 
 @register.filter
 def commentTime(datetime):
-    return datetime.strftime("%-d. %-m. %Y v %-H:%M:%S")
+    try:
+        return datetime.strftime("%-d. %-m. %Y v %-H:%M:%S")
+    except ValueError:
+        return datetime.strftime("%d. %m. %Y v %H:%M:%S")
 
-
-@register.filter
-def commentTimeAlternative(datetime):
-    return datetime.strftime("%-H:%M:%S, %-d. %-m. %Y")
 
 
 @register.inclusion_tag("discussions/creation-comments.html", takes_context=True)

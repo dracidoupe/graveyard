@@ -50,9 +50,8 @@ def creation_canonical_url(page, creation):
 
 @register.filter
 def articleTime(datetime):
-    return datetime.strftime("%-d. %-m. %Y v %-H:%M")
+    try:
+        return datetime.strftime("%-d. %-m. %Y v %-H:%M")
+    except ValueError:
+        return datetime.strftime("%d. %m. %Y v %H:%M")
 
-
-@register.filter
-def articleTimeAlternative(datetime):
-    return datetime.strftime("%-H:%M, %-d. %-m. %Y")

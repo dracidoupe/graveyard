@@ -22,4 +22,4 @@ services:
     links:
       - db
     ports:
-      - 81:80
+      - 81:8080
