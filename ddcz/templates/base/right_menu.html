@@ -2,9 +2,9 @@
     <li><span class="list_heading">Vzhled</span>
         <ul class="list_box">
             <li>Family Silver</li>
-            <li><a href="{% url 'ddcz:change-skin' %}?skin=historic&redirect={{ request.get_full_path }}">Historic</a></li>
-            <li><a href="{% url 'ddcz:change-skin' %}?skin=light&redirect={{ request.get_full_path }}">Light</a></li>
-            <li><a href="{% url 'ddcz:change-skin' %}?skin=dark&redirect={{ request.get_full_path }}">Dark</a></li>
+            <li><a href="{% url 'ddcz:change-skin' %}?skin=historic&redirect={{ current_page_url }}">Historic</a></li>
+            <li><a href="{% url 'ddcz:change-skin' %}?skin=light&redirect={{ current_page_url }}">Light</a></li>
+            <li><a href="{% url 'ddcz:change-skin' %}?skin=dark&redirect={{ current_page_url }}">Dark</a></li>
             <li>Timmothy Gold</li>
         </ul>
     </li>
