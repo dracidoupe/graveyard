@@ -38,6 +38,7 @@ input,
 textarea,
 select{
     background-color: var(--input-bg-color);
+    color: darkorange;
 }
 
 a, 
