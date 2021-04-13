@@ -1,0 +1,23 @@
+<nav id="top_menu">
+    <ul>
+        {% if user.is_authenticated %}
+        <li><a href="">Pošta</a></li>
+        <li><a href="">Psí smečka</a></li>
+        {% endif %}
+        <li><a href="{% url 'ddcz:phorum-list' %}">Fórum</a></li>
+        <li><a href="">Ankety</a></li>
+        <li><a href="">Chat</a></li>
+        <li><a href="">Moudrá sova</a></li>
+        <li><a href="">Soutěž O Hlavu Zlatého Draka</a></li>
+        <li><a href="{% url 'ddcz:about-drd' %}"">Co je to Dračí Doupě?</a></li>
+        <li><a href="">Tvůrci a Redakce</a></li>
+        <li><a href=""><b>Uživatelé</b></a></li>
+        <li><a href="">Dračí líheň</a></li>
+        <li><a href=""><b>Novinky</b></a></li>
+        <li><a href="">Čekající díla</a></li>
+        <li><a href="{% url 'ddcz:website-manual' %}"><b>Dračí manuál</b></a></li>
+        <li><a href="{% url 'ddcz:faq' %}"><b>Otázky a Odpovědi</b></a></li>
+        <li><li><a href="https://www.google.com/?q=site:www.dracidoupe.cz">Vyhledávání</a></li></li>
+        <li><a href=""><b>Rekordy a statistiky</b></a></li>
+    </ul>
+</nav>

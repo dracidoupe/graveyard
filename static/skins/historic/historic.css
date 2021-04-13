@@ -1,23 +1,26 @@
+@import url('http://fonts.googleapis.com/css?family=Courgette&subset=latin,latin-ext');
+
 @import "../common.css";
 
 :root{
-    --debug_bg_color: rgba(255, 255, 255, 01);
+    --debug_bg_color: rgba(255, 255, 255, 0);
 
     --page_bg_color: #000;
     --page_txt_color: gray;
 
-    --heading_color: #ffffff;
-    --heading_bg_color: #2f4f4f;
-    --subheading_bg_color: #aaaaaa;
+    --heading_color: gold;
 
     --hr_color: #ab8a3f;
-    --input-bg-color: #c0c0c0;
+    --input-color: gold;
+    --input-bg-color: #000;
 
-    --link-color: #2f4f4f;
-    --link-color-hover: #0d2d2d;
+    --link-color: #ab8a3f;
+    --link-color-hover: gold;
+    --link-font: 'Courgette', monospace;
 
     --navbox-border-color: #000000;
     --nick_color: #ff0000;
+    
 }
 
 
@@ -25,7 +28,8 @@
 body{
     background-color: var(--page_bg_color);
     color: var(--page_txt_color);
-    font-family: Verdana, Arial, sans-serif;
+    font-size: 10pt;
+    font-family: "Tahoma CE", "Tahoma", sans-serif;
 }
 
 h1, 
@@ -34,9 +38,11 @@ h3{
     text-align: center;
 }
 
+
 input,
 textarea,
 select{
+    color: var(--input-color);
     background-color: var(--input-bg-color);
 }
 
@@ -73,13 +79,12 @@ hr{
 
 header#page_header{
     grid-area: header;
-    background-color: var(--debug_bg_color);
     padding: 0px;
+    background-color: var(--debug_bg_color);
 }
 
 nav#top_menu{
     grid-area: top_menu;
-    width: 100%;
     background-color: var(--debug_bg_color);
 }
 
@@ -114,10 +119,12 @@ footer#page_footer{
 /* =========== HEADER ============ */
 header#page_header h1{
     text-align: center;
+    margin: 0rem;
 }
 
 header#page_header h1 img{
     width: 475px;
+    margin: 0px;    
 }
 
 
@@ -127,84 +134,95 @@ nav ul{
     padding: 0rem; 
 }
 
-nav ul.nav_border{
+nav#left_menu ul li a,
+nav#right_menu ul.nav_links li a{
     display: block;
-    border: 1px solid var(--navbox-border-color);
-}
-
-nav .list_heading{
-    display: block;
-    background-color: var(--heading_bg_color);
-    color: var(--heading_color);
+    font-size: 1.5rem;
+    font-family: var(--link-font);
     text-align: center;
-    font-weight: bold;
-    padding: 4px 0px;
 }
 
-nav .list_subheading{
+.list_heading{
     display: block;
-    background-color: var(--subheading_bg_color);
+    margin: 1rem 0rem;
     text-align: center;
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: 4px 0px;
 }
 
-nav .list_subheading::before {
-    content: "- ";
-}
-
-nav .list_subheading::after {
-    content: " -";
-}
-
-nav .list_box{
-    padding: 5px;
-}
-
-nav ul li a{
+nav#right_menu a{
     display: block;
-    font-weight: bold;
+    text-align: center;
 }
 
-nav ul li a::first-letter {
-    color: #000050;
+nav#top_menu{
+    text-align: center;
+}
+
+nav#top_menu ul{
+    list-style-type: "\00A4";
+}
+
+nav#top_menu ul li{   
+    display: inline;
+    padding: 0rem .5rem;    
 }
 
 
-.nav_border .nick, 
-.nav_border .state, 
-.nav_border .stats, 
-.nav_border .admin_link {
+.nick, 
+.state,
+.admin_link {
     text-align: center;
     font-weight: bold;
  }
 
-.nav_border .nick{
+.nick{
      color: var(--nick_color);
  }
 
-.nav_border .user_icon {
+.user_icon {
     text-align: center;
     width: 100%;
     height: 50px;
 }
-  
-.nav_border form {
-    text-align: center;
+
+
+#logout_button{
+    display: block;
+    width: 100%;
+    border: none;
+    margin: 0rem;
+    margin-top: -.6rem;
+    color: var(--link-color);
+    font-family: var(--link-font);
+    font-size: 1.5rem;
+}
+
+#logout_button:hover{
+    color: var(--link-color-hover);
+    cursor: pointer;
 }
 
 
 /* =========== MAIN CONTENT ============ */
 h1.page-heading{
-    width: 100%;
-    font-weight: bold;
-    border-top: 0px;
-    border-bottom: 0px;
+    width: 100%;    
+    border: none;
     background-color: var(--heading_bg_color);
     color: var(--heading_color);
     text-align: center;
-    font-size: 1.55rem;
-    padding: 3px 0px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: var(--link-font);
+    letter-spacing: .1rem;
+    padding: 0.1rem 0rem;
+}
+
+
+main p{
+    text-indent: 1.5rem;
+    word-spacing: 0rem;
+    margin-bottom: 0rem;
 }
 
 .pagination a::before{
@@ -222,4 +240,9 @@ h1.page-heading{
 #page-news footer {
     width: 100%;
     text-align: right; 
+}
+
+
+.user_icon{
+    width: 5rem;
 }

@@ -54,4 +54,3 @@ def articleTime(datetime):
         return datetime.strftime("%-d. %-m. %Y v %-H:%M")
     except ValueError:
         return datetime.strftime("%d. %m. %Y v %H:%M")
-
