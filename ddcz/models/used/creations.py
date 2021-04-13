@@ -344,7 +344,7 @@ class Monster(Creation):
     skupina = MisencodedTextField()
     bojovnost = MisencodedCharField(max_length=50, blank=True, null=True)
     sm = MisencodedCharField(
-        db_column="SM", max_length=50
+        db_column="SM", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
 
     legacy_html_attributes = ["popis"]
