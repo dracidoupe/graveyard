@@ -1,4 +1,6 @@
 @import url('http://fonts.googleapis.com/css?family=Courgette&subset=latin,latin-ext');
+@import url('http://fonts.googleapis.com/css?family=Stoke&subset=latin,latin-ext');
+@import url('http://fonts.googleapis.com/css?family=Playfair+Display&subset=latin,latin-ext');
 
 @import "../common.css";
 
@@ -16,7 +18,7 @@
 
     --link-color: #ab8a3f;
     --link-color-hover: gold;
-    --link-font: 'Courgette', monospace;
+    --link-font: 'Playfair Display', monospace;
 
     --navbox-border-color: #000000;
     --nick_color: #ff0000;
@@ -59,6 +61,40 @@ a:hover, a:active{
 
 hr{
     color: var(--hr_color);
+}
+
+.text-gold,
+a.text-gold:link,
+a.text-gold:visited{
+    color: gold;
+}
+
+a.text-gold:hover,
+a.text-gold:active{
+    color: goldenrod;
+}
+
+.text-red,
+a.text-red:link,
+a.text-red:visited{
+    color: red;
+}
+
+a.text-red:hover,
+a.text-red:active{
+    color: darkred;
+}
+
+.text-blue,
+a.text-blue:link,
+a.text-blue:visited{
+    color: aqua;
+}
+
+.text-blue:hover,
+a.text-blue:hover,
+a.text-blue:active{
+    color: aquamarine;
 }
 
 /* =========== GRID LAYOUT ============ */
@@ -137,10 +173,19 @@ nav ul{
 nav#left_menu ul li a,
 nav#right_menu ul.nav_links li a{
     display: block;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-family: var(--link-font);
     text-align: center;
+    letter-spacing: 0rem;
+    margin: .3rem 0rem;
 }
+
+nav#left_menu ul li a::first-letter,
+nav#right_menu ul.nav_links li a::first-letter{    
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
 
 .list_heading{
     display: block;
@@ -193,13 +238,13 @@ nav#top_menu ul li{
     border: none;
     margin: 0rem;
     margin-top: -.6rem;
-    color: var(--link-color);
+    color: gold;
     font-family: var(--link-font);
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 #logout_button:hover{
-    color: var(--link-color-hover);
+    color: goldenrod;
     cursor: pointer;
 }
 
@@ -211,11 +256,16 @@ h1.page-heading{
     background-color: var(--heading_bg_color);
     color: var(--heading_color);
     text-align: center;
-    font-size: 2.5rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 200;
     font-family: var(--link-font);
-    letter-spacing: .1rem;
-    padding: 0.1rem 0rem;
+    letter-spacing: -.1rem;    
+    margin: 0rem 0rem 2rem 0rem;    
+}
+
+h1.page-heading::first-letter{
+    font-size: 2.8rem;
+    vertical-align: middle;
 }
 
 
@@ -246,3 +296,4 @@ main p{
 .user_icon{
     width: 5rem;
 }
+

@@ -1,119 +1,36 @@
 <nav id="left_menu">
-    <ul class="nav_border">
-        <li>
-            <span class="list_heading">Rubriky</span>
-            <ul>
-                <li><span class="list_subheading">Tvorba</span>
-                    <ul class="list_box">
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='clanky' %}">Články&amp;Eseje</a>
-                        </li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='galerie' %}">Galerie</a></li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='fotogalerie' %}">Fotogalerie</a>
-                        </li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='hrbitov' %}">Hřbitov</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span class="list_subheading">Doplňky</span>
-                    <ul class="list_box">
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='dovednosti' %}">Dovednosti</a></li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='novapovolani' %}">Nová Povolání</a>
-                        </li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='noverasy' %}">Nové Rasy</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span class="list_subheading">Pro PJ</span>
-                    <ul class="list_box">
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='bestiar' %}">Bestiář</a></li>
-                        <li><a
-                                href="{% url 'ddcz:creation-list' creative_page_slug='dobrodruzstvi' %}">Dobrodružství</a>
-                        </li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='predmety' %}">Předměty</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span class="list_subheading">Všeobecné</span>
-                    <ul class="list_box">
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='downloady' %}">Downloady</a></li>
-                        <li><a href="{% url 'ddcz:links-list' %}">Linky</a></li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='expanze' %}">Rozvoj DrD</a></li>
-                    </ul>
-                </li>
-            </ul>
+    <ul class="nav_links">
+        <li><a class="text-gold" href="">Chat</a></li>
+        <li><a class="text-gold" href="">Moudrá sova</a></li>
 
-            <ul>
-                <li>
-                    <span class="list_subheading">Postavy</span>
-                    <ul class="list_box">
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='alchymistazvl' %}">Alchymista</a>
-                        </li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='alchpredmety' %}">Alchymistické
-                                předměty</a></li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='hranicar' %}">Hraničář</a></li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='hranicarkouzla' %}">Hraničářská
-                                kouzla</a></li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='kouzelnikzvl' %}">Kouzelník</a>
-                        </li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='kouzla' %}">Kouzelnická kouzla</a>
-                        </li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='valecnik' %}">Válečník</a></li>
-                        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='zlodej' %}">Zloděj</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='dobrodruzstvi' %}">Dobrodružství</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='hrbitov' %}">Hřbitov</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:phorum-list' %}">Fórum</a></li>
+        <li><a class="text-red" href="{% url 'ddcz:creation-list' creative_page_slug='clanky' %}">Články<span class="text-gold">&amp;</span>Eseje</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='expanze' %}">Rozvoj DrD</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='bestiar' %}">Bestiář</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='predmety' %}">Předměty</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='kouzelnikzvl' %}">Kouzelník</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='kouzla' %}">Kouzla</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='alchymistazvl' %}">Alchymista</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='alchpredmety' %}">Alchymistické předměty</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='valecnik' %}">Válečník</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='hranicar' %}">Hraničář</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='hranicarkouzla' %}">Hraničářská kouzla</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='zlodej' %}">Zloděj</a></li>        
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='novapovolani' %}"><span class="text-blue">Nová</span> Povolání</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='noverasy' %}"><span class="text-blue">Nové</span> Rasy</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='dovednosti' %}">Dovednosti</a></li>
+        <li><a class="text-red" href="{% url 'ddcz:creation-list' creative_page_slug='downloady' %}">Downloady</a></li>
+        <li><a class="text-red" href="{% url 'ddcz:creation-list' creative_page_slug='galerie' %}">Galerie</a></li>
+        <li><a class="text-red" href="{% url 'ddcz:creation-list' creative_page_slug='fotogalerie' %}">Fotogalerie</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:links-list' %}">Linky</a></li>
+        <li><a class="text-gold" href="{% url 'ddcz:dating' %}">Seznamka</a></li>
+        <li><a class="text-red" href="">Inzerce</a></li>
 
 
-    <ul class="nav_border">
-        <li>
-            <span class="list_heading">Ostatní</span>
-            <ul>
-                <li>
-                    <span class="list_subheading">Hledat</span>
-                    <ul class="list_box">
-                        <li>Vyhledávání</li>
-                        <li>Rekordy a statistiky</li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span class="list_subheading">Nápověda</span>
-                    <ul class="list_box">
-                        <li><a href="{% url 'ddcz:about-drd' %}">Co je to Dračí Doupě?</a></li>
-                        <li><a href="{% url 'ddcz:website-manual' %}">Dračí manuál</a></li>
-                        <li><a href="{% url 'ddcz:faq' %}">Otázky a Odpovědi</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span class="list_subheading">Kontakt</span>
-                    <ul class="list_box">
-                        <li><a href="{% url 'ddcz:dating' %}">Seznamka</a></li>
-                        <li>Inzerce</li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span class="list_subheading">Seznamy</span>
-                    <ul class="list_box">
-                        <li>Tvůrci a Redakce</li>
-                        <li>Čekající díla</li>
-                        <li>Dračí líheň</li>
-                        <li>Uživatelé</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
+        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='galerie' %}">Galerie</a></li>
+        <li><a href="{% url 'ddcz:creation-list' creative_page_slug='fotogalerie' %}">Fotogalerie</a></li>
+        
     </ul>
 </nav>

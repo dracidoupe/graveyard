@@ -1,21 +1,21 @@
 <nav id="right_menu">
 
     <ul class="nav_links">
-        <li><a href="{% url 'ddcz:news' %}">Aktuality</a></li>
+        <li><a class="text-blue" href="{% url 'ddcz:news' %}">Aktuality</a></li>
     </ul>
     {% if user.is_authenticated %}
     <div class="nick">{{ user.username }}</div>
     <div class="state">online</div>
 
     <ul class="nav_links">
-        <li><a href="">Pošta</a></li>
-        <li><a href="">Putyka</a></li>
-        <li><a href="">Nastavení</a></li>
+        <li><a class="text-red" href="">Pošta</a></li>
+        <li><a class="text-red" href="">Putyka</a></li>
+        <li><a class="text-red" href="">Nastavení</a></li>
     </ul>
 
     <form method="post" action="{% url 'ddcz:logout-action' %}">
         {% csrf_token %}
-        <input type="submit" value="Odhlaš!" id="logout_button">
+        <input type="submit" value="Odhlaš!" id="logout_button" class="text-gold">
     </form>
     {% else %}
     <ul class="nav_links">
