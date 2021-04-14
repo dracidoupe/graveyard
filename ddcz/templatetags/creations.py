@@ -25,15 +25,11 @@ def creation_rating(rating, skin):
 
 @register.inclusion_tag("creations/author-display-link.html")
 def author_display(creation_subclass):
-    try:
-        author = creation_subclass.author
-        if not author:
-            raise ValueError()
-
-    except Exception:
+    author = getattr(creation_subclass, "author", None)
+    if not author:
         author_url = "#"
         author_name = "Neznámý"
-        logger.exception(
+        logger.error(
             "Author not found, data migration error for creation %s" % creation_subclass
         )
     else:
