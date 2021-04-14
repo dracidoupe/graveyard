@@ -91,10 +91,11 @@ a.text-blue:visited{
     color: aqua;
 }
 
-.text-blue:hover,
 a.text-blue:hover,
-a.text-blue:active{
-    color: aquamarine;
+a.text-blue:active,
+a.text-red:hover > span.text-blue,
+a.text-gold:hover > span.text-blue{
+    color: lightblue;
 }
 
 /* =========== GRID LAYOUT ============ */
