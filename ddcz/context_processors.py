@@ -15,7 +15,7 @@ def common_variables(request):
             "skins/%(skin)s/main.css" % {"skin": skin}
         ),
         "skin_favico_url": staticfiles_storage.url(
-            "skins/%(skin)s/img/drak.svg" % {"skin": skin}
+            "skins/%(skin)s/img/drak.ico" % {"skin": skin}
         ),
         "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.gif" % skin),
         "login_form": LoginForm(),
