@@ -1,3 +1,4 @@
+from ddcz.models.used.social import Market
 from hashlib import md5
 import logging
 from smtplib import SMTPException
@@ -32,6 +33,7 @@ from .forms.authentication import LoginForm, PasswordResetForm
 from .forms.comments import PhorumCommentForm, DeletePhorumCommentForm
 from .html import check_creation_html, HtmlTagMismatchException
 from .models import (
+    MARKET_SECTION_CHOICES,
     Author,
     CreativePage,
     CreativePageConcept,
@@ -237,6 +239,25 @@ def dating(request):
     items = paginator.get_page(page)
 
     return render(request, "dating/list.html", {"items": items})
+
+
+def market(request):
+    # TODO: Migrate to `-datum`, see https://github.com/dracidoupe/graveyard/issues/195
+    item_list = Market.objects.order_by("-id")
+
+    section = request.GET.get("sekce", None)
+    if section:
+        if not section in [i[0] for i in MARKET_SECTION_CHOICES]:
+            raise Http404()
+
+        item_list = item_list.filter(sekce=request.GET.get("sekce"))
+
+    paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
+    page = request.GET.get("z_s", 1)
+
+    items = paginator.get_page(page)
+
+    return render(request, "market/list.html", {"items": items})
 
 
 def change_skin(request):
