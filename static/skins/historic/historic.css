@@ -10,7 +10,7 @@
     --page_bg_color: #000;
     --page_txt_color: gray;
 
-    --heading_color: gold;
+    --heading-color: gold;
 
     --hr_color: #ab8a3f;
     --input-color: gold;
@@ -254,14 +254,22 @@ nav#top_menu ul li{
 h1.page-heading{
     width: 100%;    
     border: none;
-    background-color: var(--heading_bg_color);
-    color: var(--heading_color);
+    color: var(--heading-color);
+    background-color: var(--heading_bg_color);    
     text-align: center;
     font-size: 2rem;
     font-weight: 200;
     font-family: var(--link-font);
     letter-spacing: -.1rem;    
     margin: 0rem 0rem 2rem 0rem;    
+}
+
+h1.page-heading.text-blue{
+    color: aqua;
+}
+
+h1.page-heading.text-red{
+    color: red;
 }
 
 h1.page-heading::first-letter{
