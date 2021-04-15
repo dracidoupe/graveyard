@@ -4,7 +4,6 @@ from smtplib import SMTPException
 
 from django.apps import apps
 from django.conf import settings
-from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.http import (
     HttpResponseRedirect,
@@ -14,13 +13,12 @@ from django.http import (
     HttpResponseServerError,
     Http404,
 )
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy, resolve, Resolver404
 
 from django.contrib.auth import (
     authenticate,
     login as login_auth,
-    logout as logout_auth,
     views as authviews,
 )
 from django.contrib.auth.forms import PasswordResetForm
@@ -35,7 +33,6 @@ from .forms.comments import PhorumCommentForm, DeletePhorumCommentForm
 from .html import check_creation_html, HtmlTagMismatchException
 from .models import (
     Author,
-    CommonArticle,
     CreativePage,
     CreativePageConcept,
     DownloadItem,
@@ -47,7 +44,7 @@ from .models import (
     Phorum,
     UserProfile,
 )
-from .users import migrate_user
+from .users import migrate_user, logout_user_without_losing_session
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -263,7 +260,7 @@ def logout(request):
 
     referer = request.META.get("HTTP_REFERER", "/")
 
-    logout_auth(request)
+    logout_user_without_losing_session(request)
     return HttpResponseRedirect(referer)
 
 

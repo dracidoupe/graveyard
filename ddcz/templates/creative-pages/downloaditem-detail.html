@@ -1,0 +1,34 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+{% load comments %}
+
+{% block content %}
+<div id="page-article-detail">
+    <h1 class="page-heading">{{ heading }}</h1>
+    <article>
+        <header>
+            <h2><a href="{% url 'ddcz:download-file' download_id=article.id %}">{{ article.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <table>
+                <tr>
+                    <th>Autor:</th>
+                    <td>{% author_display article %}</td>
+                </tr>
+                <tr>
+                    <th>Přidáno:</th>
+                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></td>
+                </tr>
+                <tr>
+                    <th>Hlasovalo:</th>
+                    <td>{{ article.pocet_hlasujicich }}</td>
+                </tr>
+            </table>
+        </header>
+
+        {% creation_comments creative_page_slug article.pk %}
+
+    </article>
+
+
+</div>
+{% endblock %}
