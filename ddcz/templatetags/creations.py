@@ -50,3 +50,11 @@ def articleTime(datetime):
         return datetime.strftime("%-d. %-m. %Y v %-H:%M")
     except ValueError:
         return datetime.strftime("%d. %m. %Y v %H:%M")
+
+
+@register.filter
+def czech_date(datetime):
+    try:
+        return datetime.strftime("%-d. %-m. %Y")
+    except ValueError:
+        return datetime.strftime("%d. %m. %Y")

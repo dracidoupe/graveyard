@@ -1,0 +1,51 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+{% load pages %}
+
+{% block content %}
+
+<div id="page-market">
+    <h1 class="page-heading">Inzerce</h1>
+    <p>Zde můžete nabídnout k prodeji, nebo zde naopak můžete koupit, vyměnit či darovat vše co se týká fantasy či Dračího doupěte. </p>
+    <p>Prosíme vás, abyste inzeráty týkající se seznamování hráčů přidávali do <a href="{% url 'ddcz:dating' %}">Seznamky</a>. Takové inzeráty budou z této rubriky mazány. </p>
+    {% pagination items %}
+    <br>
+    {% for i in items %}
+        <article class="market">
+            <p>
+                <span class="label">Jméno: </span>{% if i.email %}
+                    <span class="value"><a href="mailto:{{ i.email }}">{{ i.jmeno }}</a></span>
+                {% else %}
+                    <span class="value">{{ i.jmeno }}</span>
+                {% endif %}
+            </p>
+            <p>
+                <span class="label">Sekce: </span><span class="value"><a href="{% url 'ddcz:market' %}?sekce={{ i.sekce | urlencode }}">{{ i.get_sekce_display }}</a></span>
+            </p>
+            <p>
+                <span class="label">Okres: </span><span class="value">{{ i.okres }}</span>
+            </p>
+            {% if i.telefon %}
+            <p>
+                <span class="label">Telefon: </span><span class="value">{{ i.telefon }}</span>
+            </p>
+            {% endif %}
+            {% if i.mobil %}
+            <p>
+                <span class="label">Mobil: </span><span class="value">{{ i.mobil }}</span>
+            </p>
+            {% endif %}
+            <p>
+                <span class="label">Přidáno: </span><span class="value"><time datetime={{ i.date | date:"c"  }}>{{ i.date | czech_date }}</time></span>
+            </p>
+            <p>
+                <span class="label">Text: </span><span class="value">{{ i.text|render_html|safe }}</span>
+            </p>
+        </article>
+
+        <hr>
+    {% endfor %}
+    {% pagination items %}
+</div>
+{% endblock %}
