@@ -5,9 +5,9 @@
 
 {% block content %}
 
-<div id="page-news">
+<div id="page-dating">
     <h1 class="page-heading">Seznamka</h1>
-    <p>Seznamka slouží k seznamování hráčů a PJů. Pokud chcete něco prodat, nebo něco sháníte vkládejte inzeráty do inzerce.</p>
+    <p>Seznamka slouží k seznamování hráčů a PJů. Pokud chcete něco prodat, nebo něco sháníte vkládejte inzeráty do <a href="{% url 'ddcz:market' %}">inzerce</a>.</p>
     {% pagination items %}
     {% for i in items %}
         <article class="dating">
@@ -41,7 +41,7 @@
             {% endif %}
             {% if i.doba %}
             <p>
-                <span class="label">Doba:</span><span class="value">{{ i.doba }}</span>
+                <span class="label">Doba hraní DrD:</span><span class="value">{{ i.doba }}</span>
             </p>
             {% endif %}
             <p>
