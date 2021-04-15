@@ -12,7 +12,7 @@ def common_variables(request):
         "skin_for_include": skin_for_include(skin),
         "current_page_url": request.get_full_path(),
         "skin_css_url": staticfiles_storage.url(
-            "skins/%(skin)s/%(skin)s.css" % {"skin": skin}
+            "skins/%(skin)s/main.css" % {"skin": skin}
         ),
         "skin_favico_url": staticfiles_storage.url(
             "skins/%(skin)s/img/drak.svg" % {"skin": skin}
