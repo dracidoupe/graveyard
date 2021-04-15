@@ -351,21 +351,6 @@ class Groupmembers(models.Model):
         db_table = "groupmembers"
 
 
-class Inzerce(models.Model):
-    sekce = models.CharField(max_length=20)
-    jmeno = models.CharField(max_length=30, blank=True, null=True)
-    mail = models.CharField(max_length=30, blank=True, null=True)
-    telefon = models.CharField(max_length=15, blank=True, null=True)
-    mobil = models.CharField(max_length=15, blank=True, null=True)
-    okres = models.CharField(max_length=20, blank=True, null=True)
-    text = models.TextField()
-    datum = models.CharField(max_length=12)
-
-    class Meta:
-        managed = False
-        db_table = "inzerce"
-
-
 class Limity(models.Model):
     oprava_hlasovani_po = models.PositiveIntegerField(primary_key=True)
     platnost = models.CharField(max_length=1)
