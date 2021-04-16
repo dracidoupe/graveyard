@@ -148,3 +148,40 @@ class LevelSystemParams(models.Model):
 
     class Meta:
         db_table = "level_parametry_2"
+
+
+class MentatNewbie(models.Model):
+    """
+    Handle a relationship between two UserProfiles: a mentat and a newbie.
+
+    In theory, this could be generated using ManyToManyField:
+    https://docs.djangoproject.com/en/3.2/topics/db/examples/many_to_many/
+
+    In practice, Django doesn't allow attributes on the relationship, hence we need
+    to hack around with a dedicated model anyway.
+    """
+
+    # Note: newbie_id is NOT a primary key, but this is how Django model framework
+    # inspected the DB. Happens because Django doesn't support composite primary keys
+    newbie_id = models.IntegerField()
+    mentat_id = models.IntegerField()
+    # newbie = models.ForeignKey(
+    #     UserProfile, on_delete=models.CASCADE, related_name="newbie"
+    # )
+    # mentat = models.ForeignKey(
+    #     UserProfile, on_delete=models.CASCADE, related_name="mentat"
+    # )
+    newbie_rate = models.IntegerField()
+    mentat_rate = models.IntegerField()
+    locked = MisencodedCharField(max_length=2)
+    penalty = models.IntegerField()
+    # This field is not needed except for Django to be happy as it doesn't support
+    # composite primary keys
+    # TODO: This is added without a primary key to allow prefilling data on
+    # production and to allow to migrate to primary key later
+    # Will be migrated to AutoField then
+    django_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        db_table = "mentat_newbie"
+        unique_together = (("newbie_id", "mentat_id"),)
