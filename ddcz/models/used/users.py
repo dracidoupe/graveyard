@@ -80,6 +80,10 @@ class UserProfile(models.Model):
         return self.nick_uzivatele
 
     @property
+    def description(self):
+        return self.popis_uzivatele or ""
+
+    @property
     def profile_url(self):
         return reverse(
             "ddcz:user-detail",
