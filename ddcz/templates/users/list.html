@@ -27,7 +27,7 @@
         <th>Level</th>
         <th>Může poradit?</th>
         {% if user.is_authenticated %}
-            <th>Email</th>
+            <th>E-mail</th>
         {% endif %}
         <th>Popis</th>
     </tr>
@@ -38,7 +38,13 @@
             <td>{% level_star profile skin %}</td>
             <td>Výbuch</td>
             {% if user.is_authenticated %}
-                <td>{{ profile.email_uzivatele }}</td>
+                <td>
+                    {% if profile.show_email %}
+                        <a href="mailto:{{ profile.email_uzivatele }}" rel="external">{{ profile.email_uzivatele }}</a>
+                    {% else %}
+                        <span title="Uživatel{% if profile.is_female %}ka{% endif %} se rozhodl{% if profile.is_female %}a{% endif %} e-mail nezveřejnit">---</span>
+                    {% endif %}
+                </td>  
             {% endif %}
             <td>{{ profile.description | render_html | safe }}</td>
         </tr>

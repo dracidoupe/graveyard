@@ -31,6 +31,14 @@ class UserProfile(models.Model):
     pospristup = models.DateTimeField(auto_now_add=True)
     level = MisencodedCharField(max_length=1)
     icq_uzivatele = models.IntegerField(default=0)
+    # This is an important field! It lists which fields can be publicly displayed. The format of the fields
+    # is CSV with implied field names. The order of the fields is:
+    #   jmeno, prijmeni, email, ICQ, pohlavi, vek, kraj, narozeniny
+    # The actual records looks like this:
+    #   ,,,,,,,1
+    # meaning "show birthday and nothing else"
+    # Note that last two fields were added later on, meaning records with less than eight fields can occur, like this:
+    #   ,,,,,,
     vypsat_udaje = MisencodedCharField(max_length=15)
     ikonka_uzivatele = MisencodedCharField(max_length=25, blank=True, null=True)
     popis_uzivatele = MisencodedCharField(max_length=255, blank=True, null=True)
@@ -50,14 +58,16 @@ class UserProfile(models.Model):
     class Meta:
         db_table = "uzivatele"
 
-    def get_slug(self):
+    @property
+    def slug(self):
         slug = create_slug(self.nick_uzivatele)
         if not slug:
             slug = "neznamy"
             # TODO: log an error
         return slug
 
-    def get_icon_url(self):
+    @property
+    def icon_url(self):
         if not self.ikonka_uzivatele:
             return None
         else:
@@ -90,8 +100,28 @@ class UserProfile(models.Model):
             kwargs={"user_profile_id": self.pk, "nick_slug": self.slug},
         )
 
-    icon_url = property(get_icon_url)
-    slug = property(get_slug)
+    @property
+    def public_listing_permissions(self):
+        """ Load permissions from the field, parse it and return as list of boolean values """
+        # TODO: Once we are doing field renaming, this should be normalized towards field names
+        if not self.vypsat_udaje:
+            permissions = [""] * 8
+        else:
+            permissions = self.vypsat_udaje.split(",")
+        return {
+            "jmeno": permissions[0] == "1",
+            "prijmeni": permissions[1] == "1",
+            "email": permissions[2] == "1",
+            "icq": permissions[3] == "1",
+            "pohlavi": permissions[4] == "1",
+            "vek": permissions[5] == "1",
+            "kraj": len(permissions) > 6 and permissions[6] == "1",
+            "narozeniny": len(permissions) > 7 and permissions[7] == "1",
+        }
+
+    @property
+    def show_email(self):
+        return self.public_listing_permissions["email"]
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
