@@ -1,0 +1,41 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load pages %}
+
+{% block content %}
+<div class="user-list">
+    <h1 class="page-heading">Uživatelé</h1>
+
+
+    <p>Kliknutím na nick uživatele nebo vepsáním nicku nebo ID do formuláře se zobrazí jeho podrobnosti.</p>
+
+    <!--
+    <form method="get" action="{% url "ddcz:users-list" %}">
+    Nick / ID: <INPUT type="text" name="nick" value="">
+    <INPUT type="submit" value="Zobrazit">
+    </form>
+
+    table style: width="100%" cellspacing="2" cellpadding="2" border="0"
+    -->
+    {% pagination articles %}
+
+    <table class="user-list__table">
+    <tr>
+        <th>Nick</th>
+        <th>Level</th>
+        <th>Může poradit?</th>
+        {% if user.is_authenticated %}
+            <th>Email</th>
+        {% endif %}
+        <th>Popis</th>
+    </tr>
+
+    {% for profile in users %}
+        <tr>
+            <td>{{ profile.nick_uzivatele }}</td>
+        </tr>
+    {% endfor %}
+
+    {% pagination articles %}
+
+</div>
