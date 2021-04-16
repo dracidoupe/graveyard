@@ -1,0 +1,55 @@
+<nav id="right_menu">
+
+    <ul class="nav_links">
+        <li><a class="text-blue" href="{% url 'ddcz:news' %}">Aktuality</a></li>
+    </ul>
+    {% if user.is_authenticated %}
+    <div class="nick">{{ user.username }}</div>
+    <div class="state">online</div>
+
+    <ul class="nav_links">
+        <li><a class="text-red" href="">Pošta</a></li>
+        <li><a class="text-red" href="">Putyka</a></li>
+        <li><a class="text-red" href="">Nastavení</a></li>
+    </ul>
+
+    <form method="post" action="{% url 'ddcz:logout-action' %}">
+        {% csrf_token %}
+        <input type="submit" value="Odhlaš!" id="logout_button" class="text-gold">
+    </form>
+    {% else %}
+    <ul class="nav_links">
+        <li><a href="">Registrace</a></li>
+    </ul>
+    <form method="post" action="{% url 'ddcz:login-action' %}">
+        {% csrf_token %}
+        {{ login_form }}
+        <input type="submit" value="Přihlásit">
+    </form>
+    <p><a href="{% url 'ddcz:password-reset' %}">Zapomněl jsem heslo</a></p>
+    {% endif %}
+
+    <ul>
+        <li>
+            <span class="list_heading">Vzhledy</span>
+            <ul>
+                <li><a href="">Family Silver</a></li>
+                <li><a href="{% url 'ddcz:change-skin' %}?skin=historic&redirect={{ current_page_url }}">Historic</a>
+                </li>
+                <li><a href="{% url 'ddcz:change-skin' %}?skin=light&redirect={{ current_page_url }}">Light</a></li>
+                <li><a href="{% url 'ddcz:change-skin' %}?skin=dark&redirect={{ current_page_url }}">Dark</a></li>
+                <li><a href="">Timmothy Gold</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul>
+        <li>
+            <span class="list_heading">Doupě jinde</span>
+            <ul>
+                <li><a href="https://discord.gg/U6TEhAKV">Discord</a></li>
+                <li><a href="https://www.facebook.com/DraciDoupecz-47586881642/">Facebook</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>

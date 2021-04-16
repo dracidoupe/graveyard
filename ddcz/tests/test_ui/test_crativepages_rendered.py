@@ -20,7 +20,7 @@ class TestCreativePageRendered(SeleniumTestCase):
             )
 
             text = self.selenium.find_element_by_xpath(
-                '//h1[@class="page-heading"]'
+                '//h1[contains(@class,"page-heading")]'
             ).text
             self.assertEquals("DraciDoupe.cz", self.selenium.title)
             self.assertEquals(page.name, text)
