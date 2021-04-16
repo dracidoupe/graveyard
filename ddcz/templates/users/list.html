@@ -34,7 +34,7 @@
 
     {% for profile in users %}
         <tr>
-            <td>{{ profile.nick }}</td>
+            <td><a href="{{ profile.profile_url }}">{{ profile.nick }}</a></td>
             <td>{% level_star profile skin %}</td>
             <td>Výbuch</td>
             {% if user.is_authenticated %}
