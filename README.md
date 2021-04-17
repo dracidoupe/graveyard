@@ -2,23 +2,25 @@
 
 Graveyard is an attempt at open-source reimplementation of [DraciDoupe.cz](https://www.dracidoupe.cz/) (referred to as DDCZ in this text).
 
-Developer's documentation is [at Read the Docs](https://ddcz.readthedocs.io/en/latest/). 
+Developer's documentation is [at Read the Docs](https://ddcz.readthedocs.io/en/latest/).
 
 Production will be running at http://nove.dracidoupe.cz/
 
 ## Contributions
 
-Contributions are welcome provided you agree your work will be shared under the same license as Graveyard (MIT). Please use [black](https://pypi.org/project/black/) for code formatting. 
+Contributions are welcome provided you agree your work will be shared under the same license as Graveyard (MIT). Please use [black](https://pypi.org/project/black/) for code formatting.
 
 If you don't know where to start, take a look [at the roadmap](https://github.com/dracidoupe/graveyard/milestones) or ask Almad on [development Slack](https://dracidoupe.slack.com/messages/C7F0YCTFU) or in Pošta on [DraciDoupe.cz](https://www.dracidoupe.cz/).
 
+*Please install [EditorConfig](https://editorconfig.org/) support for your editor* ([plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig), [plugin for PyCharm/WebStorm/IDEAJ](https://plugins.jetbrains.com/plugin/7294-editorconfig))
+
 ## Installation
 
-You can run Graveyard either directly on your machine or inside [Docker](https://www.docker.com/). Arm64 systems (like M1 Mac) are supported. 
+You can run Graveyard either directly on your machine or inside [Docker](https://www.docker.com/). Arm64 systems (like M1 Mac) are supported.
 
-Installing and running Graveyard directly is faster (on some systems) and removes one lever of indirection, but it makes the setup more complicated. 
+Installing and running Graveyard directly is faster (on some systems) and removes one lever of indirection, but it makes the setup more complicated.
 
-Running in Docker requires familiarity with it, but it makes setup easier and guarantees consistency with the testing environment (and hopefully in the future, production environment as well). 
+Running in Docker requires familiarity with it, but it makes setup easier and guarantees consistency with the testing environment (and hopefully in the future, production environment as well).
 
 In both cases, first clone this repository and run all commands in its directory.
 
@@ -55,7 +57,7 @@ Ran 4 tests in 0.000s
 
 OK
 Destroying test database for alias 'default'...
-(graveyard-venv) almad@zeruel:~/projects/graveyard$ 
+(graveyard-venv) almad@zeruel:~/projects/graveyard$
 
 ```
 
@@ -103,7 +105,7 @@ Ran 11 tests in 0.031s
 
 OK
 Destroying test database for alias 'default'...
-(graveyard-venv) almad@zeruel:~/projects/graveyard$ 
+(graveyard-venv) almad@zeruel:~/projects/graveyard$
 ```
   * If you see error like `selenium.common.exceptions.WebDriverException: Message: 'chromedriver' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home`, you have to go to [the linked page](https://sites.google.com/a/chromium.org/chromedriver/home) and download the chromedriver to your computer. Place it somewhere in `$PATH` like `/usr/local/bin`
 * Create the database schema: `python manage.py migrate`
@@ -128,7 +130,7 @@ Follow the list above, except:
 
 #### Installation issues
 
-*  Installation failes with "mysql_config not found" 
+*  Installation failes with "mysql_config not found"
 
 If you get something like this:
 
@@ -152,4 +154,4 @@ Old setuptools: `pip install setuptools -U`
 
 ### Create user account
 
-Use ``python manage.py registeruser`` command, see ``manage.py registeruser --help`` for parameters. 
+Use ``python manage.py registeruser`` command, see ``manage.py registeruser --help`` for parameters.
