@@ -19,11 +19,11 @@ class Migration(migrations.Migration):
         #     preserve_default=False,
         # ),
         migrations.RunSQL(
-            "ALTER TABLE mentat_newbie MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY"
+            "ALTER TABLE mentat_newbie MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;"
         ),
         migrations.RunSQL(
             """
-                SET @m = (SELECT MAX(django_id) + 1 FROM mentat_newbie); 
+                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM mentat_newbie);
                 SET @s = CONCAT('ALTER TABLE mentat_newbie AUTO_INCREMENT=', @m);
                 PREPARE stmt1 FROM @s;
                 EXECUTE stmt1;
