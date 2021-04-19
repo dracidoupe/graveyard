@@ -14,7 +14,7 @@ from django.http import (
     HttpResponseServerError,
     Http404,
 )
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_list_or_404, render, get_object_or_404
 from django.urls import reverse, reverse_lazy, resolve, Resolver404
 
 from django.contrib.auth import (
@@ -52,7 +52,8 @@ from .users import migrate_user, logout_user_without_losing_session
 logger = logging.getLogger(__name__)
 
 VALID_SKINS = ["light", "dark", "historic"]
-DEFAULT_LIST_SIZE = 5
+DEFAULT_LIST_SIZE = 10
+DEFAULT_USER_LIST_SIZE = 50
 
 
 def index(request):
@@ -376,6 +377,23 @@ class PasswordResetConfirmView(authviews.PasswordResetConfirmView):
 
 class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
     template_name = "users/password-change-done.html"
+
+
+def users_list(request):
+    users = UserProfile.objects.all().order_by("-pospristup")
+
+    paginator = Paginator(users, DEFAULT_USER_LIST_SIZE)
+    page = request.GET.get("z_s", 1)
+
+    users = paginator.get_page(page)
+
+    return render(
+        request,
+        "users/list.html",
+        {
+            "users": users,
+        },
+    )
 
 
 def user_profile(request, user_profile_id, nick_slug):

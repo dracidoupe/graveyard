@@ -1,6 +1,7 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load pages %}
+{% load users %}
 
 {% block content %}
 <div class="user-list">
@@ -17,7 +18,8 @@
 
     table style: width="100%" cellspacing="2" cellpadding="2" border="0"
     -->
-    {% pagination articles %}
+    {% pagination users %}
+    <br>
 
     <table class="user-list__table">
     <tr>
@@ -25,17 +27,33 @@
         <th>Level</th>
         <th>Může poradit?</th>
         {% if user.is_authenticated %}
-            <th>Email</th>
+            <th>E-mail</th>
         {% endif %}
         <th>Popis</th>
     </tr>
 
     {% for profile in users %}
         <tr>
-            <td>{{ profile.nick_uzivatele }}</td>
+            <td><a href="{{ profile.profile_url }}">{{ profile.nick }}</a></td>
+            <td>{% level_star profile skin %}</td>
+            <td>Výbuch</td>
+            {% if user.is_authenticated %}
+                <td>
+                    {% if profile.show_email %}
+                        <a href="mailto:{{ profile.email_uzivatele }}" rel="external">{{ profile.email_uzivatele }}</a>
+                    {% else %}
+                        <span title="Uživatel{% if profile.is_female %}ka{% endif %} se rozhodl{% if profile.is_female %}a{% endif %} e-mail nezveřejnit">---</span>
+                    {% endif %}
+                </td>  
+            {% endif %}
+            <td>{{ profile.description | render_html | safe }}</td>
         </tr>
     {% endfor %}
 
-    {% pagination articles %}
+    </table>
+
+    {% pagination users %}
 
 </div>
+
+{% endblock %}

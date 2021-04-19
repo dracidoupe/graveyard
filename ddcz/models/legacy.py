@@ -382,20 +382,6 @@ class MaillistCeka(models.Model):
         db_table = "maillist_ceka"
 
 
-class MentatNewbie(models.Model):
-    newbie_id = models.IntegerField(primary_key=True)
-    mentat_id = models.IntegerField()
-    newbie_rate = models.IntegerField()
-    mentat_rate = models.IntegerField()
-    locked = models.CharField(max_length=2)
-    penalty = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = "mentat_newbie"
-        unique_together = (("newbie_id", "mentat_id"),)
-
-
 class MentatsAvail(models.Model):
     user_id = models.IntegerField(primary_key=True)
     intro_m = models.TextField()

@@ -31,6 +31,14 @@ class UserProfile(models.Model):
     pospristup = models.DateTimeField(auto_now_add=True)
     level = MisencodedCharField(max_length=1)
     icq_uzivatele = models.IntegerField(default=0)
+    # This is an important field! It lists which fields can be publicly displayed. The format of the fields
+    # is CSV with implied field names. The order of the fields is:
+    #   jmeno, prijmeni, email, ICQ, pohlavi, vek, kraj, narozeniny
+    # The actual records looks like this:
+    #   ,,,,,,,1
+    # meaning "show birthday and nothing else"
+    # Note that last two fields were added later on, meaning records with less than eight fields can occur, like this:
+    #   ,,,,,,
     vypsat_udaje = MisencodedCharField(max_length=15)
     ikonka_uzivatele = MisencodedCharField(max_length=25, blank=True, null=True)
     popis_uzivatele = MisencodedCharField(max_length=255, blank=True, null=True)
@@ -50,14 +58,16 @@ class UserProfile(models.Model):
     class Meta:
         db_table = "uzivatele"
 
-    def get_slug(self):
+    @property
+    def slug(self):
         slug = create_slug(self.nick_uzivatele)
         if not slug:
             slug = "neznamy"
             # TODO: log an error
         return slug
 
-    def get_icon_url(self):
+    @property
+    def icon_url(self):
         if not self.ikonka_uzivatele:
             return None
         else:
@@ -80,14 +90,38 @@ class UserProfile(models.Model):
         return self.nick_uzivatele
 
     @property
+    def description(self):
+        return self.popis_uzivatele or ""
+
+    @property
     def profile_url(self):
         return reverse(
             "ddcz:user-detail",
             kwargs={"user_profile_id": self.pk, "nick_slug": self.slug},
         )
 
-    icon_url = property(get_icon_url)
-    slug = property(get_slug)
+    @property
+    def public_listing_permissions(self):
+        """ Load permissions from the field, parse it and return as list of boolean values """
+        # TODO: Once we are doing field renaming, this should be normalized towards field names
+        if not self.vypsat_udaje:
+            permissions = [""] * 8
+        else:
+            permissions = self.vypsat_udaje.split(",")
+        return {
+            "jmeno": permissions[0] == "1",
+            "prijmeni": permissions[1] == "1",
+            "email": permissions[2] == "1",
+            "icq": permissions[3] == "1",
+            "pohlavi": permissions[4] == "1",
+            "vek": permissions[5] == "1",
+            "kraj": len(permissions) > 6 and permissions[6] == "1",
+            "narozeniny": len(permissions) > 7 and permissions[7] == "1",
+        }
+
+    @property
+    def show_email(self):
+        return self.public_listing_permissions["email"]
 
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
@@ -114,3 +148,40 @@ class LevelSystemParams(models.Model):
 
     class Meta:
         db_table = "level_parametry_2"
+
+
+class MentatNewbie(models.Model):
+    """
+    Handle a relationship between two UserProfiles: a mentat and a newbie.
+
+    In theory, this could be generated using ManyToManyField:
+    https://docs.djangoproject.com/en/3.2/topics/db/examples/many_to_many/
+
+    In practice, Django doesn't allow attributes on the relationship, hence we need
+    to hack around with a dedicated model anyway.
+    """
+
+    # Note: newbie_id is NOT a primary key, but this is how Django model framework
+    # inspected the DB. Happens because Django doesn't support composite primary keys
+    newbie_id = models.IntegerField()
+    mentat_id = models.IntegerField()
+    # newbie = models.ForeignKey(
+    #     UserProfile, on_delete=models.CASCADE, related_name="newbie"
+    # )
+    # mentat = models.ForeignKey(
+    #     UserProfile, on_delete=models.CASCADE, related_name="mentat"
+    # )
+    newbie_rate = models.IntegerField()
+    mentat_rate = models.IntegerField()
+    locked = MisencodedCharField(max_length=2)
+    penalty = models.IntegerField()
+    # This field is not needed except for Django to be happy as it doesn't support
+    # composite primary keys
+    # TODO: This is added without a primary key to allow prefilling data on
+    # production and to allow to migrate to primary key later
+    # Will be migrated to AutoField then
+    django_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        db_table = "mentat_newbie"
+        unique_together = (("newbie_id", "mentat_id"),)

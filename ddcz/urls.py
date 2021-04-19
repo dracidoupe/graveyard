@@ -36,6 +36,7 @@ urlpatterns = [
     path("linky/", views.links, name="links-list"),
     path("nastaveni/zmena-skinu/", views.change_skin, name="change-skin"),
     path("autor/<int:author_id>-<slug>/", views.author_detail, name="author-detail"),
+    path("uzivatele/", views.users_list, name="users-list"),
     path("uzivatel/prihlaseni/", views.login, name="login-action"),
     path("uzivatel/odhlaseni/", views.logout, name="logout-action"),
     path(
