@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="500"
+   height="500"
+   viewBox="0 0 132.29167 132.29167"
+   version="1.1"
+   id="svg8085"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="star-level-8.svg">
+  <defs
+     id="defs8079">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8100">
+      <stop
+         style="stop-color:#00ff00;stop-opacity:1"
+         offset="0"
+         id="stop8096" />
+      <stop
+         style="stop-color:#00aa00;stop-opacity:1"
+         offset="1"
+         id="stop8098" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8100"
+       id="radialGradient8102"
+       cx="40.018642"
+       cy="86.862373"
+       fx="40.018642"
+       fy="86.862373"
+       r="56.989819"
+       gradientTransform="matrix(-0.60129539,-0.12035774,0.08331741,-0.41624953,84.294633,103.71702)"
+       gradientUnits="userSpaceOnUse" />
+    <filter
+       inkscape:menu="Shadows and Glows"
+       inkscape:menu-tooltip="Cut out, add inner shadow and colorize some parts of an image"
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Emergence"
+       id="filter8170">
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.21 0.72 0.07 0 0 "
+         result="result1"
+         id="feColorMatrix8142" />
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 0 "
+         result="result9"
+         id="feColorMatrix8144" />
+      <feComposite
+         in2="result9"
+         in="SourceGraphic"
+         operator="in"
+         result="result4"
+         id="feComposite8146" />
+      <feFlood
+         result="result2"
+         flood-color="rgb(0,0,0)"
+         id="feFlood8148" />
+      <feComposite
+         in2="result9"
+         operator="in"
+         result="result10"
+         id="feComposite8150" />
+      <feComposite
+         in2="result4"
+         operator="atop"
+         id="feComposite8152" />
+      <feGaussianBlur
+         stdDeviation="3"
+         result="result8"
+         id="feGaussianBlur8154" />
+      <feOffset
+         dx="3"
+         dy="3"
+         result="result3"
+         in="result8"
+         id="feOffset8156" />
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(219,173,62)"
+         result="result5"
+         id="feFlood8158" />
+      <feMerge
+         result="result6"
+         id="feMerge8166">
+        <feMergeNode
+           in="result5"
+           id="feMergeNode8160" />
+        <feMergeNode
+           in="result3"
+           id="feMergeNode8162" />
+        <feMergeNode
+           in="result4"
+           id="feMergeNode8164" />
+      </feMerge>
+      <feComposite
+         in2="SourceGraphic"
+         operator="in"
+         result="result7"
+         id="feComposite8168" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="311.89147"
+     inkscape:cy="207.35114"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata8082">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="star"
+       style="font-variation-settings:normal;vector-effect:none;fill:url(#radialGradient8102);fill-opacity:1;fill-rule:evenodd;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;"
+       id="path7888"
+       sodipodi:sides="5"
+       sodipodi:cx="64.950134"
+       sodipodi:cy="68.395077"
+       sodipodi:r1="59.88776"
+       sodipodi:r2="28.746124"
+       sodipodi:arg1="0.90394088"
+       sodipodi:arg2="1.5322594"
+       inkscape:flatsided="false"
+       inkscape:rounded="0.14"
+       inkscape:randomized="0"
+       inkscape:transform-center-x="0.67987132"
+       inkscape:transform-center-y="-4.7319211"
+       d="M 101.9918,115.45312 C 97.554007,118.94632 71.701151,96.902271 66.057647,97.119862 60.414143,97.337453 36.335375,121.30667 31.641787,118.16553 26.9482,115.0244 39.924364,83.624886 37.973484,78.324834 36.022604,73.024782 5.7857796,57.531406 7.3227769,52.096875 8.8597742,46.662345 42.73234,49.300427 47.170134,45.807224 51.607928,42.314021 56.999312,8.7693754 62.642816,8.5517844 68.28632,8.3341933 76.244553,41.364131 80.93814,44.505264 c 4.693588,3.141134 38.26247,-2.097221 40.21335,3.202831 1.95088,5.300052 -27.003227,23.075593 -28.540225,28.510124 -1.536997,5.43453 13.818325,35.741691 9.380535,39.234901 z" />
+  </g>
+</svg>

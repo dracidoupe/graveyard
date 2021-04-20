@@ -17,7 +17,7 @@ def level_star(user_profile, skin):
     level = user_profile.level or "0"
     return {
         "star_image_url": staticfiles_storage.url(
-            "skins/%s/img/star-level-%s.gif" % (skin, level)
+            "skins/%s/img/star-level-%s.svg" % (skin, level)
         ),
         "level": level,
     }

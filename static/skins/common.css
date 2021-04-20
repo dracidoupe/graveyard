@@ -20,7 +20,7 @@ input{
 .article-list li.creation-detail {
     list-style: none;
   }
-  
+
 .article-list {
     clear: both;
 }
@@ -51,6 +51,8 @@ span.label {
 .rating-stars img {
     letter-spacing: 0px;
     transform: scale(1.5);
+    width: 1rem;
+
 }
 
 .table-like {
@@ -129,7 +131,7 @@ article.dating {
     display: table;
     width: 100%;
     margin-bottom: 3%;
-    margin-top: 3%; 
+    margin-top: 3%;
     border-spacing: 1em;
 }
 
@@ -169,12 +171,12 @@ article.link footer {
 
 article.link span.actuallink {
     text-align: right;
-    float: right; 
+    float: right;
 }
 
 /* Discussion */
 
-#page-phorum > p{    
+#page-phorum > p{
     text-indent: 1.5rem;
     font-size: .95rem
 }
@@ -184,7 +186,7 @@ article.link span.actuallink {
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
-    max-width: 60%;    
+    max-width: 60%;
 }
 
 .comment {
@@ -200,7 +202,7 @@ article.link span.actuallink {
     margin-bottom: 15px;
 
     font-size: 1.3rem;
-    
+
 }
 
 .comment__submit{
