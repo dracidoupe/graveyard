@@ -179,7 +179,6 @@ class MentatNewbie(models.Model):
     # composite primary keys
     # TODO: This is added without a primary key to allow prefilling data on
     # production and to allow to migrate to primary key later
-    # Will be migrated to AutoField then
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
