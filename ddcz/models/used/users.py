@@ -12,6 +12,52 @@ from ...text import create_slug
 from ..magic import MisencodedCharField
 
 
+LEVEL_DESCRIPTIONS = {
+    "0": """ 
+            Jsi klasickým uživatelem webu doupěte, který tu a tam něco
+            okomentuje, rád se podívá na díla a správně si žije pod
+            krásným žlutým Sluncem.
+          """,
+    "1": """
+            Žlutá barva Slunce už tě nebavila, a tak ses rozhodl
+            zapojit do hrůzného boje, kde pod náporem tvých příspěvků
+            teče azurová krev diskuzních protivníků!
+         """,
+    "2": """
+            Ne, že bys nebyl tuhým soupeřem pro jednoho diskutéra,
+            ale dokážeš napsat i srozumitelnější příspěvky,
+            a to správnou barvou modrého pera, tou správnou, kterou se
+            píší recenze a kritiky.
+         """,
+    "3": """
+            Na rozdíl od svých kolegů, kteří píší do diskuzí a hodnotí
+            díla, ty skutečně díla vytváříš! Tvoje kreativita tě sice
+            občas vytočí do oranžova, ale taková práce zaslouží odměnu.
+         """,
+    "4": """
+            Už je to chvíle, co se tvá kreativita projevuje naplno,
+            moudrost a zkušenosti tě vedou k vytváření velmi kvalitních
+            prací. Je pravda, že barva 4 a více hvězd na fialovém plášti
+            čaroděje by ještě chtěla doplnit o noblesní okraj, ale už i
+            tak je dílem takřka dokonalosti.
+         """,
+    "5": """
+            Západ Slunce při správném počasí nese barvu červena. Stejně
+            jako závěr každého dne, kde je již všechno práce odvedena,
+            i ty máš za sebou pořádnou nálož zásluh. Proto si užívej 
+            nádherné zapadající Slunce i další den, a to napořád
+            s připomínkou, že jsme vděčni.
+         """,
+    "8": """
+            Zelená znamená kupředu! Opravuj! Kritizuj! Vytvářej! 
+            Řiď a zpívej píseň, která tě povede na cestách mezi 
+            diskutéry, tvůrci, kamarády, ale i spamery a zločince.
+            Trestej a odměňuj! Tvá magická moc je nezměrná, 
+            využívej ji moudře, soudče z řad nejvyšších.
+         """,
+}
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     jmeno_uzivatele = MisencodedCharField(max_length=20)
@@ -93,6 +139,14 @@ class UserProfile(models.Model):
         return self.nick_uzivatele
 
     @property
+    def age(self):
+        return self.vek_uzivatele
+
+    @property
+    def location(self):
+        return self.kraj_uzivatele
+
+    @property
     def description(self):
         return self.popis_uzivatele or ""
 
@@ -102,6 +156,20 @@ class UserProfile(models.Model):
             "ddcz:user-detail",
             kwargs={"user_profile_id": self.pk, "nick_slug": self.slug},
         )
+
+    @property
+    def registration_date(self):
+        try:
+            return self.reg_schval_datum.strftime("%-d. %-m. %Y v %-H:%M")
+        except ValueError:
+            return self.reg_schval_datum.strftime("%d. %m. %Y v %H:%M")
+
+    @property
+    def last_login(self):
+        try:
+            return self.pospristup.strftime("%-d. %-m. %Y v %-H:%M")
+        except ValueError:
+            return self.pospristup.strftime("%d. %m. %Y v %H:%M")
 
     @property
     def public_listing_permissions(self):

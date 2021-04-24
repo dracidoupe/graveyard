@@ -1,0 +1,102 @@
+:root{
+    --bg_deb: rgba(224, 220, 19, 0);
+}
+
+#user_container{
+    display: grid;
+    grid-template-areas: 
+        'info info'
+        'server_stats server_stats'
+        'author author'
+        'patron reputation'
+    ;
+    grid-column: auto auto;
+    gap: 2rem;
+    padding: 2%;    
+    width: 96%;
+}
+
+#user_container p{
+    text-indent: 0rem;
+}
+
+#user_container > section {
+    border: 2px solid var(--page_txt_color);
+    border-radius: .5rem;
+    padding-bottom: 2rem;
+}
+
+#user_container > section > h3{
+    background-color: var(--page_txt_color);
+    color: var(--page_bg_color);
+    width: calc( 100% - 6rem );
+
+    text-align: left;    
+    font-size: 1.2rem;
+    font-family: var(--link-font);
+    
+    margin-top: 0rem;    
+    padding: .7rem 3rem;
+}
+
+#user_info{
+    grid-area: info;
+    background-color: var(--bg_deb);
+}
+
+#user_stats{
+    grid-area: server_stats;
+    background-color: var(--bg_deb)
+}
+
+#user_patron{
+    grid-area: patron;
+    background-color: var(--bg_deb);
+}
+
+#user_reputation{
+    grid-area: reputation;
+    background-color: var(--bg_deb);
+}
+
+#user_author{
+    grid-area: author;
+    background-color: var(--bg_deb);
+}
+
+
+
+#user_container table{
+    width: 100%;
+    padding: 0rem;
+    margin: 0rem;
+}
+
+#user_container table th{
+    vertical-align: top;
+    width: 9rem;
+    padding: 0rem;
+    padding-left: 2rem;
+    text-align: right;
+}
+
+#user_container table td{
+    vertical-align: top;
+    text-align: left;
+    padding-left: 3rem;
+}
+
+
+ul.user-stars{
+    display: table;
+    list-style-type: none;
+    width: 100%;
+    padding: 0rem;
+    margin: 0rem;
+}
+
+ul.user-stars li{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
