@@ -5,6 +5,7 @@ from zlib import adler32
 
 from django.apps import apps
 from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db.models.expressions import OuterRef, Subquery
@@ -34,7 +35,7 @@ from .commonarticles import (
     SLUG_NAME_TRANSLATION_FROM_CZ,
     COMMON_ARTICLES_CREATIVE_PAGES,
 )
-from .forms.authentication import LoginForm, PasswordResetForm
+from .forms.authentication import LoginForm, PasswordResetForm, SignUpForm
 from .forms.comments import PhorumCommentForm, DeletePhorumCommentForm
 from .html import check_creation_html, HtmlTagMismatchException
 from .models import (
@@ -637,5 +638,27 @@ def tavern(request):
             "tavern_tables": tavern_tables,
             "supported_list_styles": SUPPORTED_LIST_STYLES,
             "current_list_style": list_style,
+        },
+    )
+
+
+def sign_up(request):
+    if request.method == "POST" and request.POST["submit"]:
+        print("\n\n\n\n")
+        print(request.POST)
+        print("\n\n")
+        print(SignUpForm(request.POST).is_valid())
+        print("\n\n\n\n")
+
+    return render(
+        request,
+        "users/sign_up.html",
+        {
+            "sign_up_form": SignUpForm(),
+            "reg_script": staticfiles_storage.url("common/js/registration.js"),
+            "reg_style": staticfiles_storage.url("common/css/registration.css"),
+            "seal_image": staticfiles_storage.url(
+                "common/img/registration-seal-gold.svg"
+            ),
         },
     )

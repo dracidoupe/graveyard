@@ -19,7 +19,7 @@
     </form>
     {% else %}
     <ul class="nav_links">
-        <li><a href="">Registrace</a></li>
+        <li><a href="{% url 'ddcz:sign-up' %}">Registrace</a></li>
     </ul>
     <form method="post" action="{% url 'ddcz:login-action' %}">
         {% csrf_token %}

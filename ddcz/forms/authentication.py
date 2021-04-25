@@ -38,3 +38,91 @@ class PasswordResetForm(authforms.PasswordResetForm):
         )
 
         return users
+
+
+class SignUpForm(forms.Form):
+
+    SEX_CHOICES = {"0": "mužské", "1": "ženské"}
+    GDPR_CHOICES = {
+        "0": "S tímhle nemůžu souhlasit... To je moc, raději si najdu jiné město nebo zůstanu v lese. Měj se hezky, Endo, a díky za tvůj čas.",
+        "1": "Jasně, souhlasím s tím, co všechno s tím, co jsem ti tady napsal, uděláte.",
+    }
+
+    nick_uzivatele = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Zadej svůj nick", "id": "nickname"}
+        ),
+    )
+
+    email = forms.EmailField(
+        label="",
+        widget=forms.EmailInput(
+            attrs={"placeholder": "Zadej emailovou adresu", "id": "email"}
+        ),
+    )
+
+    jmeno = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Křestní jméno", "id": "first_name"}
+        ),
+    )
+
+    prijmeni = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Příjmení", "id": "last_name"}),
+    )
+
+    osloveni = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "Oslovení", "id": "addressing"}),
+    )
+
+    pohlavi = forms.ChoiceField(
+        label="",
+        widget=forms.Select(attrs={"id": "sex"}),
+        choices=SEX_CHOICES.items(),
+    )
+
+    vek = forms.IntegerField(
+        label="",
+        widget=forms.NumberInput(attrs={"placeholder": "Tvůj věk", "id": "age"}),
+    )
+
+    duvod_registrace = forms.CharField(
+        label="",
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Co tě dovedlo k rozhodnutí zaregistrovat se na náš web? Je nějaký speciální důvod, proč bys rád patřil mezi nás?",
+                "id": "motive",
+            }
+        ),
+    )
+
+    kamaradi_na_webu = forms.CharField(
+        label="",
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Znáš ve městě někoho mimo Virga?",
+                "id": "web_friends",
+                "class": "form-control",
+            }
+        ),
+    )
+
+    odkud_znas_web = forms.CharField(
+        label="",
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Odkud ses dozvěděl o existenci tohoto města (webu)?",
+                "id": "source",
+            }
+        ),
+    )
+
+    gdpr = forms.ChoiceField(
+        label="",
+        widget=forms.Select(attrs={"id": "gdpr"}),
+        choices=GDPR_CHOICES.items(),
+    )
