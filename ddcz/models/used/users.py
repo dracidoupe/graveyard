@@ -13,15 +13,15 @@ from ..magic import MisencodedCharField
 
 
 LEVEL_DESCRIPTIONS = {
-    "0": """ 
+    "0": """             
             Jsi klasickým uživatelem webu doupěte, který tu a tam něco
             okomentuje, rád se podívá na díla a správně si žije pod
             krásným žlutým Sluncem.
-          """,
+         """,
     "1": """
-            Žlutá barva Slunce už tě nebavila, a tak ses rozhodl
-            zapojit do hrůzného boje, kde pod náporem tvých příspěvků
-            teče azurová krev diskuzních protivníků!
+            Již tě nebavilo stále jen sledovat žluté Slunce, a tak došlo
+            na pádná slova a hromové argumenty! Křik se rozléhá hospodou,
+            jak teče azurová krev diskuzních protivníků!
          """,
     "2": """
             Ne, že bys nebyl tuhým soupeřem pro jednoho diskutéra,

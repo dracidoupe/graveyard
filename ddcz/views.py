@@ -475,11 +475,14 @@ def users_list(request):
 @require_http_methods(["GET"])
 def user_profile(request, user_profile_id, nick_slug):
     user_profile = get_object_or_404(UserProfile, id=user_profile_id)
+    author = Author.objects.get(user=user_profile)
+
     return render(
         request,
         "users/detail.html",
         {
             "profile": user_profile,
+            "creations": author.get_all_creations(),
             "levels": LEVEL_DESCRIPTIONS.keys(),
             "level_description": LEVEL_DESCRIPTIONS[user_profile.level],
         },

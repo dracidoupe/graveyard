@@ -1,15 +1,12 @@
 {% extends 'public.html' %}
 {% load html %}
 {% block content %}
+{% load creations %}
+
 <div id="page-user-detail">
     <h1 class="page-heading">Uživatel{% if profile.is_female %}ka{% endif %} {{ profile.nick_uzivatele }}</h1>
     {% if profile.icon_url %}<p><img src="{{ profile.icon_url }}" alt="Ikonka uživatele"></p>{% endif %}
 
-
-
-    {% if profile.is_author %}
-        <p>Uživatel je autorem. <a href="{{ profile.author_url }}">Přejít na autorský profil</a></p>
-    {% endif %}
 
     <div id="user_container">
         <section id="user_info">
@@ -67,10 +64,12 @@
                         </ul>
                     </td>
                 </tr>
+                {% if profile.id == user.profile.id %}
                 <tr>
                     <th>Level</th>
                     <td><p>{{ level_description }}</p></td>
                 </tr>
+                {% endif %}
                 <tr>
                     <th>Spatřen{% if profile.is_female %}a{% endif %} </th>
                     <td>{{ profile.last_login }}</td>
@@ -90,17 +89,45 @@
         
         <section id="user_reputation">
             <h3>Věhlas</h3>
+            <table>
+                <tr>
+                    <th>Reputace</th>
+                    <th>Kladná</th>
+                    <th>Záporná</th>
+                </tr>
+                <tr>
+                    <td>{{ profile.reputace }}</td>
+                    <td>{{ profile.reputace }}</td>
+                    <td>{{ profile.get_average_reputation }}</td>
+                </tr>
+            </table>
         </section>
 
         <section id="user_author">
-            <h3>Díla uživatele</h3>
+            <h3>Díla uživatele</h3>        
             {% if profile.is_author %}
-            {% else %}
-                <p>
-                    Uživatel není autorem žádného rubrikového příspěvku.
-                </p>
-            {% endif %}
             <p>Uživatel je autorem. <a href="{{ profile.author_url }}">Přejít na autorský profil</a></p>
+            {% for slug, page_dict in creations.items %}
+                <h4 class="creations">{{ page_dict.page.name }}</h4>
+                <div class="user_creations">
+                {% for creation in page_dict.creations %}
+                <section class="user_creation">
+                    <h5><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a></h5>
+                    <div class="stars">
+                        {% creation_rating creation.pochvez skin %}
+                    </div>
+                    <div class="date">
+                        {{ creation.datum | articleTime }}
+                    </div>                    
+                </section>
+                {% endfor %}
+                </div>
+            {% endfor %}            
+            {% else %}
+            <p>
+                Uživatel není autorem žádného rubrikového příspěvku.
+            </p>
+            {% endif %}
         </section>        
         
     </div>    
