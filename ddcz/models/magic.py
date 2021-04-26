@@ -4,7 +4,11 @@
 
 # ...aaaaand few other, let's call them, missteps?
 
+import logging
+
 from django.db import models
+
+logger = logging.getLogger(__name__)
 
 
 class MisencodedTextField(models.TextField):
@@ -54,7 +58,9 @@ class MisencodedIntegerField(models.CharField):
         try:
             return int(value)
         except ValueError:
-            # TODO: Logging infrastructure
+            logger.exception(
+                f"Integer in VARCHAR is not an integer, but {type(value)}: {value}"
+            )
             return 0
 
     def get_db_prep_value(self, value, connection, prepared=False):
