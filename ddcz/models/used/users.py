@@ -168,14 +168,14 @@ class MentatNewbie(models.Model):
     newbie = models.ForeignKey(
         UserProfile,
         on_delete=models.CASCADE,
-        related_name="newbie",
+        related_name="newbies",
         db_column="newbie_id",
         db_constraint=False,
     )
     mentat = models.ForeignKey(
         UserProfile,
         on_delete=models.CASCADE,
-        related_name="mentat",
+        related_name="mentats",
         db_column="mentat_id",
         db_constraint=False,
     )
