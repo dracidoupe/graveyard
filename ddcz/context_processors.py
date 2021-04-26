@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 from .forms.authentication import LoginForm
@@ -19,4 +20,5 @@ def common_variables(request):
         ),
         "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.gif" % skin),
         "login_form": LoginForm(),
+        "discord_invite_link": settings.DISCORD_INVITE_LINK,
     }
