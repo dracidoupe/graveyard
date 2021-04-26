@@ -163,14 +163,22 @@ class MentatNewbie(models.Model):
 
     # Note: newbie_id is NOT a primary key, but this is how Django model framework
     # inspected the DB. Happens because Django doesn't support composite primary keys
-    newbie_id = models.IntegerField()
-    mentat_id = models.IntegerField()
-    # newbie = models.ForeignKey(
-    #     UserProfile, on_delete=models.CASCADE, related_name="newbie"
-    # )
-    # mentat = models.ForeignKey(
-    #     UserProfile, on_delete=models.CASCADE, related_name="mentat"
-    # )
+    # newbie_id = models.IntegerField()
+    # mentat_id = models.IntegerField()
+    newbie = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name="newbie",
+        db_column="newbie_id",
+        db_constraint=False,
+    )
+    mentat = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name="mentat",
+        db_column="mentat_id",
+        db_constraint=False,
+    )
     newbie_rate = models.IntegerField()
     mentat_rate = models.IntegerField()
     locked = MisencodedCharField(max_length=2)
@@ -183,4 +191,4 @@ class MentatNewbie(models.Model):
 
     class Meta:
         db_table = "mentat_newbie"
-        unique_together = (("newbie_id", "mentat_id"),)
+        unique_together = (("newbie", "mentat"),)
