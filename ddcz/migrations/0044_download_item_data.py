@@ -4,7 +4,7 @@ from django.db import migrations
 
 
 class FakeFile:
-    """ Faking django.core.files.File interface in a way sufficent for one-time data migration"""
+    """Faking django.core.files.File interface in a way sufficent for one-time data migration"""
 
     def __init__(self, name, size):
         self.name = name
