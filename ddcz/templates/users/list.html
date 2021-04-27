@@ -25,7 +25,6 @@
     <tr>
         <th>Nick</th>
         <th>Level</th>
-        <th>Může poradit?</th>
         {% if user.is_authenticated %}
             <th>E-mail</th>
         {% endif %}
@@ -36,7 +35,6 @@
         <tr>
             <td><a href="{{ profile.profile_url }}">{{ profile.nick }}</a></td>
             <td>{% level_star profile skin %}</td>
-            <td>Výbuch</td>
             {% if user.is_authenticated %}
                 <td>
                     {% if profile.show_email %}
@@ -44,7 +42,7 @@
                     {% else %}
                         <span title="Uživatel{% if profile.is_female %}ka{% endif %} se rozhodl{% if profile.is_female %}a{% endif %} e-mail nezveřejnit">---</span>
                     {% endif %}
-                </td>  
+                </td>
             {% endif %}
             <td>{{ profile.description | render_html | safe }}</td>
         </tr>

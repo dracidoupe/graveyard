@@ -1,7 +1,5 @@
-from ddcz.models.used.social import Market
 from hashlib import md5
 import logging
-from smtplib import SMTPException
 
 from django.apps import apps
 from django.conf import settings
@@ -14,6 +12,7 @@ from django.http import (
     HttpResponseServerError,
     Http404,
 )
+from django.db.models import Count, Q
 from django.shortcuts import get_list_or_404, render, get_object_or_404
 from django.urls import reverse, reverse_lazy, resolve, Resolver404
 
@@ -41,6 +40,7 @@ from .models import (
     Dating,
     EditorArticle,
     Link,
+    Market,
     News,
     Quest,
     Phorum,
@@ -380,6 +380,25 @@ class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
 
 
 def users_list(request):
+    # TODO: Displaying newbies & mentats
+    # Original query:
+    #    $vysledek = MySQL_Query("SELECT a.id, a.nick_uzivatele, a.email_uzivatele, a.vypsat_udaje, a.level $co_vypsat, b.locked as mentat_id, c.newbie_id
+    #             FROM uzivatele a left outer join mentat_newbie b
+    #                ON (a.id = b.mentat_id) and (b.newbie_id = 0)
+    #                left outer join mentat_newbie c
+    #                ON (a.id = c.newbie_id) and (c.mentat_id = 0) and (c.locked='0')
+    #                ".
+    #                $podminka."
+    #             ORDER BY ".AddSlashes($ord)." ".AddSlashes($j_ord)." ".addslashes($limit));
+    # users = (
+    #     UserProfile.objects.filter(  # .all()
+    #         Q(newbies__locked="0", newbies__mentat_id=0)
+    #         | Q(mentats__locked="1", mentats__newbie_id=0)
+    #     )  # .annotate(id_count=Count("id"))
+    #     .order_by("-pospristup")
+    # )
+    # print(str(users.query))
+
     users = UserProfile.objects.all().order_by("-pospristup")
 
     paginator = Paginator(users, DEFAULT_USER_LIST_SIZE)
