@@ -281,7 +281,7 @@ class HtmlChecker(HTMLParser):
 
 
 class HtmlTagMismatchException(Exception):
-    """ Pairing of the tags is not done properly """
+    """Pairing of the tags is not done properly"""
 
 
 def check_creation_html(entity_string):

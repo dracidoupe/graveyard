@@ -102,7 +102,7 @@ class UserProfile(models.Model):
 
     @property
     def public_listing_permissions(self):
-        """ Load permissions from the field, parse it and return as list of boolean values """
+        """Load permissions from the field, parse it and return as list of boolean values"""
         # TODO: Once we are doing field renaming, this should be normalized towards field names
         if not self.vypsat_udaje:
             permissions = [""] * 8
