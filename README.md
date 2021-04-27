@@ -155,3 +155,20 @@ Old setuptools: `pip install setuptools -U`
 ### Create user account
 
 Use ``python manage.py registeruser`` command, see ``manage.py registeruser --help`` for parameters.
+
+### Debugging with Django Debug Toolbar
+
+* `pip install django-debug-toolbar==2.2.1`
+* Add to local.py:
+
+```
+from .base import INSTALLED_APPS, MIDDLEWARE
+
+INSTALLED_APPS.append("debug_toolbar")
+MIDDLEWARE.insert(
+    0,
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+)
+
+INTERNAL_IPS = ["127.0.0.1", "::1"]
+```
