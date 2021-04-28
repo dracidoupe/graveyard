@@ -1,0 +1,17 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load pages %}
+
+{% block content %}
+<div id="page-tavern">
+    <h1 class="text-blue page-heading">Putyka</h1>
+    <p>Da Tables</p>
+    {% pagination tables %}
+    <div class="article-list">
+    {% for table in tables %}
+
+    {% endfor %}
+    </div>
+    {% pagination tables %}
+</div>
+{% endblock %}
