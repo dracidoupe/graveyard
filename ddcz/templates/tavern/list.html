@@ -5,13 +5,22 @@
 {% block content %}
 <div id="page-tavern">
     <h1 class="text-blue page-heading">Putyka</h1>
-    <p>Da Tables</p>
-    {% pagination tables %}
-    <div class="article-list">
-    {% for table in tables %}
+    <p>Putyka je místo našeho setkávání. Přisedni k jednomu ze stolů a bav se s ostatními!</p>
+    <table>
+        <tr>
+            <th>Stůl</th>
+            <th>Popis stolu</th>
+            <th>Vlastník</th>
+        </tr>
 
+    {% for table in tavern_tables %}
+        <tr>
+            <td>{{ table.jmeno }}</td>
+            <td>{{ table.popis }}</td>
+            <td>{{ table.vlastnik }}</td>
+        </tr>
     {% endfor %}
-    </div>
-    {% pagination tables %}
+    </table>
+
 </div>
 {% endblock %}
