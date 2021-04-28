@@ -534,14 +534,16 @@ def tavern(request):
     elif list_style == "vsechny":
         query = TavernTable.objects.all()
 
+    # TODO: LEFT OUTER JOIN tavern access ON user & table
     candidate_tables = query.order_by("jmeno")
-    tavern_tables = []
-
-    for tavern_table in candidate_tables:
-        if tavern_table.is_public:
-            tavern_tables.append(tavern_table)
-        else:
-            # TODO
-            pass
+    # .select_related("tavernaccess__id_stolu")
+    # .filter(
+    #     tavernaccess__nick_usera=request.user.profile.nick_uzivatele
+    # )
+    tavern_tables = [
+        table
+        for table in candidate_tables
+        if table.is_user_access_allowed(request.user.profile)
+    ]
 
     return render(request, "tavern/list.html", {"tavern_tables": tavern_tables})
