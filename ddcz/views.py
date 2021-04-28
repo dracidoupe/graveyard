@@ -507,4 +507,6 @@ def editor_article(request, slug):
 
 
 def tavern(request):
+    bookmarks = request.user.profile.tavern_bookmarks.all()
+    print(bookmarks)
     return render(request, "tavern/list.html")

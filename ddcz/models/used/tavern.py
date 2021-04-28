@@ -1,11 +1,29 @@
+from ddcz.models.used.users import UserProfile
 from django.db import models
 
 from ..magic import MisencodedCharField, MisencodedTextField
 
 
+class TavernTable(models.Model):
+    jmeno = MisencodedCharField(unique=True, max_length=255)
+    popis = MisencodedCharField(max_length=255)
+    vlastnik = MisencodedCharField(max_length=30)
+    povol_hodnoceni = MisencodedCharField(max_length=1)
+    min_level = MisencodedCharField(max_length=1)
+    zalozen = models.DateTimeField()
+    verejny = MisencodedCharField(max_length=1)
+    celkem = models.IntegerField(blank=True, null=True)
+    sekce = models.IntegerField()
+
+    class Meta:
+        db_table = "putyka_stoly"
+
+
 class TavernBookmark(models.Model):
-    id_stolu = models.IntegerField()
-    id_uz = models.IntegerField()
+    id_stolu = models.ForeignKey(
+        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
+    )
+    id_uz = models.ForeignKey(UserProfile, on_delete=models.CASCADE, db_column="id_uz")
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
@@ -71,21 +89,6 @@ class TavernSection(models.Model):
 
     class Meta:
         db_table = "putyka_sekce"
-
-
-class TavernTable(models.Model):
-    jmeno = MisencodedCharField(unique=True, max_length=255)
-    popis = MisencodedCharField(max_length=255)
-    vlastnik = MisencodedCharField(max_length=30)
-    povol_hodnoceni = MisencodedCharField(max_length=1)
-    min_level = MisencodedCharField(max_length=1)
-    zalozen = models.DateTimeField()
-    verejny = MisencodedCharField(max_length=1)
-    celkem = models.IntegerField(blank=True, null=True)
-    sekce = models.IntegerField()
-
-    class Meta:
-        db_table = "putyka_stoly"
 
 
 class TavernTableVisitor(models.Model):
