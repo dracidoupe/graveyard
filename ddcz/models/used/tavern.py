@@ -4,8 +4,9 @@ from ..magic import MisencodedCharField, MisencodedTextField
 
 
 class TavernBookmark(models.Model):
-    id_stolu = models.IntegerField(primary_key=True)
+    id_stolu = models.IntegerField()
     id_uz = models.IntegerField()
+    django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "putyka_book"
