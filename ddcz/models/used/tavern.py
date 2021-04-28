@@ -76,9 +76,10 @@ class TavernComment(models.Model):
 
 
 class TavernAccess(models.Model):
-    id_stolu = models.IntegerField(primary_key=True)
+    id_stolu = models.ForeignKey(TavernTable, on_delete=models.CASCADE)
     typ_pristupu = MisencodedCharField(max_length=5)
     nick_usera = MisencodedCharField(max_length=30)
+    django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "putyka_pristup"
