@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 from ...text import create_slug
-from ..magic import MisencodedCharField, MisencodedTextField
+from ..magic import MisencodedCharField
 
 
 class UserProfile(models.Model):
@@ -54,6 +54,9 @@ class UserProfile(models.Model):
     reload = MisencodedCharField(max_length=1)
     max_level = models.IntegerField(blank=True, null=True)
     api_key = MisencodedCharField(unique=True, max_length=40, blank=True, null=True)
+    tavern_bookmarks = models.ManyToManyField(
+        "TavernTable", through="TavernBookmark", through_fields=("id_uz", "id_stolu")
+    )
 
     class Meta:
         db_table = "uzivatele"
