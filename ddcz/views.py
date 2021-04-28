@@ -15,7 +15,6 @@ from django.http import (
 from django.db.models import Count, Q
 from django.shortcuts import get_list_or_404, render, get_object_or_404
 from django.urls import reverse, reverse_lazy, resolve, Resolver404
-
 from django.contrib.auth import (
     authenticate,
     login as login_auth,
@@ -23,6 +22,7 @@ from django.contrib.auth import (
 )
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
+from django.views.decorators.http import require_http_methods
 
 from .commonarticles import (
     SLUG_NAME_TRANSLATION_FROM_CZ,
@@ -379,6 +379,7 @@ class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
     template_name = "users/password-change-done.html"
 
 
+@require_http_methods(["GET"])
 def users_list(request):
     # TODO: Displaying newbies & mentats
     # Original query:
@@ -398,8 +399,17 @@ def users_list(request):
     #     .order_by("-pospristup")
     # )
     # print(str(users.query))
+    searched_nick = request.GET.get("nick", None)
+    search_limited = False
 
-    users = UserProfile.objects.all().order_by("-pospristup")
+    if searched_nick:
+        if len(searched_nick) <= 3:
+            users = UserProfile.objects.filter(nick_uzivatele=searched_nick)
+            search_limited = True
+        else:
+            users = UserProfile.objects.filter(nick_uzivatele__icontains=searched_nick)
+    else:
+        users = UserProfile.objects.all().order_by("-pospristup")
 
     paginator = Paginator(users, DEFAULT_USER_LIST_SIZE)
     page = request.GET.get("z_s", 1)
@@ -411,6 +421,8 @@ def users_list(request):
         "users/list.html",
         {
             "users": users,
+            "searched_nick": searched_nick or "",
+            "search_limited": search_limited,
         },
     )
 
