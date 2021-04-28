@@ -15,6 +15,10 @@ class TavernTable(models.Model):
     celkem = models.IntegerField(blank=True, null=True)
     sekce = models.IntegerField()
 
+    @property
+    def is_public(self):
+        return self.verejny == "1"
+
     class Meta:
         db_table = "putyka_stoly"
 

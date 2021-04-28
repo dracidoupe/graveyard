@@ -1,3 +1,4 @@
+from ddcz.models.used.tavern import TavernTable
 from hashlib import md5
 import logging
 
@@ -507,6 +508,40 @@ def editor_article(request, slug):
 
 
 def tavern(request):
-    bookmarks = request.user.profile.tavern_bookmarks.all()
-    print(bookmarks)
-    return render(request, "tavern/list.html")
+    """
+    Display list of Tavern Tables in a given style ("vypis") that user has access to.
+    Supported styles:
+        * Bookmarked tables ("oblibene"): Show only tables user has explicitly bookmarked
+        TODO: * Active tables ("aktivni"): Show all tables except those in archive
+        * All tables ("vsechny"): All tables
+        TODO: * Search tables ("filter"): Show tables user has searched for
+    """
+    SUPPORTED_LIST_STYLES = ["oblibene", "vsechny"]
+
+    list_style = request.GET.get("vypis", None)
+    if not list_style or list_style not in SUPPORTED_LIST_STYLES:
+        bookmarks = request.user.profile.tavern_bookmarks.count()
+        if bookmarks > 0:
+            default_style = "oblibene"
+        else:
+            default_style = "vsechny"
+        return HttpResponseRedirect(
+            f"{reverse('ddcz:tavern-list')}?vypis={default_style}"
+        )
+
+    if list_style == "oblibene":
+        query = request.user.profile.tavern_bookmarks
+    elif list_style == "vsechny":
+        query = TavernTable.objects.all()
+
+    candidate_tables = query.order_by("jmeno")
+    tavern_tables = []
+
+    for tavern_table in candidate_tables:
+        if tavern_table.is_public:
+            tavern_tables.append(tavern_table)
+        else:
+            # TODO
+            pass
+
+    return render(request, "tavern/list.html", {"tavern_tables": tavern_tables})
