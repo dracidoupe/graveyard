@@ -311,8 +311,8 @@ def login(request):
     referer = request.META.get("HTTP_REFERER", "/")
 
     form = LoginForm(request.POST)
-
     if not form.is_valid():
+        messages.error(request, f"Špatně vyplněný formulář: {form.errors.as_text()}")
         return HttpResponseRedirect(referer)
 
     user = authenticate(
@@ -504,3 +504,7 @@ def editor_article(request, slug):
         "info/editor-article.html",
         {"article": article},
     )
+
+
+def tavern(request):
+    return render(request, "tavern/list.html")

@@ -24,6 +24,10 @@
                 <li>Chat</li>
                 <li><a href="http://www.dracidoupe.cz/moudrasova/">Moudrá Sova</a></li>
                 <li><a href="{% url 'ddcz:phorum-list' %}">Fórum</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'ddcz:tavern-list' %}">Putyka</a></li>
+                {% endif %}
+
                 <li>Ankety</li>
             </ul>
         </li>

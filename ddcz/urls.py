@@ -8,7 +8,7 @@ app_name = "ddcz"
 
 urlpatterns = [
     path("", RedirectView.as_view(url="aktuality/", permanent=True)),
-    path("aktuality/", views.index, name="news"),
+    ### Creations and Creative Pages
     path(
         "rubriky/<creative_page_slug>/", views.creative_page_list, name="creation-list"
     ),
@@ -31,11 +31,7 @@ urlpatterns = [
     # Those are for executing redirect to download/quest location
     path("download/<int:download_id>/", views.download_file, name="download-file"),
     path("dobrodruzstvi/<int:quest_id>/", views.quest_view_redirect, name="quest-view"),
-    path("seznamka/", views.dating, name="dating"),
-    path("inzerce/", views.market, name="market"),
-    path("linky/", views.links, name="links-list"),
-    path("nastaveni/zmena-skinu/", views.change_skin, name="change-skin"),
-    path("autor/<int:author_id>-<slug>/", views.author_detail, name="author-detail"),
+    ### User handling
     path("uzivatele/", views.users_list, name="users-list"),
     path("uzivatel/prihlaseni/", views.login, name="login-action"),
     path("uzivatel/odhlaseni/", views.logout, name="logout-action"),
@@ -64,8 +60,19 @@ urlpatterns = [
         views.user_profile,
         name="user-detail",
     ),
+    path("autor/<int:author_id>-<slug>/", views.author_detail, name="author-detail"),
+    ### User settings
+    path("nastaveni/zmena-skinu/", views.change_skin, name="change-skin"),
+    ### Info sites
+    path("aktuality/", views.index, name="news"),
+    path("seznamka/", views.dating, name="dating"),
+    path("inzerce/", views.market, name="market"),
+    path("linky/", views.links, name="links-list"),
+    ### Discussions & Tavern
     path("forum/", views.phorum, name="phorum-list"),
-    # Static pages. Would be easier to give them /static prefix, but it makes for ugly URL
+    path("putyka/", views.tavern, name="tavern-list"),
+    ### Static Editorial Pages
+    ### Would be easier to give them /static prefix, but it makes for ugly URL
     path(
         "co-je-draci-doupe/",
         views.editor_article,
