@@ -7,23 +7,33 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0073_tavernbookmark_django_id'),
+        ("ddcz", "0073_tavernbookmark_django_id"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='userprofile',
-            name='tavern_bookmarks',
-            field=models.ManyToManyField(through='ddcz.TavernBookmark', to='ddcz.TavernTable'),
+            model_name="userprofile",
+            name="tavern_bookmarks",
+            field=models.ManyToManyField(
+                through="ddcz.TavernBookmark", to="ddcz.TavernTable"
+            ),
         ),
         migrations.AlterField(
-            model_name='tavernbookmark',
-            name='id_stolu',
-            field=models.ForeignKey(db_column='id_stolu', on_delete=django.db.models.deletion.CASCADE, to='ddcz.TavernTable'),
+            model_name="tavernbookmark",
+            name="id_stolu",
+            field=models.ForeignKey(
+                db_column="id_stolu",
+                on_delete=django.db.models.deletion.CASCADE,
+                to="ddcz.TavernTable",
+            ),
         ),
         migrations.AlterField(
-            model_name='tavernbookmark',
-            name='id_uz',
-            field=models.ForeignKey(db_column='id_uz', on_delete=django.db.models.deletion.CASCADE, to='ddcz.UserProfile'),
+            model_name="tavernbookmark",
+            name="id_uz",
+            field=models.ForeignKey(
+                db_column="id_uz",
+                on_delete=django.db.models.deletion.CASCADE,
+                to="ddcz.UserProfile",
+            ),
         ),
     ]
