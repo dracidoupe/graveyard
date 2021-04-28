@@ -22,6 +22,22 @@ class TavernTable(models.Model):
     class Meta:
         db_table = "putyka_stoly"
 
+    def is_user_access_allowed(self, user_profile):
+        # For ACL explanations, see TavernAccess
+        # TODO: Verify if this is not causing additional SQL call if this is
+        # already preselected in the view
+        acls = self.tavernaccess_set.filter(nick_usera=user_profile.nick_uzivatele)
+        acl_applied_types = [acl.typ_pristupu for acl in acls]
+
+        if "vstza" in acl_applied_types:
+            return False
+        elif self.is_public:
+            return True
+        elif "vstpo" in acl_applied_types or "asist" in acl_applied_types:
+            return True
+        else:
+            return False
+
 
 class TavernBookmark(models.Model):
     id_stolu = models.ForeignKey(
@@ -76,7 +92,14 @@ class TavernComment(models.Model):
 
 
 class TavernAccess(models.Model):
-    id_stolu = models.ForeignKey(TavernTable, on_delete=models.CASCADE)
+    id_stolu = models.ForeignKey(
+        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
+    )
+    # typ_pristupu is essentially an enum:
+    # vstpo = Allow access even if otherwise denied
+    # vstza = Deny access even if otherwise allowed
+    # asist = Assistent admin, allow access even if otherwise denied
+    # zapis = Allow write access even if table is read only
     typ_pristupu = MisencodedCharField(max_length=5)
     nick_usera = MisencodedCharField(max_length=30)
     django_id = models.AutoField(primary_key=True)
