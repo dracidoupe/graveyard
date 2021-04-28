@@ -6,60 +6,68 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0071_tavern'),
+        ("ddcz", "0071_tavern"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='IgnoredTavernTable',
+            name="IgnoredTavernTable",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('id_uz', models.IntegerField()),
-                ('id_stolu', models.IntegerField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("id_uz", models.IntegerField()),
+                ("id_stolu", models.IntegerField()),
             ],
             options={
-                'db_table': 'putyka_neoblibene',
-                'managed': False,
+                "db_table": "putyka_neoblibene",
+                "managed": False,
             },
         ),
         migrations.RenameModel(
-            old_name='PutykaPristup',
-            new_name='TavernAccess',
+            old_name="PutykaPristup",
+            new_name="TavernAccess",
         ),
         migrations.RenameModel(
-            old_name='PutykaBook',
-            new_name='TavernBookmark',
+            old_name="PutykaBook",
+            new_name="TavernBookmark",
         ),
         migrations.RenameModel(
-            old_name='PutykaPrispevky',
-            new_name='TavernComment',
+            old_name="PutykaPrispevky",
+            new_name="TavernComment",
         ),
         migrations.RenameModel(
-            old_name='PutykaSekce',
-            new_name='TavernSection',
+            old_name="PutykaSekce",
+            new_name="TavernSection",
         ),
         migrations.RenameModel(
-            old_name='PutykaStoly',
-            new_name='TavernTable',
+            old_name="PutykaStoly",
+            new_name="TavernTable",
         ),
         migrations.RenameModel(
-            old_name='PutykaLinky',
-            new_name='TavernTableLink',
+            old_name="PutykaLinky",
+            new_name="TavernTableLink",
         ),
         migrations.RenameModel(
-            old_name='PutykaSlucovani',
-            new_name='TavernTableMerge',
+            old_name="PutykaSlucovani",
+            new_name="TavernTableMerge",
         ),
         migrations.RenameModel(
-            old_name='PutykaNastenky',
-            new_name='TavernTableNoticeBoard',
+            old_name="PutykaNastenky",
+            new_name="TavernTableNoticeBoard",
         ),
         migrations.RenameModel(
-            old_name='PutykaUzivatele',
-            new_name='TavernTableVisitor',
+            old_name="PutykaUzivatele",
+            new_name="TavernTableVisitor",
         ),
         migrations.RenameModel(
-            old_name='PutykaNavstevnost',
-            new_name='TavernVisit',
+            old_name="PutykaNavstevnost",
+            new_name="TavernVisit",
         ),
     ]
