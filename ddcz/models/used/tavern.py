@@ -3,7 +3,7 @@ from django.db import models
 from ..magic import MisencodedCharField, MisencodedTextField
 
 
-class PutykaBook(models.Model):
+class TavernBookmark(models.Model):
     id_stolu = models.IntegerField(primary_key=True)
     id_uz = models.IntegerField()
 
@@ -12,7 +12,7 @@ class PutykaBook(models.Model):
         unique_together = (("id_stolu", "id_uz"),)
 
 
-class PutykaLinky(models.Model):
+class TavernTableLink(models.Model):
     id_stolu = models.IntegerField(primary_key=True)
     id_linku = models.IntegerField()
 
@@ -21,7 +21,7 @@ class PutykaLinky(models.Model):
         unique_together = (("id_stolu", "id_linku"),)
 
 
-class PutykaNastenky(models.Model):
+class TavernTableNoticeBoard(models.Model):
     id_stolu = models.IntegerField(unique=True)
     nazev_stolu = MisencodedCharField(max_length=128)
     text_nastenky = MisencodedTextField()
@@ -32,17 +32,7 @@ class PutykaNastenky(models.Model):
         db_table = "putyka_nastenky"
 
 
-class PutykaNavstevnost(models.Model):
-    cas = models.DateTimeField(primary_key=True)
-    misto = MisencodedCharField(max_length=31)
-    pocet = models.IntegerField()
-
-    class Meta:
-        db_table = "putyka_navstevnost"
-        unique_together = (("cas", "misto"),)
-
-
-class PutykaNeoblibene(models.Model):
+class IgnoredTavernTable(models.Model):
     id_uz = models.IntegerField()
     id_stolu = models.IntegerField()
 
@@ -51,7 +41,7 @@ class PutykaNeoblibene(models.Model):
         db_table = "putyka_neoblibene"
 
 
-class PutykaPrispevky(models.Model):
+class TavernComment(models.Model):
     id_stolu = models.IntegerField()
     text = MisencodedTextField()
     autor = MisencodedCharField(max_length=30)
@@ -62,7 +52,7 @@ class PutykaPrispevky(models.Model):
         db_table = "putyka_prispevky"
 
 
-class PutykaPristup(models.Model):
+class TavernAccess(models.Model):
     id_stolu = models.IntegerField(primary_key=True)
     typ_pristupu = MisencodedCharField(max_length=5)
     nick_usera = MisencodedCharField(max_length=30)
@@ -72,7 +62,7 @@ class PutykaPristup(models.Model):
         unique_together = (("id_stolu", "typ_pristupu", "nick_usera"),)
 
 
-class PutykaSekce(models.Model):
+class TavernSection(models.Model):
     kod = models.IntegerField()
     poradi = models.IntegerField()
     nazev = MisencodedCharField(max_length=50)
@@ -82,17 +72,7 @@ class PutykaSekce(models.Model):
         db_table = "putyka_sekce"
 
 
-class PutykaSlucovani(models.Model):
-    id_ja = models.IntegerField()
-    id_on = models.IntegerField()
-    zustavam = models.SmallIntegerField()
-    oznaceni = MisencodedCharField(max_length=60)
-
-    class Meta:
-        db_table = "putyka_slucovani"
-
-
-class PutykaStoly(models.Model):
+class TavernTable(models.Model):
     jmeno = MisencodedCharField(unique=True, max_length=255)
     popis = MisencodedCharField(max_length=255)
     vlastnik = MisencodedCharField(max_length=30)
@@ -107,7 +87,7 @@ class PutykaStoly(models.Model):
         db_table = "putyka_stoly"
 
 
-class PutykaUzivatele(models.Model):
+class TavernTableVisitor(models.Model):
     id_stolu = models.IntegerField(primary_key=True)
     id_uzivatele = models.IntegerField()
     oblibenost = models.IntegerField()
@@ -119,3 +99,26 @@ class PutykaUzivatele(models.Model):
     class Meta:
         db_table = "putyka_uzivatele"
         unique_together = (("id_stolu", "id_uzivatele"),)
+
+
+###
+# Deprecated Features
+###
+class TavernTableMerge(models.Model):
+    id_ja = models.IntegerField()
+    id_on = models.IntegerField()
+    zustavam = models.SmallIntegerField()
+    oznaceni = MisencodedCharField(max_length=60)
+
+    class Meta:
+        db_table = "putyka_slucovani"
+
+
+class TavernVisit(models.Model):
+    cas = models.DateTimeField(primary_key=True)
+    misto = MisencodedCharField(max_length=31)
+    pocet = models.IntegerField()
+
+    class Meta:
+        db_table = "putyka_navstevnost"
+        unique_together = (("cas", "misto"),)
