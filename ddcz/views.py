@@ -519,7 +519,10 @@ def tavern(request):
         * All tables ("vsechny"): All tables
         TODO: * Search tables ("filter"): Show tables user has searched for
     """
-    SUPPORTED_LIST_STYLES = ["oblibene", "vsechny"]
+    SUPPORTED_LIST_STYLES = {
+        "oblibene": "Oblíbené",
+        "vsechny": "Všechny",
+    }
 
     list_style = request.GET.get("vypis", None)
     if not list_style or list_style not in SUPPORTED_LIST_STYLES:
@@ -539,4 +542,12 @@ def tavern(request):
 
     tavern_tables = get_tables_with_access(request.user.profile, table_queryset=query)
 
-    return render(request, "tavern/list.html", {"tavern_tables": tavern_tables})
+    return render(
+        request,
+        "tavern/list.html",
+        {
+            "tavern_tables": tavern_tables,
+            "supported_list_styles": SUPPORTED_LIST_STYLES,
+            "current_list_style": list_style,
+        },
+    )
