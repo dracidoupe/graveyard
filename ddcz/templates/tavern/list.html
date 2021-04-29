@@ -6,6 +6,14 @@
 <div id="page-tavern">
     <h1 class="text-blue page-heading">Putyka</h1>
     <p>Putyka je místo našeho setkávání. Přisedni k jednomu ze stolů a bav se s ostatními!</p>
+    <p>
+        {% for slug, name in supported_list_styles.items %}
+            <a
+                href="{% url 'ddcz:tavern-list' %}?vypis={{ slug }}"
+                {% if slug == current_list_style %} class="link link--selected"{% endif %}
+            >[{{ name }}]</a>&nbsp;
+        {% endfor %}
+    </p>
     <table>
         <tr>
             <th>Stůl</th>
