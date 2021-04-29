@@ -9,6 +9,7 @@ def common_variables(request):
     skin_directory = skin if skin not in ["light", "dark"] else "light-dark"
     return {
         "user": request.user,
+        "ddcz_profile": request.ddcz_profile,
         "skin": skin,
         "skin_for_include": skin_directory,
         "current_page_url": request.get_full_path(),

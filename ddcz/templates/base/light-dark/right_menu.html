@@ -38,14 +38,14 @@
                 {% if user.is_authenticated %}
                 <div class="nick">{{ user.username }}</div>
                 <div class="state">online</div>
-                {% if user.profile.icon_url %}
-                <p class="user_icon"><img src="{{ user.profile.icon_url }}" alt="Ikonka uživatele"></p>
+                {% if ddcz_profile.icon_url %}
+                <p class="user_icon"><img src="{{ ddcz_profile.icon_url }}" alt="Ikonka uživatele"></p>
                 {% endif %}
                 <p class="stats">
-                    Hlasů: {{ user.profile.reputace_rozdel }} <br>
-                    Reputace: {{ user.profile.reputace }}
+                    Hlasů: {{ ddcz_profile.reputace_rozdel }} <br>
+                    Reputace: {{ ddcz_profile.reputace }}
                 </p>
-                <p class="admin_link"><a href="{{ user.profile.profile_url }}">Statistiky</a>
+                <p class="admin_link"><a href="{{ ddcz_profile.profile_url }}">Statistiky</a>
                     {% if user.is_staff %}
                     <a href="{% url 'dragon:dashboard' %}">Správa</a>
                     {% endif %}
