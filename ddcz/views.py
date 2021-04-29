@@ -22,6 +22,7 @@ from django.contrib.auth import (
     login as login_auth,
     views as authviews,
 )
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
 
@@ -508,6 +509,7 @@ def editor_article(request, slug):
     )
 
 
+@login_required
 def tavern(request):
     """
     Display list of Tavern Tables in a given style ("vypis") that user has access to.

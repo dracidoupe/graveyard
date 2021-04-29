@@ -74,6 +74,11 @@ TEMPLATES = [
     },
 ]
 
+# Login configuration
+LOGIN_REDIRECT_URL = "ddcz:news"
+LOGIN_URL = "ddcz:news"
+LOGOUT_REDIRECT_URL = "ddcz:news"
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
