@@ -47,6 +47,7 @@ from .models import (
     Phorum,
     UserProfile,
 )
+from .tavern import get_tables_with_access
 from .users import migrate_user, logout_user_without_losing_session
 
 # Get an instance of a logger
@@ -534,16 +535,6 @@ def tavern(request):
     elif list_style == "vsechny":
         query = TavernTable.objects.all()
 
-    # TODO: LEFT OUTER JOIN tavern access ON user & table
-    candidate_tables = query.order_by("jmeno")
-    # .select_related("tavernaccess__id_stolu")
-    # .filter(
-    #     tavernaccess__nick_usera=request.user.profile.nick_uzivatele
-    # )
-    tavern_tables = [
-        table
-        for table in candidate_tables
-        if table.is_user_access_allowed(request.user.profile)
-    ]
+    tavern_tables = get_tables_with_access(request.user.profile, table_queryset=query)
 
     return render(request, "tavern/list.html", {"tavern_tables": tavern_tables})
