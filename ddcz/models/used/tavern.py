@@ -83,7 +83,9 @@ class IgnoredTavernTable(models.Model):
 
 
 class TavernComment(models.Model):
-    id_stolu = models.IntegerField()
+    id_stolu = models.ForeignKey(
+        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
+    )
     text = MisencodedTextField()
     autor = MisencodedCharField(max_length=30)
     reputace = models.IntegerField()

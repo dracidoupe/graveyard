@@ -23,7 +23,7 @@
 
     {% for table in tavern_tables %}
         <tr>
-            <td>{{ table.jmeno }}</td>
+            <td>{{ table.jmeno }} [{{ table.comments_no }}]</td>
             <td>{{ table.popis }}</td>
             <td>{{ table.vlastnik }}</td>
         </tr>
