@@ -540,7 +540,14 @@ def tavern(request):
     elif list_style == "vsechny":
         query = TavernTable.objects.all()
 
-    tavern_tables = get_tables_with_access(request.user.profile, table_queryset=query)
+    query = query.annotate(comments_no=Count("taverncomment")).order_by("jmeno")
+    # query = query.order_by("jmeno")
+
+    # print(query.query)
+
+    tavern_tables = get_tables_with_access(
+        request.user.profile, candidate_tables_queryset=query
+    )
 
     return render(
         request,
