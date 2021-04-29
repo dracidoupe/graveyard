@@ -14,7 +14,7 @@
                 <div class="comment_header">
                     <span class="nick">
                         {% if comment.user %}
-                            <a href="{{ comment.user.profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}
+                            <a href="{{ comment.ddcz_profile_url }}" rel="author">{{ comment.nickname }}</a>&nbsp;{% level_star comment.user skin %}
                         {% else %}
                             {# In theory, this should never happen. In practice, it does because of bad data quality and because of migration windows. Better to display something rather than bail out with 500 #}
                             {{ comment.nickname }}

@@ -26,7 +26,7 @@
         DraciDoupe.cz. Toto ovšem neznamená, že nevhodné (např. vulgární) příspěvky
         nebudou bez diskuse mazány, byť mazat se bude jen v nejnutnějších případech.
     </p>
-    
+
 
     {% if user.is_authenticated %}
         <p>
@@ -44,7 +44,7 @@
     {% endif %}
 
     {% pagination discussions %}
-    <section class="article-list">        
+    <section class="article-list">
     {% for comment in discussions %}
         <article class="comment">
             <picture class="user_icon"></picture>
@@ -57,7 +57,7 @@
                     {% else %}
                         <span class="nick">{{ comment.nickname }}</span>
                     {% endif %}
-                    {% if user.is_authenticated and comment.nickname == user.profile.nick_uzivatele %}
+                    {% if user.is_authenticated and comment.nickname == ddcz_profile.nick_uzivatele %}
                         <form action="{% url 'ddcz:phorum-list' %}" method="post">
                             {% csrf_token %}
                             {{ delete_form.post_type }}
