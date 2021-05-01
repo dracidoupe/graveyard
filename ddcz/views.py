@@ -1,7 +1,6 @@
-from ddcz.models.used.social import Market
+from ddcz.models.used.tavern import TavernTable
 from hashlib import md5
 import logging
-from smtplib import SMTPException
 
 from django.apps import apps
 from django.conf import settings
@@ -14,6 +13,7 @@ from django.http import (
     HttpResponseServerError,
     Http404,
 )
+from django.db.models import Count, Q
 from django.shortcuts import get_list_or_404, render, get_object_or_404
 from django.urls import reverse, reverse_lazy, resolve, Resolver404
 
@@ -41,6 +41,7 @@ from .models import (
     Dating,
     EditorArticle,
     Link,
+    Market,
     News,
     Quest,
     Phorum,
@@ -311,8 +312,8 @@ def login(request):
     referer = request.META.get("HTTP_REFERER", "/")
 
     form = LoginForm(request.POST)
-
     if not form.is_valid():
+        messages.error(request, f"Špatně vyplněný formulář: {form.errors.as_text()}")
         return HttpResponseRedirect(referer)
 
     user = authenticate(
@@ -380,6 +381,25 @@ class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
 
 
 def users_list(request):
+    # TODO: Displaying newbies & mentats
+    # Original query:
+    #    $vysledek = MySQL_Query("SELECT a.id, a.nick_uzivatele, a.email_uzivatele, a.vypsat_udaje, a.level $co_vypsat, b.locked as mentat_id, c.newbie_id
+    #             FROM uzivatele a left outer join mentat_newbie b
+    #                ON (a.id = b.mentat_id) and (b.newbie_id = 0)
+    #                left outer join mentat_newbie c
+    #                ON (a.id = c.newbie_id) and (c.mentat_id = 0) and (c.locked='0')
+    #                ".
+    #                $podminka."
+    #             ORDER BY ".AddSlashes($ord)." ".AddSlashes($j_ord)." ".addslashes($limit));
+    # users = (
+    #     UserProfile.objects.filter(  # .all()
+    #         Q(newbies__locked="0", newbies__mentat_id=0)
+    #         | Q(mentats__locked="1", mentats__newbie_id=0)
+    #     )  # .annotate(id_count=Count("id"))
+    #     .order_by("-pospristup")
+    # )
+    # print(str(users.query))
+
     users = UserProfile.objects.all().order_by("-pospristup")
 
     paginator = Paginator(users, DEFAULT_USER_LIST_SIZE)
@@ -485,3 +505,45 @@ def editor_article(request, slug):
         "info/editor-article.html",
         {"article": article},
     )
+
+
+def tavern(request):
+    """
+    Display list of Tavern Tables in a given style ("vypis") that user has access to.
+    Supported styles:
+        * Bookmarked tables ("oblibene"): Show only tables user has explicitly bookmarked
+        TODO: * Active tables ("aktivni"): Show all tables except those in archive
+        * All tables ("vsechny"): All tables
+        TODO: * Search tables ("filter"): Show tables user has searched for
+    """
+    SUPPORTED_LIST_STYLES = ["oblibene", "vsechny"]
+
+    list_style = request.GET.get("vypis", None)
+    if not list_style or list_style not in SUPPORTED_LIST_STYLES:
+        bookmarks = request.user.profile.tavern_bookmarks.count()
+        if bookmarks > 0:
+            default_style = "oblibene"
+        else:
+            default_style = "vsechny"
+        return HttpResponseRedirect(
+            f"{reverse('ddcz:tavern-list')}?vypis={default_style}"
+        )
+
+    if list_style == "oblibene":
+        query = request.user.profile.tavern_bookmarks
+    elif list_style == "vsechny":
+        query = TavernTable.objects.all()
+
+    # TODO: LEFT OUTER JOIN tavern access ON user & table
+    candidate_tables = query.order_by("jmeno")
+    # .select_related("tavernaccess__id_stolu")
+    # .filter(
+    #     tavernaccess__nick_usera=request.user.profile.nick_uzivatele
+    # )
+    tavern_tables = [
+        table
+        for table in candidate_tables
+        if table.is_user_access_allowed(request.user.profile)
+    ]
+
+    return render(request, "tavern/list.html", {"tavern_tables": tavern_tables})

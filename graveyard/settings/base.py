@@ -166,6 +166,8 @@ SELENIUM_HUB_HOST = None
 SELENIUM_PROJECT_HOST = None
 SELENIUM_IMPLICIT_WAIT = 10
 
+DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

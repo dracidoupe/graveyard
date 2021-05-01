@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 from ...text import create_slug
-from ..magic import MisencodedCharField, MisencodedTextField
+from ..magic import MisencodedCharField
 
 
 class UserProfile(models.Model):
@@ -54,6 +54,9 @@ class UserProfile(models.Model):
     reload = MisencodedCharField(max_length=1)
     max_level = models.IntegerField(blank=True, null=True)
     api_key = MisencodedCharField(unique=True, max_length=40, blank=True, null=True)
+    tavern_bookmarks = models.ManyToManyField(
+        "TavernTable", through="TavernBookmark", through_fields=("id_uz", "id_stolu")
+    )
 
     class Meta:
         db_table = "uzivatele"
@@ -102,7 +105,7 @@ class UserProfile(models.Model):
 
     @property
     def public_listing_permissions(self):
-        """ Load permissions from the field, parse it and return as list of boolean values """
+        """Load permissions from the field, parse it and return as list of boolean values"""
         # TODO: Once we are doing field renaming, this should be normalized towards field names
         if not self.vypsat_udaje:
             permissions = [""] * 8
@@ -163,14 +166,22 @@ class MentatNewbie(models.Model):
 
     # Note: newbie_id is NOT a primary key, but this is how Django model framework
     # inspected the DB. Happens because Django doesn't support composite primary keys
-    newbie_id = models.IntegerField()
-    mentat_id = models.IntegerField()
-    # newbie = models.ForeignKey(
-    #     UserProfile, on_delete=models.CASCADE, related_name="newbie"
-    # )
-    # mentat = models.ForeignKey(
-    #     UserProfile, on_delete=models.CASCADE, related_name="mentat"
-    # )
+    # newbie_id = models.IntegerField()
+    # mentat_id = models.IntegerField()
+    newbie = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name="newbies",
+        db_column="newbie_id",
+        db_constraint=False,
+    )
+    mentat = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name="mentats",
+        db_column="mentat_id",
+        db_constraint=False,
+    )
     newbie_rate = models.IntegerField()
     mentat_rate = models.IntegerField()
     locked = MisencodedCharField(max_length=2)
@@ -179,9 +190,8 @@ class MentatNewbie(models.Model):
     # composite primary keys
     # TODO: This is added without a primary key to allow prefilling data on
     # production and to allow to migrate to primary key later
-    # Will be migrated to AutoField then
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "mentat_newbie"
-        unique_together = (("newbie_id", "mentat_id"),)
+        unique_together = (("newbie", "mentat"),)

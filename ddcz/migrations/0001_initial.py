@@ -1869,7 +1869,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_book",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -1880,7 +1880,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_linky",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -1903,7 +1903,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_nastenky",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -1915,7 +1915,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_navstevnost",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -1935,7 +1935,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_neoblibene",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -1958,7 +1958,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_prispevky",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -1970,7 +1970,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_pristup",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -1992,7 +1992,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_sekce",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -2014,7 +2014,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_slucovani",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -2041,7 +2041,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_stoly",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -2057,8 +2057,28 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "putyka_uzivatele",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
+        ),
+        migrations.AlterUniqueTogether(
+            name="putykabook",
+            unique_together={("id_stolu", "id_uz")},
+        ),
+        migrations.AlterUniqueTogether(
+            name="putykalinky",
+            unique_together={("id_stolu", "id_linku")},
+        ),
+        migrations.AlterUniqueTogether(
+            name="putykanavstevnost",
+            unique_together={("cas", "misto")},
+        ),
+        migrations.AlterUniqueTogether(
+            name="putykapristup",
+            unique_together={("id_stolu", "typ_pristupu", "nick_usera")},
+        ),
+        migrations.AlterUniqueTogether(
+            name="putykauzivatele",
+            unique_together={("id_stolu", "id_uzivatele")},
         ),
         migrations.CreateModel(
             name="ReklamaBanneryZasobnik",

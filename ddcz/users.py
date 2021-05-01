@@ -5,7 +5,7 @@ SESSION_KEYS_TO_PRESERVE = ["skin"]
 
 
 def migrate_user(profile, password):
-    """ Create proper Django user for an existing (presumably authenticated) UserProfile """
+    """Create proper Django user for an existing (presumably authenticated) UserProfile"""
     user = User.objects.create_user(
         id=profile.id,
         username=profile.nick_uzivatele,

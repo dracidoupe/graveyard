@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreativePage(models.Model):
-    """ I represent a Creative Page as a first-item concept to help with foreign keys, definitions etc. """
+    """I represent a Creative Page as a first-item concept to help with foreign keys, definitions etc."""
 
     name = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
@@ -81,7 +81,7 @@ class CreativePage(models.Model):
 
 # TODO: Not populated yet, not used, and under scrutiny
 class CreativePageSection(models.Model):
-    """ Section within a Creative Page """
+    """Section within a Creative Page"""
 
     name = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
@@ -388,7 +388,7 @@ class GalleryPicture(Creation):
 
 
 class Photo(Creation):
-    """ See GalleryPicture; just part of different Creation Page """
+    """See GalleryPicture; just part of different Creation Page"""
 
     cesta = MisencodedTextField()
     cestathumb = MisencodedTextField()

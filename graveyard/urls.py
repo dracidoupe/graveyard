@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from graveyard.settings.base import INSTALLED_APPS
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
@@ -21,3 +23,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("sprava/", include("dragon.urls", namespace="dragon")),
 ]
+
+if settings.DEBUG and "debug_toolbar" in INSTALLED_APPS:
+    import debug_toolbar
+
+    urlpatterns.append(
+        path("__debug__/", include(debug_toolbar.urls)),
+    )
