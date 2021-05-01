@@ -220,7 +220,8 @@ article.link span.actuallink {
 }
 
 .star_level {
-    width: 1rem;
+    width: 0.9rem;
+    margin-bottom: auto;
 }
 
 .comment_main {
