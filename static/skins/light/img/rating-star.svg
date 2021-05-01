@@ -21,11 +21,11 @@
        inkscape:collect="always"
        id="linearGradient8100">
       <stop
-         style="stop-color:#ffe680;stop-opacity:1"
+         style="stop-color:#ffcc00;stop-opacity:1"
          offset="0"
          id="stop8096" />
       <stop
-         style="stop-color:#ffcc00;stop-opacity:1"
+         style="stop-color:#aa8800;stop-opacity:1"
          offset="1"
          id="stop8098" />
     </linearGradient>
@@ -33,12 +33,12 @@
        inkscape:collect="always"
        xlink:href="#linearGradient8100"
        id="radialGradient8102"
-       cx="-26.142967"
-       cy="113.09799"
-       fx="-26.142967"
-       fy="113.09799"
+       cx="-9.6605587"
+       cy="120.78113"
+       fx="-9.6605587"
+       fy="120.78113"
        r="56.989819"
-       gradientTransform="matrix(-1.0873378,2.0660671,-0.73912139,-0.38897465,115.8321,117.09316)"
+       gradientTransform="matrix(-0.77561757,1.1773327,-0.69747799,-0.45948467,119.27161,101.83355)"
        gradientUnits="userSpaceOnUse" />
     <filter
        inkscape:menu="Shadows and Glows"
@@ -115,9 +115,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="311.89147"
-     inkscape:cy="207.35114"
+     inkscape:zoom="0.7"
+     inkscape:cx="445.65843"
+     inkscape:cy="191.39152"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"

@@ -18,7 +18,7 @@ def common_variables(request):
         "skin_favico_url": staticfiles_storage.url(
             "skins/%(skin)s/img/drak.ico" % {"skin": skin}
         ),
-        "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.gif" % skin),
+        "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.svg" % skin),
         "login_form": LoginForm(),
         "discord_invite_link": settings.DISCORD_INVITE_LINK,
     }
