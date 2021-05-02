@@ -13,7 +13,7 @@ from ..magic import MisencodedCharField
 
 
 LEVEL_DESCRIPTIONS = {
-    "0": """             
+    "0": """
             Jsi klasickým uživatelem webu doupěte, který tu a tam něco
             okomentuje, rád se podívá na díla a správně si žije pod
             krásným žlutým Sluncem.
@@ -44,15 +44,15 @@ LEVEL_DESCRIPTIONS = {
     "5": """
             Západ Slunce při správném počasí nese barvu červena. Stejně
             jako závěr každého dne, kde je již všechno práce odvedena,
-            i ty máš za sebou pořádnou nálož zásluh. Proto si užívej 
+            i ty máš za sebou pořádnou nálož zásluh. Proto si užívej
             nádherné zapadající Slunce i další den, a to napořád
             s připomínkou, že jsme vděčni.
          """,
     "8": """
-            Zelená znamená kupředu! Opravuj! Kritizuj! Vytvářej! 
-            Řiď a zpívej píseň, která tě povede na cestách mezi 
+            Zelená znamená kupředu! Opravuj! Kritizuj! Vytvářej!
+            Řiď a zpívej píseň, která tě povede na cestách mezi
             diskutéry, tvůrci, kamarády, ale i spamery a zločince.
-            Trestej a odměňuj! Tvá magická moc je nezměrná, 
+            Trestej a odměňuj! Tvá magická moc je nezměrná,
             využívej ji moudře, soudče z řad nejvyšších.
          """,
 }

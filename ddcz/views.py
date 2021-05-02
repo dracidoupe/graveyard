@@ -6,6 +6,7 @@ from zlib import crc32
 
 from django.apps import apps
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import cache
 from django.core.paginator import Paginator
@@ -475,16 +476,23 @@ def users_list(request):
 @require_http_methods(["GET"])
 def user_profile(request, user_profile_id, nick_slug):
     user_profile = get_object_or_404(UserProfile, id=user_profile_id)
-    author = Author.objects.get(user=user_profile)
+    try:
+        creations = Author.objects.get(user=user_profile).get_all_creations()
+    except Author.DoesNotExist as e:
+        creations = False
+
+    description = LEVEL_DESCRIPTIONS["0"]
+    if user_profile.level in LEVEL_DESCRIPTIONS.keys():
+        description = LEVEL_DESCRIPTIONS[user_profile.level]
 
     return render(
         request,
         "users/detail.html",
         {
             "profile": user_profile,
-            "creations": author.get_all_creations(),
+            "creations": creations,
             "levels": LEVEL_DESCRIPTIONS.keys(),
-            "level_description": LEVEL_DESCRIPTIONS[user_profile.level],
+            "level_description": description,
         },
     )
 
