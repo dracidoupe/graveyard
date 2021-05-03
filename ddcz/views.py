@@ -1,9 +1,12 @@
+from ddcz.models.used.tavern import TavernTableVisitor
 from hashlib import md5
 import logging
 
 from django.apps import apps
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.db.models.expressions import OuterRef, Subquery
+from django.db.models.query_utils import FilteredRelation
 from django.http import (
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
@@ -12,7 +15,7 @@ from django.http import (
     HttpResponseServerError,
     Http404,
 )
-from django.db.models import Count, Q
+from django.db.models import Count, Q, IntegerField
 from django.shortcuts import get_list_or_404, render, get_object_or_404
 from django.urls import reverse, reverse_lazy, resolve, Resolver404
 from django.contrib.auth import (
@@ -538,7 +541,7 @@ def tavern(request):
 
     list_style = request.GET.get("vypis", None)
     if not list_style or list_style not in SUPPORTED_LIST_STYLES:
-        bookmarks = request.user.profile.tavern_bookmarks.count()
+        bookmarks = request.ddcz_profile.tavern_bookmarks.count()
         if bookmarks > 0:
             default_style = "oblibene"
         else:
@@ -548,17 +551,37 @@ def tavern(request):
         )
 
     if list_style == "oblibene":
-        query = request.user.profile.tavern_bookmarks
+        query = request.ddcz_profile.tavern_bookmarks
     elif list_style == "vsechny":
         query = TavernTable.objects.all()
 
-    query = query.annotate(comments_no=Count("taverncomment")).order_by("jmeno")
-    # query = query.order_by("jmeno")
+    query = (
+        query.annotate(
+            comments_no=Count(
+                "taverncomment",
+            ),
+            # This should work, but it doesn't. Maybe bug in 2.0 and will be solved by upgrade?
+            # Should cause LEFT OUTER JOIN putyka_uzivatele pu ON pu.id_uzivatele = $ID AND pu.id_stolu=putyka.id
+            # visitor=FilteredRelation(
+            #     "taverntablevisitor",
+            #     condition=Q(taverntablevisitor__id_uzivatele=request.ddcz_profile.pk),
+            # ),
+            # # In lieu of that, solve it using subqueries
+            new_comments_no=Subquery(
+                TavernTableVisitor.objects.filter(
+                    id_stolu=OuterRef("id"), id_uzivatele=request.ddcz_profile.pk
+                ).values("neprectenych")[:1],
+                output_field=IntegerField(),
+            ),
+        ).order_by("jmeno")
+        # TODO: Merge to be able to get "only tables with new"
+        # .filter(taverntablevisitor__neprectenych__gt=0)
+    )
 
     # print(query.query)
 
     tavern_tables = get_tables_with_access(
-        request.user.profile, candidate_tables_queryset=query
+        request.ddcz_profile, candidate_tables_queryset=query
     )
 
     return render(
