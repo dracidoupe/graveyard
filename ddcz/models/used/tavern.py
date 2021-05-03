@@ -73,15 +73,6 @@ class TavernTableNoticeBoard(models.Model):
         db_table = "putyka_nastenky"
 
 
-class IgnoredTavernTable(models.Model):
-    id_uz = models.IntegerField()
-    id_stolu = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = "putyka_neoblibene"
-
-
 class TavernComment(models.Model):
     id_stolu = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
@@ -124,13 +115,23 @@ class TavernSection(models.Model):
 
 
 class TavernTableVisitor(models.Model):
-    id_stolu = models.IntegerField(primary_key=True)
-    id_uzivatele = models.IntegerField()
+    """Tracking visits to a tavern table as well as bookmark status"""
+
+    id_stolu = models.ForeignKey(
+        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
+    )
+    id_uzivatele = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, db_column="id_uz"
+    )
+    # 1: Tavern Table is bookmarked
+    # 0: Tavern Table is not bookmarked, but this record is used for visit keeping
+    # -1: Tavern Table is ignored and should not be displayed
     oblibenost = models.IntegerField()
     navstiveno = models.DateTimeField(blank=True, null=True)
     neprectenych = models.IntegerField(blank=True, null=True)
     sprava = models.IntegerField()
     pristup = models.IntegerField()
+    django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "putyka_uzivatele"
@@ -158,3 +159,12 @@ class TavernVisit(models.Model):
     class Meta:
         db_table = "putyka_navstevnost"
         unique_together = (("cas", "misto"),)
+
+
+class IgnoredTavernTable(models.Model):
+    id_uz = models.IntegerField()
+    id_stolu = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = "putyka_neoblibene"

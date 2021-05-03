@@ -1,4 +1,3 @@
-from ddcz.models.used.tavern import TavernTable
 from hashlib import md5
 import logging
 
@@ -46,6 +45,7 @@ from .models import (
     News,
     Quest,
     Phorum,
+    TavernTable,
     UserProfile,
 )
 from .tavern import get_tables_with_access
