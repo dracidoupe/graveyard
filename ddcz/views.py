@@ -534,49 +534,55 @@ def tavern(request):
         * All tables ("vsechny"): All tables
         TODO: * Search tables ("filter"): Show tables user has searched for
     """
+    LIST_FAVORITE = "oblibene"
+    LIST_FAVORITE_NEW_COMMENTS = "oblibene_nove_komentare"
+    LIST_ALL = "vsechny"
+    LIST_ALL_NEW_COMMENTS = "vsechny_nove_komentare"
+
     SUPPORTED_LIST_STYLES = {
-        "oblibene": "Oblíbené",
-        "vsechny": "Všechny",
+        LIST_FAVORITE: "Oblíbené",
+        LIST_FAVORITE_NEW_COMMENTS: "Oblíbené s novými komentáři",
+        LIST_ALL: "Všechny",
+        LIST_ALL_NEW_COMMENTS: "Všechny s novými komentáři",
     }
 
     list_style = request.GET.get("vypis", None)
     if not list_style or list_style not in SUPPORTED_LIST_STYLES:
         bookmarks = request.ddcz_profile.tavern_bookmarks.count()
         if bookmarks > 0:
-            default_style = "oblibene"
+            default_style = LIST_FAVORITE
         else:
-            default_style = "vsechny"
+            default_style = LIST_ALL
         return HttpResponseRedirect(
             f"{reverse('ddcz:tavern-list')}?vypis={default_style}"
         )
 
-    if list_style == "oblibene":
+    if list_style in [LIST_FAVORITE, LIST_FAVORITE_NEW_COMMENTS]:
         query = request.ddcz_profile.tavern_bookmarks
-    elif list_style == "vsechny":
+    elif list_style in [LIST_ALL, LIST_ALL_NEW_COMMENTS]:
         query = TavernTable.objects.all()
 
-    query = (
-        query.annotate(
-            comments_no=Count(
-                "taverncomment",
-            ),
-            # This should work, but it doesn't. Maybe bug in 2.0 and will be solved by upgrade?
-            # Should cause LEFT OUTER JOIN putyka_uzivatele pu ON pu.id_uzivatele = $ID AND pu.id_stolu=putyka.id
-            # visitor=FilteredRelation(
-            #     "taverntablevisitor",
-            #     condition=Q(taverntablevisitor__id_uzivatele=request.ddcz_profile.pk),
-            # ),
-            # # In lieu of that, solve it using subqueries
-            new_comments_no=Subquery(
-                TavernTableVisitor.objects.filter(
-                    id_stolu=OuterRef("id"), id_uzivatele=request.ddcz_profile.pk
-                ).values("neprectenych")[:1],
-                output_field=IntegerField(),
-            ),
-        ).order_by("jmeno")
-        # TODO: Merge to be able to get "only tables with new"
-        # .filter(taverntablevisitor__neprectenych__gt=0)
-    )
+    query = query.annotate(
+        comments_no=Count(
+            "taverncomment",
+        ),
+        # This should work, but it doesn't. Maybe bug in 2.0 and will be solved by upgrade?
+        # Should cause LEFT OUTER JOIN putyka_uzivatele pu ON pu.id_uzivatele = $ID AND pu.id_stolu=putyka.id
+        # visitor=FilteredRelation(
+        #     "taverntablevisitor",
+        #     condition=Q(taverntablevisitor__id_uzivatele=request.ddcz_profile.pk),
+        # ),
+        # # In lieu of that, solve it using subqueries
+        new_comments_no=Subquery(
+            TavernTableVisitor.objects.filter(
+                id_stolu=OuterRef("id"), id_uzivatele=request.ddcz_profile.pk
+            ).values("neprectenych")[:1],
+            output_field=IntegerField(),
+        ),
+    ).order_by("jmeno")
+
+    if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
+        query = query.filter(new_comments_no__gt=0)
 
     # print(query.query)
 
