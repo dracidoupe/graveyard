@@ -16,7 +16,7 @@
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:download-file' download_id=a.id %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <h2><a download href="{% url 'ddcz:download-file' download_id=a.id %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
 
             <div class="table-like">
                 <p><span class="label">Stáhnuto:</span> <span class="value">{{ a.download_counter }}</span></p>

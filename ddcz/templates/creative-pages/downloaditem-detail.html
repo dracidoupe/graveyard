@@ -8,7 +8,7 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2><a href="{% url 'ddcz:download-file' download_id=article.id %}">{{ article.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <h2><a download href="{% url 'ddcz:download-file' download_id=article.id %}">{{ article.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
             <table>
                 <tr>
                     <th>Autor:</th>

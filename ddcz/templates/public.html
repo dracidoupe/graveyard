@@ -2,16 +2,16 @@
 <html lang="cs">
 
 <head>
-    <title>DraciDoupe.cz</title>
-    <!-- Nobody knows how hard-earned this charset is -->
+    <title>{% if page_title %}{{ page_title }}{% else %}DraciDoupe.cz{% endif %}</title>
     <meta charset="utf-8">
     <!-- Remove once this is _the_ main version -->
     <meta name="robots" content="noindex,nofollow">
     <!--
         <link rel="alternate" href="http://www.dracidoupe.cz/rss/novinky.xml" type="application/rss+xml" title="Nové články ze všech rubrik" />
-        -->
+    -->
     <link rel="stylesheet" href="{{skin_css_url}}">
     <link rel="shortcut icon" type="image/svg" href="{{ skin_favico_url }}" />
+    <link rel="apple-touch-icon" type="image/svg" href="{{ skin_favico_url }}">
 </head>
 
 <body>
