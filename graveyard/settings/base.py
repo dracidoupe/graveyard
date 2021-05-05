@@ -185,8 +185,12 @@ if DEPLOY_HASH:
     DEPLOY_HASH = DEPLOY_HASH[0:7]
 
 if os.environ.get("HEROKU_RELEASE_CREATED_AT", None):
+    # Heroku timezone format is like this: '2021-05-05T14:16:30Z'
+    # This is a valid ISO timezone, but Python stdlib doesn't implement it; we'd have to use pytz
+    # Given we are only displaying date and not time, let's ignore timezone conversion
+    # and just strip Z to treat it as naive date
     DEPLOY_DATE = datetime.fromisoformat(
-        os.environ["HEROKU_RELEASE_CREATED_AT"]
+        os.environ["HEROKU_RELEASE_CREATED_AT"][:-1]
     ).strftime("%-d. %-m. %Y")
 
 else:
