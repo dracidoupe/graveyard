@@ -1,7 +1,7 @@
 """
 Django settings for DDCZ project.
 """
-
+from datetime import datetime
 import os, os.path
 import sys
 from tempfile import gettempdir, mkdtemp
@@ -174,10 +174,23 @@ SELENIUM_IMPLICIT_WAIT = 10
 
 DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
 
-# Deployment info, overriden on build in local.py
-DEPLOY_VERSION = os.environ.get("DEPLOY_VERSION", "dev")
-DEPLOY_HASH = os.environ.get("DEPLOY_HASH", None)
-DEPLOY_DATE = None
+# Deployment info from env vars, may get overriden by generated local.py
+DEPLOY_VERSION = os.environ.get("DEPLOY_VERSION", None) or os.environ.get(
+    "HEROKU_RELEASE_VERSION", "dev"
+)
+DEPLOY_HASH = os.environ.get("DEPLOY_HASH", None) or os.environ.get(
+    "HEROKU_SLUG_COMMIT", None
+)
+if DEPLOY_HASH:
+    DEPLOY_HASH = DEPLOY_HASH[0:7]
+
+if os.environ.get("HEROKU_RELEASE_CREATED_AT", None):
+    DEPLOY_DATE = datetime.fromisoformat(
+        os.environ["HEROKU_RELEASE_CREATED_AT"]
+    ).strftime("%-d. %-m. %Y")
+
+else:
+    DEPLOY_DATE = None
 
 LOGGING = {
     "version": 1,
