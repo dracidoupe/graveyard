@@ -20,6 +20,9 @@ def creation_rating(rating, skin):
         "skin_rating_star_url": staticfiles_storage.url(
             "skins/%s/img/rating-star.svg" % skin
         ),
+        "dragon_url": staticfiles_storage.url(
+            "skins/%s/img/rating-star-dragon.svg" % skin
+        ),
     }
 
 
