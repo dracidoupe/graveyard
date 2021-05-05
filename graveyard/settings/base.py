@@ -175,8 +175,8 @@ SELENIUM_IMPLICIT_WAIT = 10
 DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
 
 # Deployment info, overriden on build in local.py
-DEPLOY_VERSION = "dev"
-DEPLOY_HASH = None
+DEPLOY_VERSION = os.environ.get("DEPLOY_VERSION", "dev")
+DEPLOY_HASH = os.environ.get("DEPLOY_HASH", None)
 DEPLOY_DATE = None
 
 LOGGING = {
