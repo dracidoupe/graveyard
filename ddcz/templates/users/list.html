@@ -7,17 +7,17 @@
 <div class="user-list">
     <h1 class="page-heading">Uživatelé</h1>
 
-
     <p>Kliknutím na nick uživatele nebo vepsáním nicku nebo ID do formuláře se zobrazí jeho podrobnosti.</p>
 
-    <!--
     <form method="get" action="{% url "ddcz:users-list" %}">
-    Nick / ID: <INPUT type="text" name="nick" value="">
-    <INPUT type="submit" value="Zobrazit">
+        Nick: <input type="text" name="nick" value="{{ searched_nick }}">
+        <input type="submit" value="Najít">
     </form>
 
-    table style: width="100%" cellspacing="2" cellpadding="2" border="0"
-    -->
+    {% if search_limited %}
+        <p class="message__warning">Vyhledáváný nick je příliš krátký. U dorazů kratších, než tři znaky jsou zobrazeny pouze nicky stejného znění.</p>
+    {% endif %}
+
     {% pagination users %}
     <br>
 

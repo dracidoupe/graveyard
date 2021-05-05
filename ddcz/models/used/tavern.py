@@ -22,18 +22,20 @@ class TavernTable(models.Model):
     class Meta:
         db_table = "putyka_stoly"
 
-    def is_user_access_allowed(self, user_profile):
+    def is_user_access_allowed(self, user_profile, acls=None):
         # For ACL explanations, see TavernAccess
-        # TODO: Verify if this is not causing additional SQL call if this is
-        # already preselected in the view
-        acls = self.tavernaccess_set.filter(nick_usera=user_profile.nick_uzivatele)
-        acl_applied_types = [acl.typ_pristupu for acl in acls]
+        # Note: Can't do "if not acls" since that would re-fetch for every empty set
+        if acls is None:
+            acls_models = self.tavernaccess_set.filter(
+                nick_usera=user_profile.nick_uzivatele
+            )
+            acls = set([acl.typ_pristupu for acl in acls_models])
 
-        if "vstza" in acl_applied_types:
+        if "vstza" in acls:
             return False
         elif self.is_public:
             return True
-        elif "vstpo" in acl_applied_types or "asist" in acl_applied_types:
+        elif "vstpo" in acls or "asist" in acls:
             return True
         else:
             return False
@@ -81,7 +83,9 @@ class IgnoredTavernTable(models.Model):
 
 
 class TavernComment(models.Model):
-    id_stolu = models.IntegerField()
+    id_stolu = models.ForeignKey(
+        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
+    )
     text = MisencodedTextField()
     autor = MisencodedCharField(max_length=30)
     reputace = models.IntegerField()

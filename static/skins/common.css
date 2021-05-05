@@ -2,6 +2,10 @@ input{
     max-width: 100%;
 }
 
+a.link--selected:any-link {
+    color: var(--link-color-hover);
+}
+
 /* Creative Pages list */
 
 .pagination {
@@ -39,6 +43,13 @@ article header .label {
 
 span.label {
     font-weight: bold;
+}
+
+/* Messages */
+
+.message__warning {
+    outline: yellow solid 1px;
+    padding: 0.5rem;
 }
 
 

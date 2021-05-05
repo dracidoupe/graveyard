@@ -50,6 +50,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "ddcz.middleware.attach_profile",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -72,6 +73,11 @@ TEMPLATES = [
         },
     },
 ]
+
+# Login configuration
+LOGIN_REDIRECT_URL = "ddcz:news"
+LOGIN_URL = "ddcz:news"
+LOGOUT_REDIRECT_URL = "ddcz:news"
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
