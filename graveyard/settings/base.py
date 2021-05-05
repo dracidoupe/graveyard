@@ -175,9 +175,12 @@ SELENIUM_IMPLICIT_WAIT = 10
 DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
 
 # Deployment info from env vars, may get overriden by generated local.py
-DEPLOY_VERSION = os.environ.get("DEPLOY_VERSION", None) or os.environ.get(
-    "HEROKU_RELEASE_VERSION", "dev"
-)
+if os.environ.get("HEROKU_RELEASE_VERSION", None):
+    DEPLOY_VERSION = f"2.{os.environ['HEROKU_RELEASE_VERSION'][1:]}"
+elif os.environ.get("DEPLOY_VERSION", None):
+    DEPLOY_VERSION = f"2.{os.environ['DEPLOY_VERSION']}"
+else:
+    DEPLOY_VERSION = None
 DEPLOY_HASH = os.environ.get("DEPLOY_HASH", None) or os.environ.get(
     "HEROKU_SLUG_COMMIT", None
 )
