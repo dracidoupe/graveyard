@@ -86,24 +86,6 @@ class TavernComment(models.Model):
         db_table = "putyka_prispevky"
 
 
-class TavernAccess(models.Model):
-    id_stolu = models.ForeignKey(
-        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
-    )
-    # typ_pristupu is essentially an enum:
-    # vstpo = Allow access even if otherwise denied
-    # vstza = Deny access even if otherwise allowed
-    # asist = Assistent admin, allow access even if otherwise denied
-    # zapis = Allow write access even if table is read only
-    typ_pristupu = MisencodedCharField(max_length=5)
-    nick_usera = MisencodedCharField(max_length=30)
-    django_id = models.AutoField(primary_key=True)
-
-    class Meta:
-        db_table = "putyka_pristup"
-        unique_together = (("id_stolu", "typ_pristupu", "nick_usera"),)
-
-
 class TavernSection(models.Model):
     kod = models.IntegerField()
     poradi = models.IntegerField()
@@ -126,11 +108,15 @@ class TavernTableVisitor(models.Model):
     # 1: Tavern Table is bookmarked
     # 0: Tavern Table is not bookmarked, but this record is used for visit keeping
     # -1: Tavern Table is ignored and should not be displayed
-    oblibenost = models.IntegerField()
+    oblibenost = models.IntegerField(default=0)
     navstiveno = models.DateTimeField(blank=True, null=True)
     neprectenych = models.IntegerField(blank=True, null=True)
-    sprava = models.IntegerField()
-    pristup = models.IntegerField()
+    sprava = models.IntegerField(default=0)
+    # 2 = Allow write
+    # 1 = Allow access
+    # 0 = Behave as normal user
+    # -2 = Deny access
+    pristup = models.IntegerField(default=0)
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
@@ -168,3 +154,23 @@ class IgnoredTavernTable(models.Model):
     class Meta:
         managed = False
         db_table = "putyka_neoblibene"
+
+
+class TavernAccess(models.Model):
+    """Tavern access was used in v0. Now it's preferred to store it as attributes in TavernTableVisitor"""
+
+    id_stolu = models.ForeignKey(
+        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
+    )
+    # typ_pristupu is essentially an enum:
+    # vstpo = Allow access even if otherwise denied
+    # vstza = Deny access even if otherwise allowed
+    # asist = Assistent admin, allow access even if otherwise denied
+    # zapis = Allow write access even if table is read only
+    typ_pristupu = MisencodedCharField(max_length=5)
+    nick_usera = MisencodedCharField(max_length=30)
+    django_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        db_table = "putyka_pristup"
+        unique_together = (("id_stolu", "typ_pristupu", "nick_usera"),)
