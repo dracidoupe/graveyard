@@ -111,6 +111,7 @@ class TavernTableVisitor(models.Model):
     oblibenost = models.IntegerField(default=0)
     navstiveno = models.DateTimeField(blank=True, null=True)
     neprectenych = models.IntegerField(blank=True, null=True)
+    # Boolean: 1 means user is an assistent admin
     sprava = models.IntegerField(default=0)
     # 2 = Allow write
     # 1 = Allow access

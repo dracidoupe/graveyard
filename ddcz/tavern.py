@@ -1,4 +1,10 @@
-from ddcz.models.used.tavern import TavernAccess
+import sys
+import logging
+
+from ddcz.models import TavernAccess, TavernTableVisitor, UserProfile
+from ddcz.text import misencode
+
+logger = logging.getLogger(__name__)
 
 
 def get_tables_with_access(user_profile, candidate_tables_queryset):
@@ -7,7 +13,7 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
     # See https://github.com/dracidoupe/graveyard/issues/233
 
     related_permissions = TavernAccess.objects.filter(
-        nick_usera=user_profile.nick_uzivatele,
+        nick_usera=misencode(user_profile.nick_uzivatele),
         id_stolu__in=[i.pk for i in candidate_tables_queryset],
     )
 
@@ -26,3 +32,79 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
             acls=related_permissions_map.get(table.pk, set()),
         )
     ]
+
+
+def migrate_tavern_access(
+    print_progress=True,
+    table_visitor_model=None,
+    tavern_access_model=None,
+    user_profile_model=None,
+):
+    """Migrate access privileges from putyka v0 (the DDCZ 2001 version) to putyka v1 (DDCZ 2004 version)"""
+
+    i = 0
+
+    if not table_visitor_model:
+        table_visitor_model = TavernTableVisitor
+
+    if not tavern_access_model:
+        tavern_access_model = TavernAccess
+
+    if not user_profile_model:
+        user_profile_model = UserProfile
+
+    # Completely accidentally, the `-typ_pristupu` gives us correct enough
+    # ordering of access priorities
+    for tavern_access in (
+        tavern_access_model.objects.all()
+        .select_related("id_stolu")
+        .order_by("-typ_pristupu")
+    ):
+        if print_progress and i % 100 == 0:
+            sys.stdout.write(".")
+            sys.stdout.flush()
+
+        try:
+            profile_id = user_profile_model.objects.get(
+                nick_uzivatele=misencode(tavern_access.nick_usera)
+            )
+        except user_profile_model.DoesNotExist:
+            # OK, this opens up a potential security problem, but so far, we don't have
+            # Users with nick that would be composed of numbers only.
+            # So let's try: sometimes, there is an integer in nick_usera that looks like
+            # corresponding to a user ID, so let's use that for a secondary search
+            try:
+                profile_id = user_profile_model.objects.get(
+                    id=int(tavern_access.nick_usera)
+                )
+            except (ValueError, user_profile_model.DoesNotExist):
+                # OK, _now_ we give up
+                logging.warn(
+                    f"Can't fetch user record for nick {tavern_access.nick_usera}. Maybe we should purge the record?"
+                )
+        else:
+            try:
+                table_visitor = table_visitor_model.objects.get(
+                    id_stolu=tavern_access.id_stolu, id_uzivatele=profile_id
+                )
+            except table_visitor_model.DoesNotExist:
+                table_visitor = table_visitor_model(
+                    id_stolu=tavern_access.id_stolu, id_uzivatele=profile_id
+                )
+
+            if tavern_access.typ_pristupu == "vstpo":
+                table_visitor.pristup = 1
+            elif tavern_access.typ_pristupu == "vstza":
+                table_visitor.pristup = -2
+            elif tavern_access.typ_pristupu == "zapis":
+                table_visitor.pristup = 2
+            elif tavern_access.typ_pristupu == "asist":
+                table_visitor.sprava = 1
+            else:
+                logger.warn(
+                    f"Unknown access type {tavern_access.typ_pristupu} for user {tavern_access.nick_usera} to table {tavern_access.id_stolu}"
+                )
+
+            table_visitor.save()
+
+        i += 1
