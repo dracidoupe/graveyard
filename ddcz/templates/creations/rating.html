@@ -1,5 +1,9 @@
 <span class="rating-stars">
 {% for i in rating %}
-    <img src="{{ skin_rating_star_url }}"{% if forloop.first %} alt="{{ rating_description }}"{% endif %}>
+    {% if i == 5 %}
+        <img src="{{ dragon_url }}" alt="Vítěz ZD" class="dragon">
+    {% else %}
+        <img src="{{ skin_rating_star_url }}"{% if forloop.first %} alt="{{ rating_description }}"{% endif %}>
+    {% endif %}
 {% endfor %}
 </span>
