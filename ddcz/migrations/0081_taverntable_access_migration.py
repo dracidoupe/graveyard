@@ -9,6 +9,7 @@ def migrate_access(apps, schema_editor):
     tavern_access_model = apps.get_model("ddcz", "TavernAccess")
     user_profile_model = apps.get_model("ddcz", "UserProfile")
     migrate_tavern_access(
+        print_progress=True,
         table_visitor_model=table_visitor_model,
         tavern_access_model=tavern_access_model,
         user_profile_model=user_profile_model,
