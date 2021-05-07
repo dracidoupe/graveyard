@@ -1,8 +1,5 @@
-@import url('http://fonts.googleapis.com/css?family=Courgette&subset=latin,latin-ext');
-@import url('http://fonts.googleapis.com/css?family=Stoke&subset=latin,latin-ext');
-@import url('http://fonts.googleapis.com/css?family=Playfair+Display&subset=latin,latin-ext');
-
-@import "../common.css";
+@import "./fonts.css";
+@import "../../../common/css/main.css";
 
 :root{
     --debug_bg_color: rgba(255, 255, 255, 0);
