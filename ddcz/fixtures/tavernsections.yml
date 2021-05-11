@@ -1,0 +1,167 @@
+- model: ddcz.tavernsection
+  pk: 1
+  fields:
+    kod: -100
+    poradi: 2
+    nazev: Server DraciDoupe.cz
+    popis: "OFICI\xC1LN\xCD - N\xE1m\u011Bty, st\xED\u017Enosti, probl\xE9my, ot\xE1zky,
+      vylep\u0161ov\xE1n\xED, um\xEDr\xE1n\xED..."
+- model: ddcz.tavernsection
+  pk: 2
+  fields:
+    kod: -50
+    poradi: 3
+    nazev: Rubriky DraciDoupe.cz
+    popis: "OFICI\xC1LN\xCD - Stoly rubrik, diskuse s redaktory, workshopy..."
+- model: ddcz.tavernsection
+  pk: 3
+  fields:
+    kod: 0
+    poradi: 8000
+    nazev: "Potemn\u011Bl\xE1 p\u0159eds\xED\u0148"
+    popis: "Sem pat\u0159\xED nov\xE9 stoly, kter\xE9 je\u0161t\u011B nebyly nikam
+      za\u0159azeny, a neaktivn\xED stoly, o jejich\u017E dal\u0161\xEDm osudu rozhoduje
+      spr\xE1va Putyky."
+- model: ddcz.tavernsection
+  pk: 4
+  fields:
+    kod: 1
+    poradi: 1000
+    nazev: "Liter\xE1rn\xED kav\xE1rna"
+    popis: "Spisovatel\xE9, knihy, \u010Detba, kr\xE1sn\xE1 i o\u0161kliv\xE1 literatura"
+- model: ddcz.tavernsection
+  pk: 5
+  fields:
+    kod: 2
+    poradi: 2000
+    nazev: "Doup\u011B kostk\xE1\u0159e Kr\xE1tkoru\u010Dky"
+    popis: "V\u0161e o hran\xED (ne-po\u010D\xEDta\u010Dov\xE9m): Hern\xED syst\xE9my,
+      tipy, triky..."
+- model: ddcz.tavernsection
+  pk: 6
+  fields:
+    kod: 3
+    poradi: 4000
+    nazev: "Doup\u011B pro astr\xE1ln\xED b\u011Bsn\u011Bn\xED"
+    popis: "cRPG, MMORPG - po\u010D\xEDta\u010Dov\xE9 a online RPG hry a v\u0161e
+      o nich"
+- model: ddcz.tavernsection
+  pk: 7
+  fields:
+    kod: 4
+    poradi: 7600
+    nazev: KLANY - KLUBY - KLIKY - KOMUNITA
+    popis: "Sekce pro SERVEROV\xC1 uskupen\xED, kluby, klany a frakce, kter\xE9 maj\xED
+      jasnou specifickou charakteristiku."
+- model: ddcz.tavernsection
+  pk: 13
+  fields:
+    kod: 10
+    poradi: 3500
+    nazev: "N\xE1levna u osmiruk\xE9 \u0161enk\xFD\u0159ky"
+    popis: "Sem pat\u0159\xED v\u0161e, co \u017Eije, je nemrtv\xE9, d\xE1 se za to
+      hr\xE1t \u010Di na to naraz\xEDte p\u0159i \u010Dist\u011Bn\xED jeskyn\xED.
+      Rasy, stv\u016Fry, nestv\u016Fry a v\u0161e jim podobn\xE9."
+- model: ddcz.tavernsection
+  pk: 14
+  fields:
+    kod: 11
+    poradi: 2500
+    nazev: "Dra\u010D\xED sal\xF3nek pro dobrodruhy"
+    popis: "V\u0161e o povol\xE1n\xEDch - diskuze o nich, dopl\u0148ky, teorie hran\xED,
+      praxe..."
+- model: ddcz.tavernsection
+  pk: 16
+  fields:
+    kod: 13
+    poradi: 7550
+    nazev: "P\xF3dium"
+    popis: "V\u0161e, na co se d\xE1 koukat, v\u0161e, co se d\xE1 poslouchat (hudba,
+      obrazy, film)"
+- model: ddcz.tavernsection
+  pk: 17
+  fields:
+    kod: 14
+    poradi: 5500
+    nazev: "\u010Cajov\xFD alt\xE1nek filosof\u016F"
+    popis: "M\xEDsto pro diskuse o byt\xED, \u010Dlov\u011Bku i sv\u011Btu na astr\xE1ln\xEDch
+      \xFArovn\xEDch."
+- model: ddcz.tavernsection
+  pk: 18
+  fields:
+    kod: 15
+    poradi: 9800
+    nazev: "Arch\xEDv Putyky"
+    popis: "Toto je archivn\xED m\xEDsto, ve kter\xE9m le\u017E\xED star\u0161\xED
+      zapr\xE1\u0161en\xE9 stoly, kter\xE9 v\u0161ak maj\xED ur\u010Dit\xFD v\xFDznam
+      pro server. (Je pravdou, \u017Ee arch\xEDv zat\xEDm nefunguje \xFApln\u011B
+      jak by m\u011Bl, ale pracuje se na jeho p\u0159ed\u011Bl\xE1n\xED a uspo\u0159\xE1d\xE1n\xED
+      po koncep\u010Dn\xED i technick\xE9 str\xE1nce)"
+- model: ddcz.tavernsection
+  pk: 19
+  fields:
+    kod: -9999
+    poradi: 9000
+    nazev: "=Priv\xE9="
+    popis: "Sem jsou automaticky umis\u0165ov\xE1ny soukrom\xE9 stoly."
+- model: ddcz.tavernsection
+  pk: 20
+  fields:
+    kod: 16
+    poradi: 4500
+    nazev: Herna
+    popis: "Pro stoly, kde se hraj\xED RPG dobrodru\u017Estv\xED"
+- model: ddcz.tavernsection
+  pk: 21
+  fields:
+    kod: 17
+    poradi: 5000
+    nazev: "Starobyl\xE9 sklepen\xED"
+    popis: "Sem pat\u0159\xED v\u0161e, co souvis\xED s histori\xED v re\xE1ln\xE9m
+      sv\u011Bt\u011B."
+- model: ddcz.tavernsection
+  pk: 22
+  fields:
+    kod: 18
+    poradi: 3000
+    nazev: "Dve\u0159e mnoha sv\u011Bt\u016F"
+    popis: "Fantasy sv\u011Bty, m\u011Bsta, kontinenty, civilizace, st\xE1ty a jejich
+      tvorba."
+- model: ddcz.tavernsection
+  pk: 23
+  fields:
+    kod: 20
+    poradi: 7999
+    nazev: "Kor\xFDtko v prachu u cesty"
+    popis: "Zde jsou v\u0161echny stoly, kter\xE9 nebyly zat\u0159\xEDd\u011Bny do
+      \u017E\xE1dn\xE9 jin\xE9 sekce."
+- model: ddcz.tavernsection
+  pk: 24
+  fields:
+    kod: 5
+    poradi: 4
+    nazev: "Obecn\xED s\xED\u0148"
+    popis: "Celoserverov\u011B d\u016Fle\u017Eit\xE1 t\xE9mata spravovan\xE1 u\u017Eivateli."
+- model: ddcz.tavernsection
+  pk: 25
+  fields:
+    kod: 25
+    poradi: 7700
+    nazev: "Komunitn\xED akce"
+    popis: "Sekce pro komunitn\xED stoly, u kter\xFDch se pl\xE1nuj\xED akce/srazy/LARPy/DrD."
+- model: ddcz.tavernsection
+  pk: 26
+  fields:
+    kod: 26
+    poradi: 1500
+    nazev: "M\u011Bstsk\xFD Penklub"
+    popis: "Amat\xE9rsk\xE1 liter\xE1rn\xED tvorba serverov\xE9ho u\u017Eivatelstva
+      a diskuse nad n\xED."
+- model: ddcz.tavernsection
+  pk: 27
+  fields:
+    kod: 27
+    poradi: 2200
+    nazev: "Podputy\u010Dn\xED d\xEDlni\u010Dka"
+    popis: "Sekce pro stoly zab\xFDvaj\xEDc\xED se p\u0159\xEDm\xFDm roz\u0161i\u0159ov\xE1n\xEDm
+      pravidel, d\xEDlny a jin\xE9 tv\u016Fr\u010D\xED stoly"
