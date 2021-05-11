@@ -1,4 +1,5 @@
 from ddcz.models.used.tavern import TavernTableVisitor
+from datetime import date
 from hashlib import md5
 import logging
 from zlib import adler32
@@ -643,18 +644,21 @@ def tavern(request):
 
 
 def sign_up(request):
+    form = SignUpForm()
+
     if request.method == "POST" and request.POST["submit"]:
-        print("\n\n\n\n")
-        print(request.POST)
-        print("\n\n")
-        print(SignUpForm(request.POST).is_valid())
-        print("\n\n\n\n")
+        data = SignUpForm.set_for_save(request.POST.copy())
+        sgn = SignUpForm(data)
+        if sgn.is_valid():
+            sgn.save()
+        else:
+            form = sgn
 
     return render(
         request,
         "users/sign_up.html",
         {
-            "sign_up_form": SignUpForm(),
+            "sign_up_form": form,
             "reg_script": staticfiles_storage.url("common/js/registration.js"),
             "reg_style": staticfiles_storage.url("common/css/registration.css"),
             "seal_image": staticfiles_storage.url(

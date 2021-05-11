@@ -11,10 +11,24 @@
 
 {% block content %}
 <h1 class="page-heading">Vstup do města Dračí Doupě</h1>
+        {% if sign_up_form.errors %}
+            {% for field in sign_up_form %}
+                {% for error in field.errors %}
+                    <div>
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in sign_up_form.non_field_errors %}
+                <div>
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
 
 <section id="registration_page">
     <form action="{% url 'ddcz:sign-up' %}" method="POST" id="registration_form">
-        {% csrf_token %}
+        {% csrf_token %}        
         <p class="first_paragraph">
             <span class="caps">D</span>rak ti proletěl nad hlavu a slunce právě zašlo na mrak, celý svět potemněl. Jak tvá noha šlápne na další větvičku, jelen nějakých patnáct sáhů od tebe zpozorní. Chladný vzduch se prohnal okolo a ty vyrážíš směrem k stezce vedoucí k městu. Kdysi tam prý žili ti největší umělci a řemeslníci, které kdo znal, a jejich krásná díla zdobí město dodnes.
         </p>

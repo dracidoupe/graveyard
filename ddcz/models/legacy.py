@@ -1061,25 +1061,6 @@ class UserStats(models.Model):
         db_table = "user_stats"
 
 
-class UzivateleCekajici(models.Model):
-    id_zaznamu = models.AutoField(primary_key=True)
-    nick_uzivatele = models.CharField(unique=True, max_length=30)
-    email = models.CharField(unique=True, max_length=40)
-    jmeno = models.CharField(max_length=40)
-    prijmeni = models.CharField(max_length=40)
-    pohlavi = models.CharField(max_length=4)
-    datum = models.IntegerField()
-    patron = models.IntegerField()
-    primluvy = models.IntegerField()
-    osloveni = models.CharField(max_length=50, blank=True, null=True)
-    popis_text = models.TextField()
-
-    class Meta:
-        managed = False
-        db_table = "uzivatele_cekajici"
-        unique_together = (("jmeno", "prijmeni"),)
-
-
 class UzivateleFiltry(models.Model):
     id_uz = models.IntegerField(primary_key=True)
     rubrika = models.CharField(max_length=20)
