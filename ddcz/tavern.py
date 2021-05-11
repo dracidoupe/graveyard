@@ -1,7 +1,11 @@
 import sys
 import logging
 
-from ddcz.models import TavernAccess, TavernTableVisitor, UserProfile
+from ddcz.models import (
+    TavernAccess,
+    TavernTableVisitor,
+    UserProfile,
+)
 from ddcz.text import misencode
 
 logger = logging.getLogger(__name__)
@@ -12,9 +16,11 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
     # This should be more optimized once we refactor the ACL model into a single row bit
     # See https://github.com/dracidoupe/graveyard/issues/233
 
+    tables_id = [i.pk for i in candidate_tables_queryset]
+
     related_permissions = TavernAccess.objects.filter(
         nick_usera=misencode(user_profile.nick_uzivatele),
-        id_stolu__in=[i.pk for i in candidate_tables_queryset],
+        id_stolu__in=tables_id,
     )
 
     related_permissions_map = {}

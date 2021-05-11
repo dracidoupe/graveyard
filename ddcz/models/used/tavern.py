@@ -96,6 +96,29 @@ class TavernSection(models.Model):
         db_table = "putyka_sekce"
 
 
+class TavernAccess(models.Model):
+    """
+    Tavern access was used in v0. Used until old version shut down.
+    Afterwards, it'll be preferred to store it as attributes in TavernTableVisitor
+    """
+
+    id_stolu = models.ForeignKey(
+        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
+    )
+    # typ_pristupu is essentially an enum:
+    # vstpo = Allow access even if otherwise denied
+    # vstza = Deny access even if otherwise allowed
+    # asist = Assistent admin, allow access even if otherwise denied
+    # zapis = Allow write access even if table is read only
+    typ_pristupu = MisencodedCharField(max_length=5)
+    nick_usera = MisencodedCharField(max_length=30)
+    django_id = models.AutoField(primary_key=True)
+
+    class Meta:
+        db_table = "putyka_pristup"
+        unique_together = (("id_stolu", "typ_pristupu", "nick_usera"),)
+
+
 class TavernTableVisitor(models.Model):
     """Tracking visits to a tavern table as well as bookmark status"""
 
@@ -107,6 +130,12 @@ class TavernTableVisitor(models.Model):
     id_uzivatele = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, db_column="id_uz"
     )
+    ###
+    # WARNING: oblibenost, sprava and pristup for access control are non-normative.
+    # TavernBookmark, TavernAccess and IgnoredTavernTable are used instead.
+    # We are going to migrate to those once old version is shut down.
+    # See https://github.com/dracidoupe/graveyard/issues/237
+    ###
     # 1: Tavern Table is bookmarked
     # 0: Tavern Table is not bookmarked, but this record is used for visit keeping
     # -1: Tavern Table is ignored and should not be displayed
@@ -125,6 +154,15 @@ class TavernTableVisitor(models.Model):
     class Meta:
         db_table = "putyka_uzivatele"
         unique_together = (("id_stolu", "id_uzivatele"),)
+
+
+class IgnoredTavernTable(models.Model):
+    id_uz = models.IntegerField()
+    id_stolu = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = "putyka_neoblibene"
 
 
 ###
@@ -148,32 +186,3 @@ class TavernVisit(models.Model):
     class Meta:
         db_table = "putyka_navstevnost"
         unique_together = (("cas", "misto"),)
-
-
-class IgnoredTavernTable(models.Model):
-    id_uz = models.IntegerField()
-    id_stolu = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = "putyka_neoblibene"
-
-
-class TavernAccess(models.Model):
-    """Tavern access was used in v0. Now it's preferred to store it as attributes in TavernTableVisitor"""
-
-    id_stolu = models.ForeignKey(
-        TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
-    )
-    # typ_pristupu is essentially an enum:
-    # vstpo = Allow access even if otherwise denied
-    # vstza = Deny access even if otherwise allowed
-    # asist = Assistent admin, allow access even if otherwise denied
-    # zapis = Allow write access even if table is read only
-    typ_pristupu = MisencodedCharField(max_length=5)
-    nick_usera = MisencodedCharField(max_length=30)
-    django_id = models.AutoField(primary_key=True)
-
-    class Meta:
-        db_table = "putyka_pristup"
-        unique_together = (("id_stolu", "typ_pristupu", "nick_usera"),)

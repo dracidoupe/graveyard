@@ -6,7 +6,6 @@ from django.apps import apps
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models.expressions import OuterRef, Subquery
-from django.db.models.query_utils import FilteredRelation
 from django.http import (
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
@@ -43,6 +42,7 @@ from .models import (
     DownloadItem,
     Dating,
     EditorArticle,
+    IgnoredTavernTable,
     Link,
     Market,
     News,
@@ -589,6 +589,21 @@ def tavern(request):
     tavern_tables = get_tables_with_access(
         request.ddcz_profile, candidate_tables_queryset=query
     )
+
+    # TODO: This should possibly be an optional filter, but anyway:
+    # Out of tables we have access to, filter out those that are ignored.
+    # Note that this shouldn't go into the access method since permission and
+    # display preference are two separate concepts
+
+    ignored_tables = [
+        i.id_stolu
+        for i in IgnoredTavernTable.objects.filter(
+            id_uz=user_profile.id,
+            id_stolu__in=[table.pk for table in tavern_tables],
+        )
+    ]
+
+    tavern_tables = [table for table in tavern_tables if table.pk not in ignored_tables]
 
     return render(
         request,
