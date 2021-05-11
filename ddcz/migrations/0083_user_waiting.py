@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0082_taverntable_ingores'),
+        ("ddcz", "0082_taverntable_ingores"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='uzivatelecekajici',
+            name="uzivatelecekajici",
             options={},
         ),
         migrations.AlterUniqueTogether(
-            name='uzivatelecekajici',
-            unique_together={('jmeno', 'prijmeni')},
+            name="uzivatelecekajici",
+            unique_together={("jmeno", "prijmeni")},
         ),
     ]

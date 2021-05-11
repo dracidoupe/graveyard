@@ -211,7 +211,6 @@ class SignUpForm(ModelForm):
             )
         return nick_uzivatele
 
-  
     def clean_vek(self, *args, **kwargs):
         vek = self.cleaned_data.get("vek")
         if vek < self.MIN_AGE:
