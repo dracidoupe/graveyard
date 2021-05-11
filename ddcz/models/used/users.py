@@ -195,3 +195,21 @@ class MentatNewbie(models.Model):
     class Meta:
         db_table = "mentat_newbie"
         unique_together = (("newbie", "mentat"),)
+
+
+class UzivateleCekajici(models.Model):
+    id_zaznamu = models.AutoField(primary_key=True)
+    nick_uzivatele = models.CharField(unique=True, max_length=30)
+    email = models.CharField(unique=True, max_length=40)
+    jmeno = models.CharField(max_length=40)
+    prijmeni = models.CharField(max_length=40)
+    pohlavi = models.CharField(max_length=4)
+    datum = models.IntegerField()
+    patron = models.IntegerField()
+    primluvy = models.IntegerField()
+    osloveni = models.CharField(max_length=50, blank=True, null=True)
+    popis_text = models.TextField()
+
+    class Meta:
+        db_table = "uzivatele_cekajici"
+        unique_together = (("jmeno", "prijmeni"),)

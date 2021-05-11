@@ -1,9 +1,11 @@
+from datetime import datetime
 import logging
 
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth import forms as authforms
 
-from ..models import UserProfile
+from ..models import UserProfile, UzivateleCekajici
 
 logger = logging.getLogger(__name__)
 
@@ -40,13 +42,43 @@ class PasswordResetForm(authforms.PasswordResetForm):
         return users
 
 
-class SignUpForm(forms.Form):
+class SignUpForm(ModelForm):
 
+    MIN_AGE = 13
     SEX_CHOICES = {"0": "mužské", "1": "ženské"}
     GDPR_CHOICES = {
         "0": "S tímhle nemůžu souhlasit... To je moc, raději si najdu jiné město nebo zůstanu v lese. Měj se hezky, Endo, a díky za tvůj čas.",
         "1": "Jasně, souhlasím s tím, co všechno s tím, co jsem ti tady napsal, uděláte.",
     }
+    FORBIDDEN_NICK_CHARACTERS = (
+        "@",
+        "_",
+        "%",
+        '"',
+        "'",
+        "/",
+        "\\",
+        "!",
+        "#",
+        "$",
+        "^",
+        "&",
+        "*",
+        "{",
+        "}",
+        "[",
+        "]",
+        "(",
+        ")",
+        ":",
+        ";",
+        "=",
+        "+",
+        "?",
+        "|",
+        ",",
+        "~",
+    )
 
     nick_uzivatele = forms.CharField(
         label="",
@@ -91,6 +123,7 @@ class SignUpForm(forms.Form):
     )
 
     duvod_registrace = forms.CharField(
+        required=False,
         label="",
         widget=forms.Textarea(
             attrs={
@@ -101,6 +134,7 @@ class SignUpForm(forms.Form):
     )
 
     kamaradi_na_webu = forms.CharField(
+        required=False,
         label="",
         widget=forms.Textarea(
             attrs={
@@ -112,6 +146,7 @@ class SignUpForm(forms.Form):
     )
 
     odkud_znas_web = forms.CharField(
+        required=False,
         label="",
         widget=forms.Textarea(
             attrs={
@@ -126,3 +161,77 @@ class SignUpForm(forms.Form):
         widget=forms.Select(attrs={"id": "gdpr"}),
         choices=GDPR_CHOICES.items(),
     )
+
+    class Meta:
+        model = UzivateleCekajici
+        fields = [
+            "nick_uzivatele",
+            "email",
+            "jmeno",
+            "prijmeni",
+            "pohlavi",
+            "osloveni",
+            "datum",
+            "patron",
+            "primluvy",
+            "popis_text",
+        ]
+
+    # Setting the data
+    @classmethod
+    def set_for_save(cls, data):
+        data["datum"] = int(datetime.now().timestamp())
+
+        data["primluvy"] = 0
+        data["patron"] = 0
+        data["popis_text"] = cls.set_description(data)
+        return data
+
+    @staticmethod
+    def set_description(data):
+        popis = "1. " + data["duvod_registrace"] + "\n"
+        popis += "2. " + data["odkud_znas_web"] + "\n"
+        popis += "3. " + data["kamaradi_na_webu"] + "\n"
+        popis += "4. \n"
+        popis += "5. \n"
+        return popis
+
+    # Validations for the form
+    def clean_nick_uzivatele(self, *args, **kwargs):
+        nick_uzivatele = self.cleaned_data.get("nick_uzivatele")
+        bad_characters = []
+        for char in self.FORBIDDEN_NICK_CHARACTERS:
+            if char in nick_uzivatele:
+                bad_characters.append(char)
+        if bad_characters.__len__() > 0:
+            raise forms.ValidationError(
+                "Ve vašem nicku jsou některé ze zakázaných znaků: ("
+                + ",".join(bad_characters)
+                + ")."
+            )
+        return nick_uzivatele
+
+  
+    def clean_vek(self, *args, **kwargs):
+        vek = self.cleaned_data.get("vek")
+        if vek < self.MIN_AGE:
+            raise forms.ValidationError(
+                "Bohužel ti není " + self.MIN_AGE + " let. Zkus to, až budeš starší."
+            )
+        return vek
+
+    def clean_pohlavi(self, *args, **kwargs):
+        pohlavi = self.cleaned_data.get("pohlavi")
+        if pohlavi not in ["0", "1"]:
+            raise forms.ValidationError(
+                "Bohužel toto pohlaví nám zůstává utajeno. Neplete si pohlaví s genderem?"
+            )
+        return pohlavi
+
+    def clean_gdpr(self, *args, **kwargs):
+        gdpr = self.cleaned_data.get("gdpr")
+        if gdpr is not "1":
+            raise forms.ValidationError(
+                "Pro registraci je nutné souhlasit se způsobem uchovávání a používání dat."
+            )
+        return gdpr
