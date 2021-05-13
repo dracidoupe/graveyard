@@ -1,7 +1,16 @@
-import sys
+from datetime import datetime
+from dateutil import tz
 import logging
+import sys
 
-from ddcz.models import TavernAccess, TavernTableVisitor, UserProfile
+from ddcz.models import (
+    TavernAccess,
+    TavernTable,
+    TavernTableVisitor,
+    UserProfile,
+    TAVERN_SECTION_PRIVATE_ID,
+    TAVERN_SECTION_NEW_ID,
+)
 from ddcz.text import misencode
 
 logger = logging.getLogger(__name__)
@@ -32,6 +41,32 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
             acls=related_permissions_map.get(table.pk, set()),
         )
     ]
+
+
+def create_tavern_table(
+    owner: UserProfile,
+    name: str,
+    description: str,
+    public: bool = False,
+    allow_reputation: bool = False,
+) -> TavernTable:
+    if public:
+        section = TAVERN_SECTION_NEW_ID
+        public_db = "1"
+    else:
+        section = TAVERN_SECTION_PRIVATE_ID
+        public_db = "0"
+
+    return TavernTable.objects.create(
+        jmeno=name,
+        popis=description,
+        vlastnik=owner.nick_uzivatele,
+        verejny=public_db,
+        povol_hodnoceni="1" if allow_reputation else "0",
+        # TODO: Those should go to model defaults
+        sekce=section,
+        zalozen=datetime.now(tz.gettz("Europe/Prague")),
+    )
 
 
 def migrate_tavern_access(
