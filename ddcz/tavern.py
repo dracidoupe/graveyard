@@ -1,7 +1,10 @@
 from datetime import datetime
+from enum import Enum
 from dateutil import tz
 import logging
 import sys
+
+from django.db.models import Count, OuterRef, Subquery, IntegerField
 
 from ddcz.models import (
     TavernAccess,
@@ -14,6 +17,53 @@ from ddcz.models import (
 from ddcz.text import misencode
 
 logger = logging.getLogger(__name__)
+
+LIST_FAVORITE = "oblibene"
+LIST_FAVORITE_NEW_COMMENTS = "oblibene_nove_komentare"
+LIST_ALL = "vsechny"
+LIST_ALL_NEW_COMMENTS = "vsechny_nove_komentare"
+
+SUPPORTED_LIST_STYLES_DISPLAY_NAME = {
+    LIST_FAVORITE: "Oblíbené",
+    LIST_FAVORITE_NEW_COMMENTS: "Oblíbené s novými komentáři",
+    LIST_ALL: "Všechny",
+    LIST_ALL_NEW_COMMENTS: "Všechny s novými komentáři",
+}
+
+
+def get_tavern_table_list(user_profile, list_style):
+    if list_style in [LIST_FAVORITE, LIST_FAVORITE_NEW_COMMENTS]:
+        query = user_profile.tavern_bookmarks
+    elif list_style in [LIST_ALL, LIST_ALL_NEW_COMMENTS]:
+        query = TavernTable.objects.all()
+
+    query = query.annotate(
+        comments_no=Count(
+            "taverncomment",
+        ),
+        # This should work, but it doesn't. Maybe bug in 2.0 and will be solved by upgrade?
+        # Should cause LEFT OUTER JOIN putyka_uzivatele pu ON pu.id_uzivatele = $ID AND pu.id_stolu=putyka.id
+        # visitor=FilteredRelation(
+        #     "taverntablevisitor",
+        #     condition=Q(taverntablevisitor__id_uzivatele=request.ddcz_profile.pk),
+        # ),
+        # # In lieu of that, solve it using subqueries
+        new_comments_no=Subquery(
+            TavernTableVisitor.objects.filter(
+                id_stolu=OuterRef("id"), id_uzivatele=user_profile.pk
+            ).values("neprectenych")[:1],
+            output_field=IntegerField(),
+        ),
+    ).order_by("jmeno")
+
+    if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
+        query = query.filter(new_comments_no__gt=0)
+
+    # print(query.query)
+
+    return get_tables_with_access(
+        user_profile=user_profile, candidate_tables_queryset=query
+    )
 
 
 def get_tables_with_access(user_profile, candidate_tables_queryset):
