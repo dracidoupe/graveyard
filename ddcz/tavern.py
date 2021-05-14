@@ -1,4 +1,5 @@
 from datetime import datetime
+from ddcz.models.used.tavern import TavernBookmark
 from enum import Enum
 from dateutil import tz
 import logging
@@ -193,3 +194,7 @@ def migrate_tavern_access(
             table_visitor.save()
 
         i += 1
+
+
+def bookmark_table(user_profile, tavern_table):
+    return TavernBookmark.objects.create(id_stolu=tavern_table, id_uz=user_profile)
