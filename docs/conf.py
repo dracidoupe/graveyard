@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = "DraciDoupe.cz"
-copyright = "2018, Almad"
-author = "Almad"
+copyright = "2018-2021, Almad & Contributors"
+author = "Almad & Contributors"
 
 # The short X.Y version
 version = ""
