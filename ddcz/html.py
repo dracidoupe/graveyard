@@ -180,7 +180,7 @@ def encode_valid_html(entity_string):
             continue
         else:
             if entity_string[i : i + 4] == "&lt;":
-                if entity_string[i + 4] == "/":
+                if len(entity_string) > (i + 4) and entity_string[i + 4] == "/":
                     # Looks like a closing of the tag. Do we have tag on stack?
                     if len(tag_stack) > 0:
                         if (
