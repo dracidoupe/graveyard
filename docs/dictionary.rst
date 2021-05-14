@@ -4,7 +4,7 @@
 Dictionary
 ###########
 
-Dictionary of words used during move and translation. 
+Dictionary of words used during move and translation.
 
 **********************
 Universal domain names
@@ -19,7 +19,7 @@ Universal domain names
 Pages
 *****
 
-In this context, page basically corresponds to URL. 
+In this context, page basically corresponds to URL.
 
 * Aktuality = News
 * Novinky = Newsfeed
@@ -33,7 +33,7 @@ In this context, page basically corresponds to URL.
 Creative Pages
 **************
 
-In this context, Crative Pages correspond to sections of the site where content is provided by our authors, after review. Creative page has Categories (= Sekce) that serve to further classify the Creations. 
+In this context, Crative Pages correspond to sections of the site where content is provided by our authors, after review. Creative page has Categories (= Sekce) that serve to further classify the Creations.
 
 * Rubriky (= Creative Pages)
 * Koncepce (rubriky) = Charter
@@ -42,8 +42,7 @@ In this context, Crative Pages correspond to sections of the site where content 
 * Diskuze = Discussion (critique, ratings and suggestions)
 * Příspěvek = Comment
 * Dlouhé příspěvky / Běžné příspěvky = Common Articles (not used publicly, but powers a lot of internal engine)
-(shouldn't be creations instead of articles?)
-
+    (shouldn't be creations instead of articles?)
 * Bestiář (= Monsters)
 * Dovednosti (= Skills)
 * Hřbitov (= Graveyard)
@@ -77,4 +76,4 @@ Putyka is the discussion section of the site, old Putyka counting around 500 dif
 * Anketa (= poll)
 * Příspěvek (= post)
 * Oblíbené stoly (= booked tables)
-    
+
