@@ -1,5 +1,5 @@
 from django.urls import path
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
 
 
 from . import views
@@ -90,5 +90,9 @@ urlpatterns = [
         views.editor_article,
         name="faq",
         kwargs={"slug": "otazky-a-odpovedi"},
+    ),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
 ]
