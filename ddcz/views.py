@@ -659,7 +659,7 @@ def sign_up(request):
         "users/sign_up.html",
         {
             "sign_up_form": form,
-            "reg_script": staticfiles_storage.url("common/js/registration.js"),
+            "reg_script": staticfiles_storage.url("common/js/main.js"),
             "reg_style": staticfiles_storage.url("common/css/registration.css"),
             "seal_image": staticfiles_storage.url(
                 "common/img/registration-seal-gold.svg"

@@ -1,9 +1,11 @@
-from datetime import datetime
+from time import time
+from enum import Enum
 import logging
 
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth import forms as authforms
+from django.utils.safestring import mark_safe
 
 from ..models import UserProfile, UzivateleCekajici
 
@@ -45,11 +47,17 @@ class PasswordResetForm(authforms.PasswordResetForm):
 class SignUpForm(ModelForm):
 
     MIN_AGE = 13
-    SEX_CHOICES = {"0": "mužské", "1": "ženské"}
-    GDPR_CHOICES = {
-        "0": "S tímhle nemůžu souhlasit... To je moc, raději si najdu jiné město nebo zůstanu v lese. Měj se hezky, Endo, a díky za tvůj čas.",
-        "1": "Jasně, souhlasím s tím, co všechno s tím, co jsem ti tady napsal, uděláte.",
-    }
+
+    class SexChoices(Enum):
+        M = "mužské"
+        F = "ženské"
+
+    class GdprChoices(Enum):
+        F = mark_safe(
+            "S tímhle nemůžu souhlasit&hellip; To je moc, raději si najdu jiné Město nebo zůstanu v lese. Měj se hezky, Endo, a díky za tvůj čas."
+        )
+        T = "Jasně, souhlasím se vším!"
+
     FORBIDDEN_NICK_CHARACTERS = (
         "@",
         "_",
@@ -114,7 +122,7 @@ class SignUpForm(ModelForm):
     pohlavi = forms.ChoiceField(
         label="",
         widget=forms.Select(attrs={"id": "sex"}),
-        choices=SEX_CHOICES.items(),
+        choices=[(tag.name, tag.value) for tag in SexChoices],
     )
 
     vek = forms.IntegerField(
@@ -138,7 +146,7 @@ class SignUpForm(ModelForm):
         label="",
         widget=forms.Textarea(
             attrs={
-                "placeholder": "Znáš ve městě někoho mimo Virga?",
+                "placeholder": "Znáš ve Městě někoho mimo Virga?",
                 "id": "web_friends",
                 "class": "form-control",
             }
@@ -150,7 +158,7 @@ class SignUpForm(ModelForm):
         label="",
         widget=forms.Textarea(
             attrs={
-                "placeholder": "Odkud ses dozvěděl o existenci tohoto města (webu)?",
+                "placeholder": "Odkud ses dozvěděl o existenci tohoto Města (webu)?",
                 "id": "source",
             }
         ),
@@ -159,7 +167,7 @@ class SignUpForm(ModelForm):
     gdpr = forms.ChoiceField(
         label="",
         widget=forms.Select(attrs={"id": "gdpr"}),
-        choices=GDPR_CHOICES.items(),
+        choices=[(tag.name, tag.value) for tag in GdprChoices],
     )
 
     class Meta:
@@ -180,7 +188,7 @@ class SignUpForm(ModelForm):
     # Setting the data
     @classmethod
     def set_for_save(cls, data):
-        data["datum"] = int(datetime.now().timestamp())
+        data["datum"] = int(time())
 
         data["primluvy"] = 0
         data["patron"] = 0
@@ -203,10 +211,10 @@ class SignUpForm(ModelForm):
         for char in self.FORBIDDEN_NICK_CHARACTERS:
             if char in nick_uzivatele:
                 bad_characters.append(char)
-        if bad_characters.__len__() > 0:
+        if len(bad_characters) > 0:
             raise forms.ValidationError(
-                "Ve vašem nicku jsou některé ze zakázaných znaků: ("
-                + ",".join(bad_characters)
+                "Ve vašem nicku jsou následující zakázané znaky: ("
+                + ", ".join(bad_characters)
                 + ")."
             )
         return nick_uzivatele
@@ -221,16 +229,16 @@ class SignUpForm(ModelForm):
 
     def clean_pohlavi(self, *args, **kwargs):
         pohlavi = self.cleaned_data.get("pohlavi")
-        if pohlavi not in ["0", "1"]:
+        if pohlavi not in ["M", "F"]:
             raise forms.ValidationError(
                 "Bohužel toto pohlaví nám zůstává utajeno. Neplete si pohlaví s genderem?"
             )
-        return pohlavi
+        return "Muž" if pohlavi == "M" else "Žena"
 
     def clean_gdpr(self, *args, **kwargs):
         gdpr = self.cleaned_data.get("gdpr")
-        if gdpr is not "1":
+        if gdpr != "T":
             raise forms.ValidationError(
                 "Pro registraci je nutné souhlasit se způsobem uchovávání a používání dat."
             )
-        return gdpr
+        return 1 if gdpr == "T" else 0
