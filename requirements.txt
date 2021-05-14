@@ -11,3 +11,4 @@ selenium
 whitenoise
 django-storages<1.10
 boto3
+pylibmc
