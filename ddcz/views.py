@@ -1,12 +1,13 @@
 from ddcz.models.used.tavern import TavernTableVisitor
 from hashlib import md5
 import logging
+from zlib import adler32
 
 from django.apps import apps
 from django.conf import settings
+from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db.models.expressions import OuterRef, Subquery
-from django.db.models.query_utils import FilteredRelation
 from django.http import (
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
@@ -15,8 +16,8 @@ from django.http import (
     HttpResponseServerError,
     Http404,
 )
-from django.db.models import Count, Q, IntegerField
-from django.shortcuts import get_list_or_404, render, get_object_or_404
+from django.db.models import Count, IntegerField
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy, resolve, Resolver404
 from django.contrib.auth import (
     authenticate,
@@ -27,6 +28,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.vary import vary_on_cookie
 
 from .commonarticles import (
     SLUG_NAME_TRANSLATION_FROM_CZ,
@@ -63,41 +65,60 @@ DEFAULT_USER_LIST_SIZE = 50
 
 
 @require_http_methods(["GET"])
+@vary_on_cookie
 def index(request):
-    news_list = News.objects.order_by("-datum")
-
-    paginator = Paginator(news_list, DEFAULT_LIST_SIZE)
     page = request.GET.get("z_s", 1)
+    cache_key = "info:news:list"
+    news = None
 
-    news = paginator.get_page(page)
+    if page == 1:
+        news = cache.get(cache_key)
+
+    if not news:
+        news_list = News.objects.order_by("-datum")
+        paginator = Paginator(news_list, DEFAULT_LIST_SIZE)
+        news = paginator.get_page(page)
+
+        if page == 1:
+            cache.set(cache_key, news)
 
     return render(request, "news/list.html", {"news": news})
 
 
 @require_http_methods(["GET"])
+@vary_on_cookie
 def creative_page_list(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split(".")
     model_class = apps.get_model(app, model_class_name)
-
-    # For Common Articles, Creative Page is stored in attribute 'rubrika' as slug
-    # For everything else, Creative Page is determined by its model class
-    if model_class_name == "commonarticle":
-        article_list = model_class.objects.filter(
-            schvaleno="a", rubrika=creative_page_slug
-        ).order_by("-datum")
-    else:
-        article_list = model_class.objects.filter(schvaleno="a").order_by("-datum")
-
-    if creative_page_slug in ["galerie", "fotogalerie"]:
-        default_limit = 18
-    else:
-        default_limit = DEFAULT_LIST_SIZE
-
-    paginator = Paginator(article_list, default_limit)
     page = request.GET.get("z_s", 1)
+    articles = None
 
-    articles = paginator.get_page(page)
+    cache_key = f"creation:{model_class_name}:list"
+    if page == 1:
+        articles = cache.get(cache_key)
+
+    if not articles:
+        # For Common Articles, Creative Page is stored in attribute 'rubrika' as slug
+        # For everything else, Creative Page is determined by its model class
+        if model_class_name == "commonarticle":
+            article_list = model_class.objects.filter(
+                schvaleno="a", rubrika=creative_page_slug
+            ).order_by("-datum")
+        else:
+            article_list = model_class.objects.filter(schvaleno="a").order_by("-datum")
+
+        if creative_page_slug in ["galerie", "fotogalerie"]:
+            default_limit = 18
+        else:
+            default_limit = DEFAULT_LIST_SIZE
+
+        paginator = Paginator(article_list, default_limit)
+
+        articles = paginator.get_page(page)
+
+        if page == 1:
+            cache.set(cache_key, articles)
 
     try:
         concept = creative_page.creativepageconcept
@@ -122,18 +143,25 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     app, model_class_name = creative_page.model_class.split(".")
     model_class = apps.get_model(app, model_class_name)
 
-    article = get_object_or_404(model_class, id=creation_id)
-    if article.get_slug() != creation_slug:
-        return HttpResponsePermanentRedirect(
-            reverse(
-                "ddcz:creation-detail",
-                kwargs={
-                    "creative_page_slug": creative_page_slug,
-                    "creation_id": article.pk,
-                    "creation_slug": article.get_slug(),
-                },
+    cache_key = f"creation:{model_class_name}:article:{int(creation_id)}:{adler32(creation_slug.encode('utf8'))}"
+
+    article = cache.get(cache_key)
+
+    if not article:
+        article = get_object_or_404(model_class, id=creation_id)
+        if article.get_slug() != creation_slug:
+            return HttpResponsePermanentRedirect(
+                reverse(
+                    "ddcz:creation-detail",
+                    kwargs={
+                        "creative_page_slug": creative_page_slug,
+                        "creation_id": article.pk,
+                        "creation_slug": article.get_slug(),
+                    },
+                )
             )
-        )
+        else:
+            cache.set(cache_key, article)
 
     return render(
         request,

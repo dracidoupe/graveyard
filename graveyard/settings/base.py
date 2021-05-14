@@ -176,9 +176,11 @@ DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
 
 # Deployment info from env vars, may get overriden by generated local.py
 if os.environ.get("HEROKU_RELEASE_VERSION", None):
-    DEPLOY_VERSION = f"2.{os.environ['HEROKU_RELEASE_VERSION'][1:]}"
+    VERSION = int(os.environ["HEROKU_RELEASE_VERSION"][1:])
+    DEPLOY_VERSION = f"2.{VERSION}"
 elif os.environ.get("DEPLOY_VERSION", None):
-    DEPLOY_VERSION = f"2.{os.environ['DEPLOY_VERSION']}"
+    VERSION = int(os.environ["DEPLOY_VERSION"])
+    DEPLOY_VERSION = f"2.{VERSION}"
 else:
     DEPLOY_VERSION = None
 DEPLOY_HASH = os.environ.get("DEPLOY_HASH", None) or os.environ.get(
@@ -200,6 +202,8 @@ else:
     DEPLOY_DATE = None
 
 if "MEMCACHIER_SERVERS" in os.environ:
+    KEY_PREFIX = "graveyard-"
+
     # See https://www.memcachier.com/documentation/django
     CACHES = {
         "default": {
