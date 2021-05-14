@@ -62,6 +62,7 @@ DEFAULT_LIST_SIZE = 10
 DEFAULT_USER_LIST_SIZE = 50
 
 
+@require_http_methods(["GET"])
 def index(request):
     news_list = News.objects.order_by("-datum")
 
@@ -73,6 +74,7 @@ def index(request):
     return render(request, "news/list.html", {"news": news})
 
 
+@require_http_methods(["GET"])
 def creative_page_list(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split(".")
@@ -114,6 +116,7 @@ def creative_page_list(request, creative_page_slug):
     )
 
 
+@require_http_methods(["GET"])
 def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split(".")
@@ -144,6 +147,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     )
 
 
+@require_http_methods(["GET"])
 def creative_page_concept(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     try:
@@ -162,6 +166,7 @@ def creative_page_concept(request, creative_page_slug):
     )
 
 
+@require_http_methods(["GET", "POST"])
 def creative_page_html_check(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
 
@@ -212,6 +217,7 @@ def creative_page_html_check(request, creative_page_slug):
     return HttpResponseNotAllowed(["GET", "POST"])
 
 
+@require_http_methods(["GET"])
 def download_file(request, download_id):
     download_item = get_object_or_404(DownloadItem, pk=download_id)
     download_item.download_counter += 1
@@ -219,6 +225,7 @@ def download_file(request, download_id):
     return HttpResponseRedirect(download_item.item.url)
 
 
+@require_http_methods(["GET"])
 def quest_view_redirect(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
     quest.precteno += 1
@@ -226,6 +233,7 @@ def quest_view_redirect(request, quest_id):
     return HttpResponseRedirect(quest.get_final_url())
 
 
+@require_http_methods(["GET"])
 def links(request):
     item_list = Link.objects.filter(schvaleno="a").order_by("-datum")
 
@@ -237,6 +245,7 @@ def links(request):
     return render(request, "links/list.html", {"items": items})
 
 
+@require_http_methods(["GET"])
 def dating(request):
     item_list = Dating.objects.order_by("-datum")
 
@@ -248,6 +257,7 @@ def dating(request):
     return render(request, "dating/list.html", {"items": items})
 
 
+@require_http_methods(["GET"])
 def market(request):
     # TODO: Migrate to `-datum`, see https://github.com/dracidoupe/graveyard/issues/195
     item_list = Market.objects.order_by("-id")
@@ -267,6 +277,7 @@ def market(request):
     return render(request, "market/list.html", {"items": items})
 
 
+@require_http_methods(["GET"])
 def change_skin(request):
     new_skin = request.GET.get("skin", "light")
     if new_skin not in VALID_SKINS:
@@ -282,16 +293,15 @@ def change_skin(request):
     return HttpResponseRedirect(redirect_url)
 
 
+@require_http_methods(["POST"])
 def logout(request):
-    if request.method != "POST":
-        return HttpResponseBadRequest("Use POST.")
-
     referer = request.META.get("HTTP_REFERER", "/")
 
     logout_user_without_losing_session(request)
     return HttpResponseRedirect(referer)
 
 
+@require_http_methods(["POST"])
 def login(request):
     """
     Log user in from one of the two sources:
@@ -310,9 +320,6 @@ def login(request):
     on each and every page, it feels better to do this than to feed this kind
     of POST handling to every view.
     """
-
-    if request.method != "POST":
-        return HttpResponseBadRequest("Use POST.")
 
     referer = request.META.get("HTTP_REFERER", "/")
 
@@ -433,6 +440,7 @@ def users_list(request):
     )
 
 
+@require_http_methods(["GET"])
 def user_profile(request, user_profile_id, nick_slug):
     user_profile = get_object_or_404(UserProfile, id=user_profile_id)
 
@@ -445,6 +453,7 @@ def user_profile(request, user_profile_id, nick_slug):
     )
 
 
+@require_http_methods(["GET"])
 def author_detail(request, author_id, slug):
     author = get_object_or_404(Author, id=author_id)
 
@@ -469,6 +478,7 @@ def author_detail(request, author_id, slug):
     )
 
 
+@require_http_methods(["GET", "POST"])
 def phorum(request):
     if request.method == "POST" and request.POST["post_type"] and request.user:
         if request.POST["post_type"] == "d" and request.POST["submit"] == "Smazat":
@@ -514,6 +524,7 @@ def phorum(request):
     )
 
 
+@require_http_methods(["GET"])
 def editor_article(request, slug):
     article = get_object_or_404(EditorArticle, slug=slug)
 
@@ -525,6 +536,7 @@ def editor_article(request, slug):
 
 
 @login_required
+@require_http_methods(["GET"])
 def tavern(request):
     """
     Display list of Tavern Tables in a given style ("vypis") that user has access to.
