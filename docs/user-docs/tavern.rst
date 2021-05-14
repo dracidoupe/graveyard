@@ -11,6 +11,10 @@ There are ways to list Tavern Tables:
     * Bookmarked Tables
     * Only bookmarked Tables with new post
 
+All of those listings honor the access control:
+
+    * Tables are always shown to the owner and asistant
+    * When user gets banned, although the bookmark link is preserved, the Table is not shown anymore
 
 ************
 Access Model
