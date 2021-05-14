@@ -117,7 +117,7 @@ p.merchant::before{
     margin: 0rem;
     padding: 0.5rem 1rem;
     border: 2px outset var(--page_txt_color);
-    transition: background-color 1s, letter-spacing 2s;
+    transition: background-color .5s, letter-spacing 1s;
 }
 
 #registration_form input[type=submit]:hover{

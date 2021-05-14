@@ -5,23 +5,23 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript" src="{{ reg_script }}" async></script>
+<script type="module" src="{{ reg_script }}" async></script>
 {% endblock %}
 
 
-{% block content %}
-<h1 class="page-heading">Vstup do města Dračí Doupě</h1>
+{% block content %}            
+<h1 class="page-heading">Vstup do Města</h1>
         {% if sign_up_form.errors %}
             {% for field in sign_up_form %}
                 {% for error in field.errors %}
                     <div>
-                        <strong>{{ error|escape }}</strong>
+                        <strong>{{ error }}</strong>
                     </div>
                 {% endfor %}
             {% endfor %}
             {% for error in sign_up_form.non_field_errors %}
                 <div>
-                    <strong>{{ error|escape }}</strong>
+                    <strong>{{ error }}</strong>
                 </div>
             {% endfor %}
         {% endif %}
@@ -30,10 +30,10 @@
     <form action="{% url 'ddcz:sign-up' %}" method="POST" id="registration_form">
         {% csrf_token %}        
         <p class="first_paragraph">
-            <span class="caps">D</span>rak ti proletěl nad hlavu a slunce právě zašlo na mrak, celý svět potemněl. Jak tvá noha šlápne na další větvičku, jelen nějakých patnáct sáhů od tebe zpozorní. Chladný vzduch se prohnal okolo a ty vyrážíš směrem k stezce vedoucí k městu. Kdysi tam prý žili ti největší umělci a řemeslníci, které kdo znal, a jejich krásná díla zdobí město dodnes.
+            <span class="caps">D</span>rak ti proletěl nad hlavu a slunce právě zašlo na mrak, celý svět potemněl. Jak tvá noha šlápne na další větvičku, jelen nějakých patnáct sáhů od tebe zpozorní. Chladný vzduch se prohnal okolo a ty vyrážíš směrem k stezce vedoucí k Městu. Kdysi tam prý žili ti největší umělci a řemeslníci, které kdo znal, a jejich krásná díla zdobí Město dodnes.
         </p>
         <p>
-            Další poryv studeného větru tě trefí do tváře, když vstupuješ na cestu táhnoucí se okolo lesa. Konečně vidíš nebe, tmavě šedé a v dálce za horou Kandris plné blesků. Není už čas nazbyt, bouře se blíží a není ta z těch, kdy by člověk rád poskakoval v dešti a zpíval z plných plic. Tahle bude pořádná. A hele, obchodník peláší na svém voze k městu. Naštěstí vypadá jako dobrák, a tak tě nechá svést se spolu s ním.
+            Další poryv studeného větru tě trefí do tváře, když vstupuješ na cestu táhnoucí se okolo lesa. Konečně vidíš nebe, tmavě šedé a v dálce za horou Kandris plné blesků. Není už čas nazbyt, bouře se blíží a není ta z těch, kdy by člověk rád poskakoval v dešti a zpíval z plných plic. Tahle bude pořádná. A hele, obchodník peláší na svém voze k Městu. Naštěstí vypadá jako dobrák, a tak tě nechá svést se spolu s ním.
         </p>
         <p class="merchant">
             <span class="ds">Ještě, že jsem tě našel!</span> začal obchodník. <span class="ds">Mé jméno je Virga Tenson, obchoduji s látkami. Jak říkají tobě?</span>
@@ -42,20 +42,20 @@
             <span class="ds">Já jsem {{ sign_up_form.nick_uzivatele }} a bloudím tímhle světem už nějakou chvíli,</span> odpovídáš překvapivě velmi milému Virgovi.
         </p>
         <p class="merchant">
-            <span class="ds">Hmm... ta bouřka vypadá nepříjemně, snad budeme včas ve městě a dáme si večeři už někde v teple.</span>
+            <span class="ds">Hmm&hellip; ta bouřka vypadá nepříjemně, snad budeme včas ve Městě a dáme si večeři už někde v teple.</span>
         </p>
         <p class="character">
-            <span class="ds">Snad jo...</span>
+            <span class="ds">Snad jo&hellip;</span>
         </p>
         <p>
-            Příjemný rozhovor s obchodníkem přeruší silný úder hromu. Ohlédneš se a vidíš, jak blesk zapálil strom na vršku Grondar. V tenhle zpropadený den už chybí snad jen nějaký útok banditů. Vrátíš se zrakem zpátky před vůz, když začneš vidět obrysy města, které si říká <span class="drd">Dračí doupě</span>.
+            Příjemný rozhovor s obchodníkem přeruší silný úder hromu. Ohlédneš se a vidíš, jak blesk zapálil strom na vršku Grondar. V tenhle zpropadený den už chybí snad jen nějaký útok banditů. Vrátíš se zrakem zpátky před vůz, když začneš vidět obrysy Města, kterému říkají <span class="drd">Dračí doupě</span>.
         </p>
         <div class="story_break">* * *</div>
         <p>
-            Brány města jsou uzavřeny. Město vypadá honosně, jeho hradby pevně. Věž, kterou je vidět zvenčí, by si jistě vyžadovala opravy, zřejmě i další části města budou v horším stavu. Ale bezpečí město nabízí a úkryt před... a je to tady, déšť za zvuku dalšího odporného hromu dopadá na tvůj plášť. Během chvíli máš vodu až na kůži.
+            Brány Města jsou uzavřeny. Město vypadá honosně, jeho hradby pevně. Věž, kterou je vidět zvenčí, by si jistě vyžadovala opravy, zřejmě i další části Města budou v horším stavu. Ale bezpečí Město nabízí a úkryt před&hellip; a je to tady, déšť za zvuku dalšího odporného hromu dopadá na tvůj plášť. Během chvíli máš vodu až na kůži.
         </p>
         <p>
-            Brány se otvírají a ty si všimneš, že brána města je dvojitá. Díky bohu za to! Pod víc jak pět metrů širokými hradbami je sucho. Virga neváhá a vjíždí dovnitř. Strážníci jej očividně znají a do města jej pustí.
+            Brány se otvírají a ty si všimneš, že brána Města je dvojitá. Díky bohu za to! Pod víc jak pět metrů širokými hradbami je sucho. Virga neváhá a vjíždí dovnitř. Strážníci jej očividně znají a do Města jej pustí.
         </p>
         <p class="guard">
             <span class="ds">Virga může v pořádku jet,</span> pronese strážník. <span class="ds">Ty ale zůstaň, nevypadáš jako nikdo, koho bych znal.</span>
@@ -64,7 +64,7 @@
             <span class="ds">Tak se uvidíme později, najdeš mě v putyce.</span>
         </p>
         <p class="guard">
-            <span class="ds">Je mi líto, ale do města nemůže vstoupit jen tak někdo. Máme zde stará a velmi drahá díla, které se snaží ukrást plno zloduchů. Je potřeba vést si kompletní seznam návštěvníků a obyvatel města. Takže... ehm... Jméno?</span>
+            <span class="ds">Je mi líto, ale do Města nemůže vstoupit jen tak někdo. Máme zde stará a velmi drahá díla, které se snaží ukrást plno zloduchů. Je potřeba vést si kompletní seznam návštěvníků a obyvatel Města. Takže&hellip; ehm&hellip; Jméno?</span>
         </p>
         <p class="character">
             <span class="ds">Jmenuji se
@@ -74,7 +74,7 @@
             </span>
         </p>
         <p class="guard">
-            <span class="ds">Já jsem Enda. Takže ty jsi... jasně, 
+            <span class="ds">Já jsem Enda. Takže ty jsi&hellip; jasně, 
                 <span id="text_fname"></span> <span id="text_lname"></span>, 
                 mám poznamenáno. To zní jako
                 {{ sign_up_form.pohlavi }}
@@ -82,19 +82,19 @@
         </p>
         <p class="character">
             <span class="ds">
-                Očividně... Co bys ještě chtěl vědět Endo? Že je mi
+                Očividně&hellip; Co bys ještě chtěl vědět Endo? Že je mi
                 {{ sign_up_form.vek }}
                 let?
             </span>
         </p>
         <p class="guard">
-            <span class="ds">Říkáš <span id="text_age"></span>, jo? Vypadáš mladší... Ale vzhled často klame, zvlášť v téhle době plné starostí. Žádáš tedy o vstup do města a trvalý pobyt?</span>
+            <span class="ds">Říkáš <span id="text_age"></span>, jo? Vypadáš mladší&hellip; Ale vzhled často klame, zvlášť v téhle době plné starostí. Žádáš tedy o vstup do Města a trvalý pobyt?</span>
         </p>
         <p class="character">
             <span class="ds">Přesně tak.</span>
         </p>
         <p>
-            Blesk právě uhodil blízko v okolí. Otočíš se a vidíš, jak za tebou netrpělivě čeká plno dalších lidí, kteří se snaží dostat do města. Ne všem se podařilo schovat před deštěm a zírají na tebe velmi promočeně.
+            Blesk právě uhodil blízko v okolí. Otočíš se a vidíš, jak za tebou netrpělivě čeká plno dalších lidí, kteří se snaží dostat do Města. Ne všem se podařilo schovat před deštěm a zírají na tebe velmi promočeně.
         </p>
         <p class="guard">
             <span class="ds">No tak rychle, nemáme na to celý den. Podívej se {{ sign_up_form.osloveni }}, máme tady zrovna místo, přidělíme ti adresu {{ sign_up_form.email }}, na kterou ti budeme posílat důležitá upozornění, jako kdyby se např. vyhlásila válka nebo došly švestky do koláčků. Každý dům má svou schránku pro případ nouze. Ještě pro formalitu mi sepiš tady těch pár věcí do žádosti.</span> Strážný ti podává papír, který doposud vyplňoval a je zde několik kolonek k vyplnění.
@@ -108,7 +108,7 @@
         </div>
 
         <p class="guard">
-            <span class="ds">Perfektní! Já teď zanesu tohle lejstro kapitánovi a hned jsem zpátky. HEJ! Tak jděte do města, ne? Vždyť nemusíte stát frontu, pokud jste schváleni.</span> zakřičí najednou Enda. <span class="ds">Hrozný lidi... Promoknou, i když se můžou jít schovat domů. Takže, kde jsme to... jasný! Kapitán to potom odnese na úřad, kde s tím budou dělat různý psí kusy, <a href="">tady (GDPR)</a> se můžeš podívat. Aby to bylo fér, musíš s tím souhlasit a potom mi to podepsat, tak co říkáš?</span>
+            <span class="ds">Perfektní! Já teď zanesu tohle lejstro kapitánovi a hned jsem zpátky. HEJ! Tak jděte do města, ne? Vždyť nemusíte stát frontu, pokud jste schváleni.</span> zakřičí najednou Enda. <span class="ds">Hrozný lidi&hellip; Promoknou, i když se můžou jít schovat domů. Takže, kde jsme to&hellip; jasný! Kapitán to potom odnese na úřad, kde s tím budou dělat různý psí kusy, <a href="">tady (GDPR)</a> se můžeš podívat. Aby to bylo fér, musíš s tím souhlasit a potom mi to podepsat, tak co říkáš?</span>
         </p>
         <p class="character">
             <span class="ds">{{ sign_up_form.gdpr }}</span>
@@ -120,7 +120,7 @@
                 <img src="{{ seal_image }}" alt="DrD" id="seal">
             </div>
             <p>
-                Enda Bhůt se vzdaluje a ty přemýšlíš, jestli bys neměl<span class="sex_suffix"></span> město opustit. Přece jen ještě je čas na Endu zavolat a říct mu, že sis to rozmyslel<span class="sex_suffix"></span>.
+                Enda Bhůt se vzdaluje a ty přemýšlíš, jestli bys neměl<span class="sex_suffix"></span> Město opustit. Přece jen ještě je čas na Endu zavolat a říct mu, že sis to rozmyslel<span class="sex_suffix"></span>.
             </p>
             <input type="submit" name="submit" value="Nechat Endu Bhůta zanést dokumenty kapitánovi.">
         </div>
