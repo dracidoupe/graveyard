@@ -1,5 +1,7 @@
 # Graveyard: Place for Dead (and Undead)
 
+[![Documentation Status](https://readthedocs.org/projects/ddcz/badge/?version=latest)](https://ddcz.readthedocs.io/?badge=latest)
+
 Graveyard is an attempt at open-source reimplementation of [DraciDoupe.cz](https://www.dracidoupe.cz/) (referred to as DDCZ in this text).
 
 Developer's documentation is [at Read the Docs](https://ddcz.readthedocs.io/en/latest/).
