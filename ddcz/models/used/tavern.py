@@ -42,17 +42,22 @@ class TavernTable(models.Model):
     def is_user_access_allowed(self, user_profile, acls=None):
         # For ACL explanations, see TavernAccess
         # Note: Can't do "if not acls" since that would re-fetch for every empty set
+        if user_profile.nick_uzivatele == self.vlastnik:
+            return True
+
         if acls is None:
             acls_models = self.tavernaccess_set.filter(
                 nick_usera=user_profile.nick_uzivatele
             )
             acls = set([acl.typ_pristupu for acl in acls_models])
 
+        if "asist" in acls:
+            return True
         if "vstza" in acls:
             return False
         elif self.is_public:
             return True
-        elif "vstpo" in acls or "asist" in acls:
+        elif "vstpo" in acls:
             return True
         else:
             return False

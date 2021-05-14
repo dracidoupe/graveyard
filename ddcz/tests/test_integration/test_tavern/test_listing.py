@@ -23,10 +23,11 @@ class TestPublicTableFullListing(TavernListingTestCase):
     def setUp(self):
         super().setUp()
 
-        self.profiles = get_alphabetic_user_profiles(number_of_users=3, saved=True)
-        self.owner = self.profiles[0]
-        self.banned = self.profiles[1]
-        self.unaffected = self.profiles[2]
+        (
+            self.owner,
+            self.banned,
+            self.unaffected,
+        ) = self.profiles = get_alphabetic_user_profiles(number_of_users=3, saved=True)
 
         self.public_table = create_tavern_table(
             owner=self.owner,
@@ -62,7 +63,7 @@ class TestPublicTableFullListing(TavernListingTestCase):
         )
 
     def test_hidden_from_banned(self):
-        self.assertTableInListing(
+        self.assertTableNotInListing(
             self.public_table, get_tavern_table_list(self.banned, LIST_ALL)
         )
 
@@ -82,10 +83,32 @@ class TestPublicTableFullListing(TavernListingTestCase):
         )
 
     def test_bookmark_hidden_from_banned(self):
-        self.assertTableInListing(
+        self.assertTableNotInListing(
             self.bookmarked_public_table,
             get_tavern_table_list(self.banned, LIST_FAVORITE),
         )
 
     def test_only_favorite_shown(self):
         self.assertEquals(1, len(get_tavern_table_list(self.unaffected, LIST_FAVORITE)))
+
+
+class TestOwnerOverrule(TavernListingTestCase):
+    def setUp(self):
+        super().setUp()
+
+        self.owner = get_alphabetic_user_profiles(number_of_users=1, saved=True)[0]
+
+        self.public_table = create_tavern_table(
+            owner=self.owner,
+            public=True,
+            name="Public",
+            description="Public Tavern Table",
+        )
+
+        # Owner bans themselves
+        self.public_table.update_access_privileges(access_banned=[self.owner.pk])
+
+    def test_table_still_shown(self):
+        self.assertTableInListing(
+            self.public_table, get_tavern_table_list(self.owner, LIST_ALL)
+        )

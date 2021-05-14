@@ -80,9 +80,9 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
     related_permissions_map = {}
 
     for perm in related_permissions:
-        if perm.id_stolu not in related_permissions_map:
-            related_permissions_map[perm.id_stolu] = set()
-        related_permissions_map[perm.id_stolu].add(perm.typ_pristupu)
+        if perm.id_stolu.pk not in related_permissions_map:
+            related_permissions_map[perm.id_stolu.pk] = set()
+        related_permissions_map[perm.id_stolu.pk].add(perm.typ_pristupu)
 
     return [
         table
