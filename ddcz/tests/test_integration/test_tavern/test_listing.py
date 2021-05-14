@@ -19,7 +19,7 @@ class TavernListingTestCase(TestCase):
         self.assertNotIn(table.pk, [table.pk for table in listing])
 
 
-class TestPublicTableFullListing(TavernListingTestCase):
+class TestPublicTableListings(TavernListingTestCase):
     def setUp(self):
         super().setUp()
 
@@ -126,4 +126,90 @@ class TestOwnerAssistOverrule(TavernListingTestCase):
     def test_hidden_banned(self):
         self.assertTableNotInListing(
             self.public_table, get_tavern_table_list(self.banned, LIST_ALL)
+        )
+
+
+class TestPrivateTableListings(TavernListingTestCase):
+    def setUp(self):
+        super().setUp()
+
+        (
+            self.owner,
+            self.banned,
+            self.unaffected,
+            self.allowed,
+            self.assist,
+        ) = self.profiles = get_alphabetic_user_profiles(number_of_users=5, saved=True)
+
+        self.private_table = create_tavern_table(
+            owner=self.owner,
+            public=False,
+            name="Private",
+            description="Private Tavern Table",
+        )
+
+        self.private_table.update_access_privileges(
+            access_banned=[self.banned.pk],
+            access_allowed=[self.allowed.pk],
+            assistant_admins=[self.assist.pk],
+        )
+
+        self.bookmarked_private_table = create_tavern_table(
+            owner=self.owner,
+            public=False,
+            name="Private Bookmarked",
+            description="Bookmarked Private Tavern Table",
+        )
+
+        self.bookmarked_private_table.update_access_privileges(
+            access_banned=[self.banned.pk],
+            access_allowed=[self.allowed.pk],
+            assistant_admins=[self.assist.pk],
+        )
+
+        for user in self.profiles:
+            bookmark_table(user, self.bookmarked_private_table)
+
+    def test_hidden_from_random_user(self):
+        self.assertTableNotInListing(
+            self.private_table, get_tavern_table_list(self.unaffected, LIST_ALL)
+        )
+
+    def test_shown_to_owner(self):
+        self.assertTableInListing(
+            self.private_table, get_tavern_table_list(self.owner, LIST_ALL)
+        )
+
+    def test_shown_to_assist(self):
+        self.assertTableInListing(
+            self.private_table, get_tavern_table_list(self.assist, LIST_ALL)
+        )
+
+    def test_hidden_from_banned(self):
+        self.assertTableNotInListing(
+            self.private_table, get_tavern_table_list(self.banned, LIST_ALL)
+        )
+
+    def test_both_tables_hidden(self):
+        self.assertEquals(0, len(get_tavern_table_list(self.unaffected, LIST_ALL)))
+
+    def test_both_tables_shown_to_allowed(self):
+        self.assertEquals(2, len(get_tavern_table_list(self.allowed, LIST_ALL)))
+
+    def test_bookmark_hidden_from_random_user(self):
+        self.assertTableNotInListing(
+            self.bookmarked_private_table,
+            get_tavern_table_list(self.unaffected, LIST_FAVORITE),
+        )
+
+    def test_bookmark_shown_to_owner(self):
+        self.assertTableInListing(
+            self.bookmarked_private_table,
+            get_tavern_table_list(self.owner, LIST_FAVORITE),
+        )
+
+    def test_bookmark_hidden_from_banned(self):
+        self.assertTableNotInListing(
+            self.bookmarked_private_table,
+            get_tavern_table_list(self.banned, LIST_FAVORITE),
         )
