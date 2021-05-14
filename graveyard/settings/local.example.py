@@ -16,3 +16,11 @@ DATABASES = {
         },
     }
 }
+
+# You can keep the local cache as specified in base for production-like behavior
+# Use this is you absolutely don't want anything to be cached
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    }
+}
