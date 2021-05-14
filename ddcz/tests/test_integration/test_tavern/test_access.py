@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from ..model_generator import get_alphabetic_user_profiles
+from ...model_generator import get_alphabetic_user_profiles
 
 from ddcz.tavern import create_tavern_table
 
