@@ -2,7 +2,13 @@ from django.test import TestCase
 
 from ...model_generator import get_alphabetic_user_profiles
 
-from ddcz.tavern import LIST_ALL, create_tavern_table, get_tavern_table_list
+from ddcz.tavern import (
+    LIST_ALL,
+    LIST_FAVORITE,
+    create_tavern_table,
+    get_tavern_table_list,
+    bookmark_table,
+)
 
 
 class TavernListingTestCase(TestCase):
@@ -31,6 +37,20 @@ class TestPublicTableFullListing(TavernListingTestCase):
 
         self.public_table.update_access_privileges(access_banned=[self.banned.pk])
 
+        self.bookmarked_public_table = create_tavern_table(
+            owner=self.owner,
+            public=True,
+            name="Public Bookmarked",
+            description="Bookmarked Public Tavern Table",
+        )
+
+        self.bookmarked_public_table.update_access_privileges(
+            access_banned=[self.banned.pk]
+        )
+
+        for user in self.profiles:
+            bookmark_table(user, self.bookmarked_public_table)
+
     def test_shown_to_random_user(self):
         self.assertTableInListing(
             self.public_table, get_tavern_table_list(self.unaffected, LIST_ALL)
@@ -45,3 +65,27 @@ class TestPublicTableFullListing(TavernListingTestCase):
         self.assertTableInListing(
             self.public_table, get_tavern_table_list(self.banned, LIST_ALL)
         )
+
+    def test_both_tables_shown(self):
+        self.assertEquals(2, len(get_tavern_table_list(self.unaffected, LIST_ALL)))
+
+    def test_bookmark_shown_to_random_user(self):
+        self.assertTableInListing(
+            self.bookmarked_public_table,
+            get_tavern_table_list(self.unaffected, LIST_FAVORITE),
+        )
+
+    def test_bookmark_shown_to_owner(self):
+        self.assertTableInListing(
+            self.bookmarked_public_table,
+            get_tavern_table_list(self.owner, LIST_FAVORITE),
+        )
+
+    def test_bookmark_hidden_from_banned(self):
+        self.assertTableInListing(
+            self.bookmarked_public_table,
+            get_tavern_table_list(self.banned, LIST_FAVORITE),
+        )
+
+    def test_only_favorite_shown(self):
+        self.assertEquals(1, len(get_tavern_table_list(self.unaffected, LIST_FAVORITE)))

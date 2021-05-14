@@ -4,7 +4,7 @@ Documentation for DraciDoupe.cz development
 
 This documentation is intended for developers interested in joining development of `DraciDoupe.cz <https://www.dracidoupe.cz/>`_.
 
-It assumes you have local working copy of the site. If not, follow installation guide from `repository's README <https://github.com/dracidoupe/graveyard/>`_. 
+It assumes you have local working copy of the site. If not, follow installation guide from `repository's README <https://github.com/dracidoupe/graveyard/>`_.
 
 .. note::
 
@@ -34,6 +34,7 @@ It assumes you have local working copy of the site. If not, follow installation 
     :maxdepth: 2
     :caption: Contents:
 
+    user-docs/index
     faq
     migration
     design
