@@ -96,6 +96,11 @@ class TestUserHtmlRender(TestCase):
         exp = "text that has been <br>breaked"
         self.assert_output(s, exp)
 
+    def test_bad_trailing_arrow(self):
+        s = "&lt;h2&gt;Skřetí zabijáci&lt;/h2&gt;&lt;"
+        exp = "<h2>Skřetí zabijáci</h2>&lt;"
+        self.assert_output(s, exp)
+
 
 class TestDeprecatedUnsafeHtmlRender(TestCase):
     def assert_output(self, entity_string, expected):
