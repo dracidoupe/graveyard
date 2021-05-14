@@ -175,6 +175,7 @@ class TavernTable(models.Model):
         )
         visitors_map = {visitor.pk: visitor for visitor in visitors}
 
+        # First, reflect privileges that were dropped
         # TODO: This can be simplified in the future, but now be more careful: reset access
         # of all visitors per access type
         for privilege in processing_privileges:
@@ -194,6 +195,7 @@ class TavernTable(models.Model):
             else:
                 raise ValueError(f"Encountered unknown privilege {privilege}")
 
+        # Next, reflect updated and added privileges
         for privilege in access_map:
             for user_id in access_map[privilege]:
                 # Update to the user with either existing privileges or at least a tavern table visit
@@ -219,7 +221,7 @@ class TavernTable(models.Model):
                     visitor = TavernTableVisitor.objects.create(**args)
                     # for handling situations like access allowed *and* assistant admin
                     visitors.append(visitor)
-                    visitors_map[visitor.pk] = visitor
+                    visitors_map[user_id] = visitor
 
 
 class TavernBookmark(models.Model):
