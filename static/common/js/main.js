@@ -1,3 +1,3 @@
 import { handleRegistrationForm } from "./registration.mjs";
 
-handleRegistrationForm();
+window.addEventListener("load", event => handleRegistrationForm());

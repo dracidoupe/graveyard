@@ -1,6 +1,6 @@
-export let getById = id => document.getElementById(id);
+let getById = id => document.getElementById(id);
 
-export let formData = {
+let formData = {
     "nick": getById("nickname"),
     "firstName": getById("first_name"),
     "lastName": getById("last_name"),
@@ -11,7 +11,7 @@ export let formData = {
     "source": getById("source")
 }
 
-export let textData = {
+let textData = {
     "firstName": getById("text_fname"),
     "lastName": getById("text_lname"),
     "age": getById("text_age"),
