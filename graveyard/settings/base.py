@@ -2,9 +2,13 @@
 Django settings for DDCZ project.
 """
 from datetime import datetime
+import logging
 import os, os.path
 import sys
 from tempfile import gettempdir, mkdtemp
+
+logger = logging.getLogger(__name__)
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
@@ -202,7 +206,9 @@ else:
     DEPLOY_DATE = None
 
 if "MEMCACHIER_SERVERS" in os.environ:
-    KEY_PREFIX = "graveyard-"
+    logger.info("Using memcachier servers")
+
+    KEY_PREFIX = "gy-"
 
     # See https://www.memcachier.com/documentation/django
     CACHES = {
@@ -240,6 +246,7 @@ if "MEMCACHIER_SERVERS" in os.environ:
         }
     }
 else:
+    logger.info("Using local cache")
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
