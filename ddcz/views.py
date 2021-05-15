@@ -94,7 +94,7 @@ def creative_page_list(request, creative_page_slug):
     page = request.GET.get("z_s", 1)
     articles = None
 
-    cache_key = f"creation:{model_class_name}:list"
+    cache_key = f"creative-page:{creative_page.slug}:list"
     if page == 1:
         articles = cache.get(cache_key)
 
