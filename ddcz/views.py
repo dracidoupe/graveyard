@@ -36,7 +36,8 @@ from .commonarticles import (
     SLUG_NAME_TRANSLATION_FROM_CZ,
     COMMON_ARTICLES_CREATIVE_PAGES,
 )
-from .forms.authentication import LoginForm, PasswordResetForm, SignUpForm
+from .forms.authentication import LoginForm, PasswordResetForm
+from .forms.signup import SignUpForm
 from .forms.comments import PhorumCommentForm, DeletePhorumCommentForm
 from .html import check_creation_html, HtmlTagMismatchException
 from .models import (
@@ -647,10 +648,10 @@ def sign_up(request):
     form = SignUpForm()
 
     if request.method == "POST" and request.POST["submit"]:
-        data = SignUpForm.set_for_save(request.POST.copy())
-        sgn = SignUpForm(data)
+        sgn = SignUpForm(request.POST)
         if sgn.is_valid():
             sgn.save()
+            return HttpResponseRedirect(reverse("ddcz:news"))
         else:
             form = sgn
 
