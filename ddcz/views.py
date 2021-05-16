@@ -2,7 +2,7 @@ from ddcz.models.used.tavern import TavernTableVisitor
 from datetime import date
 from hashlib import md5
 import logging
-from zlib import adler32
+from zlib import crc32
 
 from django.apps import apps
 from django.conf import settings
@@ -146,7 +146,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     app, model_class_name = creative_page.model_class.split(".")
     model_class = apps.get_model(app, model_class_name)
 
-    cache_key = f"creation:{model_class_name}:article:{int(creation_id)}:{adler32(creation_slug.encode('utf8'))}"
+    cache_key = f"creation:{model_class_name}:article:{int(creation_id)}:{crc32(creation_slug.encode('utf8'))}"
 
     article = cache.get(cache_key)
 
