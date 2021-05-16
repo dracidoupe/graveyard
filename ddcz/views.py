@@ -490,6 +490,7 @@ def user_profile(request, user_profile_id, nick_slug):
         "users/detail.html",
         {
             "profile": user_profile,
+            "permission": user_profile.public_listing_permissions,
             "creations": creations,
             "levels": LEVEL_DESCRIPTIONS.keys(),
             "level_description": description,

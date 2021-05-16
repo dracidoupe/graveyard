@@ -16,33 +16,45 @@
                     <th>ID</th>
                     <td>{{ profile.id }}</td>
                 </tr>
+                {% if permission.jmeno or permission.prijmeni %}
                 <tr>
                     <th>Jméno</th>
                     <td>
-                        {{ profile.jmeno_uzivatele }}
-                        {{ profile.prijmeni_uzivatele }}
+                        {% if permission.jmeno %}{{ profile.jmeno_uzivatele }}{% endif %}
+                        {% if permission.prijmeni %}{{ profile.prijmeni_uzivatele }}{% endif %}
                     </td>
                 </tr>
+                {% endif %}
+                {% if permission.email %}
                 <tr>
                     <th>E-mail</th>
                     <td>{{ profile.email_uzivatele }}</td>
                 </tr>
+                {% endif %}
+                {% if permission.pohlavi %}
                 <tr>
                     <th>Pohlaví</th>
                     <td>{{ profile.pohlavi_uzivatele }}</td>
                 </tr>
+                {% endif %}
+                {% if permission.vek %}
                 <tr>
                     <th>Věk</th>
                     <td>{{ profile.age }}</td>
                 </tr>
+                {% endif %}
+                {% if permission.kraj %}
                 <tr>
                     <th>Kraj</th>
                     <td>{{ profile.location }}</td>
                 </tr>
+                {% endif %}
+                {% if permission.icq %}
                 <tr>
                     <th>ICQ</th>
                     <td>{{ profile.icq_uzivatele }}</td>
                 </tr>
+                {% endif %}
                 <tr>
                     <th>Popis</th>
                     <td>{{ profile.description }}</td>
