@@ -67,11 +67,11 @@
                 <tr>
                     <td colspan="2">
                         <ul class="user-stars">
-                        {% for level in levels %}
+                        {% for level, star_url in level_stars.items %}
                             <li>
-                                <img src="/static/skins/{{ skin }}/img/star-level-{{ level }}.svg" alt="{{ level }}" 
+                                <img src="{{ star_url }}" alt="{{ level }}"
                                     class="star{% if level == profile.level %} star-active{% endif %}">
-                            </li>                                
+                            </li>
                         {% endfor %}
                         </ul>
                     </td>
@@ -98,7 +98,7 @@
             <h3>Patronát</h3>
         </section>
         -->
-        
+
         <section id="user_reputation">
             <h3>Věhlas</h3>
             <table>
@@ -117,8 +117,8 @@
 
         {% if profile.is_author %}
         <section id="user_author">
-            <h3><span>Díla uživatele</span></h3>        
-                        
+            <h3><span>Díla uživatele</span></h3>
+
             {% for slug, page_dict in creations.items %}
                 <table id="creation_table">
                     <tr><th colspan="3">{{ page_dict.page.name }}</th></tr>
@@ -127,13 +127,13 @@
                         <td><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a></td>
                         <td class="stars">{% creation_rating creation.pochvez skin %}</td>
                         <td class="date">{{ creation.datum | articleTime }}</td>
-                    </tr>                    
+                    </tr>
                     {% endfor %}
                 </table>
             {% endfor %}
         </section>
         {% endif %}
-        
-    </div>    
+
+    </div>
 </div>
 {% endblock %}
