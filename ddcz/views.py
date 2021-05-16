@@ -485,6 +485,13 @@ def user_profile(request, user_profile_id, nick_slug):
     if user_profile.level in LEVEL_DESCRIPTIONS:
         description = LEVEL_DESCRIPTIONS[user_profile.level]
 
+    level_stars = {
+        level: staticfiles_storage.url(
+            f"skins/{request.session.get('skin', 'light')}/img/star-level-{ level }.svg"
+        )
+        for level in LEVEL_DESCRIPTIONS
+    }
+
     return render(
         request,
         "users/detail.html",
@@ -492,7 +499,7 @@ def user_profile(request, user_profile_id, nick_slug):
             "profile": user_profile,
             "permission": user_profile.public_listing_permissions,
             "creations": creations,
-            "levels": LEVEL_DESCRIPTIONS.keys(),
+            "level_stars": level_stars,
             "level_description": description,
         },
     )
