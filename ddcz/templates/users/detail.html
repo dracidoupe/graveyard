@@ -1,7 +1,7 @@
 {% extends 'public.html' %}
 {% load html %}
-{% block content %}
 {% load creations %}
+{% block content %}
 
 <div id="page-user-detail">
     <h1 class="page-heading">Uživatel{% if profile.is_female %}ka{% endif %} {{ profile.nick_uzivatele }}</h1>
@@ -115,32 +115,24 @@
             </table>
         </section>
 
+        {% if profile.is_author %}
         <section id="user_author">
-            <h3>Díla uživatele</h3>        
-            {% if profile.is_author %}
-            <p>Uživatel je autorem. <a href="{{ profile.author_url }}">Přejít na autorský profil</a></p>
+            <h3><span>Díla uživatele</span></h3>        
+                        
             {% for slug, page_dict in creations.items %}
-                <h4 class="creations">{{ page_dict.page.name }}</h4>
-                <div class="user_creations">
-                {% for creation in page_dict.creations %}
-                <section class="user_creation">
-                    <h5><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a></h5>
-                    <div class="stars">
-                        {% creation_rating creation.pochvez skin %}
-                    </div>
-                    <div class="date">
-                        {{ creation.datum | articleTime }}
-                    </div>                    
-                </section>
-                {% endfor %}
-                </div>
-            {% endfor %}            
-            {% else %}
-            <p>
-                Uživatel není autorem žádného rubrikového příspěvku.
-            </p>
-            {% endif %}
-        </section>        
+                <table id="creation_table">
+                    <tr><th colspan="3">{{ page_dict.page.name }}</th></tr>
+                    {% for creation in page_dict.creations %}
+                    <tr class="creation">
+                        <td><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a></td>
+                        <td class="stars">{% creation_rating creation.pochvez skin %}</td>
+                        <td class="date">{{ creation.datum | articleTime }}</td>
+                    </tr>                    
+                    {% endfor %}
+                </table>
+            {% endfor %}
+        </section>
+        {% endif %}
         
     </div>    
 </div>

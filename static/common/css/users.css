@@ -8,7 +8,11 @@
 }
 
 .star-active{
-    border: 2px dashed #888;
+    border: 3px dashed #888;
+}
+
+.rating-stars img{
+    margin: auto
 }
 
 #user_container{
@@ -40,11 +44,18 @@
     width: calc( 100% - 6rem );
 
     text-align: left;    
-    font-size: 1.2rem;
+    font-size: var(--user_h3_size);
     font-family: var(--link-font);
-    
+
+    border-bottom: 3px inset var(--user_h3_bottom);
+        
     margin-top: 0rem;    
-    padding: .7rem 3rem;
+    padding: .7rem 3rem;    
+}
+
+
+#user_author .rating-stars{
+    margin-bottom: 0rem;
 }
 
 #user_info{
@@ -111,50 +122,46 @@ ul.user-stars li{
     vertical-align: middle;
 }
 
-
-h4.creations{
-    color: var(--page_bg_color);
-    background-color: var(--page_txt_color);
-    padding: 1rem 5rem;
-    filter: brightness(0.6) contrast(0.8);
+ul#creation_list > li{
+    list-style: none;
 }
 
-h4.creations::before{
-    content: "Rubrika: ";
+ul#creation_list > li > span{
+    font-size: 1.5rem;
+    line-height: 4rem;    
+    font-weight: 600;
 }
 
-div.user_creations{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 0rem;
+ul#creation_list > li > ul > li{
+    margin: 0.25rem auto;
 }
 
-section.user_creation{
-    border: 2px solid var(--page_txt_color);
-    flex-basis: 20%;
-    overflow: hidden;
-    min-width: 250px;
-    margin: 1rem;
-}
-
-section.user_creation h5{
-    margin: 0rem;
-    margin-bottom: 0.5rem;
-    padding: 0rem;
-}
-
-section.user_creation a{
-    display: block;
-    margin: 0rem;
-    font-size: 1.2rem;
-}
-
-section.user_creation .stars{    
+table#creation_table{
     width: 100%;
-    margin: 1rem 0rem;
+    vertical-align: middle;
 }
 
-section.user_creation .stars > * {
-    filter: contrast(.5) brightness(1.2);
+table#creation_table tr.creation:hover {
+    background-color: var(--user_bg_heading);
+}
+
+table#creation_table th{
+    text-align: left;
+    font-size: 1.5rem;
+    line-height: 4rem;    
+    font-weight: 600;
+}
+
+table#creation_table td{
+    vertical-align: middle;
+    height: 1.5rem;
+}
+
+table#creation_table td.stars,
+table#creation_table td.date{
+    width: 10rem;
+}
+
+table#creation_table td.stars img{
+    margin-bottom: 0rem;
 }

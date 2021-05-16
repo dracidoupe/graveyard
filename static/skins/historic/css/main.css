@@ -20,11 +20,13 @@
     --navbox-border-color: #000000;
     --nick_color: #ff0000;
 
-    --user_border: transparent;
+    --user_border: transparent;    
     --user_bg_heading: transparent;
     --user_txt_heading: gray;
     --user_border_radius: 0rem;
-    --user_star_active_border: transparent;
+    --user_star_active_border: gray;
+    --user_h3_size: 2rem;
+    --user_h3_bottom: rgba(100, 100, 100, .8);
     
 }
 
