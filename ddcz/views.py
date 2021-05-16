@@ -482,7 +482,7 @@ def user_profile(request, user_profile_id, nick_slug):
         creations = False
 
     description = LEVEL_DESCRIPTIONS["0"]
-    if user_profile.level in LEVEL_DESCRIPTIONS.keys():
+    if user_profile.level in LEVEL_DESCRIPTIONS:
         description = LEVEL_DESCRIPTIONS[user_profile.level]
 
     return render(

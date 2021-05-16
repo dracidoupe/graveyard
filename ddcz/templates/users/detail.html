@@ -83,21 +83,21 @@
                 </tr>
                 {% endif %}
                 <tr>
-                    <th>Spatřen{% if profile.is_female %}a{% endif %} </th>
-                    <td>{{ profile.last_login }}</td>
+                    <th>Naposledy spatřen{% if profile.is_female %}a{% endif %} </th>
+                    <td>{{ profile.last_login | articleTime }}</td>
                 </tr>
                 <tr>
                     <th>Registrován{% if profile.is_female %}a{% endif %} </th>
-                    <td>{{ profile.registration_date }}</td>
+                    <td>{{ profile.registration_date | articleTime }}</td>
                 </tr>
             </table>
         </section>
 
-
+        <!--
         <section id="user_patron">
             <h3>Patronát</h3>
         </section>
-        
+        -->
         
         <section id="user_reputation">
             <h3>Věhlas</h3>
@@ -109,8 +109,8 @@
                 </tr>
                 <tr>
                     <td>{{ profile.reputace }}</td>
-                    <td>{{ profile.reputace }}</td>
-                    <td>{{ profile.get_average_reputation }}</td>
+                    <td> - </td>
+                    <td> - </td>
                 </tr>
             </table>
         </section>

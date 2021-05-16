@@ -159,17 +159,11 @@ class UserProfile(models.Model):
 
     @property
     def registration_date(self):
-        try:
-            return self.reg_schval_datum.strftime("%-d. %-m. %Y v %-H:%M")
-        except ValueError:
-            return self.reg_schval_datum.strftime("%d. %m. %Y v %H:%M")
+        return self.reg_schval_datum
 
     @property
     def last_login(self):
-        try:
-            return self.pospristup.strftime("%-d. %-m. %Y v %-H:%M")
-        except ValueError:
-            return self.pospristup.strftime("%d. %m. %Y v %H:%M")
+        return self.pospristup
 
     @property
     def public_listing_permissions(self):
