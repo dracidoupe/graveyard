@@ -1,12 +1,139 @@
 {% extends 'public.html' %}
 {% load html %}
+{% load creations %}
 {% block content %}
+
 <div id="page-user-detail">
     <h1 class="page-heading">Uživatel{% if profile.is_female %}ka{% endif %} {{ profile.nick_uzivatele }}</h1>
     {% if profile.icon_url %}<p><img src="{{ profile.icon_url }}" alt="Ikonka uživatele"></p>{% endif %}
-    {% if profile.is_author %}
-        <p>Uživatel je autorem. <a href="{{ profile.author_url }}">Přejít na autorský profil</a></p>
-    {% endif %}
-    <p><span class="label">Popis:</span> <span class="value">{{ profile.popis_uzivatele }}</span></p>
+
+
+    <div id="user_container">
+        <section id="user_info">
+            <h3>Info o uživatel{% if profile.is_female %}ce{%else%}i{% endif %}</h3>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ profile.id }}</td>
+                </tr>
+                {% if permission.jmeno or permission.prijmeni %}
+                <tr>
+                    <th>Jméno</th>
+                    <td>
+                        {% if permission.jmeno %}{{ profile.jmeno_uzivatele }}{% endif %}
+                        {% if permission.prijmeni %}{{ profile.prijmeni_uzivatele }}{% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% if permission.email %}
+                <tr>
+                    <th>E-mail</th>
+                    <td>{{ profile.email_uzivatele }}</td>
+                </tr>
+                {% endif %}
+                {% if permission.pohlavi %}
+                <tr>
+                    <th>Pohlaví</th>
+                    <td>{{ profile.pohlavi_uzivatele }}</td>
+                </tr>
+                {% endif %}
+                {% if permission.vek %}
+                <tr>
+                    <th>Věk</th>
+                    <td>{{ profile.age }}</td>
+                </tr>
+                {% endif %}
+                {% if permission.kraj %}
+                <tr>
+                    <th>Kraj</th>
+                    <td>{{ profile.location }}</td>
+                </tr>
+                {% endif %}
+                {% if permission.icq %}
+                <tr>
+                    <th>ICQ</th>
+                    <td>{{ profile.icq_uzivatele }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>Popis</th>
+                    <td>{{ profile.description }}</td>
+                </tr>
+            </table>
+        </section>
+        <section id="user_stats">
+            <h3>Serverové statistiky</h3>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <ul class="user-stars">
+                        {% for level in levels %}
+                            <li>
+                                <img src="/static/skins/{{ skin }}/img/star-level-{{ level }}.svg" alt="{{ level }}" 
+                                    class="star{% if level == profile.level %} star-active{% endif %}">
+                            </li>                                
+                        {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                {% if profile.id == user.profile.id %}
+                <tr>
+                    <th>Level</th>
+                    <td><p>{{ level_description }}</p></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>Naposledy spatřen{% if profile.is_female %}a{% endif %} </th>
+                    <td>{{ profile.last_login | articleTime }}</td>
+                </tr>
+                <tr>
+                    <th>Registrován{% if profile.is_female %}a{% endif %} </th>
+                    <td>{{ profile.registration_date | articleTime }}</td>
+                </tr>
+            </table>
+        </section>
+
+        <!--
+        <section id="user_patron">
+            <h3>Patronát</h3>
+        </section>
+        -->
+        
+        <section id="user_reputation">
+            <h3>Věhlas</h3>
+            <table>
+                <tr>
+                    <th>Reputace</th>
+                    <th>Kladná</th>
+                    <th>Záporná</th>
+                </tr>
+                <tr>
+                    <td>{{ profile.reputace }}</td>
+                    <td> - </td>
+                    <td> - </td>
+                </tr>
+            </table>
+        </section>
+
+        {% if profile.is_author %}
+        <section id="user_author">
+            <h3><span>Díla uživatele</span></h3>        
+                        
+            {% for slug, page_dict in creations.items %}
+                <table id="creation_table">
+                    <tr><th colspan="3">{{ page_dict.page.name }}</th></tr>
+                    {% for creation in page_dict.creations %}
+                    <tr class="creation">
+                        <td><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a></td>
+                        <td class="stars">{% creation_rating creation.pochvez skin %}</td>
+                        <td class="date">{{ creation.datum | articleTime }}</td>
+                    </tr>                    
+                    {% endfor %}
+                </table>
+            {% endfor %}
+        </section>
+        {% endif %}
+        
+    </div>    
 </div>
 {% endblock %}

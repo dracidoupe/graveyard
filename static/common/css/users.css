@@ -1,0 +1,167 @@
+:root{
+    --bg_deb: rgba(224, 220, 19, 0);
+}
+
+.star{
+    width: 1.75rem;
+    padding: 0.5rem;
+}
+
+.star-active{
+    border: 3px dashed #888;
+}
+
+.rating-stars img{
+    margin: auto
+}
+
+#user_container{
+    display: grid;
+    grid-template-areas: 
+        'info info'
+        'server_stats server_stats'
+        'author author'
+        'patron reputation'
+    ;
+    grid-column: auto auto;
+    gap: 2rem;
+    width: 100%;
+}
+
+#user_container p{
+    text-indent: 0rem;
+}
+
+#user_container > section {
+    border: 2px solid var(--user_border);
+    border-radius: var(--user_border_radius);
+    padding-bottom: 2rem;
+}
+
+#user_container > section > h3{
+    background-color: var(--user_bg_heading);
+    color: var(--user_txt_heading);
+    width: calc( 100% - 6rem );
+
+    text-align: left;    
+    font-size: var(--user_h3_size);
+    font-family: var(--link-font);
+
+    border-bottom: 3px inset var(--user_h3_bottom);
+        
+    margin-top: 0rem;    
+    padding: .7rem 3rem;    
+}
+
+
+#user_author .rating-stars{
+    margin-bottom: 0rem;
+}
+
+#user_info{
+    grid-area: info;
+    background-color: var(--bg_deb);
+}
+
+#user_stats{
+    grid-area: server_stats;
+    background-color: var(--bg_deb)
+}
+
+#user_patron{
+    grid-area: patron;
+    background-color: var(--bg_deb);
+}
+
+#user_reputation{
+    grid-area: reputation;
+    background-color: var(--bg_deb);
+}
+
+#user_author{
+    grid-area: author;
+    background-color: var(--bg_deb);
+}
+
+#user_container table{
+    width: 100%;
+    padding: 0rem;
+    margin: 0rem;
+}
+
+#user_container table th{
+    vertical-align: top;
+    width: 9rem;
+    padding: 0rem;
+    padding-left: 2rem;
+    text-align: right;
+}
+
+#user_container table td{
+    vertical-align: top;
+    text-align: left;
+    padding-left: 3rem;
+}
+
+#user_reputation table th,
+#user_reputation table td{
+    text-align: center;
+}
+
+ul.user-stars{
+    display: table;
+    list-style-type: none;
+    width: 100%;
+    padding: 0rem;
+    margin: 0rem;
+}
+
+ul.user-stars li{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+ul#creation_list > li{
+    list-style: none;
+}
+
+ul#creation_list > li > span{
+    font-size: 1.5rem;
+    line-height: 4rem;    
+    font-weight: 600;
+}
+
+ul#creation_list > li > ul > li{
+    margin: 0.25rem auto;
+}
+
+table#creation_table{
+    width: 100%;
+    vertical-align: middle;
+}
+
+table#creation_table tr.creation:hover {
+    background-color: var(--user_bg_heading);
+}
+
+table#creation_table th{
+    text-align: left;
+    font-size: 1.5rem;
+    line-height: 4rem;    
+    font-weight: 600;
+}
+
+table#creation_table td{
+    vertical-align: middle;
+    height: 1.5rem;
+}
+
+table#creation_table td.stars,
+table#creation_table td.date{
+    width: 10rem;
+}
+
+table#creation_table td.stars img{
+    margin-bottom: 0rem;
+}
