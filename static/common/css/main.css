@@ -1,14 +1,7 @@
 @import "./fonts.css";
-@import "../users.css";
+@import "./users.css";
 
-.star{
-    width: 1.75rem;
-    padding: 0.5rem;
-}
 
-.star-active{
-    border: 2px dashed var(--link-color);
-}
 
 input{
     max-width: 100%;

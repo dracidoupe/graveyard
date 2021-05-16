@@ -18,6 +18,12 @@
 
     --navbox-border-color: #808080;
     --nick_color: #ff0000;
+
+    --user_border: #505050;
+    --user_bg_heading: #505050;
+    --user_txt_heading: #fff;
+    --user_border_radius: 0rem;
+    --user_star_active_border: #505050;
 }
 
 

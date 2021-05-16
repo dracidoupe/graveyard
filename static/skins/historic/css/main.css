@@ -19,6 +19,12 @@
 
     --navbox-border-color: #000000;
     --nick_color: #ff0000;
+
+    --user_border: transparent;
+    --user_bg_heading: transparent;
+    --user_txt_heading: gray;
+    --user_border_radius: 0rem;
+    --user_star_active_border: transparent;
     
 }
 
