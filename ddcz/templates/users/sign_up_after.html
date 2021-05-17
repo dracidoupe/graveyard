@@ -1,0 +1,23 @@
+{% extends "public.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ reg_style }}">
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ reg_script }}" async></script>
+{% endblock %}
+
+
+{% block content %}            
+<h1 class="page-heading">Vítej ve Městě, {{ addressing }}!</h1>
+        
+
+<section id="registration_page">    
+        <p class="first_paragraph">
+            Tvá žádost o vstup do města byla odeslána ke schválení. Nyní vyčkej, až ti na emailovou adresu přijde zpráva od našich redaktorů.
+        </p>
+</section>
+
+
+{% endblock %}

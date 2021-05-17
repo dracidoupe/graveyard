@@ -8,7 +8,7 @@
 }
 
 .star-active{
-    border: 3px dashed #888;
+    border: 2px dashed #888;
 }
 
 .rating-stars img{
@@ -155,6 +155,12 @@ table#creation_table th{
 table#creation_table td{
     vertical-align: middle;
     height: 1.5rem;
+}
+
+table#creation_table td a{
+    display: block;
+    margin: 0rem;
+    padding: 0rem 1rem;
 }
 
 table#creation_table td.stars,

@@ -672,7 +672,11 @@ def sign_up(request):
         sgn = SignUpForm(request.POST)
         if sgn.is_valid():
             sgn.save()
-            return HttpResponseRedirect(reverse("ddcz:news"))
+            return render(
+                request,
+                "users/sign_up_after.html",
+                {"addressing": sgn.cleaned_data["osloveni"]},
+            )
         else:
             form = sgn
 
