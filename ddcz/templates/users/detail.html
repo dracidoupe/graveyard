@@ -126,7 +126,7 @@
                     <tr class="creation">
                         <td><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a></td>
                         <td class="stars">{% creation_rating creation.pochvez skin %}</td>
-                        <td class="date">{{ creation.datum | articleTime }}</td>
+                        <td class="date">{{ creation.datum | czech_date }}</td>
                     </tr>
                     {% endfor %}
                 </table>
