@@ -9,7 +9,7 @@
 {% endblock %}
 
 
-{% block content %}            
+{% block content %}
 <h1 class="page-heading">Vstup do Města</h1>
         {% if sign_up_form.errors %}
             {% for field in sign_up_form %}
@@ -28,7 +28,7 @@
 
 <section id="registration_page">
     <form action="{% url 'ddcz:sign-up' %}" method="POST" id="registration_form">
-        {% csrf_token %}        
+        {% csrf_token %}
         <p class="first_paragraph">
             <span class="caps">D</span>rak ti proletěl nad hlavu a slunce právě zašlo na mrak, celý svět potemněl. Jak tvá noha šlápne na další větvičku, jelen nějakých patnáct sáhů od tebe zpozorní. Chladný vzduch se prohnal okolo a ty vyrážíš směrem k stezce vedoucí k Městu. Kdysi tam prý žili ti největší umělci a řemeslníci, které kdo znal, a jejich krásná díla zdobí Město dodnes.
         </p>
@@ -39,7 +39,7 @@
             <span class="ds">Ještě, že jsem tě našel!</span> začal obchodník. <span class="ds">Mé jméno je Virga Tenson, obchoduji s látkami. Jak říkají tobě?</span>
         </p>
         <p class="character">
-            <span class="ds">Já jsem {{ sign_up_form.nick_uzivatele }} a bloudím tímhle světem už nějakou chvíli,</span> odpovídáš překvapivě velmi milému Virgovi.
+            <span class="ds">Já jsem {{ sign_up_form.nick }} a bloudím tímhle světem už nějakou chvíli,</span> odpovídáš překvapivě velmi milému Virgovi.
         </p>
         <p class="merchant">
             <span class="ds">Hmm&hellip; ta bouřka vypadá nepříjemně, snad budeme včas ve Městě a dáme si večeři už někde v teple.</span>
@@ -68,14 +68,14 @@
         </p>
         <p class="character">
             <span class="ds">Jmenuji se
-                {{ sign_up_form.jmeno }}
-                {{ sign_up_form.prijmeni }}
+                {{ sign_up_form.name_given }}
+                {{ sign_up_form.name_family }}
                 a jak se jmenuješ ty?
             </span>
         </p>
         <p class="guard">
-            <span class="ds">Já jsem Enda. Takže ty jsi&hellip; jasně, 
-                <span id="text_fname"></span> <span id="text_lname"></span>, 
+            <span class="ds">Já jsem Enda. Takže ty jsi&hellip; jasně,
+                <span id="text_fname"></span> <span id="text_lname"></span>,
                 mám poznamenáno. To zní jako
                 {{ sign_up_form.pohlavi }}
                 jméno, že?</span>
@@ -83,7 +83,7 @@
         <p class="character">
             <span class="ds">
                 Očividně&hellip; Co bys ještě chtěl vědět Endo? Že je mi
-                {{ sign_up_form.vek }}
+                {{ sign_up_form.age }}
                 let?
             </span>
         </p>
@@ -97,7 +97,7 @@
             Blesk právě uhodil blízko v okolí. Otočíš se a vidíš, jak za tebou netrpělivě čeká plno dalších lidí, kteří se snaží dostat do Města. Ne všem se podařilo schovat před deštěm a zírají na tebe velmi promočeně.
         </p>
         <p class="guard">
-            <span class="ds">No tak rychle, nemáme na to celý den. Podívej se {{ sign_up_form.osloveni }}, máme tady zrovna místo, přidělíme ti adresu {{ sign_up_form.email }}, na kterou ti budeme posílat důležitá upozornění, jako kdyby se např. vyhlásila válka nebo došly švestky do koláčků. Každý dům má svou schránku pro případ nouze. Ještě pro formalitu mi sepiš tady těch pár věcí do žádosti.</span> Strážný ti podává papír, který doposud vyplňoval a je zde několik kolonek k vyplnění.
+            <span class="ds">No tak rychle, nemáme na to celý den. Podívej se {{ sign_up_form.salutation }}, máme tady zrovna místo, přidělíme ti adresu {{ sign_up_form.email }}, na kterou ti budeme posílat důležitá upozornění, jako kdyby se např. vyhlásila válka nebo došly švestky do koláčků. Každý dům má svou schránku pro případ nouze. Ještě pro formalitu mi sepiš tady těch pár věcí do žádosti.</span> Strážný ti podává papír, který doposud vyplňoval a je zde několik kolonek k vyplnění.
         </p>
         <div>
             {{ sign_up_form.duvod_registrace }}

@@ -19,10 +19,7 @@
                 {% if permission.jmeno or permission.prijmeni %}
                 <tr>
                     <th>Jméno</th>
-                    <td>
-                        {% if permission.jmeno %}{{ profile.jmeno_uzivatele }}{% endif %}
-                        {% if permission.prijmeni %}{{ profile.prijmeni_uzivatele }}{% endif %}
-                    </td>
+                    <td>{{  profile.name }}</td>
                 </tr>
                 {% endif %}
                 {% if permission.email %}
@@ -124,9 +121,9 @@
                     <tr><th colspan="3">{{ page_dict.page.name }}</th></tr>
                     {% for creation in page_dict.creations %}
                     <tr class="creation">
-                        <td><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a></td>
-                        <td class="stars">{% creation_rating creation.pochvez skin %}</td>
-                        <td class="date">{{ creation.datum | czech_date }}</td>
+                        <td><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.name }}</a></td>
+                        <td class="stars">{% creation_rating creation.rating skin %}</td>
+                        <td class="date">{{ creation.published | czech_date }}</td>
                     </tr>
                     {% endfor %}
                 </table>

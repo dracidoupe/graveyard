@@ -10,7 +10,7 @@ class ArticleAccessTestCase(TestCase):
         super().setUp()
         self.client = Client()
 
-        self.article = CommonArticle(pk=1, jmeno="xoxo")
+        self.article = CommonArticle(pk=1, name="xoxo")
         self.article.save()
 
     def test_article_present(self):
@@ -26,7 +26,7 @@ class ArticleAccessTestCase(TestCase):
         self.assertEquals(200, res.status_code)
 
     def test_redirect_for_empty_slug(self):
-        article = CommonArticle(pk=2, jmeno=" ")
+        article = CommonArticle(pk=2, name=" ")
         article.save()
 
         res = self.client.get("/rubriky/clanky/2-random-slug/", follow=True)

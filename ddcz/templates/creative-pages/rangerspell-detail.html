@@ -7,7 +7,7 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2>{{ article.jmeno }}{% creation_rating article.pochvez skin %}</h2>
+            <h2>{{ article.name }}{% creation_rating article.rating skin %}</h2>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->
@@ -18,43 +18,45 @@
                 </tr>
                 <tr>
                     <th>Přidáno:</th>
-                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></td>
+                    <td><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></td>
                 </tr>
                 <tr>
                     <th>Hlasovalo:</th>
-                    <td>{{ article.pocet_hlasujicich }}</td>
+                    <td>{{ article.rater_no }}</td>
                 </tr>
             </table>
 
-            {% if article.mag %}
-                <p><span class="label">Magenergie:</span> <span class="value">{{ article.mag }} {{ article.magpop }}</span></p>
+            <p><span class="label">Skupina:</span> <span class="value">{{ a.group }}</span></p>
+
+            {% if article.magenergy %}
+                <p><span class="label">Magenergie:</span> <span class="value">{{ article.magenergy }} {{ article.magenergy_description }}</span></p>
             {% endif %}
             {% if article.dosah %}
                 <p><span class="label">Dosah:</span> <span class="value">{{ article.dosah }} {{ article.dosahpop }}</span></p>
             {% endif %}
-            {% if article.rozsah %}
-                <p><span class="label">Rozsah:</span> <span class="value">{{ article.rozsah }} {{ article.rozsahpop }}</span></p>
+            {% if article.extent %}
+                <p><span class="label">Rozsah:</span> <span class="value">{{ article.extent }} {{ article.reach_description }}</span></p>
             {% endif %}
-            {% if article.vyvolani %}
-                <p><span class="label">Vyvolání:</span> <span class="value">{{ article.vyvolani }} {{ article.vyvolanipop }}</span></p>
+            {% if article.invocation %}
+                <p><span class="label">Vyvolání:</span> <span class="value">{{ article.invocation }} {{ article.invocation_description }}</span></p>
             {% endif %}
-            {% if article.druh %}
-                <p><span class="label">Druh:</span> <span class="value">{{ article.druh }}</span></p>
+            {% if article.spell_type %}
+                <p><span class="label">Druh:</span> <span class="value">{{ article.spell_type }}</span></p>
             {% endif %}
-            {% if article.cetnost %}
-                <p><span class="label">Četnost:</span> <span class="value">{{ article.cetnost }}</span></p>
+            {% if article.frequency %}
+                <p><span class="label">Četnost:</span> <span class="value">{{ article.frequency }}</span></p>
             {% endif %}
-            {% if article.pomucky %}
-                <p><span class="label">Pomůcky:</span> <span class="value">{{ article.pomucky }}</span></p>
+            {% if article.tools %}
+                <p><span class="label">Pomůcky:</span> <span class="value">{{ article.tools }}</span></p>
             {% endif %}
 
-            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+            <p><span class="label">Popis:</span> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></p>
 
-            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></span></p>
-            <p><span class="label">Přečteno:</span> <span class="value">{{ article.precteno }}</span></p>
-            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
+            <p><span class="label">Přečteno:</span> <span class="value">{{ article.read }}</span></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
 
-            <p><span class="label">Autor:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.autor }}</a></span></p>
+            <p><span class="label">author_nick:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.author_nick }}</a></span></p>
 
 
         </header>
@@ -63,7 +65,7 @@
             {{ article.text|render_html|safe }}
         </div>
         <footer>
-            
+
         </footer>
         {% creation_comments creative_page_slug article.pk %}
 

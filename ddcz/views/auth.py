@@ -91,7 +91,7 @@ def login(request):
             messages.error(request, "Špatný nick a nebo heslo")
             return HttpResponseRedirect(referer)
 
-        if profile.psw_uzivatele != old_insecure_hashed_password:
+        if profile.password_v1 != old_insecure_hashed_password:
             messages.error(request, "Špatný nick a nebo heslo")
             return HttpResponseRedirect(referer)
 
@@ -145,7 +145,7 @@ def sign_up(request):
             return render(
                 request,
                 "users/sign_up_after.html",
-                {"addressing": sgn.cleaned_data["osloveni"]},
+                {"addressing": sgn.cleaned_data["salutation"]},
             )
         else:
             form = sgn

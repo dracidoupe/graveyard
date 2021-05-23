@@ -60,23 +60,29 @@ LEVEL_DESCRIPTIONS = {
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    jmeno_uzivatele = MisencodedCharField(max_length=20)
-    nick_uzivatele = MisencodedCharField(unique=True, max_length=25)
-    prijmeni_uzivatele = MisencodedCharField(max_length=20)
-    psw_uzivatele = MisencodedCharField(max_length=40)
-    email_uzivatele = MisencodedCharField(max_length=50)
-    pohlavi_uzivatele = MisencodedCharField(max_length=4, blank=True, null=True)
-    vek_uzivatele = models.IntegerField(default=0)
-    kraj_uzivatele = MisencodedCharField(max_length=20)
-    chat_barva = MisencodedCharField(max_length=6)
-    chat_pismo = models.IntegerField(default=12)
-    chat_reload = models.IntegerField(default=15)
-    chat_zprav = models.IntegerField(default=20)
-    chat_filtr = MisencodedCharField(max_length=255, blank=True, null=True)
-    chat_filtr_zobrazit = models.IntegerField(default=0)
-    pospristup = models.DateTimeField(auto_now_add=True)
-    level = MisencodedCharField(max_length=1)
-    icq_uzivatele = models.IntegerField(default=0)
+    nick = MisencodedCharField(unique=True, max_length=25, db_column="nick_uzivatele")
+    name_given = MisencodedCharField(max_length=20, db_column="jmeno_uzivatele")
+    name_family = MisencodedCharField(max_length=20, db_column="prijmeni_uzivatele")
+    password_v1 = MisencodedCharField(max_length=40, db_column="psw_uzivatele")
+    email = MisencodedCharField(max_length=50, db_column="email_uzivatele")
+    gender = MisencodedCharField(
+        max_length=4, blank=True, null=True, db_column="pohlavi_uzivatele"
+    )
+    age = models.IntegerField(default=0, db_column="vek_uzivatele")
+    shire = MisencodedCharField(max_length=20, db_column="kraj_uzivatele")
+    chat_color = MisencodedCharField(max_length=6, db_column="chat_barva")
+    chat_font = models.IntegerField(default=12, db_column="chat_pismo")
+    chat_reload = models.IntegerField(default=15, db_column="chat_reload")
+    chat_message_no = models.IntegerField(default=20, db_column="chat_zprav")
+    chat_filter = MisencodedCharField(
+        max_length=255, blank=True, null=True, db_column="chat_filtr"
+    )
+    chat_filter_display = models.IntegerField(
+        default=0, db_column="chat_filtr_zobrazit"
+    )
+    last_access = models.DateTimeField(auto_now_add=True, db_column="pospristup")
+    level = MisencodedCharField(max_length=1, db_column="level")
+    icq = models.IntegerField(default=0, db_column="icq_uzivatele")
     # This is an important field! It lists which fields can be publicly displayed. The format of the fields
     # is CSV with implied field names. The order of the fields is:
     #   jmeno, prijmeni, email, ICQ, pohlavi, vek, kraj, narozeniny
@@ -85,23 +91,35 @@ class UserProfile(models.Model):
     # meaning "show birthday and nothing else"
     # Note that last two fields were added later on, meaning records with less than eight fields can occur, like this:
     #   ,,,,,,
-    vypsat_udaje = MisencodedCharField(max_length=15)
-    ikonka_uzivatele = MisencodedCharField(max_length=25, blank=True, null=True)
-    popis_uzivatele = MisencodedCharField(max_length=255, blank=True, null=True)
-    nova_posta = models.IntegerField(default=0)
-    skin = MisencodedCharField(max_length=10)
-    reputace = models.IntegerField(default=0)
-    reputace_rozdel = models.PositiveIntegerField(default=0)
-    status = MisencodedCharField(max_length=1)
-    reg_schval_datum = models.DateTimeField(blank=True, null=True, auto_now_add=True)
-    indexhodnotitele = models.DecimalField(
-        max_digits=4, decimal_places=2, default=-99.99
+    pii_display_permissions = MisencodedCharField(
+        max_length=15, db_column="vypsat_udaje"
     )
-    reload = MisencodedCharField(max_length=1)
-    max_level = models.IntegerField(blank=True, null=True)
+    icon = MisencodedCharField(
+        max_length=25, blank=True, null=True, db_column="ikonka_uzivatele"
+    )
+    description_raw = MisencodedCharField(
+        max_length=255, blank=True, null=True, db_column="popis_uzivatele"
+    )
+    new_post_no = models.IntegerField(default=0, db_column="nova_posta")
+    skin = MisencodedCharField(max_length=10, db_column="skin")
+    reputation = models.IntegerField(default=0, db_column="reputace")
+    reputation_available = models.PositiveIntegerField(
+        default=0, db_column="reputace_rozdel"
+    )
+    status = MisencodedCharField(max_length=1, db_column="status")
+    registration_approved_date = models.DateTimeField(
+        blank=True, null=True, auto_now_add=True, db_column="reg_schval_datum"
+    )
+    evaluator_index = models.DecimalField(
+        max_digits=4, decimal_places=2, default=-99.99, db_column="indexhodnotitele"
+    )
+    reload = MisencodedCharField(max_length=1, db_column="reload")
+    max_level = models.IntegerField(blank=True, null=True, db_column="max_level")
     api_key = MisencodedCharField(unique=True, max_length=40, blank=True, null=True)
     tavern_bookmarks = models.ManyToManyField(
-        "TavernTable", through="TavernBookmark", through_fields=("id_uz", "id_stolu")
+        "TavernTable",
+        through="TavernBookmark",
+        through_fields=("user_profile", "tavern_table"),
     )
 
     class Meta:
@@ -109,7 +127,7 @@ class UserProfile(models.Model):
 
     @property
     def slug(self):
-        slug = create_slug(self.nick_uzivatele)
+        slug = create_slug(self.nick)
         if not slug:
             slug = "neznamy"
             # TODO: log an error
@@ -117,10 +135,10 @@ class UserProfile(models.Model):
 
     @property
     def icon_url(self):
-        if not self.ikonka_uzivatele:
+        if not self.icon:
             return None
         else:
-            return urljoin(settings.USER_ICON_MEDIA_ROOT_URL, self.ikonka_uzivatele)
+            return urljoin(settings.USER_ICON_MEDIA_ROOT_URL, self.icon)
 
     @property
     def is_author(self):
@@ -128,27 +146,23 @@ class UserProfile(models.Model):
 
     @property
     def is_female(self):
-        return self.pohlavi_uzivatele in ["Žena", "®ena"]
+        return self.gender in ["Žena", "®ena"]
 
     @property
     def author_url(self):
         return self.author.profile_url
 
     @property
-    def nick(self):
-        return self.nick_uzivatele
-
-    @property
-    def age(self):
-        return self.vek_uzivatele
+    def name(self):
+        return f"{self.name_given} {self.name_family}"
 
     @property
     def location(self):
-        return self.kraj_uzivatele
+        return self.shire
 
     @property
     def description(self):
-        return self.popis_uzivatele or ""
+        return self.description_raw or ""
 
     @property
     def profile_url(self):
@@ -159,20 +173,20 @@ class UserProfile(models.Model):
 
     @property
     def registration_date(self):
-        return self.reg_schval_datum
+        return self.registration_approved_date
 
     @property
     def last_login(self):
-        return self.pospristup
+        return self.last_access
 
     @property
     def public_listing_permissions(self):
         """Load permissions from the field, parse it and return as list of boolean values"""
         # TODO: Once we are doing field renaming, this should be normalized towards field names
-        if not self.vypsat_udaje:
+        if not self.pii_display_permissions:
             permissions = [""] * 8
         else:
-            permissions = self.vypsat_udaje.split(",")
+            permissions = self.pii_display_permissions.split(",")
         return {
             "jmeno": permissions[0] == "1",
             "prijmeni": permissions[1] == "1",
@@ -208,8 +222,8 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 class LevelSystemParams(models.Model):
-    parametr = MisencodedCharField(primary_key=True, max_length=40)
-    hodnota = MisencodedCharField(max_length=30)
+    parametr = MisencodedCharField(primary_key=True, max_length=40, db_column="")
+    hodnota = MisencodedCharField(max_length=30, db_column="")
 
     class Meta:
         db_table = "level_parametry_2"
@@ -260,18 +274,20 @@ class MentatNewbie(models.Model):
 
 
 class UzivateleCekajici(models.Model):
-    id_zaznamu = models.AutoField(primary_key=True)
-    nick_uzivatele = models.CharField(unique=True, max_length=30)
-    email = models.CharField(unique=True, max_length=40)
-    jmeno = models.CharField(max_length=40)
-    prijmeni = models.CharField(max_length=40)
-    pohlavi = models.CharField(max_length=4)
-    datum = models.IntegerField()
-    patron = models.IntegerField()
-    primluvy = models.IntegerField()
-    osloveni = models.CharField(max_length=50, blank=True, null=True)
-    popis_text = models.TextField()
+    id = models.AutoField(primary_key=True, db_column="id_zaznamu")
+    nick = models.CharField(unique=True, max_length=30, db_column="nick_uzivatele")
+    email = models.CharField(unique=True, max_length=40, db_column="email")
+    name_given = models.CharField(max_length=40, db_column="jmeno")
+    name_family = models.CharField(max_length=40, db_column="prijmeni")
+    gender = models.CharField(max_length=4, db_column="pohlavi")
+    date = models.IntegerField(db_column="datum")
+    patron = models.IntegerField(db_column="patron")
+    supporters = models.IntegerField(db_column="primluvy")
+    salutation = models.CharField(
+        max_length=50, blank=True, null=True, db_column="osloveni"
+    )
+    description = models.TextField(db_column="popis_text")
 
     class Meta:
         db_table = "uzivatele_cekajici"
-        unique_together = (("jmeno", "prijmeni"),)
+        unique_together = (("name_given", "name_family"),)
