@@ -51,11 +51,11 @@ def get_tavern_table_list(user_profile, list_style):
         # # In lieu of that, solve it using subqueries
         new_comments_no=Subquery(
             TavernTableVisitor.objects.filter(
-                id_stolu=OuterRef("id"), id_uzivatele=user_profile.pk
-            ).values("neprectenych")[:1],
+                tavern_table_id=OuterRef("id"), user_profile=user_profile
+            ).values("unread")[:1],
             output_field=IntegerField(),
         ),
-    ).order_by("jmeno")
+    ).order_by("name")
 
     if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
         query = query.filter(new_comments_no__gt=0)
@@ -73,16 +73,16 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
     # See https://github.com/dracidoupe/graveyard/issues/233
 
     related_permissions = TavernAccess.objects.filter(
-        nick_usera=misencode(user_profile.nick_uzivatele),
-        id_stolu__in=[i.pk for i in candidate_tables_queryset],
+        user_nick=misencode(user_profile.nick_uzivatele),
+        tavern_table_id__in=[i.pk for i in candidate_tables_queryset],
     )
 
     related_permissions_map = {}
 
     for perm in related_permissions:
-        if perm.id_stolu.pk not in related_permissions_map:
-            related_permissions_map[perm.id_stolu.pk] = set()
-        related_permissions_map[perm.id_stolu.pk].add(perm.typ_pristupu)
+        if perm.tavern_table.pk not in related_permissions_map:
+            related_permissions_map[perm.tavern_table.pk] = set()
+        related_permissions_map[perm.tavern_table.pk].add(perm.access_type)
 
     return [
         table
@@ -109,14 +109,14 @@ def create_tavern_table(
         public_db = "0"
 
     return TavernTable.objects.create(
-        jmeno=name,
-        popis=description,
-        vlastnik=owner.nick_uzivatele,
-        verejny=public_db,
-        povol_hodnoceni="1" if allow_reputation else "0",
+        name=name,
+        description=description,
+        owner=owner.nick_uzivatele,
+        public=public_db,
+        allow_rep="1" if allow_reputation else "0",
         # TODO: Those should go to model defaults
-        sekce=section,
-        zalozen=datetime.now(tz.gettz("Europe/Prague")),
+        section=section,
+        created=datetime.now(tz.gettz("Europe/Prague")),
     )
 
 
@@ -143,16 +143,16 @@ def migrate_tavern_access(
     # ordering of access priorities
     for tavern_access in (
         tavern_access_model.objects.all()
-        .select_related("id_stolu")
-        .order_by("-typ_pristupu")
+        .select_related("tavern_table")
+        .order_by("-access_type")
     ):
         if print_progress and i % 100 == 0:
             sys.stdout.write(".")
             sys.stdout.flush()
 
         try:
-            profile_id = user_profile_model.objects.get(
-                nick_uzivatele=misencode(tavern_access.nick_usera)
+            user_profile = user_profile_model.objects.get(
+                nick_uzivatele=misencode(tavern_access.user_nick)
             )
         except user_profile_model.DoesNotExist:
             # OK, this opens up a potential security problem, but so far, we don't have
@@ -160,35 +160,35 @@ def migrate_tavern_access(
             # So let's try: sometimes, there is an integer in nick_usera that looks like
             # corresponding to a user ID, so let's use that for a secondary search
             try:
-                profile_id = user_profile_model.objects.get(
-                    id=int(tavern_access.nick_usera)
+                user_profile = user_profile_model.objects.get(
+                    id=int(tavern_access.user_nick)
                 )
             except (ValueError, user_profile_model.DoesNotExist):
                 # OK, _now_ we give up
                 logging.warn(
-                    f"Can't fetch user record for nick {tavern_access.nick_usera}. Maybe we should purge the record?"
+                    f"Can't fetch user record for nick {tavern_access.user_nick}. Maybe we should purge the record?"
                 )
         else:
             try:
                 table_visitor = table_visitor_model.objects.get(
-                    id_stolu=tavern_access.id_stolu, id_uzivatele=profile_id
+                    tavern_table=tavern_access.tavern_table, user_profile=user_profile
                 )
             except table_visitor_model.DoesNotExist:
                 table_visitor = table_visitor_model(
-                    id_stolu=tavern_access.id_stolu, id_uzivatele=profile_id
+                    tavern_table=tavern_access.tavern_table, user_profile=user_profile
                 )
 
-            if tavern_access.typ_pristupu == "vstpo":
-                table_visitor.pristup = 1
-            elif tavern_access.typ_pristupu == "vstza":
-                table_visitor.pristup = -2
-            elif tavern_access.typ_pristupu == "zapis":
-                table_visitor.pristup = 2
-            elif tavern_access.typ_pristupu == "asist":
-                table_visitor.sprava = 1
+            if tavern_access.access_type == "vstpo":
+                table_visitor.access = 1
+            elif tavern_access.access_type == "vstza":
+                table_visitor.access = -2
+            elif tavern_access.access_type == "zapis":
+                table_visitor.access = 2
+            elif tavern_access.access_type == "asist":
+                table_visitor.moderator = 1
             else:
                 logger.warn(
-                    f"Unknown access type {tavern_access.typ_pristupu} for user {tavern_access.nick_usera} to table {tavern_access.id_stolu}"
+                    f"Unknown access type {tavern_access.access_type} for user {tavern_access.user_nick} to table {tavern_access.tavern_table}"
                 )
 
             table_visitor.save()
@@ -197,4 +197,4 @@ def migrate_tavern_access(
 
 
 def bookmark_table(user_profile, tavern_table):
-    return TavernBookmark.objects.create(id_stolu=tavern_table, id_uz=user_profile)
+    return TavernBookmark.objects.create(tavern_table=tavern_table, user_profile=user_profile)

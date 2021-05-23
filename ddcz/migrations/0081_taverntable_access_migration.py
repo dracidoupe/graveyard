@@ -8,12 +8,14 @@ def migrate_access(apps, schema_editor):
     table_visitor_model = apps.get_model("ddcz", "TavernTableVisitor")
     tavern_access_model = apps.get_model("ddcz", "TavernAccess")
     user_profile_model = apps.get_model("ddcz", "UserProfile")
-    migrate_tavern_access(
-        print_progress=True,
-        table_visitor_model=table_visitor_model,
-        tavern_access_model=tavern_access_model,
-        user_profile_model=user_profile_model,
-    )
+    # Because of our model rename migration, we would have to have a frozen copy of
+    # the function here. Given the production is migrated, let's mark it as noop now
+    # migrate_tavern_access(
+    #     print_progress=True,
+    #     table_visitor_model=table_visitor_model,
+    #     tavern_access_model=tavern_access_model,
+    #     user_profile_model=user_profile_model,
+    # )
 
 
 class Migration(migrations.Migration):
