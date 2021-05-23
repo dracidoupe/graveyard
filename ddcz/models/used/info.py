@@ -2,7 +2,7 @@
 
 from django.db import models
 
-from ..magic import MisencodedCharField, MisencodedTextField
+from ..magic import MisencodedTextField
 
 
 class EditorArticle(models.Model):
@@ -18,10 +18,10 @@ class EditorArticle(models.Model):
 
 
 class News(models.Model):
-    datum = models.DateTimeField()
-    autor = MisencodedTextField()
-    autmail = MisencodedTextField()
-    text = MisencodedTextField()
+    date = models.DateTimeField(db_column="datum")
+    author = MisencodedTextField(db_column="autor")
+    author_mail = MisencodedTextField(db_column="autmail")
+    text = MisencodedTextField(db_column="text")
 
     class Meta:
         db_table = "aktuality"
@@ -30,8 +30,8 @@ class News(models.Model):
 
     def __str__(self):
         return "{} dne {} v {}: {}".format(
-            self.autor,
-            self.datum.strftime("%d. %m. %Y"),
-            self.datum.strftime("%X"),
+            self.author,
+            self.date.strftime("%d. %m. %Y"),
+            self.date.strftime("%X"),
             self.text[0:50],
         )

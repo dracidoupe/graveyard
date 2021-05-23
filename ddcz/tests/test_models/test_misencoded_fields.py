@@ -12,15 +12,15 @@ class AnimalTestCase(TestCase):
         self.problematic_diacritic_string = "ěščřžýáíéďťň"
 
     def test_set_save_doesnt_destroy_model(self):
-        p = UserProfile(nick_uzivatele=self.problematic_diacritic_string)
+        p = UserProfile(nick=self.problematic_diacritic_string)
         p.save()
 
-        self.assertEquals(self.problematic_diacritic_string, p.nick_uzivatele)
+        self.assertEquals(self.problematic_diacritic_string, p.nick)
 
     def test_set_save_doesnt_destroy_database(self):
-        p = UserProfile.objects.create(nick_uzivatele=self.problematic_diacritic_string)
+        p = UserProfile.objects.create(nick=self.problematic_diacritic_string)
 
-        d = UserProfile.objects.get(id=p.id).nick_uzivatele
+        d = UserProfile.objects.get(id=p.id).nick
 
         self.assertEquals(self.problematic_diacritic_string, d)
 
@@ -32,9 +32,9 @@ class NewsTestCase(TestCase):
 
     def test_save_and_read(self):
         p = News(
-            datum=datetime.now(pytz.timezone("Europe/Prague")),
-            autor="xoxo",
-            autmail="xoxo@example.com",
+            date=datetime.now(pytz.timezone("Europe/Prague")),
+            author="xoxo",
+            author_mail="xoxo@example.com",
             text=self.problematic_diacritic_string,
         )
         p.save()

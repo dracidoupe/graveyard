@@ -18,8 +18,8 @@ class TestAuthorLinkRender(TestCase):
             nickname="Author",
             email="test@example.com",
             text="Text of the comment",
-            reg="1",
-            reputace=0,
+            registered_or_ip="1",
+            reputation=0,
             user=self.user,
         )
 

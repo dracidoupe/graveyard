@@ -7,7 +7,7 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2>{{ article.jmeno }}{% creation_rating article.pochvez skin %}</h2>
+            <h2>{{ article.name }}{% creation_rating article.rating skin %}</h2>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->
@@ -16,30 +16,30 @@
             {% if article.vlastnost %}
                 <p><span class="label">Vlastnost:</span> <span class="value">{{ article.vlastnost }}</span></p>
             {% endif %}
-            {% if article.obtiznost %}
-                <p><span class="label">Obtížnost:</span> <span class="value">{{ article.obtiznost }}</span></p>
+            {% if article.difficulty %}
+                <p><span class="label">Obtížnost:</span> <span class="value">{{ article.difficulty }}</span></p>
             {% endif %}
-            {% if article.overovani %}
-                <p><span class="label">Ověřování:</span> <span class="value">{{ article.overovani }}</span></p>
+            {% if article.check_interval %}
+                <p><span class="label">Ověřování:</span> <span class="value">{{ article.check_interval }}</span></p>
             {% endif %}
-            {% if article.totuspech %}
-                <p><span class="label">Totální úspěch:</span> <span class="value">{{ article.totuspech }}</span></p>
+            {% if article.total_success %}
+                <p><span class="label">Totální úspěch:</span> <span class="value">{{ article.total_success }}</span></p>
             {% endif %}
-            {% if article.uspech %}
-                <p><span class="label">Úspěch:</span> <span class="value">{{ article.uspech }}</span></p>
+            {% if article.success %}
+                <p><span class="label">Úspěch:</span> <span class="value">{{ article.success }}</span></p>
             {% endif %}
-            {% if article.neuspech %}
-                <p><span class="label">Neúspěch:</span> <span class="value">{{ article.neuspech }}</span></p>
+            {% if article.failure %}
+                <p><span class="label">Neúspěch:</span> <span class="value">{{ article.failure }}</span></p>
             {% endif %}
-            {% if article.fatneuspech %}
-                <p><span class="label">Fatální neúspěch:</span> <span class="value">{{ article.fatneuspech }}</span></p>
+            {% if article.fatal_failure %}
+                <p><span class="label">Fatální neúspěch:</span> <span class="value">{{ article.fatal_failure }}</span></p>
             {% endif %}
-            <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></div>
+            <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></div>
         </div>
         <footer class="table-like">
             <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
-            <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H.i" }}</time></p>
-            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+            <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.published | date:"r"  }}>{{ article.published | date:"j. n. Y v H.i" }}</time></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
         </footer>
         {% creation_comments creative_page_slug article.pk %}
 

@@ -52,7 +52,7 @@ class SignUpForm(ModelForm):
         "~",
     )
 
-    nick_uzivatele = forms.CharField(
+    nick = forms.CharField(
         label="",
         widget=forms.TextInput(
             attrs={"placeholder": "Zadej svůj nick", "id": "nickname"}
@@ -66,35 +66,35 @@ class SignUpForm(ModelForm):
         ),
     )
 
-    jmeno = forms.CharField(
+    name_given = forms.CharField(
         label="",
         widget=forms.TextInput(
             attrs={"placeholder": "Křestní jméno", "id": "first_name"}
         ),
     )
 
-    prijmeni = forms.CharField(
+    name_first = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Příjmení", "id": "last_name"}),
     )
 
-    osloveni = forms.CharField(
+    salutation = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Oslovení", "id": "addressing"}),
     )
 
-    pohlavi = forms.ChoiceField(
+    gender = forms.ChoiceField(
         label="",
         widget=forms.Select(attrs={"id": "sex"}),
         choices=[(tag.name, tag.value) for tag in SexChoices],
     )
 
-    vek = forms.IntegerField(
+    age = forms.IntegerField(
         label="",
         widget=forms.NumberInput(attrs={"placeholder": "Tvůj věk", "id": "age"}),
     )
 
-    duvod_registrace = forms.CharField(
+    motive = forms.CharField(
         required=False,
         label="",
         widget=forms.Textarea(
@@ -105,7 +105,7 @@ class SignUpForm(ModelForm):
         ),
     )
 
-    kamaradi_na_webu = forms.CharField(
+    registered_friends = forms.CharField(
         required=False,
         label="",
         widget=forms.Textarea(
@@ -117,7 +117,7 @@ class SignUpForm(ModelForm):
         ),
     )
 
-    odkud_znas_web = forms.CharField(
+    source = forms.CharField(
         required=False,
         label="",
         widget=forms.Textarea(
@@ -135,49 +135,49 @@ class SignUpForm(ModelForm):
     )
 
     patron = forms.CharField(required=False)
-    primluvy = forms.CharField(required=False)
-    datum = forms.CharField(required=False)
-    popis_text = forms.CharField(required=False)
+    supporters = forms.CharField(required=False)
+    date = forms.CharField(required=False)
+    description = forms.CharField(required=False)
 
     class Meta:
         model = UzivateleCekajici
         fields = [
-            "nick_uzivatele",
+            "nick",
             "email",
-            "jmeno",
-            "prijmeni",
-            "pohlavi",
-            "osloveni",
-            "datum",
+            "name_given",
+            "name_family",
+            "gender",
+            "salutation",
+            "date",
             "patron",
-            "primluvy",
-            "popis_text",
+            "supporters",
+            "description",
         ]
 
     def clean(self):
         cdata = super(SignUpForm, self).clean()
 
-        popis = "1. " + cdata["duvod_registrace"] + "\n"
-        popis += "2. " + cdata["odkud_znas_web"] + "\n"
-        popis += "3. " + cdata["kamaradi_na_webu"] + "\n"
+        popis = "1. " + cdata["motive"] + "\n"
+        popis += "2. " + cdata["source"] + "\n"
+        popis += "3. " + cdata["supporters"] + "\n"
         popis += "4. \n"
         popis += "5. \n"
 
-        self.datum = int(time())
-        self.popis_text = popis
-        self.primluvy = 0
+        self.date = int(time())
+        self.description = popis
+        self.supporters = 0
         self.patron = 0
 
-        self.cleaned_data["datum"] = int(time())
-        self.cleaned_data["popis_text"] = popis
-        self.cleaned_data["primluvy"] = 0
+        self.cleaned_data["date"] = int(time())
+        self.cleaned_data["description"] = popis
+        self.cleaned_data["supporters"] = 0
         self.cleaned_data["patron"] = 0
 
-    def clean_nick_uzivatele(self, *args, **kwargs):
-        nick_uzivatele = self.cleaned_data.get("nick_uzivatele")
+    def clean_nick(self, *args, **kwargs):
+        nick = self.cleaned_data.get("nick")
         bad_characters = []
         for char in self.FORBIDDEN_NICK_CHARACTERS:
-            if char in nick_uzivatele:
+            if char in nick:
                 bad_characters.append(char)
         if len(bad_characters) > 0:
             raise forms.ValidationError(
@@ -185,23 +185,23 @@ class SignUpForm(ModelForm):
                 + ", ".join(bad_characters)
                 + ")."
             )
-        return nick_uzivatele
+        return nick
 
-    def clean_vek(self, *args, **kwargs):
-        vek = self.cleaned_data.get("vek")
-        if vek < self.MIN_AGE:
+    def clean_age(self, *args, **kwargs):
+        age = self.cleaned_data.get("age")
+        if age < self.MIN_AGE:
             raise forms.ValidationError(
                 "Bohužel ti není " + self.MIN_AGE + " let. Zkus to, až budeš starší."
             )
-        return vek
+        return age
 
-    def clean_pohlavi(self, *args, **kwargs):
-        pohlavi = self.cleaned_data.get("pohlavi")
-        if pohlavi not in ["M", "F"]:
+    def clean_gender(self, *args, **kwargs):
+        gender = self.cleaned_data.get("gender")
+        if gender not in ["M", "F"]:
             raise forms.ValidationError(
                 "Bohužel toto pohlaví nám zůstává utajeno. Neplete si pohlaví s genderem?"
             )
-        return "Muž" if pohlavi == "M" else "Žena"
+        return "Muž" if gender == "M" else "Žena"
 
     def clean_gdpr(self, *args, **kwargs):
         gdpr = self.cleaned_data.get("gdpr")

@@ -7,7 +7,7 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2>{{ article.jmeno }}{% creation_rating article.pochvez skin %}</h2>
+            <h2>{{ article.name }}{% creation_rating article.rating skin %}</h2>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->
@@ -18,54 +18,63 @@
                 </tr>
                 <tr>
                     <th>Přidáno:</th>
-                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></td>
+                    <td><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></td>
                 </tr>
                 <tr>
                     <th>Hlasovalo:</th>
-                    <td>{{ article.pocet_hlasujicich }}</td>
+                    <td>{{ article.rater_no }}</td>
                 </tr>
             </table>
 
-            <p><span class="label">Skupina:</span> <span class="value">{{ article.skupina }}</span></p>
-            {% if article.mag %}
-                <p><span class="label">Magenergie:</span> <span class="value">{{ article.mag }}</span></p>
+            <p><span class="label">Skupina:</span> <span class="value">{{ article.group }}</span></p>
+            {% if article.magenergy %}
+                <p><span class="label">Magenergie:</span> <span class="value">{{ article.magenergy }}</span></p>
               {% endif %}
-            {% if article.suroviny %}
-                <p><span class="label">Suroviny:</span> <span class="value">{{ article.suroviny }}</span></p>
+            {% if article.resources %}
+                <p><span class="label">Suroviny:</span> <span class="value">{{ article.resources }}</span></p>
             {% endif %}
-            {% if article.zaklad %}
-                <p><span class="label">Základ:</span> <span class="value">{{ article.zaklad }}</span></p>
+            {% if article.base %}
+                <p><span class="label">Základ:</span> <span class="value">{{ article.base }}</span></p>
             {% endif %}
-            {% if article.nalezeni %}
-                <p><span class="label">Nalezení:</span> <span class="value">{{ article.nalezeni }}</span></p>
+            {% if article.discovery %}
+                <p><span class="label">Nalezení:</span> <span class="value">{{ article.discovery }}</span></p>
             {% endif %}
-            {% if article.trvani %}
-                <p><span class="label">Trvání:</span> <span class="value">{{ article.trvani }}</span></p>
+            {% if article.duration %}
+                <p><span class="label">Trvání:</span> <span class="value">{{ article.duration }}</span></p>
             {% endif %}
-            {% if article.vyroba %}
-                <p><span class="label">Výroba:</span> <span class="value">{{ article.vyroba }}</span></p>
+            {% if article.crafting %}
+                <p><span class="label">Výroba:</span> <span class="value">{{ article.crafting }}</span></p>
             {% endif %}
-            {% if article.nebezpecnost %}
-                <p><span class="label">Nebezpečnost:</span> <span class="value">{{ article.nebezpecnost }}</span></p>
+            {% if article.dangerousness %}
+                <p><span class="label">Nebezpečnost:</span> <span class="value">{{ article.dangerousness }}</span></p>
             {% endif %}
-            {% if article.sila %}
-                <p><span class="label">Síla:</span> <span class="value">{{ article.sila }}</span></p>
+            {% if article.strength %}
+                <p><span class="label">Síla:</span> <span class="value">{{ article.strength }}</span></p>
             {% endif %}
-            {% if article.bcz %}
-                <p><span class="label">Barva/chuť/zápach:</span> <span class="value">{{ article.bcz }}</span></p>
+            {% if article.color_taste_smell %}
+                <p><span class="label">Barva/chuť/zápach:</span> <span class="value">{{ article.color_taste_smell }}</span></p>
             {% endif %}
-            {% if article.denmag %}
-                <p><span class="label">Magy/den:</span> <span class="value">{{ article.denmag }}</span></p>
+            {% if article.daily_magenergy %}
+                <p><span class="label">Magy/den:</span> <span class="value">{{ article.daily_magenergy }}</span></p>
+            {% endif %}
+            {% if article.effect_outreach %}
+                <p><span class="label">Dosah účinku:</span> <span class="value">{{ article.effect_outreach }}</span></p>
+            {% endif %}
+            {% if article.crafter_level %}
+                <p><span class="label">Úroveň výrobce:</span> <span class="value">{{ article.crafter_level }}</span></p>
+            {% endif %}
+            {% if article.sphere %}
+                <p><span class="label">Sféra:</span> <span class="value">{{ article.sphere }}</span></p>
             {% endif %}
 
 
-            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+            <p><span class="label">Popis:</span> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></p>
 
-            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></span></p>
-            <p><span class="label">Přečteno:</span> <span class="value">{{ article.precteno }}</span></p>
-            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
+            <p><span class="label">Přečteno:</span> <span class="value">{{ article.read }}</span></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
 
-            <p><span class="label">Autor:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.autor }}</a></span></p>
+            <p><span class="label">Autor:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.author_nick }}</a></span></p>
 
 
         </header>
@@ -74,7 +83,7 @@
             {{ article.text|render_html|safe }}
         </div>
         <footer>
-            
+
         </footer>
 
         {% creation_comments creative_page_slug article.pk %}

@@ -12,7 +12,7 @@
         </tr>
         {% for result in bad_creations %}
             <tr>
-                <td><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=result.creation.id creation_slug=result.creation.get_slug %}">{{ result.creation.jmeno }}</a></td>
+                <td><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=result.creation.id creation_slug=result.creation.get_slug %}">{{ result.creation.name }}</a></td>
                 <td>{{ result.message}}
             </tr>
         {% endfor %}

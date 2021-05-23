@@ -20,37 +20,37 @@
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
             <div class="table-like">
-                <p><span class="label">Skupina:</span> <span class="value">{{ a.skupina }}</span></p>
-                {% if a.mag %}
-                    <p><span class="label">Magenergie:</span> <span class="value">{{ a.mag }} {{ a.magpop }}</span></p>
+                <p><span class="label">Skupina:</span> <span class="value">{{ a.group }}</span></p>
+                {% if a.magenergy %}
+                    <p><span class="label">Magenergie:</span> <span class="value">{{ a.magenergy }} {{ a.magenergy_description }}</span></p>
                 {% endif %}
-                {% if a.dosah %}
-                    <p><span class="label">Dosah:</span> <span class="value">{{ a.dosah }} {{ a.dosahpop }}</span></p>
+                {% if a.extent or a.extent_description %}
+                    <p><span class="label">Dosah:</span> <span class="value">{% if a.extent %}{{ a.extent }} {% endif %}{%  if a.a.extent_description %}{{ a.extent_description }}{% endif %}</span></p>
                 {% endif %}
-                {% if a.rozsah %}
-                    <p><span class="label">Rozsah:</span> <span class="value">{{ a.rozsah }} {{ a.rozsahpop }}</span></p>
+                {% if a.reach or a.reach_description %}
+                    <p><span class="label">Rozsah:</span> <span class="value">{% if a.reach %}{{ a.reach }} {% endif %}{%  if a.a.reach_description %}{{ a.reach_description }}{% endif %}</span></p>
                 {% endif %}
-                {% if a.vyvolani %}
-                    <p><span class="label">Vyvolání:</span> <span class="value">{{ a.vyvolani }} {{ a.vyvolanipop }}</span></p>
+                {% if a.invocation %}
+                    <p><span class="label">Vyvolání:</span> <span class="value">{{ a.invocation }} {{ a.invocation_description }}</span></p>
                 {% endif %}
-                {% if a.druh %}
-                    <p><span class="label">Druh:</span> <span class="value">{{ a.druh }}</span></p>
+                {% if a.spell_type %}
+                    <p><span class="label">Druh:</span> <span class="value">{{ a.spell_type }}</span></p>
                 {% endif %}
-                {% if a.cetnost %}
-                    <p><span class="label">Četnost:</span> <span class="value">{{ a.cetnost }}</span></p>
+                {% if a.frequency %}
+                    <p><span class="label">Četnost:</span> <span class="value">{{ a.frequency }}</span></p>
                 {% endif %}
-                {% if a.pomucky %}
-                    <p><span class="label">Pomůcky:</span> <span class="value">{{ a.pomucky }}</span></p>
+                {% if a.tools %}
+                    <p><span class="label">Pomůcky:</span> <span class="value">{{ a.tools }}</span></p>
                 {% endif %}
 
 
-                <div class="description-row"><span class="label">Popis:</span> <div class="value">{{ a.popis|render_html_insecurely|safe }}</div></div>
+                <div class="description-row"><span class="label">Popis:</span> <div class="value">{{ a.description|render_html_insecurely|safe }}</div></div>
 
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | articleTime }}</time></span></p>
-                <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
-                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime }}</time></span></p>
+                <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>
+                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
 
                 <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
                 <!--

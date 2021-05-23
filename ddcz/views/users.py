@@ -52,12 +52,12 @@ def users_list(request):
 
     if searched_nick:
         if len(searched_nick) <= 3:
-            users = UserProfile.objects.filter(nick_uzivatele=searched_nick)
+            users = UserProfile.objects.filter(nick=searched_nick)
             search_limited = True
         else:
-            users = UserProfile.objects.filter(nick_uzivatele__icontains=searched_nick)
+            users = UserProfile.objects.filter(nick__icontains=searched_nick)
     else:
-        users = UserProfile.objects.all().order_by("-pospristup")
+        users = UserProfile.objects.all().order_by("-last_access")
 
     paginator = Paginator(users, DEFAULT_USER_LIST_SIZE)
     page = request.GET.get("z_s", 1)

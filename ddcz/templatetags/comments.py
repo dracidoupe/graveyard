@@ -17,8 +17,8 @@ def commentTime(datetime):
 @register.inclusion_tag("discussions/creation-comments.html", takes_context=True)
 def creation_comments(context, creative_page_slug, creation_pk):
     comments = CreationComment.objects.filter(
-        cizi_tbl=creative_page_slug, id_cizi=creation_pk
-    ).order_by("-datum")
+        foreign_table=creative_page_slug, foreign_id=creation_pk
+    ).order_by("-date")
 
     default_limit = 10
     paginator = Paginator(comments, default_limit)

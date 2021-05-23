@@ -23,9 +23,9 @@
 
     {% for table in tavern_tables %}
         <tr>
-            <td>{{ table.jmeno }} [{% if table.new_comments_no >= 0 %}{{ table.new_comments_no }}/{% endif %}{{ table.comments_no }}]</td>
-            <td>{{ table.popis }}</td>
-            <td>{{ table.vlastnik }}</td>
+            <td>{{ table.name }} [{% if table.new_comments_no >= 0 %}{{ table.new_comments_no }}/{% endif %}{{ table.comments_no }}]</td>
+            <td>{{ table.description }}</td>
+            <td>{{ table.owner }}</td>
         </tr>
     {% endfor %}
     </table>

@@ -20,56 +20,56 @@
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
             <div class="table-like">
-                <p><span class="label">Skupina:</span> <span class="value">{{ a.skupina }}</span></p>
-                {% if a.zvt %}
-                    <p><span class="label">Životaschopnost:</span> <span class="value">{{ a.zvt }}</span></p>
+                <p><span class="label">Skupina:</span> <span class="value">{{ a.group }}</span></p>
+                {% if a.hitpoint_class %}
+                    <p><span class="label">Životaschopnost:</span> <span class="value">{{ a.hitpoint_class }}</span></p>
                 {% endif %}
-                {% if a.uc %}
-                    <p><span class="label">Útočné číslo:</span> <span class="value">{{ a.uc }}</span></p>
+                {% if a.attack %}
+                    <p><span class="label">Útočné číslo:</span> <span class="value">{{ a.attack }}</span></p>
                 {% endif %}
-                {% if a.oc %}
-                    <p><span class="label">Obranné číslo:</span> <span class="value">{{ a.oc }}</span></p>
+                {% if a.defense %}
+                    <p><span class="label">Obranné číslo:</span> <span class="value">{{ a.defense }}</span></p>
                 {% endif %}
-                {% if a.odl %}
-                    <p><span class="label">Odolnost:</span> <span class="value">{{ a.odl }}</span></p>
+                {% if a.fortitude %}
+                    <p><span class="label">Odolnost:</span> <span class="value">{{ a.fortitude }}</span></p>
                 {% endif %}
-                {% if a.inteligence %}
-                    <p><span class="label">Inteligence:</span> <span class="value">{{ a.inteligence }}</span></p>
+                {% if a.intelligence %}
+                    <p><span class="label">Inteligence:</span> <span class="value">{{ a.intelligence }}</span></p>
                 {% endif %}
-                {% if a.vel %}
-                    <p><span class="label">Velikost:</span> <span class="value">{{ a.vel }}</span></p>
+                {% if a.size %}
+                    <p><span class="label">Velikost:</span> <span class="value">{{ a.size }}</span></p>
                 {% endif %}
-                {% if a.zran %}
-                    <p><span class="label">Zranitelnost:</span> <span class="value">{{ a.zran }}</span></p>
+                {% if a.vulnerability %}
+                    <p><span class="label">Zranitelnost:</span> <span class="value">{{ a.vulnerability }}</span></p>
                 {% endif %}
-                {% if a.poh %}
-                    <p><span class="label">Pohyblivost:</span> <span class="value">{{ a.poh }}</span></p>
+                {% if a.agility %}
+                    <p><span class="label">Pohyblivost:</span> <span class="value">{{ a.agility }}</span></p>
                 {% endif %}
-                {% if a.pres %}
-                    <p><span class="label">Přesvědčení:</span> <span class="value">{{ a.pres }}</span></p>
+                {% if a.alignment %}
+                    <p><span class="label">Přesvědčení:</span> <span class="value">{{ a.alignment }}</span></p>
                 {% endif %}
-                {% if a.pokl %}
-                    <p><span class="label">Poklady:</span> <span class="value">{{ a.pokl }}</span></p>
+                {% if treasures.pokl %}
+                    <p><span class="label">Poklady:</span> <span class="value">{{ a.treasures }}</span></p>
                 {% endif %}
-                {% if a.zkus %}
-                    <p><span class="label">Zkušenost:</span> <span class="value">{{ a.zkus }}</span></p>
+                {% if a.experience %}
+                    <p><span class="label">Zkušenost:</span> <span class="value">{{ a.experience }}</span></p>
                 {% endif %}
-                {% if a.bojovnost %}
-                    <p><span class="label">Bojovnost:</span> <span class="value">{{ a.bojovnost }}</span></p>
+                {% if a.combativeness %}
+                    <p><span class="label">Bojovnost:</span> <span class="value">{{ a.combativeness }}</span></p>
                 {% endif %}
-                {% if a.sm %}
-                    <p><span class="label">Síla mysli:</span> <span class="value">{{ a.sm }}</span></p>
+                {% if a.mental_strength %}
+                    <p><span class="label">Síla mysli:</span> <span class="value">{{ a.mental_strength }}</span></p>
                 {% endif %}
 
-                <p><span class="label">Popis:</span> <div class="value">{{ a.popis|render_html|safe }}</div></p>
+                <p><span class="label">Popis:</span> <div class="value">{{ a.description|render_html|safe }}</div></p>
 
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | articleTime }}</time></span></p>
-                <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
-                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime }}</time></span></p>
+                <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>
+                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
 
-                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
+                <p><span class="label">author_nick:</span> <span class="value">{% author_display a %}</span></p>
                 <!--
                 <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
                 -->

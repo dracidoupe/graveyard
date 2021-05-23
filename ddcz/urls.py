@@ -3,6 +3,7 @@ from django.views.generic.base import RedirectView, TemplateView
 
 
 from . import views
+from .views import news
 
 app_name = "ddcz"
 
@@ -65,7 +66,7 @@ urlpatterns = [
     ### User settings
     path("nastaveni/zmena-skinu/", views.change_skin, name="change-skin"),
     ### Info sites
-    path("aktuality/", views.index, name="news"),
+    path("aktuality/", news.list, name="news"),
     path("seznamka/", views.dating, name="dating"),
     path("inzerce/", views.market, name="market"),
     path("linky/", views.links, name="links-list"),

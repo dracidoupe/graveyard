@@ -5,13 +5,13 @@ from .users import UserProfile
 
 
 class Phorum(models.Model):
-    nickname = MisencodedCharField(max_length=64)
-    email = MisencodedTextField(blank=True, null=True)
-    datum = models.DateTimeField(auto_now_add=True)
-    text = MisencodedTextField()
+    nickname = MisencodedCharField(max_length=64, db_column="nickname")
+    email = MisencodedTextField(blank=True, null=True, db_column="email")
+    date = models.DateTimeField(auto_now_add=True, db_column="datum")
+    text = MisencodedTextField(db_column="")
     # stands for 'registered', contains either '1' or IP address
-    reg = MisencodedCharField(max_length=50)
-    reputace = models.IntegerField()
+    registered_or_ip = MisencodedCharField(max_length=50, db_column="reg")
+    reputation = models.IntegerField(db_column="reputace")
     user = models.ForeignKey(
         UserProfile, on_delete=models.SET_NULL, blank=True, null=True
     )
@@ -28,15 +28,15 @@ class Phorum(models.Model):
 
     @property
     def by_registered_user(self):
-        return self.reg == "1" and self.user
+        return self.registered_or_ip == "1" and self.user
 
 
 class CreationComment(models.Model):
-    nickname = MisencodedCharField(max_length=25)
-    email = MisencodedCharField(max_length=40)
-    text = MisencodedTextField()
-    datum = models.DateTimeField(auto_now_add=True)
-    reputace = models.IntegerField()
+    nickname = MisencodedCharField(max_length=25, db_column="nickname")
+    email = MisencodedCharField(max_length=40, db_column="email")
+    text = MisencodedTextField(db_column="text")
+    date = models.DateTimeField(auto_now_add=True, db_column="datum")
+    reputation = models.IntegerField(db_column="reputace")
     user = models.ForeignKey(
         UserProfile, on_delete=models.SET_NULL, blank=True, null=True
     )
@@ -49,8 +49,8 @@ class CreationComment(models.Model):
 
     # Refactor is needed. `cizi_tbl` gives an illusion to refer to a model, but no, it refers
     # to a CreativePage slug instead
-    cizi_tbl = MisencodedCharField(max_length=20)
-    id_cizi = models.IntegerField()
+    foreign_table = MisencodedCharField(max_length=20, db_column="cizi_tbl")
+    foreign_id = models.IntegerField(db_column="id_cizi")
 
     class Meta:
         db_table = "diskuze"

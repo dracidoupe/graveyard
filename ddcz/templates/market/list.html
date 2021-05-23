@@ -17,27 +17,27 @@
                 <span class="label">Jméno: </span>{% if i.email %}
                     <span class="value"><a href="mailto:{{ i.email }}">{{ i.jmeno }}</a></span>
                 {% else %}
-                    <span class="value">{{ i.jmeno }}</span>
+                    <span class="value">{{ i.name }}</span>
                 {% endif %}
             </p>
             <p>
-                <span class="label">Sekce: </span><span class="value"><a href="{% url 'ddcz:market' %}?sekce={{ i.sekce | urlencode }}">{{ i.get_sekce_display }}</a></span>
+                <span class="label">Sekce: </span><span class="value"><a href="{% url 'ddcz:market' %}?sekce={{ i.group | urlencode }}">{{ i.get_group_display }}</a></span>
             </p>
             <p>
-                <span class="label">Okres: </span><span class="value">{{ i.okres }}</span>
+                <span class="label">Okres: </span><span class="value">{{ i.area }}</span>
             </p>
             {% if i.telefon %}
             <p>
-                <span class="label">Telefon: </span><span class="value">{{ i.telefon }}</span>
+                <span class="label">Telefon: </span><span class="value">{{ i.phone }}</span>
             </p>
             {% endif %}
-            {% if i.mobil %}
+            {% if i.mobile %}
             <p>
-                <span class="label">Mobil: </span><span class="value">{{ i.mobil }}</span>
+                <span class="label">Mobil: </span><span class="value">{{ i.mobile }}</span>
             </p>
             {% endif %}
             <p>
-                <span class="label">Přidáno: </span><span class="value"><time datetime={{ i.date | date:"c"  }}>{{ i.date | czech_date }}</time></span>
+                <span class="label">Přidáno: </span><span class="value"><time datetime={{ i.published | date:"c"  }}>{{ i.published | czech_date }}</time></span>
             </p>
             <p>
                 <span class="label">Text: </span><span class="value">{{ i.text|render_html|safe }}</span>

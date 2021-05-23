@@ -13,25 +13,25 @@
         <article class="dating">
             <p>
                 <span class="label">Jméno:</span>{% if i.email %}
-                    <span class="value"><a href="mailto:{{ i.email }}">{{ i.jmeno }}</a></span>
+                    <span class="value"><a href="mailto:{{ i.email }}">{{ i.name }}</a></span>
                 {% else %}
-                    <span class="value">{{ i.jmeno }}</span>
+                    <span class="value">{{ i.name }}</span>
                 {% endif %}
             </p>
             <p>
-                <span class="label">Sekce:</span><span class="value">{{ i.sekce }}</span>
+                <span class="label">Sekce:</span><span class="value">{{ i.group }}</span>
             </p>
             <p>
-                <span class="label">Okres:</span><span class="value">{{ i.okres }}</span>
+                <span class="label">Okres:</span><span class="value">{{ i.area }}</span>
             </p>
-            {% if i.vek %}
+            {% if i.age %}
             <p>
-                <span class="label">Věk:</span><span class="value">{{ i.vek }}</span>
+                <span class="label">Věk:</span><span class="value">{{ i.age }}</span>
             </p>
             {% endif %}
-            {% if i.telefon %}
+            {% if i.phone %}
             <p>
-                <span class="label">Telefon:</span><span class="value">{{ i.telefon }}</span>
+                <span class="label">Telefon:</span><span class="value">{{ i.phone }}</span>
             </p>
             {% endif %}
             {% if i.mobil %}
@@ -39,13 +39,13 @@
                 <span class="label">Mobil:</span><span class="value">{{ i.mobil }}</span>
             </p>
             {% endif %}
-            {% if i.doba %}
+            {% if i.experience %}
             <p>
-                <span class="label">Doba hraní DrD:</span><span class="value">{{ i.doba }}</span>
+                <span class="label">Doba hraní DrD:</span><span class="value">{{ i.experience }}</span>
             </p>
             {% endif %}
             <p>
-                <span class="label">Přidáno:</span><span class="value"><time datetime={{ i.datum | date:"r"  }}>{{ i.datum | articleTime }}</time></span>
+                <span class="label">Přidáno:</span><span class="value"><time datetime={{ i.published | date:"r"  }}>{{ i.published | articleTime }}</time></span>
             </p>
             <p>
                 <span class="label">Text:</span><span class="value">{{ i.text|render_html|safe }}</span>

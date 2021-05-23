@@ -38,7 +38,7 @@
             {% if user.is_authenticated %}
                 <td>
                     {% if profile.show_email %}
-                        <a href="mailto:{{ profile.email_uzivatele }}" rel="external">{{ profile.email_uzivatele }}</a>
+                        <a href="mailto:{{ profile.email }}" rel="external">{{ profile.email }}</a>
                     {% else %}
                         <span title="Uživatel{% if profile.is_female %}ka{% endif %} se rozhodl{% if profile.is_female %}a{% endif %} e-mail nezveřejnit">---</span>
                     {% endif %}

@@ -22,20 +22,20 @@ class PhorumCommentTestCase(TestCase):
         )
 
         self.user_profile = UserProfile.objects.create(
-            nick_uzivatele=self.nickname,
-            email_uzivatele="physics@example.com",
+            nick=self.nickname,
+            email="physics@example.com",
             user=self.valid_user,
         )
 
         self.user_profile2 = UserProfile.objects.create(
-            nick_uzivatele=self.nickname2,
-            email_uzivatele="mathematics@example.com",
+            nick=self.nickname2,
+            email="mathematics@example.com",
             user=self.valid_user2,
         )
 
         self.comment = Phorum.objects.create(
-            reputace=0,
-            reg=1,
+            reputation=0,
+            registered_or_ip=1,
             text=self.message,
             nickname=self.nickname,
             email="physics@example.com",
@@ -43,8 +43,8 @@ class PhorumCommentTestCase(TestCase):
         )
 
         self.comment2 = Phorum.objects.create(
-            reputace=0,
-            reg=1,
+            reputation=0,
+            registered_or_ip=1,
             text=self.message2,
             nickname=self.nickname2,
             email="mathematics@example.com",

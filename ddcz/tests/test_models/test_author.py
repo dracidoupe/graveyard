@@ -2,7 +2,7 @@ from django.test import SimpleTestCase, TestCase
 
 from ..model_generator import get_valid_article_chain
 
-from ddcz.models import Author, CommonArticle, UserProfile, Quest
+from ddcz.models import Author, Quest
 
 
 class TestAuthorLinkRender(SimpleTestCase):
@@ -35,11 +35,11 @@ class TestAuthorCretionsList(TestCase):
         self.article = data["article"]
 
         self.quest = Quest(
-            jmeno="Example Quest",
+            name="Example Quest",
             author=self.author_user,
-            autor=self.user.nick_uzivatele,
-            autmail=self.user.email_uzivatele,
-            schvaleno=Quest.CREATION_APPROVED,
+            author_nick=self.user.nick,
+            author_mail=self.user.email,
+            is_published=Quest.CREATION_APPROVED,
         )
 
         self.user.save()
@@ -60,10 +60,10 @@ class TestAuthorCretionsList(TestCase):
         author_creations = self.author_user.get_all_creations()
 
         self.assertEqual(
-            "Example Quest", author_creations["dobrodruzstvi"]["creations"][0].jmeno
+            "Example Quest", author_creations["dobrodruzstvi"]["creations"][0].name
         )
         self.assertEqual(
-            "Test Article", author_creations["clanky"]["creations"][0].jmeno
+            "Test Article", author_creations["clanky"]["creations"][0].name
         )
 
     def test_author_pages_returned(self):

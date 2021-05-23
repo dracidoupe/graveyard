@@ -11,12 +11,12 @@ class Command(BaseCommand):
     help = "Denormalizes authors from legacy tables to Author table"
 
     def get_author(self, creation, creation_model):
-        if creation.autor:
+        if creation.author_nick:
             author_type = Author.USER_TYPE
-            author_name = creation.autor.lower()
+            author_name = creation.author_nick.lower()
         else:
             author_type = Author.WEBSITE_TYPE
-            author_name = creation.zdroj.lower()
+            author_name = creation.original_web.lower()
 
         if (author_type, author_name) in self.authors:
             return self.authors[(author_type, author_name)]
@@ -24,8 +24,8 @@ class Command(BaseCommand):
         else:
             if author_type is Author.WEBSITE_TYPE:
                 author = Author.objects.create(
-                    website=creation.zdroj,
-                    website_email=creation.zdrojmail,
+                    website=creation.original_web,
+                    website_email=creation.original_web_mail,
                     author_type=author_type,
                 )
             else:
@@ -42,28 +42,33 @@ class Command(BaseCommand):
                     except Author.DoesNotExist:
 
                         try:
-                            author_encoded = creation.autor.encode("latin2")
+                            author_encoded = creation.author_nick.encode("latin2")
                         except UnicodeEncodeError:
                             print(
                                 "Can't do standalone encoding for registered user, attempting skipping bad characters"
                             )
-                            author_encoded = creation.autor.encode("latin2", "ignore")
+                            author_encoded = creation.author_nick.encode(
+                                "latin2", "ignore"
+                            )
                             print(
                                 "Author's name replaced from %s to %s"
-                                % (creation.autor, author_encoded.decode("latin2"))
+                                % (
+                                    creation.author_nick,
+                                    author_encoded.decode("latin2"),
+                                )
                             )
 
                         author = Author.objects.create(
                             user=profile,
                             author_type=author_type,
-                            user_nick=creation.autor,
+                            user_nick=creation.author_nick,
                         )
 
                 except UserProfile.DoesNotExist as err:
                     author_type = Author.ANONYMOUS_USER_TYPE
 
                     try:
-                        author_encoded = creation.autor.encode("latin2")
+                        author_encoded = creation.author_nick.encode("latin2")
                     except UnicodeEncodeError:
                         print(
                             "Can't do standalone encoding for anonymous user, attempting skipping bad characters"
@@ -73,10 +78,10 @@ class Command(BaseCommand):
                             % (creation, creation_model)
                         )
 
-                        author_encoded = creation.autor.encode("latin2", "ignore")
+                        author_encoded = creation.author_nick.encode("latin2", "ignore")
                         print(
                             "Author's name replaced from %s to %s"
-                            % (creation.autor, author_encoded.decode("latin2"))
+                            % (creation.author_nick, author_encoded.decode("latin2"))
                         )
 
                     author = Author.objects.create(
