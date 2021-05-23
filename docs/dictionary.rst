@@ -78,6 +78,7 @@ Putyka is the discussion section of the site, old Putyka counting around 500 dif
 * Oblíbené stoly (= favorite tables)
 * Označit stůl za oblíbený (= mark as favorite)
 * Ignorovat stůl (= ignore table)
+* Moderátor (kdysi pomocník admina) (= moderator)
 
 **************
 Users & Social
