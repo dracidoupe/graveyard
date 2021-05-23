@@ -77,3 +77,9 @@ Putyka is the discussion section of the site, old Putyka counting around 500 dif
 * Příspěvek (= post)
 * Oblíbené stoly (= booked tables)
 
+**************
+Users & Social
+**************
+
+* Reputace (= Reputation)
+* Udělit reputaci (= Give rep)
