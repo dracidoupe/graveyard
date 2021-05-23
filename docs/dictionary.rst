@@ -75,7 +75,9 @@ Putyka is the discussion section of the site, old Putyka counting around 500 dif
 * Nástěnka (= notice-board)
 * Anketa (= poll)
 * Příspěvek (= post)
-* Oblíbené stoly (= booked tables)
+* Oblíbené stoly (= favorite tables)
+* Označit stůl za oblíbený (= mark as favorite)
+* Ignorovat stůl (= ignore table)
 
 **************
 Users & Social
