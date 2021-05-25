@@ -231,7 +231,9 @@ class TavernBookmark(models.Model):
     tavern_table = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
     )
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, db_column="id_uz")
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, db_column="id_uz"
+    )
     django_id = models.AutoField(primary_key=True)
 
     class Meta:

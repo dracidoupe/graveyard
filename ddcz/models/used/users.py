@@ -101,7 +101,9 @@ class UserProfile(models.Model):
     max_level = models.IntegerField(blank=True, null=True)
     api_key = MisencodedCharField(unique=True, max_length=40, blank=True, null=True)
     tavern_bookmarks = models.ManyToManyField(
-        "TavernTable", through="TavernBookmark", through_fields=("user_profile", "tavern_table")
+        "TavernTable",
+        through="TavernBookmark",
+        through_fields=("user_profile", "tavern_table"),
     )
 
     class Meta:

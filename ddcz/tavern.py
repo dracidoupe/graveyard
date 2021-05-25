@@ -197,4 +197,6 @@ def migrate_tavern_access(
 
 
 def bookmark_table(user_profile, tavern_table):
-    return TavernBookmark.objects.create(tavern_table=tavern_table, user_profile=user_profile)
+    return TavernBookmark.objects.create(
+        tavern_table=tavern_table, user_profile=user_profile
+    )
