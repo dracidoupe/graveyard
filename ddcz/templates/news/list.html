@@ -12,13 +12,13 @@
     {% for n in news %}
         <article>
             <header>
-                <p><time datetime={{ n.datum | date:"r"  }}>{{ n.datum | articleTime }}</time></p>
+                <p><time datetime={{ n.date | date:"r"  }}>{{ n.date | articleTime }}</time></p>
             </header>
             <div class="content">
                 {{ n.text|render_html|safe }}
             </div>
             <footer>
-                <a href="#" class="author" rel="author">{{ n.autor }}</a>
+                <a href="#" class="author" rel="author">{{ n.author }}</a>
             </footer>
         </article>
     {% endfor %}
