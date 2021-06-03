@@ -32,9 +32,9 @@ class NewsTestCase(TestCase):
 
     def test_save_and_read(self):
         p = News(
-            datum=datetime.now(pytz.timezone("Europe/Prague")),
-            autor="xoxo",
-            autmail="xoxo@example.com",
+            date=datetime.now(pytz.timezone("Europe/Prague")),
+            author="xoxo",
+            author_mail="xoxo@example.com",
             text=self.problematic_diacritic_string,
         )
         p.save()

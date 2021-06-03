@@ -140,12 +140,12 @@ class Author(models.Model):
         creations = {}
 
         for model_info in models:
-            filters = {"author": self, "schvaleno": Creation.CREATION_APPROVED}
+            filters = {"author": self, "is_published": Creation.CREATION_APPROVED}
             if model_info["model"].SHARED_BETWEEN_CREATIVE_PAGES:
-                filters["rubrika"] = model_info["page"].slug
+                filters["creative_page_slug"] = model_info["page"].slug
 
             page_creations = (
-                model_info["model"].objects.filter(**filters).order_by("-datum")
+                model_info["model"].objects.filter(**filters).order_by("-published")
             )
 
             if len(page_creations) > 0:

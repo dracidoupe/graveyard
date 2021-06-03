@@ -10,10 +10,10 @@ def get_valid_article_chain():
     article = CommonArticle(
         author=author,
         name="Test Article",
-        autor=user.nick_uzivatele,
-        autmail=user.email_uzivatele,
-        schvaleno=CommonArticle.CREATION_APPROVED,
-        rubrika="clanky",
+        author_nick=user.nick_uzivatele,
+        author_mail=user.email_uzivatele,
+        is_published=CommonArticle.CREATION_APPROVED,
+        creative_page_slug="clanky",
     )
 
     return {
