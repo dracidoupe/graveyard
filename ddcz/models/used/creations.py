@@ -225,12 +225,20 @@ class Creation(models.Model):
 
     jmeno = MisencodedTextField(db_column="jmeno")
     autor = MisencodedCharField(max_length=50, blank=True, null=True, db_column="autor")
-    autmail = MisencodedCharField(max_length=50, blank=True, null=True, db_column="autmail")
-    schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno")
+    autmail = MisencodedCharField(
+        max_length=50, blank=True, null=True, db_column="autmail"
+    )
+    schvaleno = MisencodedCharField(
+        max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno"
+    )
     zdroj = MisencodedTextField(blank=True, null=True, db_column="zdroj")
     zdrojmail = MisencodedTextField(blank=True, null=True, db_column="zdrojmail")
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True, db_column="pocet_hlasujicich")
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True, db_column="hodnota_hlasovani")
+    pocet_hlasujicich = models.IntegerField(
+        blank=True, null=True, db_column="pocet_hlasujicich"
+    )
+    hodnota_hlasovani = models.IntegerField(
+        blank=True, null=True, db_column="hodnota_hlasovani"
+    )
     pochvez = MisencodedIntegerField(max_length=5, db_column="pochvez")
     # dubious usage, probably used only by Quest, may be worth
     # removing in the future from other creations
@@ -241,7 +249,9 @@ class Creation(models.Model):
     # Careful about difference from "Czech" `autor`, which is a text field
     # with a nickname that relies on being string equal with `UserProfile.nick_uzivatele`
     # Should be NOT NULL in the future, null allowed for transition period
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True, db_column="author")
+    author = models.ForeignKey(
+        Author, on_delete=models.SET_NULL, blank=True, null=True, db_column="author"
+    )
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
     # Should be overwritten by models who want their legacy HTML checked
@@ -308,7 +318,9 @@ class CommonArticle(Creation):
     SHARED_BETWEEN_CREATIVE_PAGES = True
 
     text = MisencodedTextField(db_column="text")
-    skupina = MisencodedCharField(max_length=30, blank=True, null=True, db_column="skupina")
+    skupina = MisencodedCharField(
+        max_length=30, blank=True, null=True, db_column="skupina"
+    )
     anotace = MisencodedTextField(blank=True, null=True, db_column="anotace")
     rubrika = MisencodedCharField(max_length=30, db_column="rubrika")
 
@@ -333,7 +345,9 @@ class Monster(Creation):
     uc = MisencodedTextField(db_column="uc")
     oc = MisencodedTextField(db_column="oc")
     odl = MisencodedCharField(max_length=3, db_column="odl")
-    inteligence = MisencodedCharField(max_length=50, blank=True, null=True, db_column="inteligence")
+    inteligence = MisencodedCharField(
+        max_length=50, blank=True, null=True, db_column="inteligence"
+    )
     vel = MisencodedCharField(max_length=20, db_column="vel")
     zran = MisencodedTextField(blank=True, null=True, db_column="zran")
     poh = MisencodedTextField(blank=True, null=True, db_column="poh")
@@ -342,10 +356,10 @@ class Monster(Creation):
     zkus = MisencodedCharField(max_length=50, db_column="zkus")
     popis = MisencodedTextField(db_column="popis")
     skupina = MisencodedTextField(db_column="skupina")
-    bojovnost = MisencodedCharField(max_length=50, blank=True, null=True, db_column="bojovnost")
-    sm = MisencodedCharField(
-        db_column="SM", max_length=50, blank=True, null=True
+    bojovnost = MisencodedCharField(
+        max_length=50, blank=True, null=True, db_column="bojovnost"
     )
+    sm = MisencodedCharField(db_column="SM", max_length=50, blank=True, null=True)
 
     legacy_html_attributes = ["popis"]
 
@@ -375,7 +389,7 @@ class GalleryPicture(Creation):
     """
 
     cesta = MisencodedTextField(db_column="cesta")
-    cestathumb = MisencodedTextField(db_column="cestathumb)
+    cestathumb = MisencodedTextField(db_column="cestathumb")
 
     class Meta:
         db_table = "galerie"
@@ -425,16 +439,30 @@ class Skill(Creation):
 class AlchemistTool(Creation):
     mag = models.IntegerField(blank=True, null=True, db_column="mag")
     suroviny = models.SmallIntegerField(blank=True, null=True, db_column="suroviny")
-    zaklad = MisencodedCharField(max_length=150, blank=True, null=True, db_column="zaklad")
-    nalezeni = MisencodedCharField(max_length=150, blank=True, null=True, db_column="nalezeni")
-    trvani = MisencodedCharField(max_length=30, blank=True, null=True, db_column="trvani")
-    vyroba = MisencodedCharField(max_length=30, blank=True, null=True, db_column="vyroba")
-    nebezpecnost = MisencodedCharField(max_length=30, blank=True, null=True, db_column="nebezpecnost")
+    zaklad = MisencodedCharField(
+        max_length=150, blank=True, null=True, db_column="zaklad"
+    )
+    nalezeni = MisencodedCharField(
+        max_length=150, blank=True, null=True, db_column="nalezeni"
+    )
+    trvani = MisencodedCharField(
+        max_length=30, blank=True, null=True, db_column="trvani"
+    )
+    vyroba = MisencodedCharField(
+        max_length=30, blank=True, null=True, db_column="vyroba"
+    )
+    nebezpecnost = MisencodedCharField(
+        max_length=30, blank=True, null=True, db_column="nebezpecnost"
+    )
     sila = MisencodedCharField(max_length=30, blank=True, null=True, db_column="sila")
     bcz = MisencodedCharField(max_length=30, blank=True, null=True, db_column="bcz")
     denmag = models.IntegerField(blank=True, null=True, db_column="denmag")
-    dosah_ucinku = MisencodedCharField(max_length=20, blank=True, null=True, db_column="dosah_ucinku")
-    uroven_vyrobce = MisencodedCharField(max_length=10, null=True, blank=True, db_column="uroven_vyrobce")
+    dosah_ucinku = MisencodedCharField(
+        max_length=20, blank=True, null=True, db_column="dosah_ucinku"
+    )
+    uroven_vyrobce = MisencodedCharField(
+        max_length=10, null=True, blank=True, db_column="uroven_vyrobce"
+    )
     sfera = MisencodedCharField(max_length=20, null=True, blank=True, db_column="sfera")
     popis = MisencodedTextField(db_column="popis")
     skupina = MisencodedCharField(max_length=30, db_column="v")
@@ -456,10 +484,16 @@ class Link(models.Model):
     adresa = MisencodedTextField(db_column="adresa")
     popis = MisencodedTextField(db_column="popis")
     pochvez = MisencodedCharField(max_length=1, db_column="pochvez")
-    schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno")
+    schvaleno = MisencodedCharField(
+        max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno"
+    )
     datum = models.DateTimeField(db_column="datum")
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True, db_column="pocet_hlasujicich")
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True, db_column="hodnota_hlasovani")
+    pocet_hlasujicich = models.IntegerField(
+        blank=True, null=True, db_column="pocet_hlasujicich"
+    )
+    hodnota_hlasovani = models.IntegerField(
+        blank=True, null=True, db_column="hodnota_hlasovani"
+    )
 
     legacy_html_attributes = ["popis"]
 
@@ -517,17 +551,15 @@ class WizardSpell(Creation):
 
 
 class Item(Creation):
-    uc = MisencodedTextField(
-        db_column="UC", blank=True, null=True
-    )
-    kz = MisencodedCharField(
-        db_column="KZ", max_length=3, blank=True, null=True
-    )
+    uc = MisencodedTextField(db_column="UC", blank=True, null=True)
+    kz = MisencodedCharField(db_column="KZ", max_length=3, blank=True, null=True)
     delka = MisencodedCharField(max_length=3, blank=True, null=True, db_column="delka")
     cena = models.IntegerField(db_column="cena")
     popis = MisencodedTextField(db_column="popis")
     malydostrel = models.IntegerField(blank=True, null=True, db_column="malydostrel")
-    strednidostrel = models.IntegerField(blank=True, null=True, db_column="strednidostrel")
+    strednidostrel = models.IntegerField(
+        blank=True, null=True, db_column="strednidostrel"
+    )
     velkydostrel = models.IntegerField(blank=True, null=True, db_column="velkydostrel")
     sfera = models.IntegerField(blank=True, null=True, db_column="sfera")
     vaha = models.IntegerField(db_column="vaha")
