@@ -223,25 +223,25 @@ class Creation(models.Model):
     # filter based on `rubrika` attribute is needed
     SHARED_BETWEEN_CREATIVE_PAGES = False
 
-    jmeno = MisencodedTextField()
-    autor = MisencodedCharField(max_length=50, blank=True, null=True)
-    autmail = MisencodedCharField(max_length=50, blank=True, null=True)
-    schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES)
-    zdroj = MisencodedTextField(blank=True, null=True)
-    zdrojmail = MisencodedTextField(blank=True, null=True)
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
-    pochvez = MisencodedIntegerField(max_length=5)
+    jmeno = MisencodedTextField(db_column="jmeno")
+    autor = MisencodedCharField(max_length=50, blank=True, null=True, db_column="autor")
+    autmail = MisencodedCharField(max_length=50, blank=True, null=True, db_column="autmail")
+    schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno")
+    zdroj = MisencodedTextField(blank=True, null=True, db_column="zdroj")
+    zdrojmail = MisencodedTextField(blank=True, null=True, db_column="zdrojmail")
+    pocet_hlasujicich = models.IntegerField(blank=True, null=True, db_column="pocet_hlasujicich")
+    hodnota_hlasovani = models.IntegerField(blank=True, null=True, db_column="hodnota_hlasovani")
+    pochvez = MisencodedIntegerField(max_length=5, db_column="pochvez")
     # dubious usage, probably used only by Quest, may be worth
     # removing in the future from other creations
-    precteno = models.IntegerField(default=0)
-    tisknuto = models.IntegerField(default=0)
-    datum = models.DateTimeField(auto_now_add=True)
+    precteno = models.IntegerField(default=0, db_column="precteno")
+    tisknuto = models.IntegerField(default=0, db_column="tisknuto")
+    datum = models.DateTimeField(auto_now_add=True, db_column="datum")
 
     # Careful about difference from "Czech" `autor`, which is a text field
     # with a nickname that relies on being string equal with `UserProfile.nick_uzivatele`
     # Should be NOT NULL in the future, null allowed for transition period
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True, db_column="author")
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
     # Should be overwritten by models who want their legacy HTML checked
@@ -277,12 +277,12 @@ class Creation(models.Model):
 class CreationVotes(models.Model):
     # creation = models.OneToMany(Creation) -- to be introduced later
     # TODO: Would conversion to ForeignKey work..and would it work to User?
-    id_uz = models.IntegerField(primary_key=True)
-    id_cizi = models.IntegerField()
-    rubrika = MisencodedCharField(max_length=20)
-    pochvez = models.IntegerField()
-    time = models.IntegerField()
-    opraveno = MisencodedCharField(max_length=1)
+    id_uz = models.IntegerField(primary_key=True, db_column="id_uz")
+    id_cizi = models.IntegerField(db_column="id_cizi")
+    rubrika = MisencodedCharField(max_length=20, db_column="rubrika")
+    pochvez = models.IntegerField(db_column="pochvez")
+    time = models.IntegerField(db_column="time")
+    opraveno = MisencodedCharField(max_length=1, db_column="opraveno")
 
     class Meta:
         db_table = "hlasovani_prispevky"
@@ -307,10 +307,10 @@ class CommonArticle(Creation):
 
     SHARED_BETWEEN_CREATIVE_PAGES = True
 
-    text = MisencodedTextField()
-    skupina = MisencodedCharField(max_length=30, blank=True, null=True)
-    anotace = MisencodedTextField(blank=True, null=True)
-    rubrika = MisencodedCharField(max_length=30)
+    text = MisencodedTextField(db_column="text")
+    skupina = MisencodedCharField(max_length=30, blank=True, null=True, db_column="skupina")
+    anotace = MisencodedTextField(blank=True, null=True, db_column="anotace")
+    rubrika = MisencodedCharField(max_length=30, db_column="rubrika")
 
     legacy_html_attributes = ["text"]
 
@@ -329,23 +329,23 @@ class CommonArticle(Creation):
 
 
 class Monster(Creation):
-    zvt = MisencodedTextField()
-    uc = MisencodedTextField()
-    oc = MisencodedTextField()
-    odl = MisencodedCharField(max_length=3)
-    inteligence = MisencodedCharField(max_length=50, blank=True, null=True)
-    vel = MisencodedCharField(max_length=20)
-    zran = MisencodedTextField(blank=True, null=True)
-    poh = MisencodedTextField(blank=True, null=True)
-    pres = MisencodedTextField(blank=True, null=True)
-    pokl = MisencodedTextField(blank=True, null=True)
-    zkus = MisencodedCharField(max_length=50)
-    popis = MisencodedTextField()
-    skupina = MisencodedTextField()
-    bojovnost = MisencodedCharField(max_length=50, blank=True, null=True)
+    zvt = MisencodedTextField(db_column="zvt")
+    uc = MisencodedTextField(db_column="uc")
+    oc = MisencodedTextField(db_column="oc")
+    odl = MisencodedCharField(max_length=3, db_column="odl")
+    inteligence = MisencodedCharField(max_length=50, blank=True, null=True, db_column="inteligence")
+    vel = MisencodedCharField(max_length=20, db_column="vel")
+    zran = MisencodedTextField(blank=True, null=True, db_column="zran")
+    poh = MisencodedTextField(blank=True, null=True, db_column="poh")
+    pres = MisencodedTextField(blank=True, null=True, db_column="pres")
+    pokl = MisencodedTextField(blank=True, null=True, db_column="pokl")
+    zkus = MisencodedCharField(max_length=50, db_column="zkus")
+    popis = MisencodedTextField(db_column="popis")
+    skupina = MisencodedTextField(db_column="skupina")
+    bojovnost = MisencodedCharField(max_length=50, blank=True, null=True, db_column="bojovnost")
     sm = MisencodedCharField(
         db_column="SM", max_length=50, blank=True, null=True
-    )  # Field name made lowercase.
+    )
 
     legacy_html_attributes = ["popis"]
 
@@ -374,8 +374,8 @@ class GalleryPicture(Creation):
     (path stored in `cesta`) as well as new version
     """
 
-    cesta = MisencodedTextField()
-    cestathumb = MisencodedTextField()
+    cesta = MisencodedTextField(db_column="cesta")
+    cestathumb = MisencodedTextField(db_column="cestathumb)
 
     class Meta:
         db_table = "galerie"
@@ -390,8 +390,8 @@ class GalleryPicture(Creation):
 class Photo(Creation):
     """See GalleryPicture; just part of different Creation Page"""
 
-    cesta = MisencodedTextField()
-    cestathumb = MisencodedTextField()
+    cesta = MisencodedTextField(db_column="cesta")
+    cestathumb = MisencodedTextField(db_column="cestathumb")
 
     class Meta:
         db_table = "fotogalerie"
@@ -404,17 +404,17 @@ class Photo(Creation):
 
 
 class Skill(Creation):
-    vlastnost = MisencodedTextField()
-    obtiznost = MisencodedTextField()
-    overovani = MisencodedTextField()
-    totuspech = MisencodedTextField()
-    uspech = MisencodedTextField()
-    neuspech = MisencodedTextField()
-    fatneuspech = MisencodedTextField()
-    popis = MisencodedTextField()
-    skupina = MisencodedCharField(max_length=30)
+    vlastnost = MisencodedTextField(db_column="vlastnost")
+    obtiznost = MisencodedTextField(db_column="obtiznost")
+    overovani = MisencodedTextField(db_column="overovani")
+    totuspech = MisencodedTextField(db_column="totuspech")
+    uspech = MisencodedTextField(db_column="uspech")
+    neuspech = MisencodedTextField(db_column="neuspech")
+    fatneuspech = MisencodedTextField(db_column="fatneuspech")
+    popis = MisencodedTextField(db_column="popis")
+    skupina = MisencodedCharField(max_length=30j, db_column="skupina")
     # TODO: No idea what this is used for, potentially drop
-    hlasoval = MisencodedTextField(blank=True, null=True)
+    hlasoval = MisencodedTextField(blank=True, null=True, db_column="hlasoval")
 
     legacy_html_attributes = ["totuspech", "uspech", "neuspech", "fatneuspech", "popis"]
 
@@ -423,21 +423,21 @@ class Skill(Creation):
 
 
 class AlchemistTool(Creation):
-    mag = models.IntegerField(blank=True, null=True)
-    suroviny = models.SmallIntegerField(blank=True, null=True)
-    zaklad = MisencodedCharField(max_length=150, blank=True, null=True)
-    nalezeni = MisencodedCharField(max_length=150, blank=True, null=True)
-    trvani = MisencodedCharField(max_length=30, blank=True, null=True)
-    vyroba = MisencodedCharField(max_length=30, blank=True, null=True)
-    nebezpecnost = MisencodedCharField(max_length=30, blank=True, null=True)
-    sila = MisencodedCharField(max_length=30, blank=True, null=True)
-    bcz = MisencodedCharField(max_length=30, blank=True, null=True)
-    denmag = models.IntegerField(blank=True, null=True)
-    dosah_ucinku = MisencodedCharField(max_length=20, blank=True, null=True)
-    uroven_vyrobce = MisencodedCharField(max_length=10, null=True, blank=True)
-    sfera = MisencodedCharField(max_length=20, null=True, blank=True)
-    popis = MisencodedTextField()
-    skupina = MisencodedCharField(max_length=30)
+    mag = models.IntegerField(blank=True, null=True, db_column="mag")
+    suroviny = models.SmallIntegerField(blank=True, null=True, db_column="suroviny")
+    zaklad = MisencodedCharField(max_length=150, blank=True, null=True, db_column="zaklad")
+    nalezeni = MisencodedCharField(max_length=150, blank=True, null=True, db_column="nalezeni")
+    trvani = MisencodedCharField(max_length=30, blank=True, null=True, db_column="trvani")
+    vyroba = MisencodedCharField(max_length=30, blank=True, null=True, db_column="vyroba")
+    nebezpecnost = MisencodedCharField(max_length=30, blank=True, null=True, db_column="nebezpecnost")
+    sila = MisencodedCharField(max_length=30, blank=True, null=True, db_column="sila")
+    bcz = MisencodedCharField(max_length=30, blank=True, null=True, db_column="bcz")
+    denmag = models.IntegerField(blank=True, null=True, db_column="denmag")
+    dosah_ucinku = MisencodedCharField(max_length=20, blank=True, null=True, db_column="dosah_ucinku")
+    uroven_vyrobce = MisencodedCharField(max_length=10, null=True, blank=True, db_column="uroven_vyrobce")
+    sfera = MisencodedCharField(max_length=20, null=True, blank=True, db_column="sfera")
+    popis = MisencodedTextField(db_column="popis")
+    skupina = MisencodedCharField(max_length=30, db_column="v")
 
     legacy_html_attributes = ["popis"]
 
@@ -452,14 +452,14 @@ class AlchemistTool(Creation):
 
 
 class Link(models.Model):
-    nazev = MisencodedTextField()
-    adresa = MisencodedTextField()
-    popis = MisencodedTextField()
-    pochvez = MisencodedCharField(max_length=1)
-    schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES)
-    datum = models.DateTimeField()
-    pocet_hlasujicich = models.IntegerField(blank=True, null=True)
-    hodnota_hlasovani = models.IntegerField(blank=True, null=True)
+    nazev = MisencodedTextField(db_column="nazev")
+    adresa = MisencodedTextField(db_column="adresa")
+    popis = MisencodedTextField(db_column="popis")
+    pochvez = MisencodedCharField(max_length=1, db_column="pochvez")
+    schvaleno = MisencodedCharField(max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno")
+    datum = models.DateTimeField(db_column="datum")
+    pocet_hlasujicich = models.IntegerField(blank=True, null=True, db_column="pocet_hlasujicich")
+    hodnota_hlasovani = models.IntegerField(blank=True, null=True, db_column="hodnota_hlasovani")
 
     legacy_html_attributes = ["popis"]
 
@@ -471,19 +471,19 @@ class Link(models.Model):
 
 
 class RangerSpell(Creation):
-    mag = models.SmallIntegerField()
-    magpop = MisencodedTextField()
-    dosah = models.SmallIntegerField(blank=True, null=True)
-    dosahpop = MisencodedTextField(blank=True, null=True)
-    rozsah = models.SmallIntegerField(blank=True, null=True)
-    rozsahpop = MisencodedTextField(blank=True, null=True)
-    vyvolani = models.SmallIntegerField(blank=True, null=True)
-    vyvolanipop = MisencodedTextField(blank=True, null=True)
-    druh = MisencodedTextField(blank=True, null=True)
-    skupina = MisencodedTextField()
-    cetnost = MisencodedTextField(blank=True, null=True)
-    pomucky = MisencodedTextField(blank=True, null=True)
-    popis = MisencodedTextField()
+    mag = models.SmallIntegerField(db_column="mag")
+    magpop = MisencodedTextField(db_column="magpop")
+    dosah = models.SmallIntegerField(blank=True, null=True, db_column="dosah")
+    dosahpop = MisencodedTextField(blank=True, null=True, db_column="dosahpop")
+    rozsah = models.SmallIntegerField(blank=True, null=True, db_column="rozsah")
+    rozsahpop = MisencodedTextField(blank=True, null=True, db_column="rozsahpop")
+    vyvolani = models.SmallIntegerField(blank=True, null=True, db_column="vyvolani")
+    vyvolanipop = MisencodedTextField(blank=True, null=True, db_column="vyvolanipop")
+    druh = MisencodedTextField(blank=True, null=True, db_column="druh")
+    skupina = MisencodedTextField(db_column="skupina")
+    cetnost = MisencodedTextField(blank=True, null=True, db_column="cetnost")
+    pomucky = MisencodedTextField(blank=True, null=True, db_column="pomucky")
+    popis = MisencodedTextField(db_column="popis")
 
     legacy_html_attributes = ["popis", "pomucky"]
 
@@ -495,20 +495,20 @@ class RangerSpell(Creation):
 
 
 class WizardSpell(Creation):
-    kouzsl = MisencodedTextField()
-    mag = models.SmallIntegerField()
-    magpop = MisencodedTextField()
-    past = MisencodedTextField(blank=True, null=True)
-    dosah = models.IntegerField(blank=True, null=True)
-    dosahpop = MisencodedTextField(blank=True, null=True)
-    rozsah = models.IntegerField()
-    rozsahpop = MisencodedTextField(blank=True, null=True)
-    vyvolani = models.IntegerField()
-    vyvolanipop = MisencodedTextField()
-    trvani = models.IntegerField()
-    trvanipop = MisencodedTextField(blank=True, null=True)
-    popis = MisencodedTextField()
-    skupina = MisencodedTextField()
+    kouzsl = MisencodedTextField(db_column="kouzsl")
+    mag = models.SmallIntegerField(db_column="mag")
+    magpop = MisencodedTextField(db_column="magpop")
+    past = MisencodedTextField(blank=True, null=True, db_column="past")
+    dosah = models.IntegerField(blank=True, null=True, db_column="dosah")
+    dosahpop = MisencodedTextField(blank=True, null=True, db_column="dosahpop")
+    rozsah = models.IntegerField(db_column="rozsah")
+    rozsahpop = MisencodedTextField(blank=True, null=True, db_column="rozsahpop")
+    vyvolani = models.IntegerField(db_column="vyvolani")
+    vyvolanipop = MisencodedTextField(db_column="vyvolanipop")
+    trvani = models.IntegerField(db_column="trvani")
+    trvanipop = MisencodedTextField(blank=True, null=True, db_column="trvanipop")
+    popis = MisencodedTextField(db_column="popis")
+    skupina = MisencodedTextField(db_column="skupina")
 
     legacy_html_attributes = ["popis"]
 
@@ -519,19 +519,19 @@ class WizardSpell(Creation):
 class Item(Creation):
     uc = MisencodedTextField(
         db_column="UC", blank=True, null=True
-    )  # Field name made lowercase.
+    )
     kz = MisencodedCharField(
         db_column="KZ", max_length=3, blank=True, null=True
-    )  # Field name made lowercase.
-    delka = MisencodedCharField(max_length=3, blank=True, null=True)
-    cena = models.IntegerField()
-    popis = MisencodedTextField()
-    malydostrel = models.IntegerField(blank=True, null=True)
-    strednidostrel = models.IntegerField(blank=True, null=True)
-    velkydostrel = models.IntegerField(blank=True, null=True)
-    sfera = models.IntegerField(blank=True, null=True)
-    vaha = models.IntegerField()
-    skupina = MisencodedTextField()
+    )
+    delka = MisencodedCharField(max_length=3, blank=True, null=True, db_column="delka")
+    cena = models.IntegerField(db_column="cena")
+    popis = MisencodedTextField(db_column="popis")
+    malydostrel = models.IntegerField(blank=True, null=True, db_column="malydostrel")
+    strednidostrel = models.IntegerField(blank=True, null=True, db_column="strednidostrel")
+    velkydostrel = models.IntegerField(blank=True, null=True, db_column="velkydostrel")
+    sfera = models.IntegerField(blank=True, null=True, db_column="sfera")
+    vaha = models.IntegerField(db_column="vaha")
+    skupina = MisencodedTextField(db_column="skupina")
 
     legacy_html_attributes = ["popis"]
 
@@ -540,13 +540,13 @@ class Item(Creation):
 
 
 class DownloadItem(Creation):
-    cesta = models.TextField(blank=True, null=True)
-    format = models.TextField()
-    popis = models.TextField()
-    velikost = models.IntegerField()
-    skupina = models.TextField()
-    item = models.FileField(upload_to="soub", null=True)
-    download_counter = models.IntegerField(default=0)
+    cesta = models.TextField(blank=True, null=True, db_column="cesta")
+    format = models.TextField(db_column="format")
+    popis = models.TextField(db_column="popis")
+    velikost = models.IntegerField(db_column="velikost")
+    skupina = models.TextField(db_column="skupina")
+    item = models.FileField(upload_to="soub", null=True, db_column="item")
+    download_counter = models.IntegerField(default=0, db_column="download_counter")
 
     legacy_html_attributes = ["popis"]
 
@@ -556,9 +556,9 @@ class DownloadItem(Creation):
 
 
 class Quest(Creation):
-    anotace = models.TextField()
-    cesta = models.TextField(blank=True, null=True)
-    klicsl = models.TextField()
+    anotace = models.TextField(db_column="anotace")
+    cesta = models.TextField(blank=True, null=True, db_column="cesta")
+    klicsl = models.TextField(db_column="klicsl")
 
     def get_final_url(self):
         return urljoin(
