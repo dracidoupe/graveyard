@@ -35,9 +35,14 @@ Creative Pages
 
 In this context, Crative Pages correspond to sections of the site where content is provided by our authors, after review. Creative page has Categories (= Sekce) that serve to further classify the Creations.
 
+* schváleno = published
+* hlasování = rating
+* hlasující = rater
+
 * Rubriky (= Creative Pages)
+* Sekce (= Section)
 * Koncepce (rubriky) = Charter
-* Dílo = Creation
+* Dílo = Creation (attributes follow naming conventions from `Article on schema.org <https://schema.org/Article>`_)
 * Anotace = Synopsis
 * Diskuze = Discussion (critique, ratings and suggestions)
 * Příspěvek = Comment

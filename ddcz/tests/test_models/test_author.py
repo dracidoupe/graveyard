@@ -60,10 +60,10 @@ class TestAuthorCretionsList(TestCase):
         author_creations = self.author_user.get_all_creations()
 
         self.assertEqual(
-            "Example Quest", author_creations["dobrodruzstvi"]["creations"][0].jmeno
+            "Example Quest", author_creations["dobrodruzstvi"]["creations"][0].name
         )
         self.assertEqual(
-            "Test Article", author_creations["clanky"]["creations"][0].jmeno
+            "Test Article", author_creations["clanky"]["creations"][0].name
         )
 
     def test_author_pages_returned(self):

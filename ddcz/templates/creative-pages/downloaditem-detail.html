@@ -8,19 +8,19 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2><a download href="{% url 'ddcz:download-file' download_id=article.id %}">{{ article.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <h2><a download href="{% url 'ddcz:download-file' download_id=article.id %}">{{ article.name }}</a>{% creation_rating a.rating skin %}</h2>
             <table>
                 <tr>
-                    <th>Autor:</th>
+                    <th>author_nick:</th>
                     <td>{% author_display article %}</td>
                 </tr>
                 <tr>
                     <th>Přidáno:</th>
-                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></td>
+                    <td><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></td>
                 </tr>
                 <tr>
                     <th>Hlasovalo:</th>
-                    <td>{{ article.pocet_hlasujicich }}</td>
+                    <td>{{ article.rater_no }}</td>
                 </tr>
             </table>
         </header>

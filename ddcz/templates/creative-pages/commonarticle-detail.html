@@ -8,22 +8,22 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2>{{ article.jmeno }}{% creation_rating article.pochvez skin %}</h2>
+            <h2>{{ article.name }}{% creation_rating article.rating skin %}</h2>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->
             <table>
                 <tr>
-                    <th>Autor:</th>
+                    <th>author_nick:</th>
                     <td>{% author_display article %}</td>
                 </tr>
                 <tr>
                     <th>Přidáno:</th>
-                    <td><time datetime={{ article.datum | date:"r"  }}>{{ article.datum | articleTime }}</time></td>
+                    <td><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></td>
                 </tr>
                 <tr>
                     <th>Hlasovalo:</th>
-                    <td>{{ article.pocet_hlasujicich }}</td>
+                    <td>{{ article.rater_no }}</td>
                 </tr>
             </table>
             <p class="synopsis">{{ article.anotace }}</p>
@@ -34,7 +34,7 @@
         </section>
         <footer>
         </footer>
-        
+
         {% creation_comments creative_page_slug article.pk %}
 
     </article>

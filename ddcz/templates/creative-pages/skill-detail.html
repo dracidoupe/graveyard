@@ -7,7 +7,7 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2>{{ article.jmeno }}{% creation_rating article.pochvez skin %}</h2>
+            <h2>{{ article.name }}{% creation_rating article.rating skin %}</h2>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->
@@ -37,9 +37,9 @@
             <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></div>
         </div>
         <footer class="table-like">
-            <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
-            <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.datum | date:"r"  }}>{{ article.datum | date:"j. n. Y v H.i" }}</time></p>
-            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.pocet_hlasujicich }}</span></p>
+            <p><span class="label">author_nick:</span> <span class="value">{% author_display article %}</span></p>
+            <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.published | date:"r"  }}>{{ article.published | date:"j. n. Y v H.i" }}</time></p>
+            <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
         </footer>
         {% creation_comments creative_page_slug article.pk %}
 

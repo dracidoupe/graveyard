@@ -223,34 +223,36 @@ class Creation(models.Model):
     # filter based on `rubrika` attribute is needed
     SHARED_BETWEEN_CREATIVE_PAGES = False
 
-    jmeno = MisencodedTextField(db_column="jmeno")
-    autor = MisencodedCharField(max_length=50, blank=True, null=True, db_column="autor")
-    autmail = MisencodedCharField(
+    name = MisencodedTextField(db_column="jmeno")
+    author_nick = MisencodedCharField(
+        max_length=50, blank=True, null=True, db_column="autor"
+    )
+    author_mail = MisencodedCharField(
         max_length=50, blank=True, null=True, db_column="autmail"
     )
-    schvaleno = MisencodedCharField(
+    is_published = MisencodedCharField(
         max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno"
     )
-    zdroj = MisencodedTextField(blank=True, null=True, db_column="zdroj")
-    zdrojmail = MisencodedTextField(blank=True, null=True, db_column="zdrojmail")
-    pocet_hlasujicich = models.IntegerField(
-        blank=True, null=True, db_column="pocet_hlasujicich"
+    original_web = MisencodedTextField(blank=True, null=True, db_column="zdroj")
+    original_web_mail = MisencodedTextField(
+        blank=True, null=True, db_column="zdrojmail"
     )
-    hodnota_hlasovani = models.IntegerField(
+    rater_no = models.IntegerField(blank=True, null=True, db_column="pocet_hlasujicich")
+    rating_sum = models.IntegerField(
         blank=True, null=True, db_column="hodnota_hlasovani"
     )
-    pochvez = MisencodedIntegerField(max_length=5, db_column="pochvez")
+    rating = MisencodedIntegerField(max_length=5, db_column="pochvez")
     # dubious usage, probably used only by Quest, may be worth
     # removing in the future from other creations
-    precteno = models.IntegerField(default=0, db_column="precteno")
-    tisknuto = models.IntegerField(default=0, db_column="tisknuto")
-    datum = models.DateTimeField(auto_now_add=True, db_column="datum")
+    read = models.IntegerField(default=0, db_column="precteno")
+    printed = models.IntegerField(default=0, db_column="tisknuto")
+    published = models.DateTimeField(auto_now_add=True, db_column="datum")
 
     # Careful about difference from "Czech" `autor`, which is a text field
     # with a nickname that relies on being string equal with `UserProfile.nick_uzivatele`
     # Should be NOT NULL in the future, null allowed for transition period
     author = models.ForeignKey(
-        Author, on_delete=models.SET_NULL, blank=True, null=True, db_column="author"
+        Author, on_delete=models.SET_NULL, blank=True, null=True  # , db_column="author"
     )
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)
@@ -262,18 +264,18 @@ class Creation(models.Model):
 
     def get_author_profile(self):
         try:
-            return UserProfile.objects.get(nick_uzivatele=self.autor)
+            return UserProfile.objects.get(nick_uzivatele=self.author_nick)
         except UserProfile.DoesNotExist:
             return
 
     author_profile = property(get_author_profile)
 
     def get_slug(self):
-        slug = create_slug(self.jmeno)
+        slug = create_slug(self.name)
         return slug or EMPTY_SLUG_PLACEHOLDER
 
     def __str__(self):
-        return "{} od {}".format(self.jmeno, self.autor)
+        return "{} od {}".format(self.name, self.author_nick)
 
 
 ###
@@ -287,16 +289,16 @@ class Creation(models.Model):
 class CreationVotes(models.Model):
     # creation = models.OneToMany(Creation) -- to be introduced later
     # TODO: Would conversion to ForeignKey work..and would it work to User?
-    id_uz = models.IntegerField(primary_key=True, db_column="id_uz")
-    id_cizi = models.IntegerField(db_column="id_cizi")
-    rubrika = MisencodedCharField(max_length=20, db_column="rubrika")
-    pochvez = models.IntegerField(db_column="pochvez")
+    user_profile_id = models.IntegerField(primary_key=True, db_column="id_uz")
+    creation_id = models.IntegerField(db_column="id_cizi")
+    creative_page_name = MisencodedCharField(max_length=20, db_column="rubrika")
+    rating = models.IntegerField(db_column="pochvez")
     time = models.IntegerField(db_column="time")
-    opraveno = MisencodedCharField(max_length=1, db_column="opraveno")
+    changed = MisencodedCharField(max_length=1, db_column="opraveno")
 
     class Meta:
         db_table = "hlasovani_prispevky"
-        unique_together = (("id_uz", "id_cizi", "rubrika"),)
+        unique_together = (("user_profile_id", "creation_id", "creative_page_name"),)
 
 
 ###
@@ -318,11 +320,11 @@ class CommonArticle(Creation):
     SHARED_BETWEEN_CREATIVE_PAGES = True
 
     text = MisencodedTextField(db_column="text")
-    skupina = MisencodedCharField(
+    section = MisencodedCharField(
         max_length=30, blank=True, null=True, db_column="skupina"
     )
-    anotace = MisencodedTextField(blank=True, null=True, db_column="anotace")
-    rubrika = MisencodedCharField(max_length=30, db_column="rubrika")
+    abstract = MisencodedTextField(blank=True, null=True, db_column="anotace")
+    creative_page_slug = MisencodedCharField(max_length=30, db_column="rubrika")
 
     legacy_html_attributes = ["text"]
 
@@ -334,9 +336,9 @@ class CommonArticle(Creation):
     def __str__(self):
         return "{}: {} od {}".format(
             # COMMON_ARTICLES_CREATIVE_PAGES[self.rubrika]['name'],
-            self.rubrika,
-            self.jmeno,
-            self.autor,
+            self.creative_page_slug,
+            self.name,
+            self.author_nick,
         )
 
 
@@ -370,8 +372,8 @@ class Monster(Creation):
 
     def __str__(self):
         return "{} od {}".format(
-            self.jmeno,
-            self.autor,
+            self.name,
+            self.author_nick,
         )
 
 
@@ -426,7 +428,7 @@ class Skill(Creation):
     neuspech = MisencodedTextField(db_column="neuspech")
     fatneuspech = MisencodedTextField(db_column="fatneuspech")
     popis = MisencodedTextField(db_column="popis")
-    skupina = MisencodedCharField(max_length=30j, db_column="skupina")
+    skupina = MisencodedCharField(max_length=30, db_column="skupina")
     # TODO: No idea what this is used for, potentially drop
     hlasoval = MisencodedTextField(blank=True, null=True, db_column="hlasoval")
 
@@ -465,7 +467,7 @@ class AlchemistTool(Creation):
     )
     sfera = MisencodedCharField(max_length=20, null=True, blank=True, db_column="sfera")
     popis = MisencodedTextField(db_column="popis")
-    skupina = MisencodedCharField(max_length=30, db_column="v")
+    skupina = MisencodedCharField(max_length=30, db_column="skupina")
 
     legacy_html_attributes = ["popis"]
 
@@ -474,8 +476,8 @@ class AlchemistTool(Creation):
 
     def __str__(self):
         return "{} od {}".format(
-            self.jmeno,
-            self.autor,
+            self.name,
+            self.author_nick,
         )
 
 
@@ -525,7 +527,7 @@ class RangerSpell(Creation):
         db_table = "hranicarkouzla"
 
     def __str__(self):
-        return "{} od {}".format(self.jmeno, self.autor)
+        return "{} od {}".format(self.name, self.author_nick)
 
 
 class WizardSpell(Creation):

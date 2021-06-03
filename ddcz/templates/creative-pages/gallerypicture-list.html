@@ -16,15 +16,15 @@
     <ul class="article-list gallery-list">
     {% for a in articles %}
         <li class="creation-detail gallery-item">
-            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.jmeno }}</a></h2> 
+            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a></h2>
             <div class="table-like">
-                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
+                <p><span class="label">author_nick:</span> <span class="value">{% author_display a %}</span></p>
                 <p>
                     <a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">
-                        <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.jmeno }}">
+                        <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.name }}">
                     </a>
                 </p>
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | articleTime}}</time></span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime}}</time></span></p>
                 <!--
                 <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
                 -->

@@ -46,14 +46,16 @@ def creative_page_list(request, creative_page_slug):
         articles = cache.get(cache_key)
 
     if not articles:
-        # For Common Articles, Creative Page is stored in attribute 'rubrika' as slug
+        # For Common Articles, Creative Page is stored in attribute 'creative_page_slug' as slug
         # For everything else, Creative Page is determined by its model class
         if model_class_name == "commonarticle":
             article_list = model_class.objects.filter(
-                schvaleno="a", rubrika=creative_page_slug
-            ).order_by("-datum")
+                is_published="a", creative_page_slug=creative_page_slug
+            ).order_by("-published")
         else:
-            article_list = model_class.objects.filter(schvaleno="a").order_by("-datum")
+            article_list = model_class.objects.filter(is_published="a").order_by(
+                "-published"
+            )
 
         if creative_page_slug in ["galerie", "fotogalerie"]:
             default_limit = 18
@@ -158,15 +160,15 @@ def creative_page_html_check(request, creative_page_slug):
         app, model_class_name = creative_page.model_class.split(".")
         model_class = apps.get_model(app, model_class_name)
 
-        # For Common Articles, Creative Page is stored in attribute 'rubrika' as slug
+        # For Common Articles, Creative Page is stored in attribute 'creative_page_slug' as slug
         # For everything else, Creative Page is determined by its model class
         if model_class_name == "commonarticle":
             creations_list = model_class.objects.filter(
-                schvaleno="a", rubrika=creative_page_slug
-            ).order_by("-datum")
+                is_published="a", creative_page_slug=creative_page_slug
+            ).order_by("-published")
         else:
-            creations_list = model_class.objects.filter(schvaleno="a").order_by(
-                "-datum"
+            creations_list = model_class.objects.filter(is_published="a").order_by(
+                "-published"
             )
 
         bad_creations = []

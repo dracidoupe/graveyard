@@ -20,15 +20,15 @@
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.jmeno }}</a>{% creation_rating a.pochvez skin %}</h2>
+            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
             <div class="table-like">
-                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
+                <p><span class="label">author_nick:</span> <span class="value">{% author_display a %}</span></p>
                 {% if a.vlastnost %}
                     <p><span class="label">Vlastnost:</span> <span class="value">{{ a.vlastnost }}</span></p>
                 {% endif %}
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.datum | date:"r"  }}>{{ a.datum | articleTime }}</time></span></p>
-                <p><span class="label">Přečteno:</span> <span class="value">{{ a.precteno }}</span></p>
-                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.pocet_hlasujicich }}</span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime }}</time></span></p>
+                <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>
+                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
 
                 <!--
                 <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
