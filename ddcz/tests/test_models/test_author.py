@@ -35,7 +35,7 @@ class TestAuthorCretionsList(TestCase):
         self.article = data["article"]
 
         self.quest = Quest(
-            jmeno="Example Quest",
+            name="Example Quest",
             author=self.author_user,
             autor=self.user.nick_uzivatele,
             autmail=self.user.email_uzivatele,

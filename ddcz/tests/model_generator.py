@@ -9,7 +9,7 @@ def get_valid_article_chain():
 
     article = CommonArticle(
         author=author,
-        jmeno="Test Article",
+        name="Test Article",
         autor=user.nick_uzivatele,
         autmail=user.email_uzivatele,
         schvaleno=CommonArticle.CREATION_APPROVED,
