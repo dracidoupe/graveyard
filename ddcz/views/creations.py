@@ -1,53 +1,28 @@
-from ddcz.models.used.tavern import TavernTableVisitor
-from datetime import date
-from hashlib import md5
 import logging
 from zlib import crc32
 
 from django.apps import apps
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.db.models.expressions import OuterRef, Subquery
 from django.http import (
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
-    HttpResponseBadRequest,
     HttpResponseNotAllowed,
-    HttpResponseServerError,
     Http404,
 )
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse, reverse_lazy, resolve, Resolver404
-from django.contrib.auth import (
-    authenticate,
-    login as login_auth,
-    views as authviews,
-)
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordResetForm
-from django.contrib import messages
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
 
-from ..commonarticles import (
-    SLUG_NAME_TRANSLATION_FROM_CZ,
-    COMMON_ARTICLES_CREATIVE_PAGES,
-)
-
 from ..html import check_creation_html, HtmlTagMismatchException
 from ..models import (
-    MARKET_SECTION_CHOICES,
     Author,
     CreativePage,
     CreativePageConcept,
     DownloadItem,
     Quest,
-    LEVEL_DESCRIPTIONS,
 )
-
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -228,7 +203,7 @@ def download_file(request, download_id):
 @require_http_methods(["GET"])
 def quest_view_redirect(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
-    quest.precteno += 1
+    quest.read += 1
     quest.save()
     return HttpResponseRedirect(quest.get_final_url())
 
