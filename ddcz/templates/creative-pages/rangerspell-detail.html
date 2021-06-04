@@ -13,7 +13,7 @@
             -->
             <table>
                 <tr>
-                    <th>author_nick:</th>
+                    <th>Autor:</th>
                     <td>{% author_display article %}</td>
                 </tr>
                 <tr>
@@ -26,29 +26,31 @@
                 </tr>
             </table>
 
-            {% if article.mag %}
-                <p><span class="label">Magenergie:</span> <span class="value">{{ article.mag }} {{ article.magpop }}</span></p>
+            <p><span class="label">Skupina:</span> <span class="value">{{ a.group }}</span></p>
+
+            {% if article.magenergy %}
+                <p><span class="label">Magenergie:</span> <span class="value">{{ article.magenergy }} {{ article.magenergy_description }}</span></p>
             {% endif %}
             {% if article.dosah %}
                 <p><span class="label">Dosah:</span> <span class="value">{{ article.dosah }} {{ article.dosahpop }}</span></p>
             {% endif %}
-            {% if article.rozsah %}
-                <p><span class="label">Rozsah:</span> <span class="value">{{ article.rozsah }} {{ article.rozsahpop }}</span></p>
+            {% if article.extent %}
+                <p><span class="label">Rozsah:</span> <span class="value">{{ article.extent }} {{ article.reach_description }}</span></p>
             {% endif %}
-            {% if article.vyvolani %}
-                <p><span class="label">Vyvolání:</span> <span class="value">{{ article.vyvolani }} {{ article.vyvolanipop }}</span></p>
+            {% if article.invocation %}
+                <p><span class="label">Vyvolání:</span> <span class="value">{{ article.invocation }} {{ article.invocation_description }}</span></p>
             {% endif %}
-            {% if article.druh %}
-                <p><span class="label">Druh:</span> <span class="value">{{ article.druh }}</span></p>
+            {% if article.spell_type %}
+                <p><span class="label">Druh:</span> <span class="value">{{ article.spell_type }}</span></p>
             {% endif %}
-            {% if article.cetnost %}
-                <p><span class="label">Četnost:</span> <span class="value">{{ article.cetnost }}</span></p>
+            {% if article.frequency %}
+                <p><span class="label">Četnost:</span> <span class="value">{{ article.frequency }}</span></p>
             {% endif %}
-            {% if article.pomucky %}
-                <p><span class="label">Pomůcky:</span> <span class="value">{{ article.pomucky }}</span></p>
+            {% if article.tools %}
+                <p><span class="label">Pomůcky:</span> <span class="value">{{ article.tools }}</span></p>
             {% endif %}
 
-            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+            <p><span class="label">Popis:</span> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></p>
 
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
             <p><span class="label">Přečteno:</span> <span class="value">{{ article.read }}</span></p>

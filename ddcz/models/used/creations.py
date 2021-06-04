@@ -579,21 +579,39 @@ class Link(models.Model):
 
 
 class RangerSpell(Creation):
-    mag = models.SmallIntegerField(db_column="mag")
-    magpop = MisencodedTextField(db_column="magpop")
-    dosah = models.SmallIntegerField(blank=True, null=True, db_column="dosah")
-    dosahpop = MisencodedTextField(blank=True, null=True, db_column="dosahpop")
-    rozsah = models.SmallIntegerField(blank=True, null=True, db_column="rozsah")
-    rozsahpop = MisencodedTextField(blank=True, null=True, db_column="rozsahpop")
-    vyvolani = models.SmallIntegerField(blank=True, null=True, db_column="vyvolani")
-    vyvolanipop = MisencodedTextField(blank=True, null=True, db_column="vyvolanipop")
-    druh = MisencodedTextField(blank=True, null=True, db_column="druh")
-    skupina = MisencodedTextField(db_column="skupina")
-    cetnost = MisencodedTextField(blank=True, null=True, db_column="cetnost")
-    pomucky = MisencodedTextField(blank=True, null=True, db_column="pomucky")
-    popis = MisencodedTextField(db_column="popis")
+    magenergy = models.SmallIntegerField(db_column="mag", verbose_name="Magenergie")
+    magenergy_description = MisencodedTextField(db_column="magpop", verbose_name="")
+    reach = models.SmallIntegerField(
+        blank=True, null=True, db_column="dosah", verbose_name="Rozsah"
+    )
+    reach_description = MisencodedTextField(
+        blank=True, null=True, db_column="dosahpop", verbose_name=""
+    )
+    extent = models.SmallIntegerField(
+        blank=True, null=True, db_column="rozsah", verbose_name="Rozsah"
+    )
+    extent_description = MisencodedTextField(
+        blank=True, null=True, db_column="rozsahpop", verbose_name=""
+    )
+    invocation = models.SmallIntegerField(
+        blank=True, null=True, db_column="vyvolani", verbose_name="Vyvolání"
+    )
+    invocation_description = MisencodedTextField(
+        blank=True, null=True, db_column="vyvolanipop", verbose_name=""
+    )
+    spell_type = MisencodedTextField(
+        blank=True, null=True, db_column="druh", verbose_name="Druh"
+    )
+    frequency = MisencodedTextField(
+        blank=True, null=True, db_column="cetnost", verbose_name="Četnost"
+    )
+    tools = MisencodedTextField(
+        blank=True, null=True, db_column="pomucky", verbose_name="Pomůcky"
+    )
+    description = MisencodedTextField(db_column="popis", verbose_name="Popis")
+    group = MisencodedTextField(db_column="skupina", verbose_name="Skupina")
 
-    legacy_html_attributes = ["popis", "pomucky"]
+    legacy_html_attributes = ["description", "tools"]
 
     class Meta:
         db_table = "hranicarkouzla"
@@ -603,20 +621,34 @@ class RangerSpell(Creation):
 
 
 class WizardSpell(Creation):
-    kouzsl = MisencodedTextField(db_column="kouzsl")
-    mag = models.SmallIntegerField(db_column="mag")
-    magpop = MisencodedTextField(db_column="magpop")
-    past = MisencodedTextField(blank=True, null=True, db_column="past")
-    dosah = models.IntegerField(blank=True, null=True, db_column="dosah")
-    dosahpop = MisencodedTextField(blank=True, null=True, db_column="dosahpop")
-    rozsah = models.IntegerField(db_column="rozsah")
-    rozsahpop = MisencodedTextField(blank=True, null=True, db_column="rozsahpop")
-    vyvolani = models.IntegerField(db_column="vyvolani")
-    vyvolanipop = MisencodedTextField(db_column="vyvolanipop")
-    trvani = models.IntegerField(db_column="trvani")
-    trvanipop = MisencodedTextField(blank=True, null=True, db_column="trvanipop")
-    popis = MisencodedTextField(db_column="popis")
-    skupina = MisencodedTextField(db_column="skupina")
+    summon_words = MisencodedTextField(
+        db_column="kouzsl", verbose_name="Kouzelná slova"
+    )
+    magenergy = models.SmallIntegerField(db_column="mag", verbose_name="Magenergie")
+    magenergy_description = MisencodedTextField(db_column="magpop", verbose_name="")
+    skill_check = MisencodedTextField(
+        blank=True, null=True, db_column="past", verbose_name="Past"
+    )
+    reach = models.SmallIntegerField(db_column="dosah", verbose_name="Rozsah")
+    reach_description = MisencodedTextField(
+        blank=True, null=True, db_column="dosahpop", verbose_name=""
+    )
+    extent = models.SmallIntegerField(
+        blank=True, null=True, db_column="rozsah", verbose_name="Rozsah"
+    )
+    extent_description = MisencodedTextField(
+        blank=True, null=True, db_column="rozsahpop", verbose_name=""
+    )
+    invocation = models.SmallIntegerField(db_column="vyvolani", verbose_name="Vyvolání")
+    invocation_description = MisencodedTextField(
+        db_column="vyvolanipop", verbose_name=""
+    )
+    duration = models.IntegerField(db_column="trvani", verbose_name="Trvání")
+    duration_description = MisencodedTextField(
+        blank=True, null=True, db_column="trvanipop", verbose_name=""
+    )
+    description = MisencodedTextField(db_column="popis")
+    group = MisencodedTextField(db_column="skupina")
 
     legacy_html_attributes = ["popis"]
 

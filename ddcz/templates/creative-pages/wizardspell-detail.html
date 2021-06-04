@@ -7,13 +7,13 @@
     <h1 class="page-heading">{{ heading }}</h1>
     <article>
         <header>
-            <h2>{{ article.name }} <span class="wizard-summmonwords">*{{ article.kouzsl }}*</span>{% creation_rating article.rating skin %}</h2>
+            <h2>{{ article.name }} <span class="wizard-summmonwords">*{{ article.spell_words }}*</span>{% creation_rating article.rating skin %}</h2>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->
             <table>
                 <tr>
-                    <th>author_nick:</th>
+                    <th>Autor:</th>
                     <td>{% author_display article %}</td>
                 </tr>
                 <tr>
@@ -26,35 +26,32 @@
                 </tr>
             </table>
 
-            <p><span class="label">Skupina:</span> <span class="value">{{ article.skupina }}</span></p>
+            <p><span class="label">Skupina:</span> <span class="value">{{ article.group }}</span></p>
                 {% if article.mag %}
                     <p><span class="label">Magenergie:</span> <span class="value">{{ article.mag }} {{ article.magpop }}</span></p>
                 {% endif %}
-                {% if article.past %}
-                    <p><span class="label">Past:</span> <span class="value">{{ article.past }}</span></p>
+                {% if article.skill_check %}
+                    <p><span class="label">Past:</span> <span class="value">{{ article.skill_check }}</span></p>
                 {% endif %}
-                {% if article.dosah or article.dosahpop %}
-                    <p><span class="label">Dosah:</span> <span class="value">{% if article.dosah %}{{ article.dosah }} {% endif %}{{ article.dosahpop }}</span></p>
+                {% if article.extent or article.extent_description %}
+                    <p><span class="label">Dosah:</span> <span class="value">{% if article.extent %}{{ article.extent }} {% endif %}{%  if article.article.extent_description %}{{ article.extent_description }}{% endif %}</span></p>
                 {% endif %}
-                {% if article.rozsah or article.rozsahpop %}
-                    <p><span class="label">Rozsah:</span> <span class="value">{% if article.rosah %}{{ article.rozsah }} {% endif %}{{ article.rozsahpop }}</span></p>
+                {% if article.reach or article.reach_description %}
+                    <p><span class="label">Rozsah:</span> <span class="value">{% if article.reach %}{{ article.reach }} {% endif %}{%  if article.article.reach_description %}{{ article.reach_description }}{% endif %}</span></p>
                 {% endif %}
-                {% if article.vyvolani %}
-                    <p><span class="label">Vyvolání:</span> <span class="value">{{ article.vyvolani }} {{ article.vyvolanipop }}</span></p>
+                {% if article.invocation %}
+                    <p><span class="label">Vyvolání:</span> <span class="value">{{ article.invocation }} {{ article.invocation_description }}</span></p>
                 {% endif %}
-                {% if article.trvani %}
-                    <p><span class="label">Trvání:</span> <span class="value">{{ article.trvani }} {{ article.trvanipop }}</span></p>
+                {% if article.duration %}
+                    <p><span class="label">Trvání:</span> <span class="value">{{ article.duration }} {{ article.duration_description }}</span></p>
                 {% endif %}
 
 
-            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+            <p><span class="label">Popis:</span> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></p>
 
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
             <p><span class="label">Přečteno:</span> <span class="value">{{ article.read }}</span></p>
             <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
-
-            <p><span class="label">author_nick:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.author_nick }}</a></span></p>
-
 
         </header>
 
