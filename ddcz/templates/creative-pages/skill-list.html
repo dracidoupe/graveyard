@@ -22,9 +22,9 @@
         <li class="creation-detail">
             <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
             <div class="table-like">
-                <p><span class="label">author_nick:</span> <span class="value">{% author_display a %}</span></p>
-                {% if a.vlastnost %}
-                    <p><span class="label">Vlastnost:</span> <span class="value">{{ a.vlastnost }}</span></p>
+                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
+                {% if a.attribute %}
+                    <p><span class="label">Vlastnost:</span> <span class="value">{{ a.attribute }}</span></p>
                 {% endif %}
                 <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime }}</time></span></p>
                 <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>

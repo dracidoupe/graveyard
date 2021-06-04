@@ -448,19 +448,31 @@ class Photo(Creation):
 
 
 class Skill(Creation):
-    vlastnost = MisencodedTextField(db_column="vlastnost")
-    obtiznost = MisencodedTextField(db_column="obtiznost")
-    overovani = MisencodedTextField(db_column="overovani")
-    totuspech = MisencodedTextField(db_column="totuspech")
-    uspech = MisencodedTextField(db_column="uspech")
-    neuspech = MisencodedTextField(db_column="neuspech")
-    fatneuspech = MisencodedTextField(db_column="fatneuspech")
-    popis = MisencodedTextField(db_column="popis")
-    skupina = MisencodedCharField(max_length=30, db_column="skupina")
+    attribute = MisencodedTextField(db_column="vlastnost", verbose_name="Vlastnost")
+    difficulty = MisencodedTextField(db_column="obtiznost", verbose_name="Obtížnost")
+    check_interval = MisencodedTextField(
+        db_column="overovani", verbose_name="Ověřování"
+    )
+    total_success = MisencodedTextField(
+        db_column="totuspech", verbose_name="Totální úspěch"
+    )
+    success = MisencodedTextField(db_column="uspech", verbose_name="Úspěch")
+    failure = MisencodedTextField(db_column="neuspech", verbose_name="Neúspěch")
+    fatal_failure = MisencodedTextField(
+        db_column="fatneuspech", verbose_name="Fatální neúspěch"
+    )
+    description = MisencodedTextField(db_column="popis", verbose_name="Popis")
+    group = MisencodedCharField(max_length=30, db_column="skupina")
     # TODO: No idea what this is used for, potentially drop
-    hlasoval = MisencodedTextField(blank=True, null=True, db_column="hlasoval")
+    voted = MisencodedTextField(blank=True, null=True, db_column="hlasoval")
 
-    legacy_html_attributes = ["totuspech", "uspech", "neuspech", "fatneuspech", "popis"]
+    legacy_html_attributes = [
+        "total_success",
+        "success",
+        "failure",
+        "fatal_failure",
+        "description",
+    ]
 
     class Meta:
         db_table = "dovednosti"
