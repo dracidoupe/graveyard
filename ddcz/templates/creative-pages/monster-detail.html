@@ -26,48 +26,48 @@
                 </tr>
             </table>
 
-            <p><span class="label">Skupina:</span> <span class="value">{{ article.skupina }}</span></p>
+            <p><span class="label">Skupina:</span> <span class="value">{{ article.group }}</span></p>
             {% if article.zvt %}
-                <p><span class="label">Životaschopnost:</span> <span class="value">{{ article.zvt }}</span></p>
+                <p><span class="label">Životaschopnost:</span> <span class="value">{{ article.hitpoint_class }}</span></p>
             {% endif %}
             {% if article.uc %}
-                <p><span class="label">Útočné číslo:</span> <span class="value">{{ article.uc }}</span></p>
+                <p><span class="label">Útočné číslo:</span> <span class="value">{{ article.attack }}</span></p>
             {% endif %}
             {% if article.oc %}
-                <p><span class="label">Obranné číslo:</span> <span class="value">{{ article.oc }}</span></p>
+                <p><span class="label">Obranné číslo:</span> <span class="value">{{ article.defense }}</span></p>
             {% endif %}
             {% if article.odl %}
-                <p><span class="label">Odolnost:</span> <span class="value">{{ article.odl }}</span></p>
+                <p><span class="label">Odolnost:</span> <span class="value">{{ article.fortitude }}</span></p>
             {% endif %}
             {% if article.inteligence %}
-                <p><span class="label">Inteligence:</span> <span class="value">{{ article.inteligence }}</span></p>
+                <p><span class="label">Inteligence:</span> <span class="value">{{ article.intelligence }}</span></p>
             {% endif %}
             {% if article.vel %}
-                <p><span class="label">Velikost:</span> <span class="value">{{ article.vel }}</span></p>
+                <p><span class="label">Velikost:</span> <span class="value">{{ article.size }}</span></p>
             {% endif %}
             {% if article.zran %}
-                <p><span class="label">Zranitelnost:</span> <span class="value">{{ article.zran }}</span></p>
+                <p><span class="label">Zranitelnost:</span> <span class="value">{{ article.vulnerability }}</span></p>
             {% endif %}
             {% if article.poh %}
-                <p><span class="label">Pohyblivost:</span> <span class="value">{{ article.poh }}</span></p>
+                <p><span class="label">Pohyblivost:</span> <span class="value">{{ article.agility }}</span></p>
             {% endif %}
             {% if article.pres %}
-                <p><span class="label">Přesvědčení:</span> <span class="value">{{ article.pres }}</span></p>
+                <p><span class="label">Přesvědčení:</span> <span class="value">{{ article.alignment }}</span></p>
             {% endif %}
             {% if article.pokl %}
-                <p><span class="label">Poklady:</span> <span class="value">{{ article.pokl }}</span></p>
+                <p><span class="label">Poklady:</span> <span class="value">{{ article.treasures }}</span></p>
             {% endif %}
             {% if article.zkus %}
-                <p><span class="label">Zkušenost:</span> <span class="value">{{ article.zkus }}</span></p>
+                <p><span class="label">Zkušenost:</span> <span class="value">{{ article.experience }}</span></p>
             {% endif %}
             {% if article.bojovnost %}
-                <p><span class="label">Bojovnost:</span> <span class="value">{{ article.bojovnost }}</span></p>
+                <p><span class="label">Bojovnost:</span> <span class="value">{{ article.combativeness }}</span></p>
             {% endif %}
             {% if article.sm %}
-                <p><span class="label">Síla mysli:</span> <span class="value">{{ article.sm }}</span></p>
+                <p><span class="label">Síla mysli:</span> <span class="value">{{ article.mental_strength }}</span></p>
             {% endif %}
 
-            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+            <p><span class="label">Popis:</span> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></p>
 
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
             <p><span class="label">Přečteno:</span> <span class="value">{{ article.read }}</span></p>

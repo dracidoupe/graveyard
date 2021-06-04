@@ -343,25 +343,49 @@ class CommonArticle(Creation):
 
 
 class Monster(Creation):
-    zvt = MisencodedTextField(db_column="zvt")
-    uc = MisencodedTextField(db_column="uc")
-    oc = MisencodedTextField(db_column="oc")
-    odl = MisencodedCharField(max_length=3, db_column="odl")
-    inteligence = MisencodedCharField(
-        max_length=50, blank=True, null=True, db_column="inteligence"
+    hitpoint_class = MisencodedTextField(
+        db_column="zvt", verbose_name="Životaschopnost"
     )
-    vel = MisencodedCharField(max_length=20, db_column="vel")
-    zran = MisencodedTextField(blank=True, null=True, db_column="zran")
-    poh = MisencodedTextField(blank=True, null=True, db_column="poh")
-    pres = MisencodedTextField(blank=True, null=True, db_column="pres")
-    pokl = MisencodedTextField(blank=True, null=True, db_column="pokl")
-    zkus = MisencodedCharField(max_length=50, db_column="zkus")
-    popis = MisencodedTextField(db_column="popis")
-    skupina = MisencodedTextField(db_column="skupina")
-    bojovnost = MisencodedCharField(
-        max_length=50, blank=True, null=True, db_column="bojovnost"
+    attack = MisencodedTextField(db_column="uc", verbose_name="Útočné číslo")
+    defense = MisencodedTextField(db_column="oc", verbose_name="Obranné číslo")
+    fortitude = MisencodedCharField(
+        max_length=3, db_column="odl", verbose_name="Odolnost"
     )
-    sm = MisencodedCharField(db_column="SM", max_length=50, blank=True, null=True)
+    intelligence = MisencodedCharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column="inteligence",
+        verbose_name="Inteligence",
+    )
+    size = MisencodedCharField(max_length=20, db_column="vel", verbose_name="Velikost")
+    vulnerability = MisencodedTextField(
+        blank=True, null=True, db_column="zran", verbose_name="Zranitelnost"
+    )
+    agility = MisencodedTextField(
+        blank=True, null=True, db_column="poh", verbose_name="Pohyblivost"
+    )
+    alignment = MisencodedTextField(
+        blank=True, null=True, db_column="pres", verbose_name="Přesvědčení"
+    )
+    treasures = MisencodedTextField(
+        blank=True, null=True, db_column="pokl", verbose_name="Poklady"
+    )
+    experience = MisencodedCharField(
+        max_length=50, db_column="zkus", verbose_name="Zkušenost"
+    )
+    description = MisencodedTextField(db_column="popis", verbose_name="Popis")
+    group = MisencodedTextField(db_column="skupina")
+    combativeness = MisencodedCharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        db_column="bojovnost",
+        verbose_name="Bojovnost",
+    )
+    mental_strength = MisencodedCharField(
+        db_column="SM", max_length=50, blank=True, null=True, verbose_name="Síla mysli"
+    )
 
     legacy_html_attributes = ["popis"]
 
