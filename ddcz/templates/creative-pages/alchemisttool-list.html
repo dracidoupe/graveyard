@@ -23,46 +23,54 @@
         <li class="creation-detail">
             <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
             <div class="table-like">
-                <p><span class="label">Skupina:</span> <span class="value">{{ a.skupina }}</span></p>
-                {% if a.mag %}
-                    <p><span class="label">Magenergie:</span> <span class="value">{{ a.mag }}</span></p>
+                <p><span class="label">Skupina:</span> <span class="value">{{ a.group }}</span></p>
+                {% if a.magenergy %}
+                    <p><span class="label">Magenergie:</span> <span class="value">{{ a.magenergy }}</span></p>
                 {% endif %}
-                {% if a.suroviny %}
-                    <p><span class="label">Suroviny:</span> <span class="value">{{ a.suroviny }}</span></p>
+                {% if a.resources %}
+                    <p><span class="label">Suroviny:</span> <span class="value">{{ a.resources }}</span></p>
                 {% endif %}
-                {% if a.zaklad %}
-                    <p><span class="label">Základ:</span> <span class="value">{{ a.zaklad }}</span></p>
+                {% if a.base %}
+                    <p><span class="label">Základ:</span> <span class="value">{{ a.base }}</span></p>
                 {% endif %}
-                {% if a.nalezeni %}
-                    <p><span class="label">Nalezení:</span> <span class="value">{{ a.nalezeni }}</span></p>
+                {% if a.discovery %}
+                    <p><span class="label">Nalezení:</span> <span class="value">{{ a.discovery }}</span></p>
                 {% endif %}
-                {% if a.trvani %}
-                    <p><span class="label">Trvání:</span> <span class="value">{{ a.trvani }}</span></p>
+                {% if a.duration %}
+                    <p><span class="label">Trvání:</span> <span class="value">{{ a.duration }}</span></p>
                 {% endif %}
-                {% if a.vyroba %}
-                    <p><span class="label">Výroba:</span> <span class="value">{{ a.vyroba }}</span></p>
+                {% if a.crafting %}
+                    <p><span class="label">Výroba:</span> <span class="value">{{ a.crafting }}</span></p>
                 {% endif %}
-                {% if a.nebezpecnost %}
-                    <p><span class="label">Nebezpečnost:</span> <span class="value">{{ a.nebezpecnost }}</span></p>
+                {% if a.dangerousness %}
+                    <p><span class="label">Nebezpečnost:</span> <span class="value">{{ a.dangerousness }}</span></p>
                 {% endif %}
-                {% if a.sila %}
-                    <p><span class="label">Síla:</span> <span class="value">{{ a.sila }}</span></p>
+                {% if a.strength %}
+                    <p><span class="label">Síla:</span> <span class="value">{{ a.strength }}</span></p>
                 {% endif %}
-                {% if a.bcz %}
-                    <p><span class="label">Barva/chuť/zápach:</span> <span class="value">{{ a.bcz }}</span></p>
+                {% if a.color_taste_smell %}
+                    <p><span class="label">Barva/chuť/zápach:</span> <span class="value">{{ a.color_taste_smell }}</span></p>
                 {% endif %}
-                {% if a.denmag %}
-                    <p><span class="label">Magy/den:</span> <span class="value">{{ a.denmag }}</span></p>
+                {% if a.daily_magenergy %}
+                    <p><span class="label">Magy/den:</span> <span class="value">{{ a.daily_magenergy }}</span></p>
+                {% endif %}
+                {% if a.effect_outreach %}
+                    <p><span class="label">Dosah účinku:</span> <span class="value">{{ a.effect_outreach }}</span></p>
+                {% endif %}
+                {% if a.crafter_level %}
+                    <p><span class="label">Úroveň výrobce:</span> <span class="value">{{ a.crafter_level }}</span></p>
+                {% endif %}
+                {% if a.sphere %}
+                    <p><span class="label">Sféra:</span> <span class="value">{{ a.sphere }}</span></p>
                 {% endif %}
 
-
-                <div class="description-row"><span class="label">Popis:</span> <div class="value">{{ a.popis|render_html_insecurely|safe }}</div></div>
+                <div class="description-row"><span class="label">Popis:</span> <div class="value">{{ a.description|render_html_insecurely|safe }}</div></div>
 
                 <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime }}</time></span></p>
                 <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>
                 <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
 
-                <p><span class="label">author_nick:</span> <span class="value">{% author_display a %}</span></p>
+                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
                 <!--
                 <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
                 -->

@@ -479,35 +479,69 @@ class Skill(Creation):
 
 
 class AlchemistTool(Creation):
-    mag = models.IntegerField(blank=True, null=True, db_column="mag")
-    suroviny = models.SmallIntegerField(blank=True, null=True, db_column="suroviny")
-    zaklad = MisencodedCharField(
-        max_length=150, blank=True, null=True, db_column="zaklad"
+    magenergy = models.IntegerField(
+        blank=True, null=True, db_column="mag", verbose_name="Magenergie"
     )
-    nalezeni = MisencodedCharField(
-        max_length=150, blank=True, null=True, db_column="nalezeni"
+    resources = models.SmallIntegerField(
+        blank=True, null=True, db_column="suroviny", verbose_name="Suroviny"
     )
-    trvani = MisencodedCharField(
-        max_length=30, blank=True, null=True, db_column="trvani"
+    base = MisencodedCharField(
+        max_length=150, blank=True, null=True, db_column="zaklad", verbose_name="Základ"
     )
-    vyroba = MisencodedCharField(
-        max_length=30, blank=True, null=True, db_column="vyroba"
+    discovery = MisencodedCharField(
+        max_length=150,
+        blank=True,
+        null=True,
+        db_column="nalezeni",
+        verbose_name="Nalezení",
     )
-    nebezpecnost = MisencodedCharField(
-        max_length=30, blank=True, null=True, db_column="nebezpecnost"
+    duration = MisencodedCharField(
+        max_length=30, blank=True, null=True, db_column="trvani", verbose_name="Trvání"
     )
-    sila = MisencodedCharField(max_length=30, blank=True, null=True, db_column="sila")
-    bcz = MisencodedCharField(max_length=30, blank=True, null=True, db_column="bcz")
-    denmag = models.IntegerField(blank=True, null=True, db_column="denmag")
-    dosah_ucinku = MisencodedCharField(
-        max_length=20, blank=True, null=True, db_column="dosah_ucinku"
+    crafting = MisencodedCharField(
+        max_length=30, blank=True, null=True, db_column="vyroba", verbose_name="Výroba"
     )
-    uroven_vyrobce = MisencodedCharField(
-        max_length=10, null=True, blank=True, db_column="uroven_vyrobce"
+    dangerousness = MisencodedCharField(
+        max_length=30,
+        blank=True,
+        null=True,
+        db_column="nebezpecnost",
+        verbose_name="Nebezpečnost",
     )
-    sfera = MisencodedCharField(max_length=20, null=True, blank=True, db_column="sfera")
-    popis = MisencodedTextField(db_column="popis")
-    skupina = MisencodedCharField(max_length=30, db_column="skupina")
+    strength = MisencodedCharField(
+        max_length=30, blank=True, null=True, db_column="sila", verbose_name="Síla"
+    )
+    color_taste_smell = MisencodedCharField(
+        max_length=30,
+        blank=True,
+        null=True,
+        db_column="bcz",
+        verbose_name="Barva/chuť/zápach:",
+    )
+    daily_magenergy = models.IntegerField(
+        blank=True, null=True, db_column="denmag", verbose_name="Magy/den"
+    )
+    effect_outreach = MisencodedCharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        db_column="dosah_ucinku",
+        verbose_name="Dosah účinku",
+    )
+    crafter_level = MisencodedCharField(
+        max_length=10,
+        null=True,
+        blank=True,
+        db_column="uroven_vyrobce",
+        verbose_name="Úroveň výrobce",
+    )
+    sphere = MisencodedCharField(
+        max_length=20, null=True, blank=True, db_column="sfera", verbose_name="Sféra"
+    )
+    description = MisencodedTextField(db_column="popis", verbose_name="Popis")
+    group = MisencodedCharField(
+        max_length=30, db_column="skupina", verbose_name="Skupina"
+    )
 
     legacy_html_attributes = ["popis"]
 
