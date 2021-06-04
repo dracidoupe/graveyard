@@ -414,33 +414,37 @@ class GalleryPicture(Creation):
     (path stored in `cesta`) as well as new version
     """
 
-    cesta = MisencodedTextField(db_column="cesta")
-    cestathumb = MisencodedTextField(db_column="cestathumb")
+    image_path = MisencodedTextField(db_column="cesta", verbose_name="Cesta k obrázku")
+    image_thumbnail_path = MisencodedTextField(
+        db_column="cestathumb", verbose_name="Cesta k náhledovému obrázku"
+    )
 
     class Meta:
         db_table = "galerie"
 
     def get_thumbnail_url(self):
-        return urljoin(settings.GALLERY_MEDIA_ROOT_URL, self.cestathumb)
+        return urljoin(settings.GALLERY_MEDIA_ROOT_URL, self.image_thumbnail_path)
 
     def get_picture_url(self):
-        return urljoin(settings.GALLERY_MEDIA_ROOT_URL, self.cesta)
+        return urljoin(settings.GALLERY_MEDIA_ROOT_URL, self.image_path)
 
 
 class Photo(Creation):
     """See GalleryPicture; just part of different Creation Page"""
 
-    cesta = MisencodedTextField(db_column="cesta")
-    cestathumb = MisencodedTextField(db_column="cestathumb")
+    image_path = MisencodedTextField(db_column="cesta", verbose_name="Cesta k obrázku")
+    image_thumbnail_path = MisencodedTextField(
+        db_column="cestathumb", verbose_name="Cesta k náhledovému obrázku"
+    )
 
     class Meta:
         db_table = "fotogalerie"
 
     def get_thumbnail_url(self):
-        return urljoin(settings.PHOTOGALLERY_MEDIA_ROOT_URL, self.cestathumb)
+        return urljoin(settings.PHOTOGALLERY_MEDIA_ROOT_URL, self.image_thumbnail_path)
 
     def get_picture_url(self):
-        return urljoin(settings.PHOTOGALLERY_MEDIA_ROOT_URL, self.cesta)
+        return urljoin(settings.PHOTOGALLERY_MEDIA_ROOT_URL, self.image_path)
 
 
 class Skill(Creation):
