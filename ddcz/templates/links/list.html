@@ -9,14 +9,14 @@
 
 <p><b>Tato rubrika je nefunkční. Nelze do ní přidávat další odkazy, nejsou aktualizovány odkazy stávající. Děkujeme za pochopení.</b></p>
 <p><b>Děkujeme</b> všem, kteří nám poskytli své stránky ke zveřejnění na našem webu.
-Jsou to: 
-<a href="http://pajuvdrd.wz.cz" target="_blank">Pájův DrD koutek</a>, 
-<a href="http://www.volny.cz/salim/drd/index.html" target="_blank">Tamuria</a>, 
-<a href="http://klandraku.d2.cz" target="_blank">Klan Draků</a>, 
+Jsou to:
+<a href="http://pajuvdrd.wz.cz" target="_blank">Pájův DrD koutek</a>,
+<a href="http://www.volny.cz/salim/drd/index.html" target="_blank">Tamuria</a>,
+<a href="http://klandraku.d2.cz" target="_blank">Klan Draků</a>,
 <a href="http://www.volny.cz/sikmar/index.htm" target="_blank">Sicco web</a>,
-<a href="http://www.hyperlink.cz/dracidoupe" target="_blank">Hyperlink/DraciDoupe</a>, 
-<a href="http://mapmaker.wz.cz" target="_blank">MapMaker&amp;DungeonMapper</a>, 
-<a href="http://www.gop.pilsedu.cz/pech/" target="_blank">Dračí poklad</a> 
+<a href="http://www.hyperlink.cz/dracidoupe" target="_blank">Hyperlink/DraciDoupe</a>,
+<a href="http://mapmaker.wz.cz" target="_blank">MapMaker&amp;DungeonMapper</a>,
+<a href="http://www.gop.pilsedu.cz/pech/" target="_blank">Dračí poklad</a>
 a částečně i <a href="http://drd.webz.cz/" target="_blank">U.G.DrD's page</a></p>
 <p>Budeme rádi, když na nás upozorníte na svých stránkách odkazem.</p>
 
@@ -25,14 +25,14 @@ a částečně i <a href="http://drd.webz.cz/" target="_blank">U.G.DrD's page</a
     {% for item in items %}
         <article class="link">
             <header>
-                <h2>{{ item.nazev }}</h2>
+                <h2>{{ item.name }}</h2>
                 <div><a href="#">Komentáře a hlasování (brzy přístupné)</a></div>
             </header>
             <div class="content">
-                {{ item.popis|render_html_insecurely|safe }}
+                {{ item.description|render_html_insecurely|safe }}
             </div>
             <footer>
-                {% creation_rating item.pochvez skin %}<span class="actuallink"><a href="{{ item.adresa }}">{{ item.adresa }}</a></span>
+                {% creation_rating item.rating skin %}<span class="actuallink"><a href="{{ item.url }}">{{ item.adresa }}</a></span>
             </footer>
         </article>
     {% endfor %}

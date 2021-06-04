@@ -556,28 +556,26 @@ class AlchemistTool(Creation):
 
 
 class Link(models.Model):
-    nazev = MisencodedTextField(db_column="nazev")
-    adresa = MisencodedTextField(db_column="adresa")
-    popis = MisencodedTextField(db_column="popis")
-    pochvez = MisencodedCharField(max_length=1, db_column="pochvez")
-    schvaleno = MisencodedCharField(
+    name = MisencodedTextField(db_column="nazev")
+    url = MisencodedTextField(db_column="adresa")
+    description = MisencodedTextField(db_column="popis")
+    rating = MisencodedCharField(max_length=1, db_column="pochvez")
+    is_approved = MisencodedCharField(
         max_length=1, choices=APPROVAL_CHOICES, db_column="schvaleno"
     )
-    datum = models.DateTimeField(db_column="datum")
-    pocet_hlasujicich = models.IntegerField(
-        blank=True, null=True, db_column="pocet_hlasujicich"
-    )
-    hodnota_hlasovani = models.IntegerField(
+    published = models.DateTimeField(db_column="datum")
+    rater_no = models.IntegerField(blank=True, null=True, db_column="pocet_hlasujicich")
+    rater_sum = models.IntegerField(
         blank=True, null=True, db_column="hodnota_hlasovani"
     )
 
-    legacy_html_attributes = ["popis"]
+    legacy_html_attributes = ["description"]
 
     class Meta:
         db_table = "linky"
 
     def __str__(self):
-        return "{} {}".format(self.nazev, self.adresa)
+        return "{} {}".format(self.name, self.url)
 
 
 class RangerSpell(Creation):

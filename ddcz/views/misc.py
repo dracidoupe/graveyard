@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 @require_http_methods(["GET"])
 def links(request):
-    item_list = Link.objects.filter(schvaleno="a").order_by("-datum")
+    item_list = Link.objects.filter(is_approved="a").order_by("-published")
 
     paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
     page = request.GET.get("z_s", 1)
