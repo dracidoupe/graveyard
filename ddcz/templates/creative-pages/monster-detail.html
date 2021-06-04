@@ -13,7 +13,7 @@
             -->
             <table>
                 <tr>
-                    <th>author_nick:</th>
+                    <th>Autor:</th>
                     <td>{% author_display article %}</td>
                 </tr>
                 <tr>
@@ -27,43 +27,43 @@
             </table>
 
             <p><span class="label">Skupina:</span> <span class="value">{{ article.group }}</span></p>
-            {% if article.zvt %}
+            {% if article.hitpoint_class %}
                 <p><span class="label">Životaschopnost:</span> <span class="value">{{ article.hitpoint_class }}</span></p>
             {% endif %}
-            {% if article.uc %}
+            {% if article.attack %}
                 <p><span class="label">Útočné číslo:</span> <span class="value">{{ article.attack }}</span></p>
             {% endif %}
-            {% if article.oc %}
+            {% if article.defense %}
                 <p><span class="label">Obranné číslo:</span> <span class="value">{{ article.defense }}</span></p>
             {% endif %}
-            {% if article.odl %}
+            {% if article.fortitude %}
                 <p><span class="label">Odolnost:</span> <span class="value">{{ article.fortitude }}</span></p>
             {% endif %}
-            {% if article.inteligence %}
+            {% if article.intelligence %}
                 <p><span class="label">Inteligence:</span> <span class="value">{{ article.intelligence }}</span></p>
             {% endif %}
-            {% if article.vel %}
+            {% if article.size %}
                 <p><span class="label">Velikost:</span> <span class="value">{{ article.size }}</span></p>
             {% endif %}
-            {% if article.zran %}
+            {% if article.vulnerability %}
                 <p><span class="label">Zranitelnost:</span> <span class="value">{{ article.vulnerability }}</span></p>
             {% endif %}
-            {% if article.poh %}
+            {% if article.agility %}
                 <p><span class="label">Pohyblivost:</span> <span class="value">{{ article.agility }}</span></p>
             {% endif %}
-            {% if article.pres %}
+            {% if article.alignment %}
                 <p><span class="label">Přesvědčení:</span> <span class="value">{{ article.alignment }}</span></p>
             {% endif %}
-            {% if article.pokl %}
+            {% if article.treasures %}
                 <p><span class="label">Poklady:</span> <span class="value">{{ article.treasures }}</span></p>
             {% endif %}
-            {% if article.zkus %}
+            {% if article.experience %}
                 <p><span class="label">Zkušenost:</span> <span class="value">{{ article.experience }}</span></p>
             {% endif %}
-            {% if article.bojovnost %}
+            {% if article.combativeness %}
                 <p><span class="label">Bojovnost:</span> <span class="value">{{ article.combativeness }}</span></p>
             {% endif %}
-            {% if article.sm %}
+            {% if article.mental_strength %}
                 <p><span class="label">Síla mysli:</span> <span class="value">{{ article.mental_strength }}</span></p>
             {% endif %}
 
