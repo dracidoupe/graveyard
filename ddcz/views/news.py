@@ -11,7 +11,7 @@ DEFAULT_LIST_SIZE = 10
 
 @require_http_methods(["GET"])
 @vary_on_cookie
-def index(request):
+def list(request):
     page = request.GET.get("z_s", 1)
     cache_key = "info:news:list"
     news = None
