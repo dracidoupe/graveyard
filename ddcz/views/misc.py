@@ -47,7 +47,7 @@ def links(request):
 
 @require_http_methods(["GET"])
 def dating(request):
-    item_list = Dating.objects.order_by("-datum")
+    item_list = Dating.objects.order_by("-published")
 
     paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
     page = request.GET.get("z_s", 1)
