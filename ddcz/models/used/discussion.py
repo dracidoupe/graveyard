@@ -7,7 +7,7 @@ from .users import UserProfile
 class Phorum(models.Model):
     nickname = MisencodedCharField(max_length=64, db_column="nickname")
     email = MisencodedTextField(blank=True, null=True, db_column="email")
-    datum = models.DateTimeField(auto_now_add=True, db_column="datum")
+    date = models.DateTimeField(auto_now_add=True, db_column="datum")
     text = MisencodedTextField(db_column="")
     # stands for 'registered', contains either '1' or IP address
     registered_or_ip = MisencodedCharField(max_length=50, db_column="reg")

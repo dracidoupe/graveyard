@@ -33,8 +33,8 @@ def phorum(request):
             form = PhorumCommentForm(request.POST)
             if form.is_valid():
                 Phorum.objects.create(
-                    reputace=0,
-                    reg=1,
+                    reputation=0,
+                    registered_or_ip=1,
                     user=request.user.profile,
                     text=form.cleaned_data["text"],
                     nickname=request.user.profile.nick_uzivatele,
@@ -44,7 +44,7 @@ def phorum(request):
         return HttpResponseRedirect(reverse("ddcz:phorum-list"))
 
     default_limit = 20
-    discussions = Phorum.objects.all().order_by("-datum")
+    discussions = Phorum.objects.all().order_by("-date")
 
     paginator = Paginator(discussions, default_limit)
     page = request.GET.get("z_s", 1)
