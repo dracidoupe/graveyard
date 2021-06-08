@@ -8,10 +8,10 @@ def migrate_user(profile, password):
     """Create proper Django user for an existing (presumably authenticated) UserProfile"""
     user = User.objects.create_user(
         id=profile.id,
-        username=profile.nick_uzivatele,
+        username=profile.nick,
         password=password,
-        date_joined=profile.reg_schval_datum,
-        last_login=profile.pospristup,
+        date_joined=profile.registration_approved_date,
+        last_login=profile.last_access,
     )
     profile.user = user
     profile.save()

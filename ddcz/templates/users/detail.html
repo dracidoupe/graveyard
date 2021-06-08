@@ -19,10 +19,7 @@
                 {% if permission.jmeno or permission.prijmeni %}
                 <tr>
                     <th>Jméno</th>
-                    <td>
-                        {% if permission.jmeno %}{{ profile.jmeno_uzivatele }}{% endif %}
-                        {% if permission.prijmeni %}{{ profile.prijmeni_uzivatele }}{% endif %}
-                    </td>
+                    <td>{{  profile.name }}</td>
                 </tr>
                 {% endif %}
                 {% if permission.email %}

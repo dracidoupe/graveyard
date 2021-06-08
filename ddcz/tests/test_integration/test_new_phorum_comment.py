@@ -22,14 +22,14 @@ class PhorumCommentTestCase(TestCase):
         )
 
         self.user_profile = UserProfile.objects.create(
-            nick_uzivatele=self.nickname,
-            email_uzivatele="physics@example.com",
+            nick=self.nickname,
+            email="physics@example.com",
             user=self.valid_user,
         )
 
         self.user_profile2 = UserProfile.objects.create(
-            nick_uzivatele=self.nickname2,
-            email_uzivatele="mathematics@example.com",
+            nick=self.nickname2,
+            email="mathematics@example.com",
             user=self.valid_user2,
         )
 

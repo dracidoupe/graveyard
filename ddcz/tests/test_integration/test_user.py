@@ -23,8 +23,8 @@ class PasswordResetTestCase(TestCase):
         )
 
         self.valid_profile = UserProfile.objects.create(
-            nick_uzivatele=self.nick,
-            email_uzivatele=self.valid_email,
+            nick=self.nick,
+            email=self.valid_email,
             user=self.valid_user,
         )
 

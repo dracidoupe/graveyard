@@ -37,8 +37,8 @@ class TestAuthorCretionsList(TestCase):
         self.quest = Quest(
             name="Example Quest",
             author=self.author_user,
-            author_nick=self.user.nick_uzivatele,
-            author_mail=self.user.email_uzivatele,
+            author_nick=self.user.nick,
+            author_mail=self.user.email,
             is_published=Quest.CREATION_APPROVED,
         )
 

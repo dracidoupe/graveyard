@@ -164,7 +164,7 @@ class Author(models.Model):
             if self.user_nick:
                 display_name = self.user_nick
             else:
-                display_name = self.user.nick_uzivatele
+                display_name = self.user.nick
 
         elif self.author_type == self.WEBSITE_TYPE:
             display_name = self.website

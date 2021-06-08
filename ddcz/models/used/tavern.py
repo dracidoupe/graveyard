@@ -45,13 +45,11 @@ class TavernTable(models.Model):
     def is_user_access_allowed(self, user_profile, acls=None):
         # For ACL explanations, see TavernAccess
         # Note: Can't do "if not acls" since that would re-fetch for every empty set
-        if user_profile.nick_uzivatele == self.owner:
+        if user_profile.nick == self.owner:
             return True
 
         if acls is None:
-            acls_models = self.tavernaccess_set.filter(
-                user_nick=user_profile.nick_uzivatele
-            )
+            acls_models = self.tavernaccess_set.filter(user_nick=user_profile.nick)
             acls = set([acl.access_type for acl in acls_models])
 
         if "asist" in acls:
@@ -152,7 +150,7 @@ class TavernTable(models.Model):
                 TavernAccess.objects.create(
                     tavern_table=self,
                     access_type=access_type.value,
-                    user_nick=UserProfile.objects.get(pk=user_id).nick_uzivatele,
+                    user_nick=UserProfile.objects.get(pk=user_id).nick,
                 )
 
         # Deleting the ones that were dropped

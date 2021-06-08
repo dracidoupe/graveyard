@@ -29,6 +29,12 @@ In this context, page basically corresponds to URL.
 * Otázky a odpovědi = FAQ
 * Dračí manuál = Dragon Manual
 
+*****
+Users
+*****
+
+* Okres = Shire (yes, it's a bad translation, but it's fun)
+
 **************
 Creative Pages
 **************

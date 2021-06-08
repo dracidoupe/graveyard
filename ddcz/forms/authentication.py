@@ -23,7 +23,7 @@ class PasswordResetForm(authforms.PasswordResetForm):
         user model since that is normative for email storage.
         """
 
-        user_profiles = UserProfile.objects.filter(email_uzivatele__iexact=email)
+        user_profiles = UserProfile.objects.filter(email__iexact=email)
 
         users = tuple(
             list(

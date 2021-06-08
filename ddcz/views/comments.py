@@ -23,7 +23,7 @@ def phorum(request):
             try:
                 Phorum.objects.get(
                     id=request.POST["post_id"],
-                    nickname=request.user.profile.nick_uzivatele,
+                    nickname=request.user.profile.nick,
                 ).delete()
             except Phorum.DoesNotExist as e:
                 messages.error(request, "Zprávu se nepodařilo smazat.")
@@ -37,8 +37,8 @@ def phorum(request):
                     registered_or_ip=1,
                     user=request.user.profile,
                     text=form.cleaned_data["text"],
-                    nickname=request.user.profile.nick_uzivatele,
-                    email=request.user.profile.email_uzivatele,
+                    nickname=request.user.profile.nick,
+                    email=request.user.profile.email,
                 )
 
         return HttpResponseRedirect(reverse("ddcz:phorum-list"))

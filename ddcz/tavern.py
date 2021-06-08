@@ -73,7 +73,7 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
     # See https://github.com/dracidoupe/graveyard/issues/233
 
     related_permissions = TavernAccess.objects.filter(
-        user_nick=misencode(user_profile.nick_uzivatele),
+        user_nick=misencode(user_profile.nick),
         tavern_table_id__in=[i.pk for i in candidate_tables_queryset],
     )
 
@@ -111,7 +111,7 @@ def create_tavern_table(
     return TavernTable.objects.create(
         name=name,
         description=description,
-        owner=owner.nick_uzivatele,
+        owner=owner.nick,
         public=public_db,
         allow_rep="1" if allow_reputation else "0",
         # TODO: Those should go to model defaults

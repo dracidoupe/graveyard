@@ -12,15 +12,15 @@ class AnimalTestCase(TestCase):
         self.problematic_diacritic_string = "ěščřžýáíéďťň"
 
     def test_set_save_doesnt_destroy_model(self):
-        p = UserProfile(nick_uzivatele=self.problematic_diacritic_string)
+        p = UserProfile(nick=self.problematic_diacritic_string)
         p.save()
 
-        self.assertEquals(self.problematic_diacritic_string, p.nick_uzivatele)
+        self.assertEquals(self.problematic_diacritic_string, p.nick)
 
     def test_set_save_doesnt_destroy_database(self):
-        p = UserProfile.objects.create(nick_uzivatele=self.problematic_diacritic_string)
+        p = UserProfile.objects.create(nick=self.problematic_diacritic_string)
 
-        d = UserProfile.objects.get(id=p.id).nick_uzivatele
+        d = UserProfile.objects.get(id=p.id).nick
 
         self.assertEquals(self.problematic_diacritic_string, d)
 
