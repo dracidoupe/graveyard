@@ -20,7 +20,7 @@
                             {{ comment.nickname }}
                         {% endif %}
                     </span>
-                    <time datetime={{ comment.datum | date:"r"  }}>{{ comment.datum | commentTime }}</time>
+                    <time datetime={{ comment.date | date:"r"  }}>{{ comment.date | commentTime }}</time>
                 </div>
                 <p class="comment_text">{{ comment.text|render_html|safe }}</p>
             </comment>
