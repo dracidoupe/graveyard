@@ -34,8 +34,8 @@ class PhorumCommentTestCase(TestCase):
         )
 
         self.comment = Phorum.objects.create(
-            reputace=0,
-            reg=1,
+            reputation=0,
+            registered_or_ip=1,
             text=self.message,
             nickname=self.nickname,
             email="physics@example.com",
@@ -43,8 +43,8 @@ class PhorumCommentTestCase(TestCase):
         )
 
         self.comment2 = Phorum.objects.create(
-            reputace=0,
-            reg=1,
+            reputation=0,
+            registered_or_ip=1,
             text=self.message2,
             nickname=self.nickname2,
             email="mathematics@example.com",
