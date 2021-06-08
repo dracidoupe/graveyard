@@ -697,11 +697,11 @@ class Item(Creation):
 
 
 class DownloadItem(Creation):
-    cesta = models.TextField(blank=True, null=True, db_column="cesta")
+    path = models.TextField(blank=True, null=True, db_column="cesta")
     format = models.TextField(db_column="format")
-    popis = models.TextField(db_column="popis")
-    velikost = models.IntegerField(db_column="velikost")
-    skupina = models.TextField(db_column="skupina")
+    description = models.TextField(db_column="popis")
+    size = models.IntegerField(db_column="velikost")
+    group = models.TextField(db_column="skupina")
     item = models.FileField(upload_to="soub", null=True, db_column="item")
     download_counter = models.IntegerField(default=0, db_column="download_counter")
 
@@ -713,13 +713,13 @@ class DownloadItem(Creation):
 
 
 class Quest(Creation):
-    anotace = models.TextField(db_column="anotace")
-    cesta = models.TextField(blank=True, null=True, db_column="cesta")
-    klicsl = models.TextField(db_column="klicsl")
+    abstract = models.TextField(db_column="anotace")
+    path = models.TextField(blank=True, null=True, db_column="cesta")
+    keywords = models.TextField(db_column="klicsl")
 
     def get_final_url(self):
         return urljoin(
-            urljoin(settings.QUEST_MEDIA_ROOT_URL, str(self.pk)) + "/", self.cesta
+            urljoin(settings.QUEST_MEDIA_ROOT_URL, str(self.pk)) + "/", self.path
         )
 
     class Meta:

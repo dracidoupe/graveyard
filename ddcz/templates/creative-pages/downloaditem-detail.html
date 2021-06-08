@@ -11,7 +11,7 @@
             <h2><a download href="{% url 'ddcz:download-file' download_id=article.id %}">{{ article.name }}</a>{% creation_rating a.rating skin %}</h2>
             <table>
                 <tr>
-                    <th>author_nick:</th>
+                    <th>Autor:</th>
                     <td>{% author_display article %}</td>
                 </tr>
                 <tr>
@@ -21,6 +21,10 @@
                 <tr>
                     <th>Hlasovalo:</th>
                     <td>{{ article.rater_no }}</td>
+                </tr>
+                <tr>
+                    <th>Popis:</th>
+                    <td>{{ article.description|render_html_insecurely|safe }}</td>
                 </tr>
             </table>
         </header>
