@@ -657,21 +657,40 @@ class WizardSpell(Creation):
 
 
 class Item(Creation):
-    uc = MisencodedTextField(db_column="UC", blank=True, null=True)
-    kz = MisencodedCharField(db_column="KZ", max_length=3, blank=True, null=True)
-    delka = MisencodedCharField(max_length=3, blank=True, null=True, db_column="delka")
-    cena = models.IntegerField(db_column="cena")
-    popis = MisencodedTextField(db_column="popis")
-    malydostrel = models.IntegerField(blank=True, null=True, db_column="malydostrel")
-    strednidostrel = models.IntegerField(
-        blank=True, null=True, db_column="strednidostrel"
+    attack_number = MisencodedTextField(
+        db_column="UC", blank=True, null=True, verbose_name="Síla zbraně"
     )
-    velkydostrel = models.IntegerField(blank=True, null=True, db_column="velkydostrel")
-    sfera = models.IntegerField(blank=True, null=True, db_column="sfera")
-    vaha = models.IntegerField(db_column="vaha")
-    skupina = MisencodedTextField(db_column="skupina")
+    armour_quality = MisencodedCharField(
+        db_column="KZ",
+        max_length=3,
+        blank=True,
+        null=True,
+        verbose_name="Kvalita zbroje",
+    )
+    length = MisencodedCharField(
+        max_length=3, blank=True, null=True, db_column="delka", verbose_name="Délka"
+    )
+    price = models.IntegerField(db_column="cena", verbose_name="Cena")
+    range_small = models.IntegerField(
+        blank=True, null=True, db_column="malydostrel", verbose_name="Malý dostřel"
+    )
+    range_expected = models.IntegerField(
+        blank=True,
+        null=True,
+        db_column="strednidostrel",
+        verbose_name="Střední dostřel",
+    )
+    range_long = models.IntegerField(
+        blank=True, null=True, db_column="velkydostrel", verbose_name="Velký dostřel"
+    )
+    sphere = models.IntegerField(
+        blank=True, null=True, db_column="sfera", verbose_name="Sféra"
+    )
+    weight = models.IntegerField(db_column="vaha", verbose_name="Váha")
+    description = MisencodedTextField(db_column="popis", verbose_name="Popis")
+    group = MisencodedTextField(db_column="skupina")
 
-    legacy_html_attributes = ["popis"]
+    legacy_html_attributes = ["description"]
 
     class Meta:
         db_table = "predmety"

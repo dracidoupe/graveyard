@@ -13,7 +13,7 @@
             -->
             <table>
                 <tr>
-                    <th>author_nick:</th>
+                    <th>Autor:</th>
                     <td>{% author_display article %}</td>
                 </tr>
                 <tr>
@@ -26,43 +26,43 @@
                 </tr>
             </table>
 
-            <p><span class="label">Skupina:</span> <span class="value">{{ article.skupina }}</span></p>
+            <p><span class="label">Skupina:</span> <span class="value">{{ article.group }}</span></p>
 
-                {% if article.uc %}
-                    <p><span class="label">Síla zbraně:</span> <span class="value">{{ article.uc }}</span></p>
+                {% if article.attack_number %}
+                    <p><span class="label">Síla zbraně:</span> <span class="value">{{ article.attack_number }}</span></p>
                 {% endif %}
-                {% if article.kz %}
-                    <p><span class="label">Kvalita zbroje:</span> <span class="value">{{ article.kz }}</span></p>
+                {% if article.armour_quality %}
+                    <p><span class="label">Kvalita zbroje:</span> <span class="value">{{ article.armour_quality }}</span></p>
                 {% endif %}
-                {% if article.delka %}
-                    <p><span class="label">Délka:</span> <span class="value">{{ article.delka }}</span></p>
+                {% if article.length %}
+                    <p><span class="label">Délka:</span> <span class="value">{{ article.length }}</span></p>
                 {% endif %}
-                {% if article.cena %}
-                    <p><span class="label">Cena:</span> <span class="value">{{ article.cena }}</span></p>
+                {% if article.price %}
+                    <p><span class="label">Cena:</span> <span class="value">{{ article.price }}</span></p>
                 {% endif %}
-                {% if article.malydostrel %}
-                    <p><span class="label">Malý dostřel:</span> <span class="value">{{ article.malydostrel }}</span></p>
+                {% if article.range_small %}
+                    <p><span class="label">Malý dostřel:</span> <span class="value">{{ article.range_small }}</span></p>
                 {% endif %}
-                {% if article.strednidostrel %}
-                    <p><span class="label">Střední dostřel:</span> <span class="value">{{ article.strednidostrel }}</span></p>
+                {% if article.range_expected %}
+                    <p><span class="label">Střední dostřel:</span> <span class="value">{{ article.range_expected }}</span></p>
                 {% endif %}
-                {% if article.velkydostrel %}
-                    <p><span class="label">Velký dostřel:</span> <span class="value">{{ article.velkydostrel }}</span></p>
+                {% if article.range_long %}
+                    <p><span class="label">Velký dostřel:</span> <span class="value">{{ article.range_long }}</span></p>
                 {% endif %}
-                {% if article.sfera %}
-                    <p><span class="label">Sféra:</span> <span class="value">{{ article.sfera }}</span></p>
+                {% if article.sphere %}
+                    <p><span class="label">Sféra:</span> <span class="value">{{ article.sphere }}</span></p>
                 {% endif %}
-                {% if article.vaha %}
-                    <p><span class="label">Váha:</span> <span class="value">{{ article.vaha }}&nbsp;mn</span></p>
+                {% if article.weight %}
+                    <p><span class="label">Váha:</span> <span class="value">{{ article.weight }}&nbsp;mn</span></p>
                 {% endif %}
 
-            <p><span class="label">Popis:</span> <div class="value">{{ article.popis|render_html_insecurely|safe }}</div></p>
+            <p><span class="label">Popis:</span> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></p>
 
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
             <p><span class="label">Přečteno:</span> <span class="value">{{ article.read }}</span></p>
             <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
 
-            <p><span class="label">author_nick:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.author_nick }}</a></span></p>
+            <p><span class="label">Autor:</span> <span class="value"><a href="#" class="author" rel="author">{{ article.author_nick }}</a></span></p>
 
 
         </header>
