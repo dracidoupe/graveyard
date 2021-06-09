@@ -22,18 +22,18 @@ class TavernAccessRights(Enum):
 
 
 class TavernTable(models.Model):
-    jmeno = MisencodedCharField(unique=True, max_length=255, db_column="jmeno")
-    popis = MisencodedCharField(max_length=255, db_column="popis")
-    vlastnik = MisencodedCharField(max_length=30, db_column="vlastnik")
+    name = MisencodedCharField(unique=True, max_length=255, db_column="jmeno")
+    description = MisencodedCharField(max_length=255, db_column="popis")
+    owner = MisencodedCharField(max_length=30, db_column="vlastnik")
     # TODO: MisencodedBooleanField
-    povol_hodnoceni = MisencodedCharField(max_length=1, db_column="povol_hodnoceni")
+    allow_rep = MisencodedCharField(max_length=1, db_column="povol_hodnoceni")
     min_level = MisencodedCharField(max_length=1, db_column="min_level")
-    zalozen = models.DateTimeField(db_column="zalozen")
+    created = models.DateTimeField(db_column="zalozen")
     # TODO: MisencodedBooleanField
-    verejny = MisencodedCharField(max_length=1, db_column="verejny")
-    celkem = models.IntegerField(blank=True, null=True, db_column="celkem")
+    public = MisencodedCharField(max_length=1, db_column="verejny")
+    posts_no = models.IntegerField(blank=True, null=True, db_column="celkem")
     # TODO: FK migration
-    sekce = models.IntegerField(db_column="sekce")
+    section = models.IntegerField(db_column="sekce")
 
     @property
     def is_public(self):
@@ -226,47 +226,47 @@ class TavernTable(models.Model):
 
 
 class TavernBookmark(models.Model):
-    id_stolu = models.ForeignKey(
+    tavern_table = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
     )
-    id_uz = models.ForeignKey(UserProfile, on_delete=models.CASCADE, db_column="id_uz")
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, db_column="id_uz"
+    )
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "putyka_book"
-        unique_together = (("id_stolu", "id_uz"),)
+        unique_together = (("tavern_table", "user_profile"),)
 
 
 class TavernTableLink(models.Model):
-    id_stolu = models.IntegerField(primary_key=True, db_column="id_stolu")
-    id_linku = models.IntegerField(db_column="id_linku")
+    tavern_table_id = models.IntegerField(primary_key=True, db_column="id_stolu")
+    linked_table_id = models.IntegerField(db_column="id_linku")
 
     class Meta:
         db_table = "putyka_linky"
-        unique_together = (("id_stolu", "id_linku"),)
+        unique_together = (("tavern_table_id", "linked_table_id"),)
 
 
 class TavernTableNoticeBoard(models.Model):
-    id_stolu = models.IntegerField(unique=True, db_column="id_stolu")
-    nazev_stolu = MisencodedCharField(max_length=128, db_column="nazev_stolu")
-    text_nastenky = MisencodedTextField(db_column="text_nastenky")
-    posledni_zmena = models.DateTimeField(
-        blank=True, null=True, db_column="posledni_zmena"
-    )
-    zmenil = MisencodedCharField(max_length=25, db_column="zmenil")
+    tavern_table_id = models.IntegerField(unique=True, db_column="id_stolu")
+    table_name = MisencodedCharField(max_length=128, db_column="nazev_stolu")
+    text = MisencodedTextField(db_column="text_nastenky")
+    changed = models.DateTimeField(blank=True, null=True, db_column="posledni_zmena")
+    change_owner = MisencodedCharField(max_length=25, db_column="zmenil")
 
     class Meta:
         db_table = "putyka_nastenky"
 
 
 class TavernComment(models.Model):
-    id_stolu = models.ForeignKey(
+    tavern_table_id = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
     )
     text = MisencodedTextField(db_column="text")
     # TODO: ForeignKey Migration
-    autor = MisencodedCharField(max_length=30, db_column="autor")
-    reputace = models.IntegerField(db_column="reputace")
+    author = MisencodedCharField(max_length=30, db_column="autor")
+    reputation = models.IntegerField(db_column="reputace")
     datum = models.DateTimeField(db_column="datum")
 
     class Meta:
@@ -274,10 +274,10 @@ class TavernComment(models.Model):
 
 
 class TavernSection(models.Model):
-    kod = models.IntegerField(db_column="kod")
-    poradi = models.IntegerField(db_column="poradi")
-    nazev = MisencodedCharField(max_length=50, db_column="nazev")
-    popis = MisencodedCharField(max_length=255, db_column="popis")
+    code = models.IntegerField(db_column="kod")
+    order = models.IntegerField(db_column="poradi")
+    name = MisencodedCharField(max_length=50, db_column="nazev")
+    description = MisencodedCharField(max_length=255, db_column="popis")
 
     class Meta:
         db_table = "putyka_sekce"
@@ -288,25 +288,25 @@ class TavernTableVisitor(models.Model):
 
     # TODO: Migrate to "table" and "user" attributes
     # :thinking: Shouldn't be too hard given we can leave the db_column in...
-    id_stolu = models.ForeignKey(
+    tavern_table = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
     )
-    id_uzivatele = models.ForeignKey(
+    user_profile = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, db_column="id_uz"
     )
     # 1: Tavern Table is bookmarked
     # 0: Tavern Table is not bookmarked, but this record is used for visit keeping
     # -1: Tavern Table is ignored and should not be displayed
-    oblibenost = models.IntegerField(default=0, db_column="oblibenost")
-    navstiveno = models.DateTimeField(blank=True, null=True, db_column="navstiveno")
-    neprectenych = models.IntegerField(blank=True, null=True, db_column="neprectenych")
+    favorite = models.IntegerField(default=0, db_column="oblibenost")
+    visit_time = models.DateTimeField(blank=True, null=True, db_column="navstiveno")
+    unread = models.IntegerField(blank=True, null=True, db_column="neprectenych")
     # Boolean: 1 means user is an assistent admin
-    sprava = models.IntegerField(default=0, db_column="sprava")
+    moderator = models.IntegerField(default=0, db_column="sprava")
     # 2 = Allow write
     # 1 = Allow access
     # 0 = Behave as normal user
     # -2 = Deny access
-    pristup = models.IntegerField(default=0, db_column="pristup")
+    access = models.IntegerField(default=0, db_column="pristup")
     django_id = models.AutoField(primary_key=True)
 
     ACCESS_CODE_MAP = {
@@ -318,35 +318,35 @@ class TavernTableVisitor(models.Model):
 
     class Meta:
         db_table = "putyka_uzivatele"
-        unique_together = (("id_stolu", "id_uzivatele"),)
+        unique_together = (("tavern_table", "user_profile"),)
 
 
 ###
 # Deprecated Features
 ###
 class TavernTableMerge(models.Model):
-    id_ja = models.IntegerField(db_column="id_ja")
-    id_on = models.IntegerField(db_column="id_on")
-    zustavam = models.SmallIntegerField(db_column="zustavam")
-    oznaceni = MisencodedCharField(max_length=60, db_column="oznaceni")
+    requestor_id = models.IntegerField(db_column="id_ja")
+    merger_id = models.IntegerField(db_column="id_on")
+    staying = models.SmallIntegerField(db_column="zustavam")
+    marker = MisencodedCharField(max_length=60, db_column="oznaceni")
 
     class Meta:
         db_table = "putyka_slucovani"
 
 
 class TavernVisit(models.Model):
-    cas = models.DateTimeField(primary_key=True, db_column="cas")
-    misto = MisencodedCharField(max_length=31, db_column="misto")
-    pocet = models.IntegerField(db_column="pocet")
+    time = models.DateTimeField(primary_key=True, db_column="cas")
+    place = MisencodedCharField(max_length=31, db_column="misto")
+    number = models.IntegerField(db_column="pocet")
 
     class Meta:
         db_table = "putyka_navstevnost"
-        unique_together = (("cas", "misto"),)
+        unique_together = (("time", "place"),)
 
 
 class IgnoredTavernTable(models.Model):
-    id_uz = models.IntegerField(db_column="id_uz")
-    id_stolu = models.IntegerField(db_column="id_stolu")
+    user_profile_id = models.IntegerField(db_column="id_uz")
+    tavern_table_id = models.IntegerField(db_column="id_stolu")
 
     class Meta:
         managed = False
@@ -356,7 +356,7 @@ class IgnoredTavernTable(models.Model):
 class TavernAccess(models.Model):
     """Tavern access was used in v0. Now it's preferred to store it as attributes in TavernTableVisitor"""
 
-    id_stolu = models.ForeignKey(
+    tavern_table = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
     )
     # typ_pristupu is essentially an enum:
@@ -364,10 +364,10 @@ class TavernAccess(models.Model):
     # vstza = Deny access even if otherwise allowed
     # asist = Assistent admin, allow access even if otherwise denied
     # zapis = Allow write access even if table is read only
-    typ_pristupu = MisencodedCharField(max_length=5, db_column="typ_pristupu")
-    nick_usera = MisencodedCharField(max_length=30, db_column="nick_usera")
+    access_type = MisencodedCharField(max_length=5, db_column="typ_pristupu")
+    user_nick = MisencodedCharField(max_length=30, db_column="nick_usera")
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "putyka_pristup"
-        unique_together = (("id_stolu", "typ_pristupu", "nick_usera"),)
+        unique_together = (("tavern_table", "access_type", "user_nick"),)
