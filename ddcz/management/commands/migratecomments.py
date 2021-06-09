@@ -21,9 +21,7 @@ class Command(BaseCommand):
                 sys.stdout.write(".")
                 sys.stdout.flush()
             try:
-                comment.user = UserProfile.objects.get(
-                    nick_uzivatele=misencode(comment.nickname)
-                )
+                comment.user = UserProfile.objects.get(nick=misencode(comment.nickname))
                 comment.save()
 
             except UserProfile.DoesNotExist:

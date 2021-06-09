@@ -4,7 +4,7 @@
 {% block content %}
 
 <div id="page-user-detail">
-    <h1 class="page-heading">Uživatel{% if profile.is_female %}ka{% endif %} {{ profile.nick_uzivatele }}</h1>
+    <h1 class="page-heading">Uživatel{% if profile.is_female %}ka{% endif %} {{ profile.nick }}</h1>
     {% if profile.icon_url %}<p><img src="{{ profile.icon_url }}" alt="Ikonka uživatele"></p>{% endif %}
 
 
@@ -16,31 +16,31 @@
                     <th>ID</th>
                     <td>{{ profile.id }}</td>
                 </tr>
-                {% if permission.jmeno or permission.prijmeni %}
+                {% if permission.name_given or permission.name_family %}
                 <tr>
                     <th>Jméno</th>
-                    <td>{{  profile.name }}</td>
+                    <td>{% if permission.name_given %}{{ profile.name_given }} {% endif %}{% if permission.name_family %}{{ profile.name_family }}{% endif %}</td>
                 </tr>
                 {% endif %}
                 {% if permission.email %}
                 <tr>
                     <th>E-mail</th>
-                    <td>{{ profile.email_uzivatele }}</td>
+                    <td>{{ profile.email }}</td>
                 </tr>
                 {% endif %}
-                {% if permission.pohlavi %}
+                {% if permission.gender %}
                 <tr>
                     <th>Pohlaví</th>
-                    <td>{{ profile.pohlavi_uzivatele }}</td>
+                    <td>{{ profile.gender }}</td>
                 </tr>
                 {% endif %}
-                {% if permission.vek %}
+                {% if permission.age %}
                 <tr>
                     <th>Věk</th>
                     <td>{{ profile.age }}</td>
                 </tr>
                 {% endif %}
-                {% if permission.kraj %}
+                {% if permission.shire %}
                 <tr>
                     <th>Kraj</th>
                     <td>{{ profile.location }}</td>
@@ -49,7 +49,7 @@
                 {% if permission.icq %}
                 <tr>
                     <th>ICQ</th>
-                    <td>{{ profile.icq_uzivatele }}</td>
+                    <td>{{ profile.icq }}</td>
                 </tr>
                 {% endif %}
                 <tr>

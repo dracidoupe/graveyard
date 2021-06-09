@@ -264,7 +264,7 @@ class Creation(models.Model):
 
     def get_author_profile(self):
         try:
-            return UserProfile.objects.get(nick_uzivatele=self.author_nick)
+            return UserProfile.objects.get(nick=self.author_nick)
         except UserProfile.DoesNotExist:
             return
 

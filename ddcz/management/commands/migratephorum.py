@@ -24,7 +24,7 @@ class Command(BaseCommand):
             if comment.by_registered_user:
                 try:
                     comment.user = UserProfile.objects.get(
-                        nick_uzivatele=misencode(comment.nickname)
+                        nick=misencode(comment.nickname)
                     )
                     comment.save()
 

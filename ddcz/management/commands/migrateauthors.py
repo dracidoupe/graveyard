@@ -31,9 +31,7 @@ class Command(BaseCommand):
             else:
                 # Shouldn't be needed in theory (tm)
                 try:
-                    profile = UserProfile.objects.get(
-                        nick_uzivatele=misencode(author_name)
-                    )
+                    profile = UserProfile.objects.get(nick=misencode(author_name))
 
                     try:
                         author = Author.objects.get(

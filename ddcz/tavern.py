@@ -152,7 +152,7 @@ def migrate_tavern_access(
 
         try:
             user_profile = user_profile_model.objects.get(
-                nick_uzivatele=misencode(tavern_access.user_nick)
+                nick=misencode(tavern_access.user_nick)
             )
         except user_profile_model.DoesNotExist:
             # OK, this opens up a potential security problem, but so far, we don't have
