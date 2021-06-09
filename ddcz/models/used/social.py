@@ -14,38 +14,38 @@ MARKET_SECTION_CHOICES = (
 
 
 class Dating(models.Model):
-    name = MisencodedCharField(
+    jmeno = MisencodedCharField(
         max_length=40, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
     )
     email = MisencodedCharField(max_length=40, blank=True, null=True)
-    phone = MisencodedCharField(
+    telefon = MisencodedCharField(
         max_length=20,
         blank=True,
         null=True,
         db_column="telefon",
         verbose_name="Telefon",
     )
-    mobile = MisencodedCharField(
+    mobil = MisencodedCharField(
         max_length=20, blank=True, null=True, db_column="mobil", verbose_name="Mobil"
     )
-    age = models.IntegerField(
+    vek = models.IntegerField(
         blank=True, null=True, db_column="vek", verbose_name="Věk"
     )
-    area = MisencodedCharField(
+    okres = MisencodedCharField(
         max_length=40, blank=True, null=True, db_column="okres", verbose_name="Okres"
     )
-    experience = MisencodedCharField(
+    doba = MisencodedCharField(
         max_length=20,
         blank=True,
         null=True,
         db_column="doba",
         verbose_name="Doba hraní DrD",
     )
-    published = models.DateTimeField(
+    datum = models.DateTimeField(
         blank=True, null=True, db_column="datum", verbose_name="Datum"
     )
     text = MisencodedTextField(blank=True, null=True, db_column="text")
-    group = MisencodedCharField(
+    sekce = MisencodedCharField(
         max_length=20, blank=True, null=True, db_column="sekce", verbose_name="Sekce"
     )
 
@@ -56,36 +56,36 @@ class Dating(models.Model):
 
 
 class Market(models.Model):
-    group = MisencodedCharField(
+    sekce = MisencodedCharField(
         max_length=20,
         choices=MARKET_SECTION_CHOICES,
         db_column="sekce",
         verbose_name="Sekce",
     )
-    name = MisencodedCharField(
+    jmeno = MisencodedCharField(
         max_length=30, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
     )
     mail = MisencodedCharField(
         max_length=30, blank=True, null=True, db_column="mail", verbose_name="E-mail"
     )
-    phone = MisencodedCharField(
+    telefon = MisencodedCharField(
         max_length=15,
         blank=True,
         null=True,
         db_column="telefon",
         verbose_name="Telefon",
     )
-    mobile = MisencodedCharField(
+    mobil = MisencodedCharField(
         max_length=15, blank=True, null=True, db_column="mobil", verbose_name="Mobil"
     )
-    area = MisencodedCharField(
+    okres = MisencodedCharField(
         max_length=20, blank=True, null=True, db_column="okres", verbose_name="Okres"
     )
-    text = MisencodedTextField()
+    text = MisencodedTextField(db_column="text")
     # WARNING WARNING WARNING, not a Date, but a varchar instead!
     # Old version stores in the Czech format: dd. mm. YYYY (where d/m is without leading 0)
     # See https://github.com/dracidoupe/graveyard/issues/195
-    published_varchar = MisencodedCharField(
+    datum = MisencodedCharField(
         max_length=12, db_column="datum", verbose_name="Přidáno"
     )
 

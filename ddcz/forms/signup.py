@@ -52,7 +52,7 @@ class SignUpForm(ModelForm):
         "~",
     )
 
-    nick = forms.CharField(
+    nick_uzivatele = forms.CharField(
         label="",
         widget=forms.TextInput(
             attrs={"placeholder": "Zadej svůj nick", "id": "nickname"}
@@ -66,35 +66,35 @@ class SignUpForm(ModelForm):
         ),
     )
 
-    name_given = forms.CharField(
+    jmeno = forms.CharField(
         label="",
         widget=forms.TextInput(
             attrs={"placeholder": "Křestní jméno", "id": "first_name"}
         ),
     )
 
-    name_first = forms.CharField(
+    prijmeni = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Příjmení", "id": "last_name"}),
     )
 
-    salutation = forms.CharField(
+    osloveni = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Oslovení", "id": "addressing"}),
     )
 
-    gender = forms.ChoiceField(
+    pohlavi = forms.ChoiceField(
         label="",
         widget=forms.Select(attrs={"id": "sex"}),
         choices=[(tag.name, tag.value) for tag in SexChoices],
     )
 
-    age = forms.IntegerField(
+    vek = forms.IntegerField(
         label="",
         widget=forms.NumberInput(attrs={"placeholder": "Tvůj věk", "id": "age"}),
     )
 
-    motive = forms.CharField(
+    duvod_registrace = forms.CharField(
         required=False,
         label="",
         widget=forms.Textarea(
@@ -105,7 +105,7 @@ class SignUpForm(ModelForm):
         ),
     )
 
-    registered_friends = forms.CharField(
+    kamaradi_na_webu = forms.CharField(
         required=False,
         label="",
         widget=forms.Textarea(
@@ -117,7 +117,7 @@ class SignUpForm(ModelForm):
         ),
     )
 
-    source = forms.CharField(
+    odkud_znas_web = forms.CharField(
         required=False,
         label="",
         widget=forms.Textarea(
@@ -135,23 +135,23 @@ class SignUpForm(ModelForm):
     )
 
     patron = forms.CharField(required=False)
-    supporters = forms.CharField(required=False)
+    primluvy = forms.CharField(required=False)
     date = forms.CharField(required=False)
-    description = forms.CharField(required=False)
+    popis_text = forms.CharField(required=False)
 
     class Meta:
         model = UzivateleCekajici
         fields = [
-            "nick",
+            "nick_uzivatele",
             "email",
-            "name_given",
-            "name_family",
-            "gender",
-            "salutation",
-            "date",
+            "jmeno",
+            "prijmeni",
+            "pohlavi",
+            "osloveni",
+            "datum",
             "patron",
-            "supporters",
-            "description",
+            "primluvy",
+            "popis_text",
         ]
 
     def clean(self):

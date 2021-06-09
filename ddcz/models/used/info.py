@@ -18,9 +18,9 @@ class EditorArticle(models.Model):
 
 
 class News(models.Model):
-    date = models.DateTimeField(db_column="datum")
-    author = MisencodedTextField(db_column="autor")
-    author_mail = MisencodedTextField(db_column="autmail")
+    datum = models.DateTimeField(db_column="datum")
+    autor = MisencodedTextField(db_column="autor")
+    autmail = MisencodedTextField(db_column="autmail")
     text = MisencodedTextField(db_column="text")
 
     class Meta:
