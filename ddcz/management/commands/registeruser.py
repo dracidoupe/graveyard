@@ -20,16 +20,10 @@ class Command(BaseCommand):
         if User.objects.filter(username__iexact=options["nick"]).count() > 0:
             raise CommandError("User nickname already taken")
 
-        if (
-            UserProfile.objects.filter(nick_uzivatele__iexact=options["nick"]).count()
-            > 0
-        ):
+        if UserProfile.objects.filter(nick__iexact=options["nick"]).count() > 0:
             raise CommandError("User nickname already taken")
 
-        if (
-            UserProfile.objects.filter(email_uzivatele__iexact=options["email"]).count()
-            > 0
-        ):
+        if UserProfile.objects.filter(email__iexact=options["email"]).count() > 0:
             raise CommandError("User email already taken")
 
         validate_email(options["email"])
@@ -41,7 +35,7 @@ class Command(BaseCommand):
         )
 
         self.valid_profile = UserProfile.objects.create(
-            nick_uzivatele=options["nick"],
-            email_uzivatele=options["email"],
+            nick=options["nick"],
+            email=options["email"],
             user=self.valid_user,
         )

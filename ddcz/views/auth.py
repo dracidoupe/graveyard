@@ -1,38 +1,26 @@
-from ddcz.models.used.tavern import TavernTableVisitor
-from datetime import date
 from hashlib import md5
-import logging
-from zlib import crc32
 
-from django.apps import apps
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import (
+    authenticate,
+    login as login_auth,
+    views as authviews,
+)
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.http import (
     HttpResponseRedirect,
     HttpResponseServerError,
 )
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
-from django.contrib.auth import (
-    authenticate,
-    login as login_auth,
-    views as authviews,
-)
-from django.contrib.auth.forms import PasswordResetForm
-from django.contrib import messages
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
 
-from ..commonarticles import (
-    SLUG_NAME_TRANSLATION_FROM_CZ,
-    COMMON_ARTICLES_CREATIVE_PAGES,
-)
 from ..forms.authentication import LoginForm, PasswordResetForm
 from ..forms.signup import SignUpForm
 from ..models import (
     UserProfile,
-    LEVEL_DESCRIPTIONS,
 )
-
 from ..users import migrate_user, logout_user_without_losing_session
 
 
@@ -86,7 +74,7 @@ def login(request):
         old_insecure_hashed_password = m.hexdigest()
 
         try:
-            profile = UserProfile.objects.get(nick_uzivatele=form.cleaned_data["nick"])
+            profile = UserProfile.objects.get(nick=form.cleaned_data["nick"])
         except UserProfile.DoesNotExist:
             messages.error(request, "Špatný nick a nebo heslo")
             return HttpResponseRedirect(referer)

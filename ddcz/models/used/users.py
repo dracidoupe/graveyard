@@ -188,14 +188,14 @@ class UserProfile(models.Model):
         else:
             permissions = self.pii_display_permissions.split(",")
         return {
-            "jmeno": permissions[0] == "1",
-            "prijmeni": permissions[1] == "1",
+            "name_given": permissions[0] == "1",
+            "name_family": permissions[1] == "1",
             "email": permissions[2] == "1",
             "icq": permissions[3] == "1",
-            "pohlavi": permissions[4] == "1",
-            "vek": permissions[5] == "1",
-            "kraj": len(permissions) > 6 and permissions[6] == "1",
-            "narozeniny": len(permissions) > 7 and permissions[7] == "1",
+            "gender": permissions[4] == "1",
+            "age": permissions[5] == "1",
+            "shire": len(permissions) > 6 and permissions[6] == "1",
+            "birthday": len(permissions) > 7 and permissions[7] == "1",
         }
 
     @property

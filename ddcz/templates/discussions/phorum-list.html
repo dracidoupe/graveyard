@@ -57,7 +57,7 @@
                     {% else %}
                         <span class="nick">{{ comment.nickname }}</span>
                     {% endif %}
-                    {% if user.is_authenticated and comment.nickname == ddcz_profile.nick_uzivatele %}
+                    {% if user.is_authenticated and comment.nickname == ddcz_profile.nick %}
                         <form action="{% url 'ddcz:phorum-list' %}" method="post">
                             {% csrf_token %}
                             {{ delete_form.post_type }}
