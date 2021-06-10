@@ -535,7 +535,7 @@ class AlchemistTool(Creation):
         db_column="uroven_vyrobce",
         verbose_name="Úroveň výrobce",
     )
-    sphere = MisencodedCharField(
+    plane = MisencodedCharField(
         max_length=20, null=True, blank=True, db_column="sfera", verbose_name="Sféra"
     )
     description = MisencodedTextField(db_column="popis", verbose_name="Popis")
