@@ -11,7 +11,7 @@ def migrate_user(profile, password):
         username=profile.nick,
         password=password,
         date_joined=profile.registration_approved_date,
-        last_login=profile.last_access,
+        last_login=profile.last_login,
     )
     profile.user = user
     profile.save()

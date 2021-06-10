@@ -80,7 +80,7 @@ class UserProfile(models.Model):
     chat_filter_display = models.IntegerField(
         default=0, db_column="chat_filtr_zobrazit"
     )
-    last_access = models.DateTimeField(auto_now_add=True, db_column="pospristup")
+    last_login = models.DateTimeField(auto_now_add=True, db_column="pospristup")
     level = MisencodedCharField(max_length=1, db_column="level")
     icq = models.IntegerField(default=0, db_column="icq_uzivatele")
     # This is an important field! It lists which fields can be publicly displayed. The format of the fields
@@ -174,10 +174,6 @@ class UserProfile(models.Model):
     @property
     def registration_date(self):
         return self.registration_approved_date
-
-    @property
-    def last_login(self):
-        return self.last_access
 
     @property
     def public_listing_permissions(self):

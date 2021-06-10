@@ -73,7 +73,7 @@ class SignUpForm(ModelForm):
         ),
     )
 
-    name_first = forms.CharField(
+    name_family = forms.CharField(
         label="",
         widget=forms.TextInput(attrs={"placeholder": "Příjmení", "id": "last_name"}),
     )
