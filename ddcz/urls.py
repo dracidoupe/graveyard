@@ -3,7 +3,7 @@ from django.views.generic.base import RedirectView, TemplateView
 
 
 from . import views
-from .views import news
+from .views import news, tavern
 
 app_name = "ddcz"
 
@@ -72,7 +72,12 @@ urlpatterns = [
     path("linky/", views.links, name="links-list"),
     ### Discussions & Tavern
     path("forum/", views.phorum, name="phorum-list"),
-    path("putyka/", views.tavern, name="tavern-list"),
+    path("putyka/", tavern.list_tables, name="tavern-list"),
+    path(
+        "putyka/stul/<int:tavern_table_id>/",
+        tavern.table_posts,
+        name="tavern-posts",
+    ),
     ### Static Editorial Pages
     ### Would be easier to give them /static prefix, but it makes for ugly URL
     path(

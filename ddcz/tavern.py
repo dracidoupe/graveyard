@@ -40,7 +40,7 @@ def get_tavern_table_list(user_profile, list_style):
 
     query = query.annotate(
         comments_no=Count(
-            "taverncomment",
+            "tavernpost",
         ),
         # This should work, but it doesn't. Maybe bug in 2.0 and will be solved by upgrade?
         # Should cause LEFT OUTER JOIN putyka_uzivatele pu ON pu.id_uzivatele = $ID AND pu.id_stolu=putyka.id

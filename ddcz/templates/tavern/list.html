@@ -23,7 +23,7 @@
 
     {% for table in tavern_tables %}
         <tr>
-            <td>{{ table.name }} [{% if table.new_comments_no >= 0 %}{{ table.new_comments_no }}/{% endif %}{{ table.comments_no }}]</td>
+            <td><a href="{% url "ddcz:tavern-posts" tavern_table_id=table.pk %}">{{ table.name }}</a> [{% if table.new_comments_no >= 0 %}{{ table.new_comments_no }}/{% endif %}{{ table.comments_no }}]</td>
             <td>{{ table.description }}</td>
             <td>{{ table.owner }}</td>
         </tr>
