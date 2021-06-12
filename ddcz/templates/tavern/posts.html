@@ -1,0 +1,11 @@
+{% extends 'tavern/table-detail.html' %}
+{% load comments %}
+
+{% block taverntablecontent %}
+    <form>
+        form
+    </form>
+    <main>
+        {% tavern_posts tavern_table=table %}
+    </main>
+{% endblock %}

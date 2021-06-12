@@ -259,15 +259,22 @@ class TavernTableNoticeBoard(models.Model):
         db_table = "putyka_nastenky"
 
 
-class TavernComment(models.Model):
-    tavern_table_id = models.ForeignKey(
+class TavernPost(models.Model):
+    tavern_table = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
     )
     text = MisencodedTextField(db_column="text")
-    # TODO: ForeignKey Migration
-    author = MisencodedCharField(max_length=30, db_column="autor")
     reputation = models.IntegerField(db_column="reputace")
-    datum = models.DateTimeField(db_column="datum")
+    date = models.DateTimeField(db_column="datum")
+    author_nick = MisencodedCharField(max_length=30, db_column="autor")
+    user = models.ForeignKey(
+        UserProfile, on_delete=models.SET_NULL, blank=True, null=True
+    )
+
+    # Comment template compatibility
+    @property
+    def nickname(self):
+        return self.author_nick
 
     class Meta:
         db_table = "putyka_prispevky"

@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django import template
 
-from ddcz.models import CreationComment
+from ddcz.models import CreationComment, TavernPost
 
 register = template.Library()
 
@@ -23,5 +23,16 @@ def creation_comments(context, creative_page_slug, creation_pk):
     default_limit = 10
     paginator = Paginator(comments, default_limit)
     comments = paginator.get_page(context["comment_page"])
+
+    return {"comments": comments, "user": context["user"], "skin": context["skin"]}
+
+
+@register.inclusion_tag("discussions/creation-comments.html", takes_context=True)
+def tavern_posts(context, tavern_table):
+    comments = TavernPost.objects.filter(tavern_table=tavern_table).order_by("-date")
+
+    default_limit = 10
+    paginator = Paginator(comments, default_limit)
+    comments = paginator.get_page(context["posts_page"])
 
     return {"comments": comments, "user": context["user"], "skin": context["skin"]}
