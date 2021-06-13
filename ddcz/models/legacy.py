@@ -873,30 +873,6 @@ class ReklamaUsers(models.Model):
         db_table = "reklama_users"
 
 
-class ReputaceLog(models.Model):
-    id_zaznamu = models.AutoField(primary_key=True)
-    dal = models.CharField(max_length=30)
-    prijal = models.CharField(max_length=30)
-    akce = models.CharField(max_length=3)
-    v_diskusi = models.CharField(max_length=1, blank=True, null=True)
-    id_prispevku = models.PositiveIntegerField(blank=True, null=True)
-    date = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = "reputace_log"
-
-
-class ReputaceSpecial(models.Model):
-    prijal_nick = models.CharField(max_length=25)
-    duvod_udeleni = models.CharField(max_length=200)
-    hodnota = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = "reputace_special"
-
-
 class RubrikyPristup(models.Model):
     id_usr = models.PositiveIntegerField(primary_key=True)
     id_cizi = models.IntegerField()
