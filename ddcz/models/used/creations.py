@@ -20,6 +20,8 @@ from ...text import create_slug
 logger = logging.getLogger(__name__)
 
 
+PUBLISHED = "a"
+
 APPROVAL_CHOICES = (
     ("a", "Schváleno"),
     ("n", "Neschváleno"),
