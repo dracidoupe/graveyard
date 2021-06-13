@@ -3,6 +3,9 @@ from django.db import models
 from ..magic import MisencodedCharField, MisencodedTextField
 from .users import UserProfile
 
+ADD_PHORUM_COMMENT = "a"
+DELETE_PHORUM_COMMENT = "d"
+
 
 class Phorum(models.Model):
     nickname = MisencodedCharField(max_length=64, db_column="nickname")
