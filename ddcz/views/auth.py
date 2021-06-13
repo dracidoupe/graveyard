@@ -1,4 +1,5 @@
 from hashlib import md5
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib import messages
@@ -64,6 +65,9 @@ def login(request):
     )
     if user is not None:
         login_auth(request, user)
+        profile = UserProfile.objects.get(user=user)
+        profile.last_login = datetime.now()
+        profile.save()
         return HttpResponseRedirect(referer)
     else:
         m = md5()
