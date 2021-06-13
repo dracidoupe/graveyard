@@ -6,16 +6,24 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0086_renames_followup'),
+        ("ddcz", "0086_renames_followup"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='reputacelog',
+            name="reputacelog",
             options={},
         ),
         migrations.AlterModelOptions(
-            name='reputacespecial',
+            name="reputacespecial",
             options={},
+        ),
+        migrations.RenameModel(
+            old_name="ReputaceSpecial",
+            new_name="ReputationAdditional",
+        ),
+        migrations.RenameModel(
+            old_name="ReputaceLog",
+            new_name="ReputationLog",
         ),
     ]

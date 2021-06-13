@@ -2224,7 +2224,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="ReputaceLog",
             fields=[
-                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("id_zaznamu", models.AutoField(primary_key=True, serialize=False)),
                 ("dal", models.CharField(max_length=30)),
                 ("prijal", models.CharField(max_length=30)),
                 ("akce", models.CharField(max_length=3)),
