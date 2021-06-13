@@ -8,7 +8,6 @@ __pycache__
 
 /graveyard-venv
 /gvenv
-/.vscode
 /.directory
 
 /graveyard/settings/local.py
@@ -16,4 +15,9 @@ __pycache__
 
 .DS_store
 
+# Local building tools
 /docker-compose.yml
+
+## Local IDEs dirs
+.idea
+/.vscode
