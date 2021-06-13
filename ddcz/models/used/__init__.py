@@ -4,3 +4,4 @@ from .info import *
 from .social import *
 from .tavern import *
 from .users import *
+from .reputation import *
