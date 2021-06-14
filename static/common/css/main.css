@@ -1,8 +1,6 @@
 @import "./fonts.css";
 @import "./users.css";
 
-
-
 input{
     max-width: 100%;
 }
@@ -272,4 +270,29 @@ article.link span.actuallink {
 .phorum-delete:hover{
     cursor: pointer;
     color: red;
+}
+
+/* Tavern */
+
+#tavern_table_menu ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#tavern_table_menu li {
+    flex: 1;
+    text-transform: uppercase;
+}
+
+#tavern_table_menu li::before {
+    content: "[";
+}
+
+#tavern_table_menu li::after {
+    content: "]";
+}
+
+#page-tavern-detail header {
+    text-align: center;
 }
