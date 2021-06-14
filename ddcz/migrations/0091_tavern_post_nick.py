@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("ddcz", "0087_tavern_comment_post"),
+        ("ddcz", "0090_prune_lost_tavern_posts"),
     ]
 
     operations = [
