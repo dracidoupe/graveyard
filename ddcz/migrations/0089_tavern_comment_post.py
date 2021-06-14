@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("ddcz", "0086_renames_followup"),
+        ("ddcz", "0088_reputation_renaming"),
     ]
 
     operations = [
