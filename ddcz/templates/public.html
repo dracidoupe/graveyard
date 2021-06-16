@@ -16,7 +16,7 @@
     <link rel="apple-touch-icon" type="image/svg" href="{{ skin_favico_url }}">
 </head>
 
-<body>
+<body data-logged-in="{% if user.is_authenticated %}1{% else %}0{% endif %}">
 
     <div id="container">
 

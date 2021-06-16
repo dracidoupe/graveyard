@@ -49,6 +49,7 @@ def list_tables(request):
     list_style = request.GET.get("vypis", None)
     if not list_style or list_style not in SUPPORTED_LIST_STYLES_DISPLAY_NAME:
         bookmarks = request.ddcz_profile.tavern_bookmarks.count()
+
         if bookmarks > 0:
             default_style = LIST_FAVORITE
         else:

@@ -1,5 +1,5 @@
-from hashlib import md5
 from datetime import datetime
+from hashlib import md5
 
 from django.conf import settings
 from django.contrib import messages
@@ -19,9 +19,6 @@ from django.views.decorators.http import require_http_methods
 
 from ..forms.authentication import LoginForm, PasswordResetForm
 from ..forms.signup import SignUpForm
-from ..models import (
-    UserProfile,
-)
 from ..users import migrate_user, logout_user_without_losing_session
 
 
@@ -60,9 +57,14 @@ def login(request):
         messages.error(request, f"Špatně vyplněný formulář: {form.errors.as_text()}")
         return HttpResponseRedirect(referer)
 
+    from ddcz.models import UserProfile
+
     user = authenticate(
         username=form.cleaned_data["nick"], password=form.cleaned_data["password"]
     )
+
+    from django.contrib.auth.models import User
+
     if user is not None:
         login_auth(request, user)
         profile = UserProfile.objects.get(user=user)
