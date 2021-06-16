@@ -27,15 +27,15 @@
         </header>
 
         {% if skin == "historic" %}
-        {% include "base/historic/top_menu.html" %}
+            {% include "base/historic/top_menu.html" %}
         {% endif %}
 
         {% with "base/"|add:skin_for_include|add:"/left_menu.html" as lmenu %}
-        {% include lmenu %}
+            {% include lmenu %}
         {% endwith %}
 
         {% with "base/"|add:skin_for_include|add:"/right_menu.html" as rmenu %}
-        {% include rmenu %}
+            {% include rmenu %}
         {% endwith %}
 
         <main id="page_content">
@@ -58,7 +58,7 @@
             <p>Tato verze stránek je open source a <a href="https://github.com/dracidoupe/graveyard/">je možné přispět k
                     jejímu vývoji</a> podle <a href="https://ddcz.readthedocs.io/en/latest/">dokumentace</a>.</p>
         </footer>
-    </div>    
+    </div>
     {% block scripts %}{% endblock %}
 </body>
 </html>

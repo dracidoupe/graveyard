@@ -73,7 +73,7 @@ class TavernTable(models.Model):
         """
         Set access privileges to new versions described by arguments. All lists are list of IDs.
         If None is given, it means "do not update given list of privileges"
-        If empty list is given ([]), it means "set this access type to none.
+        If empty list is given ([]), it means "set this access type to no user.
         """
         # We can migrate to upsert syntax if we'd migrate to postgres
         # Normally, I'd just delete & insert, but given the presence of django_id,
