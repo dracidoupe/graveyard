@@ -52,7 +52,7 @@
                 </p>
                 <form method="post" action="{% url 'ddcz:logout-action' %}">
                     {% csrf_token %}
-                    <input type="submit" value="Odhlaš">
+                    <input type="submit" value="Odhlaš" id="logout_submit">
                 </form>
                 {% else %}
                 <p><a href="{% url 'ddcz:sign-up' %}">Registrace</a></p>

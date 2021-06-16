@@ -43,12 +43,13 @@ def get_alphabetic_user_profiles(
             user = User(username=letter, email=email)
             user.set_password(email)
 
-        profile = UserProfile(nick=letter, email=email, user=user)
+        profile = UserProfile(nick=letter, email=email)
         profiles.append(profile)
 
         if saved:
             if with_corresponding_user:
                 user.save()
+                profile.user = user
             profile.save()
 
     return profiles
@@ -58,7 +59,7 @@ def create_test_tavern_table(all_users, bookmark, public):
     owner, allowed_user, banned_user, visiting_user = all_users
 
     public_desc = "Public" if public else "Private"
-    bookmark_desc = "Bookmarked " if bookmark else "Unbookmarked"
+    bookmark_desc = "Bookmarked" if bookmark else "Unbookmarked"
 
     table = create_tavern_table(
         owner=owner,

@@ -1,10 +1,8 @@
-from datetime import datetime
-from ddcz.models.used.tavern import TavernBookmark
-from enum import Enum
-from dateutil import tz
 import logging
 import sys
+from datetime import datetime
 
+from dateutil import tz
 from django.db.models import Count, OuterRef, Subquery, IntegerField
 
 from ddcz.models import (
@@ -15,6 +13,7 @@ from ddcz.models import (
     TAVERN_SECTION_PRIVATE_ID,
     TAVERN_SECTION_NEW_ID,
 )
+from ddcz.models.used.tavern import TavernBookmark
 from ddcz.text import misencode
 
 logger = logging.getLogger(__name__)

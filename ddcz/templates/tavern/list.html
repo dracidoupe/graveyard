@@ -11,10 +11,11 @@
             <a
                 href="{% url 'ddcz:tavern-list' %}?vypis={{ slug }}"
                 {% if slug == current_list_style %} class="link link--selected"{% endif %}
+                data-list-style="{{ slug }}"
             >[{{ name }}]</a>&nbsp;
         {% endfor %}
     </p>
-    <table>
+    <table class="tavern-table-list">
         <tr>
             <th>Stůl</th>
             <th>Popis stolu</th>
@@ -23,7 +24,7 @@
 
     {% for table in tavern_tables %}
         <tr>
-            <td><a href="{% url "ddcz:tavern-posts" tavern_table_id=table.pk %}">{{ table.name }}</a> [{% if table.new_comments_no >= 0 %}{{ table.new_comments_no }}/{% endif %}{{ table.comments_no }}]</td>
+            <td><a href="{% url "ddcz:tavern-posts" tavern_table_id=table.pk %}"><span class="tavern-table-name">{{ table.name }}</span></a> [{% if table.new_comments_no >= 0 %}{{ table.new_comments_no }}/{% endif %}{{ table.comments_no }}]</td>
             <td>{{ table.description }}</td>
             <td>{{ table.owner }}</td>
         </tr>
