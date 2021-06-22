@@ -11,18 +11,18 @@ There are ways to list Tavern Tables:
     * Bookmarked Tables
     * Only bookmarked Tables with new post
 
-All of those listings honor the access control:
+Tables are listed regardless of whether user can access them or not. The ability to visit a table is denoted by whether the name of the table is a clickable link. In addition:
 
-    * Tables are always shown to the owner and asistant
-    * When user gets banned, although the bookmark link is preserved, the Table is not shown anymore
+* Tables are always shown to the owner and assistant
+* In the original version, tables can be ignored and are then never shown in the listing. This is not supported (yet?), see `#291 <https://github.com/dracidoupe/graveyard/issues/291>`_.
 
 ************
 Access Model
 ************
 
-Tables can be either public (all users can visit and view by default) or private (no user can visit or view by default). The default setting can be modified using nick allowlist (allow access even when table is private) or denylist (prevent user from visiting even when table is public).
+Tables can be either public (all users can visit and view by default) or private (no user can visit or view by default). The default setting can be modified using nick allowlist (allow access even when table is private) or deny list (prevent user from visiting even when table is public).
 
-In both cases, table can be set as read-only: only allowlisted users are able to write posts and noone else.
+In both cases, table can be set as read-only: only users in the allow list are able to write posts and noone else.
 
 Owner of the table can designate assistants. Both the owner and the assistants can enter and post, regardless of other settings. In addition, they can both manage Notice Board and Pools.
 
