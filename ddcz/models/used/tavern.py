@@ -42,6 +42,9 @@ class TavernTable(models.Model):
     class Meta:
         db_table = "putyka_stoly"
 
+    def show_listing_link(self, *args, **kwargs):
+        return self.is_user_access_allowed(*args, **kwargs)
+
     def is_user_access_allowed(self, user_profile, acls=None):
         # For ACL explanations, see TavernAccess
         # Note: Can't do "if not acls" since that would re-fetch for every empty set

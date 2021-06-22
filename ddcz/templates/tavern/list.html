@@ -1,6 +1,7 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load pages %}
+{% load tavern %}
 
 {% block content %}
 <div id="page-tavern">
@@ -22,11 +23,11 @@
             <th>Vlastník</th>
         </tr>
 
-    {% for table in tavern_tables %}
+    {% for listing_table in tavern_tables %}
         <tr>
-            <td><a href="{% url "ddcz:tavern-posts" tavern_table_id=table.pk %}"><span class="tavern-table-name">{{ table.name }}</span></a> [{% if table.new_comments_no >= 0 %}{{ table.new_comments_no }}/{% endif %}{{ table.comments_no }}]</td>
-            <td>{{ table.description }}</td>
-            <td>{{ table.owner }}</td>
+            <td>{% tavern_table_name listing_table ddcz_profile %}</td>
+            <td>{{ listing_table.description }}</td>
+            <td>{{ listing_table.owner }}</td>
         </tr>
     {% endfor %}
     </table>

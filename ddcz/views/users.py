@@ -1,5 +1,4 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
 from django.http import (
     HttpResponseRedirect,

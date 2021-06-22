@@ -59,15 +59,14 @@ def get_tavern_table_list(user_profile, list_style):
     if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
         query = query.filter(new_comments_no__gt=0)
 
-    # print(query.query)
-
-    return get_tables_with_access(
-        user_profile=user_profile, candidate_tables_queryset=query
-    )
+    return list(query)
 
 
 def get_tables_with_access(user_profile, candidate_tables_queryset):
-    """Return tables from given queryset to which the user_profile has access to"""
+    """
+    DEPRECATED: Not used by listing, requirements changed. Keeping it around for potential API.
+    Return tables from given queryset to which the user_profile has access to
+    """
     # This should be more optimized once we refactor the ACL model into a single row bit
     # See https://github.com/dracidoupe/graveyard/issues/233
 
