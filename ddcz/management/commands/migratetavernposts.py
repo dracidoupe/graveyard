@@ -13,11 +13,23 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
     help = "Fills in reference to User object into CreationComments"
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--batch-size",
+            action="store",
+            dest="batch_size",
+            help="Limit the amount of processed posts",
+        )
+
     def handle(self, *args, **options):
         i = 0
-        for comment in TavernPost.objects.filter(user__isnull=True):
+        query = TavernPost.objects.filter(user__isnull=True)
+        logger.info(f"Migrating Tavern Posts, batch size {options['batch_size']}")
+        if "batch_size" in options and options["batch_size"]:
+            query = query[0 : int(options["batch_size"])]
+        for comment in query:
             i += 1
-            if i % 100 == 0:
+            if i % 10 == 0:
                 sys.stdout.write(".")
                 sys.stdout.flush()
             try:
