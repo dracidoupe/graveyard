@@ -6,6 +6,17 @@ This documentation is intended for developers interested in joining development 
 
 It assumes you have local working copy of the site. If not, follow installation guide from `repository's README <https://github.com/dracidoupe/graveyard/>`_.
 
+.. warning::
+
+    This project has significant legacy hacks that makes it behave unexpectedly for a seasoned Django developer!
+
+    Please note:
+
+        * ``python manage.py test`` is the only reasonable way to run tests; see :ref:`db-migration`
+        * database encoding is wrong; see :ref:`db-encoding`
+        * because of above, only MySQL backend is supported
+        * never use `django.auth.models.User.create_user` directly! see :ref:`user-model-migration`
+
 .. note::
 
     *Proč to tady neni česky?*
@@ -18,35 +29,14 @@ It assumes you have local working copy of the site. If not, follow installation 
 
     Pro popis toho co se to tu děje a proč vlastně navštivte sekci :ref:`faq`.
 
-.. warning::
-
-    This project has significant legacy hacks that makes it behave unexpectedly for seasoned Django developer!
-
-    Please note:
-
-        * ``python manage.py test`` is the only reasonable way to run tests; see :ref:`db-migration`
-        * database encoding is wrong; see :ref:`db-encoding`
-        * because of above, only MySQL backend is supported
-        * never use `django.auth.models.User.create_user` directly! see :ref:`user-model-migration`
-
 
 .. toctree::
     :maxdepth: 2
-    :caption: Contents:
 
     user-docs/index
-    faq
-    migration
-    design
+    dev-docs/index
     dictionary
-    infrastructure
+    decisions
+    faq
 
 
-
-******************
-Indices and tables
-******************
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
