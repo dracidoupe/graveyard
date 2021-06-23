@@ -11,7 +11,7 @@ Infrastructure
 Production
 ***********
 
-This section contains production-specific information and runbook. 
+This section contains production-specific information and runbook.
 
 
 Architecture and Setup
@@ -23,30 +23,30 @@ We are using:
 * [AWS RDS](https://aws.amazon.com/rds/) for hosting database
 * [AWS S3](https://aws.amazon.com/s3/) for hosting static data and uploaded content
 
-Old version is running on [EC2 instance](https://aws.amazon.com/ec2/). 
+Old version is running on an [EC2 instance](https://aws.amazon.com/ec2/).
 
 User Content Hosting
 --------------------
 
 User-uploaded content (user icons, gallery pictures etc.) is hosted on S3 im the `uploady.dracidoupe.cz` budket/domain.
 
-There is no sharing with the old version: content from current production needs to be uploaded/synchronized manually. This needs to happen on a bastion host as the EC2 instance can't talk to Amazon APIs because of obsoleted openssl. Use [aws s3 sync . s3://uploady.dracidoupe.cz/whatever](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html) command. 
+There is no sharing with the old version: content from current production needs to be uploaded/synchronized manually. This needs to happen on a bastion host as the EC2 instance can't talk to Amazon APIs because of obsoleted openssl. Use [aws s3 sync . s3://uploady.dracidoupe.cz/whatever](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html) command.
 
 Static File Hosting
 --------------------
 
-Static files (like CSS) are now hosted from within Heroku [using whitenoise](http://whitenoise.evans.io/en/stable/django.html). They [should be migrated to CDN](https://github.com/dracidoupe/graveyard/issues/2). 
+Static files (like CSS) are now hosted from within Heroku [using whitenoise](http://whitenoise.evans.io/en/stable/django.html). They [should be migrated to CDN](https://github.com/dracidoupe/graveyard/issues/2).
 
 
 Error Reporting
 ---------------
 
-Exceptions are sent to [Sentry](https://sentry.io/welcome/). Sentry is configured to push information about new exceptions into [#serverove-novinky Slack channel](https://dracidoupe.slack.com/archives/C7FMV74DT). 
+Exceptions are sent to [Sentry](https://sentry.io/welcome/). Sentry is configured to push information about new exceptions into [#serverove-novinky Slack channel](https://dracidoupe.slack.com/archives/C7FMV74DT).
 
 Installation
 ============
 
-Graveyard is not yet intended to be universally installable, but it plans to be. Current assumptions about production follows. 
+Graveyard is not yet intended to be universally installable, but it plans to be. Current assumptions about production follows.
 
 Configuration
 -------------
@@ -79,7 +79,7 @@ For automated testing, we're using standard Django tests suite. In case of end-t
 
 All Selenium tests are in the ``ddcz/tests/test_ui`` directory.
 
-Test can be run locally, but there is a testing infrastructure run on every push. We are using CircleCI for that.
+Test can be run locally, but there is a testing infrastructure run on every push. We are using `Github Actions <https://github.com/dracidoupe/graveyard/actions>`_ for that.
 
 To have the Selenium running properly, we are running the Docker container version of everything and with dedicated ``docker-compose.circle.yml``.
 

@@ -75,10 +75,10 @@ In this context, Crative Pages correspond to sections of the site where content 
 * Downloady (= Downloads and DownloadItem)
 * Dobrodružství (= Quests)
 
-*****************
-Putyka (= Tavern)
-*****************
-Putyka is the discussion section of the site, old Putyka counting around 500 different "tables" which are basically separate permanent discussion threads with added functionality (table owner, noticeboards, polls and so on)
+******
+Tavern
+******
+Tavern (Putyka) is the discussion section of the site, old Putyka counting around 500 different "tables" which are basically separate permanent discussion threads with added functionality (table owner, noticeboards, polls and so on)
 
 * Staré dělení - Putyka -> Sekce -> Stoly (= Tavern -> Sections -> Tables)
 * Nové dělení (= Tavern -> Tables)
