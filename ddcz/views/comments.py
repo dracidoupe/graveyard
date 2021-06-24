@@ -1,17 +1,10 @@
-from django.core.paginator import Paginator
-from django.http import (
-    HttpResponseRedirect,
-)
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.vary import vary_on_cookie
 
-from ..commonarticles import (
-    SLUG_NAME_TRANSLATION_FROM_CZ,
-    COMMON_ARTICLES_CREATIVE_PAGES,
-)
 from ..forms.comments import PhorumCommentForm, DeletePhorumCommentForm
 from ..models import Phorum
 

@@ -1,8 +1,7 @@
 import logging
 import sys
 
-from django.apps import apps
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from ddcz.models import CreationComment, UserProfile
 from ddcz.text import misencode

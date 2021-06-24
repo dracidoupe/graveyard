@@ -2,11 +2,13 @@
 {% load comments %}
 
 {% block taverntablecontent %}
-    <!--
-    <form>
-        TODO: form
-    </form>
-    -->
+    {% if user_can_post %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ post_form.as_p }}
+            <input type="submit" name="submit" value="Přidej" class="comment__submit">
+        </form>
+    {% endif %}
     <main>
         {% tavern_posts tavern_table=table %}
     </main>

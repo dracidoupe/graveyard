@@ -16,3 +16,8 @@ June
     * Write ``migrate$modelname`` management command
     * Run it upon deploy
     * Write it to the `data migration ticket <https://github.com/dracidoupe/graveyard/issues/128>`_ for final migration when old version is shut down
+
+* For comments and tavern posts, we are using the same endpoint and POST action. Action is designated by a POST attribute. "Correctly", this would be done better by using different HTTP method, unfortunately `Mike's proposal is not implemented <http://amundsen.com/examples/put-delete-forms/>`_
+
+* All attributes for all models are now in English and in accordance with the :ref:`dictionary`. Czech names should be hidden under ``db_column`` attributes and under ``Enum``s
+
