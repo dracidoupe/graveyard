@@ -2,10 +2,11 @@ from copy import deepcopy
 from enum import Enum, unique
 from itertools import chain
 
-from ddcz.models.used.users import UserProfile
 from django.db import models
 
+from .users import UserProfile
 from ..magic import MisencodedCharField, MisencodedTextField
+from ...text import misencode
 
 TAVERN_SECTION_PRIVATE_ID = 19
 TAVERN_SECTION_NEW_ID = 3
@@ -45,26 +46,60 @@ class TavernTable(models.Model):
     def show_listing_link(self, *args, **kwargs):
         return self.is_user_access_allowed(*args, **kwargs)
 
-    def is_user_access_allowed(self, user_profile, acls=None):
+    def is_user_write_allowed(self, user_profile, acls=None):
         # For ACL explanations, see TavernAccess
-        # Note: Can't do "if not acls" since that would re-fetch for every empty set
         if user_profile.nick == self.owner:
             return True
 
+        # Note: Can't do "if not acls" since that would re-fetch for every empty set
         if acls is None:
-            acls_models = self.tavernaccess_set.filter(user_nick=user_profile.nick)
-            acls = set([acl.access_type for acl in acls_models])
+            acls = self.get_user_acls(user_profile)
 
-        if "asist" in acls:
+        # User can't write if they can't even enter
+        if not self.is_user_access_allowed(user_profile, acls=acls):
+            return False
+
+        if not self.is_write_restricted():
             return True
-        if "vstza" in acls:
+        else:
+            return TavernAccessRights.WRITE_ALLOWED in acls
+
+    def is_user_access_allowed(self, user_profile, acls=None):
+        # For ACL explanations, see TavernAccess
+        if user_profile.nick == self.owner:
+            return True
+
+        # Note: Can't do "if not acls" since that would re-fetch for every empty set
+        if acls is None:
+            acls = self.get_user_acls(user_profile)
+
+        if TavernAccessRights.ASSISTANT_ADMIN in acls:
+            return True
+        if TavernAccessRights.ACCESS_BANNED in acls:
             return False
         elif self.is_public:
             return True
-        elif "vstpo" in acls:
+        elif TavernAccessRights.ACCESS_ALLOWED in acls:
             return True
         else:
             return False
+
+    def is_write_restricted(self):
+        # FIXME: Looking this up should be an attribute, not a query
+        # see #297 <https://github.com/dracidoupe/graveyard/issues/297>
+        # Meanwhile, this can be annotated in a view, thus look it up
+        if getattr(self, "write_allowed_user_no", None):
+            return self.write_allowed_user_no > 0
+        else:
+            self.tavernaccess_set.filter(
+                access_type=TavernAccessRights.WRITE_ALLOWED
+            ).count() > 0
+
+    def get_user_acls(self, user_profile):
+        acls_models = self.tavernaccess_set.filter(
+            user_nick=misencode(user_profile.nick)
+        )
+        return set([TavernAccessRights(acl.access_type) for acl in acls_models])
 
     def update_access_privileges(
         self,

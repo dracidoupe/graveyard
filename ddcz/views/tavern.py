@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import wraps
 
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
+from ..forms.comments import TavernPostForm, CommentAction
 from ..models import TavernTable, TavernPost
 from ..tavern import (
     LIST_ALL,
@@ -74,15 +76,48 @@ def list_tables(request):
 
 
 @login_required
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 @table_accessible
 def table_posts(request, tavern_table_id):
     table = request.tavern_table
+    user_can_post = table.is_user_write_allowed(user_profile=request.ddcz_profile)
+
+    if request.method == "POST":
+        # if request.POST["post_type"] == CommentAction.DELETE.value:
+        #     try:
+        #         Phorum.objects.get(
+        #             id=request.POST["post_id"],
+        #             nickname=request.user.profile.nick,
+        #         ).delete()
+        #     except Phorum.DoesNotExist as e:
+        #         messages.error(request, "Zprávu se nepodařilo smazat.")
+        #
+        if (
+            request.POST.get("action", None) == CommentAction.ADD.value
+            and user_can_post
+        ):
+            post_form = TavernPostForm(request.POST)
+            if post_form.is_valid():
+                TavernPost.objects.create(
+                    tavern_table=table,
+                    text=post_form.cleaned_data["text"],
+                    reputation=0,
+                    user=request.ddcz_profile,
+                    author_nick=request.ddcz_profile.nick,
+                    date=datetime.now(),
+                )
+            return HttpResponseRedirect(request.get_full_path())
+
+    else:
+        post_form = TavernPostForm()
+
     return render(
         request,
         "tavern/posts.html",
         {
             "table": table,
             "posts_page": request.GET.get("z_s", 1),
+            "post_form": post_form,
+            "user_can_post": user_can_post,
         },
     )

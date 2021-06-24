@@ -5,6 +5,8 @@ from ddcz.models import CreationComment, TavernPost
 
 register = template.Library()
 
+COMMENT_DEFAULT_LIMIT = 10
+
 
 @register.filter
 def commentTime(datetime):
@@ -20,8 +22,7 @@ def creation_comments(context, creative_page_slug, creation_pk):
         foreign_table=creative_page_slug, foreign_id=creation_pk
     ).order_by("-date")
 
-    default_limit = 10
-    paginator = Paginator(comments, default_limit)
+    paginator = Paginator(comments, COMMENT_DEFAULT_LIMIT)
     comments = paginator.get_page(context["comment_page"])
 
     return {"comments": comments, "user": context["user"], "skin": context["skin"]}
@@ -31,8 +32,7 @@ def creation_comments(context, creative_page_slug, creation_pk):
 def tavern_posts(context, tavern_table):
     comments = TavernPost.objects.filter(tavern_table=tavern_table).order_by("-date")
 
-    default_limit = 10
-    paginator = Paginator(comments, default_limit)
+    paginator = Paginator(comments, COMMENT_DEFAULT_LIMIT)
     comments = paginator.get_page(context["posts_page"])
 
     return {"comments": comments, "user": context["user"], "skin": context["skin"]}
