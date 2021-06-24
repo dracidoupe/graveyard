@@ -1,8 +1,7 @@
 import logging
 import sys
 
-from django.apps import apps
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from ddcz.models import TavernPost, UserProfile
 from ddcz.text import misencode
@@ -23,6 +22,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         i = 0
+        total_no = TavernPost.objects.filter(user__isnull=True).count()
+        logger.info(f"Found {total_no} posts for migration")
         query = TavernPost.objects.filter(user__isnull=True)
         logger.info(f"Migrating Tavern Posts, batch size {options['batch_size']}")
         if "batch_size" in options and options["batch_size"]:
