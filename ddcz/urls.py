@@ -78,6 +78,11 @@ urlpatterns = [
         tavern.table_posts,
         name="tavern-posts",
     ),
+    path(
+        "putyka/stul/<int:tavern_table_id>/nastenka/",
+        tavern.notice_board,
+        name="tavern-notice-board",
+    ),
     ### Static Editorial Pages
     ### Would be easier to give them /static prefix, but it makes for ugly URL
     path(

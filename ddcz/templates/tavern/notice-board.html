@@ -1,0 +1,15 @@
+{% extends 'tavern/table-detail.html' %}
+{% load html %}
+
+{% block taverntablecontent %}
+    {% if user_can_update_notice_board %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ post_form.as_p }}
+            <input type="submit" name="submit" value="Přidej" class="comment__submit">
+        </form>
+    {% endif %}
+    <main>
+        {{ notice_board.text | render_html | safe }}
+    </main>
+{% endblock %}

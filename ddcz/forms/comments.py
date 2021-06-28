@@ -30,3 +30,9 @@ class TavernPostForm(forms.Form):
     text = forms.CharField(
         label="", widget=forms.Textarea(attrs={"class": "comment__textarea"})
     )
+
+
+class NoticeBoardForm(forms.Form):
+    text = forms.CharField(
+        label="", widget=forms.Textarea(attrs={"class": "comment__textarea"})
+    )
