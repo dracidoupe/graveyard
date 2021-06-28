@@ -84,6 +84,20 @@ class TavernTable(models.Model):
         else:
             return False
 
+    def is_notice_board_update_allowed(self, user_profile, acls=None):
+        # For ACL explanations, see TavernAccess
+        if user_profile.nick == self.owner:
+            return True
+
+        # Note: Can't do "if not acls" since that would re-fetch for every empty set
+        if acls is None:
+            acls = self.get_user_acls(user_profile)
+
+        if TavernAccessRights.ASSISTANT_ADMIN in acls:
+            return True
+
+        return False
+
     def is_write_restricted(self):
         # FIXME: Looking this up should be an attribute, not a query
         # see #297 <https://github.com/dracidoupe/graveyard/issues/297>
@@ -287,11 +301,14 @@ class TavernTableLink(models.Model):
 
 
 class TavernTableNoticeBoard(models.Model):
-    tavern_table_id = models.IntegerField(unique=True, db_column="id_stolu")
+    tavern_table = models.OneToOneField(
+        db_column="id_stolu", to=TavernTable, on_delete=models.CASCADE, primary_key=True
+    )
+    # TODO: Drop
     table_name = MisencodedCharField(max_length=128, db_column="nazev_stolu")
     text = MisencodedTextField(db_column="text_nastenky")
-    changed = models.DateTimeField(blank=True, null=True, db_column="posledni_zmena")
-    change_owner = MisencodedCharField(max_length=25, db_column="zmenil")
+    changed_at = models.DateTimeField(blank=True, null=True, db_column="posledni_zmena")
+    change_author_nick = MisencodedCharField(max_length=25, db_column="zmenil")
 
     class Meta:
         db_table = "putyka_nastenky"

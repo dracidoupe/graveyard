@@ -285,11 +285,11 @@ article.link span.actuallink {
     text-transform: uppercase;
 }
 
-#tavern_table_menu li::before {
+#tavern_table_menu li a::before {
     content: "[";
 }
 
-#tavern_table_menu li::after {
+#tavern_table_menu li a::after {
     content: "]";
 }
 

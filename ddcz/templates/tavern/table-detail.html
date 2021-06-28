@@ -12,11 +12,12 @@
         <p>ID stolu: {{ table.id }}</p>
         <nav id="tavern_table_menu">
             <ul>
+                <li><a href="{% url "ddcz:tavern-posts" tavern_table_id=table.id %}">Stůl</a></li>
                 <li>Oblíbit</li>
                 <li>Admin</li>
-                <li>Vymaž</li>
+                <!-- <li>Vymaž</li> -->
                 <li>Ankety</li>
-                <li>Nástěnka</li>
+                <li><a href="{% url "ddcz:tavern-notice-board" tavern_table_id=table.id %}">Nástěnka</a></li>
                 <li>Statistiky</li>
             </ul>
         </nav>
