@@ -11,6 +11,8 @@ We capture major decisions about the development here. Similar to `architecture 
 June
 ====
 
+* For URLs, we prefer longer and more expressive URLs that explain the particular resource or resource list. Hence, displaying posts in Tavern is `/tavern/table/id/posts/` as opposed to just `/tavern/table/id/`, especially since we have `/tavern/table/id/notice-board/` etc. In the same fashion, root url `/` redirects to `/news/` instead of being served directly since we may (and actually want) to redo the landing page.
+
 * Models missing integer foreign key should have it added (as opposed to working on the character foreign keys). Pattern:
     * Add nullable column
     * Write ``migrate$modelname`` management command

@@ -74,7 +74,7 @@ urlpatterns = [
     path("forum/", views.phorum, name="phorum-list"),
     path("putyka/", tavern.list_tables, name="tavern-list"),
     path(
-        "putyka/stul/<int:tavern_table_id>/",
+        "putyka/stul/<int:tavern_table_id>/prispevky/",
         tavern.table_posts,
         name="tavern-posts",
     ),
