@@ -1,4 +1,6 @@
-from django.test import TestCase
+from django.contrib.auth.models import User
+from django.urls import reverse
+from django.test import Client, TestCase
 
 from ...model_generator import get_alphabetic_user_profiles
 
@@ -17,6 +19,48 @@ class TavernListingTestCase(TestCase):
 
     def assertTableNotInListing(self, table, listing):
         self.assertNotIn(table.pk, [table.pk for table in listing])
+
+
+class TestListingDoesNotHaveRunawayQueries(TavernListingTestCase):
+    # This can be incremented, but the point is not to let pointless runaway queries happen
+    # as it did before, see <https://github.com/dracidoupe/graveyard/issues/302>
+    EXPECTED_LIST_QUERIES = 4
+
+    def setUp(self):
+        super().setUp()
+
+        self.owner, self.banned = get_alphabetic_user_profiles(
+            number_of_users=2, saved=True
+        )
+
+        self.owner_user = User.objects.create_user(
+            username="owner", password="bobr-evropsky"
+        )
+        self.banned_user = User.objects.create_user(
+            username="banned", password="bobrice-evropska"
+        )
+
+        for i in range(0, 15):
+            table = create_tavern_table(
+                owner=self.owner,
+                public=True,
+                name=f"Public {i}",
+                description="Public Table",
+            )
+
+            table.update_access_privileges(access_banned=[self.banned.pk])
+
+        self.client = Client()
+
+    def test_owner_not_runaway(self):
+        self.client.force_login(user=self.owner_user)
+        with self.assertNumQueries(self.EXPECTED_LIST_QUERIES):
+            self.client.get(f"{reverse('ddcz:tavern-list')}?vypis=vsechny")
+
+    def test_banned_not_runaway(self):
+        self.client.force_login(user=self.banned_user)
+        with self.assertNumQueries(self.EXPECTED_LIST_QUERIES):
+            self.client.get(f"{reverse('ddcz:tavern-list')}?vypis=vsechny")
 
 
 class TestPublicTableListings(TavernListingTestCase):
