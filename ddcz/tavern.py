@@ -61,9 +61,6 @@ def get_tavern_table_list(user_profile, list_style):
         query = TavernTable.objects.all()
 
     query = query.annotate(
-        comments_no=Count(
-            "tavernpost",
-        ),
         # This should work, but it doesn't. Maybe bug in 2.0 and will be solved by upgrade?
         # Should cause LEFT OUTER JOIN putyka_uzivatele pu ON pu.id_uzivatele = $ID AND pu.id_stolu=putyka.id
         # visitor=FilteredRelation(
@@ -139,7 +136,7 @@ def get_tavern_table_list(user_profile, list_style):
             output_field=BooleanField(),
         ),
         # Do not resolve allow write privileges as those are not displayed on the list page
-    ).order_by("id")
+    ).order_by("name")
 
     if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
         query = query.filter(new_comments_no__gt=0)
