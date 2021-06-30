@@ -25,5 +25,5 @@ def tavern_table_name(listing_table, user_profile):
         f"{listing_table.new_comments_no}/"
         if listing_table.new_comments_no is not None
         else "",
-        listing_table.comments_no,
+        listing_table.posts_no,
     )

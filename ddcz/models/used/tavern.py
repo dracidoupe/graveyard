@@ -71,9 +71,7 @@ class TavernTable(models.Model):
 
         # Speedup cache for listing; see ddcz.tavern.get_tavern_table_list
         # TODO: Refactor and reconcile with elif below
-        if self.access_privileges_annotated:
-            print(f"is_assistant_admin_no {self.is_assistant_admin_no}")
-
+        if getattr(self, "access_privileges_annotated", None):
             if self.is_assistant_admin:
                 return True
             if self.is_banned:
