@@ -69,6 +69,23 @@ class TavernTable(models.Model):
         if user_profile.nick == self.owner:
             return True
 
+        # Speedup cache for listing; see ddcz.tavern.get_tavern_table_list
+        # TODO: Refactor and reconcile with elif below
+        if self.access_privileges_annotated:
+            print(f"is_assistant_admin_no {self.is_assistant_admin_no}")
+
+            if self.is_assistant_admin:
+                return True
+            if self.is_banned:
+                return False
+            elif self.is_public:
+                return True
+            elif self.is_allowed:
+                print(f"Is allowed at table {self.name}")
+                return True
+            else:
+                return False
+
         # Note: Can't do "if not acls" since that would re-fetch for every empty set
         if acls is None:
             acls = self.get_user_acls(user_profile)

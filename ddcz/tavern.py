@@ -3,18 +3,29 @@ import sys
 from datetime import datetime
 
 from dateutil import tz
-from django.db.models import Count, OuterRef, Subquery, IntegerField
+from django.db.models import (
+    Count,
+    OuterRef,
+    Subquery,
+    IntegerField,
+    BooleanField,
+    Case,
+    Value,
+    When,
+    Q,
+)
 
-from ddcz.models import (
+from .models import (
     TavernAccess,
+    TavernAccessRights,
     TavernTable,
     TavernTableVisitor,
     UserProfile,
     TAVERN_SECTION_PRIVATE_ID,
     TAVERN_SECTION_NEW_ID,
 )
-from ddcz.models.used.tavern import TavernBookmark
-from ddcz.text import misencode
+from .models.used.tavern import TavernBookmark
+from .text import misencode
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +43,18 @@ SUPPORTED_LIST_STYLES_DISPLAY_NAME = {
 
 
 def get_tavern_table_list(user_profile, list_style):
+    """
+    Return list of Tavern Tables optimized for the main view:
+        * Respect list style and filter accordingly
+        * Annotate with attributes that would prevent additional list queries:
+            * Displaying amount of posts:
+                * comments_no
+                * new_comments_no
+            * Merge permissions:
+                * is_assistant_admin
+                * is_banned
+                * is_allowed
+    """
     if list_style in [LIST_FAVORITE, LIST_FAVORITE_NEW_COMMENTS]:
         query = user_profile.tavern_bookmarks
     elif list_style in [LIST_ALL, LIST_ALL_NEW_COMMENTS]:
@@ -54,7 +77,69 @@ def get_tavern_table_list(user_profile, list_style):
             ).values("unread")[:1],
             output_field=IntegerField(),
         ),
-    ).order_by("name")
+        # Resolve privileges and annotate we have done so
+        access_privileges_annotated=Case(default=True, output_field=BooleanField()),
+        # Resolve Assistant Admin privileges
+        is_assistant_admin_no=Count(
+            Subquery(
+                TavernAccess.objects.filter(
+                    tavern_table_id=OuterRef("id"),
+                    user_nick=misencode(user_profile.nick),
+                    access_type=TavernAccessRights.ASSISTANT_ADMIN,
+                ).values("django_id")[:1],
+                output_field=IntegerField(),
+            )
+        ),
+        # privileges_no=Count("tavernaccess"),
+        # is_assistant_admin_no=Count(
+        #     "tavernaccess",
+        #     # filter=Q(
+        #     #     # tavernaccess__tavern_table_id=OuterRef("id"),
+        #     #     tavernaccess__user_nick=misencode(user_profile.nick)
+        #     # )
+        #     # & Q(
+        #     #     tavernaccess__access_type=TavernAccessRights.ASSISTANT_ADMIN,
+        #     # ),
+        # ),
+        is_assistant_admin=Case(
+            When(is_assistant_admin_no__gte=1, then=Value(True)),
+            default=False,
+            output_field=BooleanField(),
+        ),
+        # Resolve Banned privileges
+        is_banned_no=Count(
+            Subquery(
+                TavernAccess.objects.filter(
+                    tavern_table_id=OuterRef("id"),
+                    user_nick=misencode(user_profile.nick),
+                    access_type=TavernAccessRights.ACCESS_BANNED,
+                ).values("django_id")[:1],
+                output_field=IntegerField(),
+            )
+        ),
+        is_banned=Case(
+            When(is_banned_no__gte=1, then=Value(True)),
+            default=False,
+            output_field=BooleanField(),
+        ),
+        # Resolve Allow List privileges
+        is_allowed_no=Count(
+            Subquery(
+                TavernAccess.objects.filter(
+                    tavern_table_id=OuterRef("id"),
+                    user_nick=misencode(user_profile.nick),
+                    access_type=TavernAccessRights.ACCESS_ALLOWED,
+                ).values("django_id")[:1],
+                output_field=IntegerField(),
+            )
+        ),
+        is_allowed=Case(
+            When(is_allowed_no__gte=1, then=Value(True)),
+            default=False,
+            output_field=BooleanField(),
+        ),
+        # Do not resolve allow write privileges as those are not displayed on the list page
+    ).order_by("id")
 
     if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
         query = query.filter(new_comments_no__gt=0)
