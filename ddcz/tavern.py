@@ -61,6 +61,9 @@ def get_tavern_table_list(user_profile, list_style):
         query = TavernTable.objects.all()
 
     query = query.annotate(
+        # comments_no=Count(
+        #     "tavernpost",
+        # ),
         # This should work, but it doesn't. Maybe bug in 2.0 and will be solved by upgrade?
         # Should cause LEFT OUTER JOIN putyka_uzivatele pu ON pu.id_uzivatele = $ID AND pu.id_stolu=putyka.id
         # visitor=FilteredRelation(
@@ -68,6 +71,10 @@ def get_tavern_table_list(user_profile, list_style):
         #     condition=Q(taverntablevisitor__id_uzivatele=request.ddcz_profile.pk),
         # ),
         # # In lieu of that, solve it using subqueries
+        ## Also note: all of the queries below are suboptimally generated; it should be (select count(*) ...) as count
+        ## as opposed to query/count aggregate, plus the case should be merged in
+        ## But it's fast enough and should go completely away with the removal of the old version, so YOLO
+        ## See <https://github.com/dracidoupe/graveyard/issues/305>
         new_comments_no=Subquery(
             TavernTableVisitor.objects.filter(
                 tavern_table_id=OuterRef("id"), user_profile=user_profile
@@ -81,23 +88,12 @@ def get_tavern_table_list(user_profile, list_style):
             Subquery(
                 TavernAccess.objects.filter(
                     tavern_table_id=OuterRef("id"),
-                    user_nick=misencode(user_profile.nick),
-                    access_type=TavernAccessRights.ASSISTANT_ADMIN,
+                    user_nick=user_profile.pk,
+                    access_type=TavernAccessRights.ASSISTANT_ADMIN.value,
                 ).values("django_id")[:1],
                 output_field=IntegerField(),
             )
         ),
-        # privileges_no=Count("tavernaccess"),
-        # is_assistant_admin_no=Count(
-        #     "tavernaccess",
-        #     # filter=Q(
-        #     #     # tavernaccess__tavern_table_id=OuterRef("id"),
-        #     #     tavernaccess__user_nick=misencode(user_profile.nick)
-        #     # )
-        #     # & Q(
-        #     #     tavernaccess__access_type=TavernAccessRights.ASSISTANT_ADMIN,
-        #     # ),
-        # ),
         is_assistant_admin=Case(
             When(is_assistant_admin_no__gte=1, then=Value(True)),
             default=False,
@@ -109,7 +105,7 @@ def get_tavern_table_list(user_profile, list_style):
                 TavernAccess.objects.filter(
                     tavern_table_id=OuterRef("id"),
                     user_nick=misencode(user_profile.nick),
-                    access_type=TavernAccessRights.ACCESS_BANNED,
+                    access_type=TavernAccessRights.ACCESS_BANNED.value,
                 ).values("django_id")[:1],
                 output_field=IntegerField(),
             )
@@ -125,7 +121,7 @@ def get_tavern_table_list(user_profile, list_style):
                 TavernAccess.objects.filter(
                     tavern_table_id=OuterRef("id"),
                     user_nick=misencode(user_profile.nick),
-                    access_type=TavernAccessRights.ACCESS_ALLOWED,
+                    access_type=TavernAccessRights.ACCESS_ALLOWED.value,
                 ).values("django_id")[:1],
                 output_field=IntegerField(),
             )
@@ -140,8 +136,7 @@ def get_tavern_table_list(user_profile, list_style):
 
     if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
         query = query.filter(new_comments_no__gt=0)
-
-    return list(query)
+    return query
 
 
 def get_tables_with_access(user_profile, candidate_tables_queryset):
@@ -245,7 +240,7 @@ def migrate_tavern_access(
                 )
             except (ValueError, user_profile_model.DoesNotExist):
                 # OK, _now_ we give up
-                logging.warn(
+                logging.warning(
                     f"Can't fetch user record for nick {tavern_access.user_nick}. Maybe we should purge the record?"
                 )
         else:
@@ -267,7 +262,7 @@ def migrate_tavern_access(
             elif tavern_access.access_type == "asist":
                 table_visitor.moderator = 1
             else:
-                logger.warn(
+                logger.warning(
                     f"Unknown access type {tavern_access.access_type} for user {tavern_access.user_nick} to table {tavern_access.tavern_table}"
                 )
 

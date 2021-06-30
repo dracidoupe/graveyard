@@ -28,6 +28,7 @@ class TavernTable(models.Model):
     owner = MisencodedCharField(max_length=30, db_column="vlastnik")
     # TODO: MisencodedBooleanField
     allow_rep = MisencodedCharField(max_length=1, db_column="povol_hodnoceni")
+    # TODO: Not used, to my knowledge; fine to drop the column, but double-check old code
     min_level = MisencodedCharField(max_length=1, db_column="min_level")
     created = models.DateTimeField(db_column="zalozen")
     # TODO: MisencodedBooleanField
@@ -79,7 +80,6 @@ class TavernTable(models.Model):
             elif self.is_public:
                 return True
             elif self.is_allowed:
-                print(f"Is allowed at table {self.name}")
                 return True
             else:
                 return False
@@ -125,10 +125,25 @@ class TavernTable(models.Model):
             ).count() > 0
 
     def get_user_acls(self, user_profile):
-        acls_models = self.tavernaccess_set.filter(
-            user_nick=misencode(user_profile.nick)
+        # This is fucked up thanks to <https://github.com/dracidoupe/graveyard/issues/306>
+        # Will be fixed by the permission model upgrade
+        acls = [
+            TavernAccessRights(acl.access_type)
+            for acl in self.tavernaccess_set.filter(
+                ~models.Q(access_type=TavernAccessRights.ASSISTANT_ADMIN),
+                user_nick=misencode(user_profile.nick),
+            )
+        ]
+        acls.extend(
+            [
+                TavernAccessRights(acl.access_type)
+                for acl in self.tavernaccess_set.filter(
+                    access_type=TavernAccessRights.ASSISTANT_ADMIN,
+                    user_nick=user_profile.pk,
+                )
+            ]
         )
-        return set([TavernAccessRights(acl.access_type) for acl in acls_models])
+        return set(acls)
 
     def update_access_privileges(
         self,
