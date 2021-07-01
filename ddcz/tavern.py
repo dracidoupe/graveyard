@@ -88,7 +88,7 @@ def get_tavern_table_list(user_profile, list_style):
             Subquery(
                 TavernAccess.objects.filter(
                     tavern_table_id=OuterRef("id"),
-                    user_nick=user_profile.pk,
+                    user_nick_or_id=user_profile.pk,
                     access_type=TavernAccessRights.ASSISTANT_ADMIN.value,
                 ).values("django_id")[:1],
                 output_field=IntegerField(),
@@ -104,7 +104,7 @@ def get_tavern_table_list(user_profile, list_style):
             Subquery(
                 TavernAccess.objects.filter(
                     tavern_table_id=OuterRef("id"),
-                    user_nick=misencode(user_profile.nick),
+                    user_nick_or_id=misencode(user_profile.nick),
                     access_type=TavernAccessRights.ACCESS_BANNED.value,
                 ).values("django_id")[:1],
                 output_field=IntegerField(),
@@ -120,7 +120,7 @@ def get_tavern_table_list(user_profile, list_style):
             Subquery(
                 TavernAccess.objects.filter(
                     tavern_table_id=OuterRef("id"),
-                    user_nick=misencode(user_profile.nick),
+                    user_nick_or_id=misencode(user_profile.nick),
                     access_type=TavernAccessRights.ACCESS_ALLOWED.value,
                 ).values("django_id")[:1],
                 output_field=IntegerField(),
@@ -148,7 +148,7 @@ def get_tables_with_access(user_profile, candidate_tables_queryset):
     # See https://github.com/dracidoupe/graveyard/issues/233
 
     related_permissions = TavernAccess.objects.filter(
-        user_nick=misencode(user_profile.nick),
+        user_nick_or_id=misencode(user_profile.nick),
         tavern_table_id__in=[i.pk for i in candidate_tables_queryset],
     )
 
@@ -227,7 +227,7 @@ def migrate_tavern_access(
 
         try:
             user_profile = user_profile_model.objects.get(
-                nick=misencode(tavern_access.user_nick)
+                nick=misencode(tavern_access.user_nick_or_id)
             )
         except user_profile_model.DoesNotExist:
             # OK, this opens up a potential security problem, but so far, we don't have
@@ -236,12 +236,12 @@ def migrate_tavern_access(
             # corresponding to a user ID, so let's use that for a secondary search
             try:
                 user_profile = user_profile_model.objects.get(
-                    id=int(tavern_access.user_nick)
+                    id=int(tavern_access.user_nick_or_id)
                 )
             except (ValueError, user_profile_model.DoesNotExist):
                 # OK, _now_ we give up
                 logging.warning(
-                    f"Can't fetch user record for nick {tavern_access.user_nick}. Maybe we should purge the record?"
+                    f"Can't fetch user record for nick {tavern_access.user_nick_or_id}. Maybe we should purge the record?"
                 )
         else:
             try:
@@ -263,7 +263,7 @@ def migrate_tavern_access(
                 table_visitor.moderator = 1
             else:
                 logger.warning(
-                    f"Unknown access type {tavern_access.access_type} for user {tavern_access.user_nick} to table {tavern_access.tavern_table}"
+                    f"Unknown access type {tavern_access.access_type} for user {tavern_access.user_nick_or_id} to table {tavern_access.tavern_table}"
                 )
 
             table_visitor.save()
