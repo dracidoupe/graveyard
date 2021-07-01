@@ -131,7 +131,7 @@ class TavernTable(models.Model):
             TavernAccessRights(acl.access_type)
             for acl in self.tavernaccess_set.filter(
                 ~models.Q(access_type=TavernAccessRights.ASSISTANT_ADMIN),
-                user_nick=misencode(user_profile.nick),
+                user_nick_or_id=misencode(user_profile.nick),
             )
         ]
         acls.extend(
@@ -139,7 +139,7 @@ class TavernTable(models.Model):
                 TavernAccessRights(acl.access_type)
                 for acl in self.tavernaccess_set.filter(
                     access_type=TavernAccessRights.ASSISTANT_ADMIN,
-                    user_nick=user_profile.pk,
+                    user_nick_or_id=user_profile.pk,
                 )
             ]
         )
@@ -232,7 +232,7 @@ class TavernTable(models.Model):
                 TavernAccess.objects.create(
                     tavern_table=self,
                     access_type=access_type.value,
-                    user_nick=UserProfile.objects.get(pk=user_id).nick,
+                    user_nick_or_id=UserProfile.objects.get(pk=user_id).nick,
                 )
 
         # Deleting the ones that were dropped
@@ -457,9 +457,12 @@ class TavernAccess(models.Model):
     # asist = Assistent admin, allow access even if otherwise denied
     # zapis = Allow write access even if table is read only
     access_type = MisencodedCharField(max_length=5, db_column="typ_pristupu")
-    user_nick = MisencodedCharField(max_length=30, db_column="nick_usera")
+    # For everything except asist, it's user's nickname
+    # for assist, it's ID
+    # Burn it with fire, see <https://github.com/dracidoupe/graveyard/issues/306>
+    user_nick_or_id = MisencodedCharField(max_length=30, db_column="nick_usera")
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "putyka_pristup"
-        unique_together = (("tavern_table", "access_type", "user_nick"),)
+        unique_together = (("tavern_table", "access_type", "user_nick_or_id"),)
