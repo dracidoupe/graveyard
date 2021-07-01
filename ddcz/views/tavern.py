@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from ..forms.comments import TavernPostForm, CommentAction, NoticeBoardForm
-from ..models import TavernTable, TavernPost, TavernTableNoticeBoard
+from ..models import TavernTable, TavernPost, TavernTableNoticeBoard, TavernTableVisitor
 from ..tavern import (
     LIST_ALL,
     LIST_FAVORITE,
@@ -79,8 +79,11 @@ def list_tables(request):
 def table_posts(request, tavern_table_id):
     table = request.tavern_table
     user_can_post = table.is_user_write_allowed(user_profile=request.ddcz_profile)
+    posts_page = request.GET.get("z_s", 1)
 
     if request.method == "POST":
+        # Create new Post
+
         # if request.POST["post_type"] == CommentAction.DELETE.value:
         #     try:
         #         Phorum.objects.get(
@@ -107,6 +110,13 @@ def table_posts(request, tavern_table_id):
             return HttpResponseRedirect(request.get_full_path())
 
     else:
+        # Visit the table listing
+        new_values = {"visit_time": datetime.now()}
+        if posts_page == 1:
+            new_values["unread"] = 0
+        TavernTableVisitor.objects.update_or_create(
+            tavern_table=table, user_profile=request.ddcz_profile, defaults=new_values
+        )
         post_form = TavernPostForm()
 
     return render(
@@ -114,7 +124,7 @@ def table_posts(request, tavern_table_id):
         "tavern/posts.html",
         {
             "table": table,
-            "posts_page": request.GET.get("z_s", 1),
+            "posts_page": posts_page,
             "post_form": post_form,
             "user_can_post": user_can_post,
         },
