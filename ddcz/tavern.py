@@ -226,23 +226,21 @@ def migrate_tavern_access(
             sys.stdout.flush()
 
         try:
-            user_profile = user_profile_model.objects.get(
-                nick=misencode(tavern_access.user_nick_or_id)
-            )
-        except user_profile_model.DoesNotExist:
-            # OK, this opens up a potential security problem, but so far, we don't have
-            # Users with nick that would be composed of numbers only.
-            # So let's try: sometimes, there is an integer in nick_usera that looks like
-            # corresponding to a user ID, so let's use that for a secondary search
-            try:
+            if (
+                TavernAccessRights(tavern_access.access_type)
+                == TavernAccessRights.ASSISTANT_ADMIN
+            ):
                 user_profile = user_profile_model.objects.get(
                     id=int(tavern_access.user_nick_or_id)
                 )
-            except (ValueError, user_profile_model.DoesNotExist):
-                # OK, _now_ we give up
-                logging.warning(
-                    f"Can't fetch user record for nick {tavern_access.user_nick_or_id}. Maybe we should purge the record?"
+            else:
+                user_profile = user_profile_model.objects.get(
+                    nick=misencode(tavern_access.user_nick_or_id)
                 )
+        except (ValueError, user_profile_model.DoesNotExist):
+            logging.warning(
+                f"Can't fetch user record for nick {tavern_access.user_nick_or_id}. Maybe we should purge the record?"
+            )
         else:
             try:
                 table_visitor = table_visitor_model.objects.get(
@@ -253,13 +251,13 @@ def migrate_tavern_access(
                     tavern_table=tavern_access.tavern_table, user_profile=user_profile
                 )
 
-            if tavern_access.access_type == "vstpo":
+            if tavern_access.access_type == TavernAccessRights.ACCESS_ALLOWED:
                 table_visitor.access = 1
-            elif tavern_access.access_type == "vstza":
+            elif tavern_access.access_type == TavernAccessRights.ACCESS_BANNED:
                 table_visitor.access = -2
-            elif tavern_access.access_type == "zapis":
+            elif tavern_access.access_type == TavernAccessRights.WRITE_ALLOWED:
                 table_visitor.access = 2
-            elif tavern_access.access_type == "asist":
+            elif tavern_access.access_type == TavernAccessRights.ASSISTANT_ADMIN:
                 table_visitor.moderator = 1
             else:
                 logger.warning(
