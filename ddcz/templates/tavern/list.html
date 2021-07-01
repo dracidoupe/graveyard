@@ -26,7 +26,7 @@
     {% for listing_table in tavern_tables %}
         <tr>
             <td>{% tavern_table_name listing_table ddcz_profile %}</td>
-            <td>{{ listing_table.description }}</td>
+            <td>{{ listing_table.description | render_html | safe }}</td>
             <td>{{ listing_table.owner }}</td>
         </tr>
     {% endfor %}

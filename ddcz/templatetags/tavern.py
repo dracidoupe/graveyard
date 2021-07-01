@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
+from ..html import encode_valid_html
+
 logger = logging.getLogger(__name__)
 register = template.Library()
 
@@ -20,7 +22,7 @@ def tavern_table_name(listing_table, user_profile):
         )
         if show_link
         else "",
-        listing_table.name,
+        mark_safe(encode_valid_html(listing_table.name)),
         mark_safe("</a>") if show_link else "",
         f"{listing_table.new_comments_no}/"
         if listing_table.new_comments_no is not None
