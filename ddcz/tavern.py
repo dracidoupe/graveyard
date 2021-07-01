@@ -1,8 +1,9 @@
 import logging
 import sys
 from datetime import datetime
-
 from dateutil import tz
+
+
 from django.db.models import (
     Count,
     OuterRef,
@@ -270,6 +271,20 @@ def migrate_tavern_access(
 
 
 def bookmark_table(user_profile, tavern_table):
+    TavernTableVisitor.objects.update_or_create(
+        tavern_table=tavern_table, user_profile=user_profile, defaults={"favorite": 1}
+    )
+
     return TavernBookmark.objects.create(
         tavern_table=tavern_table, user_profile=user_profile
     )
+
+
+def unbook_table(user_profile, tavern_table):
+    TavernTableVisitor.objects.update_or_create(
+        tavern_table=tavern_table, user_profile=user_profile, defaults={"favorite": 0}
+    )
+
+    TavernBookmark.objects.filter(
+        tavern_table=tavern_table, user_profile=user_profile
+    ).delete()

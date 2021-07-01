@@ -1,32 +1,77 @@
 from datetime import datetime
+from enum import Enum, unique
 from functools import wraps
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import (
+    HttpResponseRedirect,
+    HttpResponseForbidden,
+    HttpResponseBadRequest,
+)
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from ..forms.comments import TavernPostForm, CommentAction, NoticeBoardForm
-from ..models import TavernTable, TavernPost, TavernTableNoticeBoard, TavernTableVisitor
+from ..models import (
+    TavernTable,
+    TavernPost,
+    TavernTableNoticeBoard,
+    TavernTableVisitor,
+    TavernBookmark,
+)
 from ..tavern import (
     LIST_ALL,
     LIST_FAVORITE,
     SUPPORTED_LIST_STYLES_DISPLAY_NAME,
     get_tavern_table_list,
+    bookmark_table,
+    unbook_table,
 )
 
 
-def table_accessible(view_func):
-    """Check if the tavern table is accessible. If not, redirect to the tavern table list"""
+@unique
+class BookmarkActions(Enum):
+    BOOK = "oblibit"
+    UNBOOK = "neoblibit"
+
+
+def handle_table_visit(view_func):
+    """
+    Check if the tavern table is accessible:
+        * If not, redirect to the tavern table list
+        * If yes, update visit time and attach common variables
+    """
 
     @wraps(view_func)
     def _wrapped_view_func(request, *args, **kwargs):
         if "tavern_table_id" in kwargs:
+            # TODO: room for optimization, could be pre-selected with visitor
             request.tavern_table = table = get_object_or_404(
                 TavernTable, pk=kwargs["tavern_table_id"]
             )
             if table.is_user_access_allowed(user_profile=request.ddcz_profile):
+                (
+                    request.tavern_table.visitor,
+                    created,
+                ) = TavernTableVisitor.objects.get_or_create(
+                    tavern_table=table,
+                    user_profile=request.ddcz_profile,
+                    defaults={"unread": 0, "visit_time": datetime.now()},
+                )
+                if not created:
+                    request.tavern_table.visitor.visit_time = datetime.now()
+                    request.tavern_table.visitor.save()
+
+                # This will be in the future just inferred from the visitor, but for now, the normative
+                # data is in the TavernBookmark, unfortunately
+                table.is_bookmarked = (
+                    TavernBookmark.objects.filter(
+                        tavern_table=table, user_profile=request.ddcz_profile
+                    ).count()
+                    == 1
+                )
+                # Call the actual view function
                 response = view_func(request, *args, **kwargs)
                 return response
         return HttpResponseRedirect(reverse("ddcz:tavern-list"))
@@ -75,7 +120,7 @@ def list_tables(request):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-@table_accessible
+@handle_table_visit
 def table_posts(request, tavern_table_id):
     table = request.tavern_table
     user_can_post = table.is_user_write_allowed(user_profile=request.ddcz_profile)
@@ -110,13 +155,9 @@ def table_posts(request, tavern_table_id):
             return HttpResponseRedirect(request.get_full_path())
 
     else:
-        # Visit the table listing
-        new_values = {"visit_time": datetime.now()}
         if posts_page == 1:
-            new_values["unread"] = 0
-        TavernTableVisitor.objects.update_or_create(
-            tavern_table=table, user_profile=request.ddcz_profile, defaults=new_values
-        )
+            table.visitor.unread = 0
+            table.visitor.save()
         post_form = TavernPostForm()
 
     return render(
@@ -133,7 +174,7 @@ def table_posts(request, tavern_table_id):
 
 @login_required
 @require_http_methods(["GET", "POST"])
-@table_accessible
+@handle_table_visit
 def notice_board(request, tavern_table_id):
     table = request.tavern_table
     user_can_update_notice_board = table.is_notice_board_update_allowed(
@@ -181,4 +222,32 @@ def notice_board(request, tavern_table_id):
             "post_form": post_form,
             "user_can_update_notice_board": user_can_update_notice_board,
         },
+    )
+
+
+@login_required
+@require_http_methods(["GET"])
+@handle_table_visit
+def table_bookmark(request, tavern_table_id):
+    table = request.tavern_table
+
+    # TODO: The "Book" button should be a form and it should sent a POST request
+    if "akce" not in request.GET:
+        return HttpResponseBadRequest(
+            "`akce` request parameter is mandatory for this endpoint"
+        )
+    try:
+        action = BookmarkActions(request.GET["akce"])
+    except ValueError:
+        return HttpResponseBadRequest(
+            f"Invalid parameter for `akce`: {request.GET['akce']}"
+        )
+
+    if action == BookmarkActions.BOOK:
+        bookmark_table(user_profile=request.ddcz_profile, tavern_table=table)
+    elif action == BookmarkActions.UNBOOK:
+        unbook_table(user_profile=request.ddcz_profile, tavern_table=table)
+
+    return HttpResponseRedirect(
+        reverse("ddcz:tavern-posts", kwargs={"tavern_table_id": table.pk})
     )

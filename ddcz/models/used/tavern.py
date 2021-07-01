@@ -378,8 +378,6 @@ class TavernSection(models.Model):
 class TavernTableVisitor(models.Model):
     """Tracking visits to a tavern table as well as bookmark status"""
 
-    # TODO: Migrate to "table" and "user" attributes
-    # :thinking: Shouldn't be too hard given we can leave the db_column in...
     tavern_table = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
     )
