@@ -48,7 +48,7 @@ def users_list(request):
         else:
             users = UserProfile.objects.filter(nick__icontains=searched_nick)
     else:
-        users = UserProfile.objects.all().order_by("-last_access")
+        users = UserProfile.objects.all().order_by("-last_login")
 
     paginator = Paginator(users, DEFAULT_USER_LIST_SIZE)
     page = request.GET.get("z_s", 1)
