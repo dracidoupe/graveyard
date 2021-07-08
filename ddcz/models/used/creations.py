@@ -476,6 +476,8 @@ class Skill(Creation):
 
     class Meta:
         db_table = "dovednosti"
+        verbose_name = "Dovednost"
+        verbose_name_plural = "Dovednosti"
 
 
 class AlchemistTool(Creation):
@@ -547,6 +549,8 @@ class AlchemistTool(Creation):
 
     class Meta:
         db_table = "alchpredmety"
+        verbose_name = "Alchymistický předmět"
+        verbose_name_plural = "Alchimistické předměty"
 
     def __str__(self):
         return "{} od {}".format(
@@ -573,6 +577,8 @@ class Link(models.Model):
 
     class Meta:
         db_table = "linky"
+        verbose_name = "Odkaz"
+        verbose_name_plural = "Odkazy"
 
     def __str__(self):
         return "{} {}".format(self.name, self.url)
@@ -656,6 +662,8 @@ class WizardSpell(Creation):
 
     class Meta:
         db_table = "kouzla"
+        verbose_name = "Kouzelnické kouzlo"
+        verbose_name_plural = "Kouzelnická kouzla"
 
 
 class Item(Creation):
@@ -696,6 +704,8 @@ class Item(Creation):
 
     class Meta:
         db_table = "predmety"
+        verbose_name = "Předmět"
+        verbose_name_plural = "Předměty"
 
 
 class DownloadItem(Creation):
