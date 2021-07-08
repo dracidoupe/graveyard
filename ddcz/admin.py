@@ -4,6 +4,7 @@ from .models import (
     AlchemistTool,
     CommonArticle,
     CreativePageConcept,
+    Dating,
     EditorArticle,
     Item,
     Link,
@@ -25,6 +26,7 @@ class SearchableAdmin(admin.ModelAdmin):
 admin.site.register(AlchemistTool, SearchableAdmin)
 admin.site.register(CommonArticle, SearchableAdmin)
 admin.site.register(CreativePageConcept, SearchableAdmin)
+admin.site.register(Dating, SearchableAdmin)
 admin.site.register(Item, SearchableAdmin)
 admin.site.register(Link, SearchableAdmin)
 admin.site.register(Monster, SearchableAdmin)
