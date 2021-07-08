@@ -19,20 +19,23 @@ admin.site.site_header = "Administrace pro DraciDoupe.cz"
 admin.site.site_title = admin.site.site_header
 
 
-class SearchableAdmin(admin.ModelAdmin):
+class SearchableName(admin.ModelAdmin):
     search_fields = ("jmeno",)
 
 
-admin.site.register(AlchemistTool, SearchableAdmin)
-admin.site.register(CommonArticle, SearchableAdmin)
-admin.site.register(CreativePageConcept, SearchableAdmin)
-admin.site.register(Dating, SearchableAdmin)
-admin.site.register(Item, SearchableAdmin)
-admin.site.register(Link, SearchableAdmin)
-admin.site.register(Monster, SearchableAdmin)
-admin.site.register(News, SearchableAdmin)
-admin.site.register(RangerSpell, SearchableAdmin)
-admin.site.register(Skill, SearchableAdmin)
-admin.site.register(WizardSpell, SearchableAdmin)
+class DatingSearch(admin.ModelAdmin):
+    search_fields = ("name", "email", "phone", "mobile")
+
+
+admin.site.register(AlchemistTool, SearchableName)
+admin.site.register(CommonArticle, SearchableName)
+admin.site.register(CreativePageConcept, SearchableName)
+admin.site.register(Item, SearchableName)
+admin.site.register(Link, SearchableName)
+admin.site.register(Monster, SearchableName)
+admin.site.register(News, SearchableName)
+admin.site.register(RangerSpell, SearchableName)
+admin.site.register(Skill, SearchableName)
+admin.site.register(WizardSpell, SearchableName)
 
 admin.site.register(EditorArticle)

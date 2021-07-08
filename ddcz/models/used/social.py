@@ -54,6 +54,9 @@ class Dating(models.Model):
         verbose_name = "Seznamka"
         verbose_name_plural = "Seznamky"
 
+    def __str__(self):
+        return f"{self.name} ve skupině {self.group}"
+
 
 class Market(models.Model):
     group = MisencodedCharField(
