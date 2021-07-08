@@ -27,6 +27,8 @@ class DatingSearch(admin.ModelAdmin):
     search_fields = ("name", "email", "phone", "mobile")
 
 
+admin.site.register(Dating, DatingSearch)
+
 admin.site.register(AlchemistTool, SearchableName)
 admin.site.register(CommonArticle, SearchableName)
 admin.site.register(CreativePageConcept, SearchableName)
