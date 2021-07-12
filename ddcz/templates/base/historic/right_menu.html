@@ -29,19 +29,21 @@
     <p><a href="{% url 'ddcz:password-reset' %}">Zapomněl jsem heslo</a></p>
     {% endif %}
 
-    <ul>
-        <li>
-            <span class="list_heading">Vzhledy</span>
-            <ul>
-                <li><a href="">Family Silver</a></li>
-                <li><a href="{% url 'ddcz:change-skin' %}?skin=historic&redirect={{ current_page_url }}">NeoHistoric</a>
-                </li>
-                <li><a href="{% url 'ddcz:change-skin' %}?skin=light&redirect={{ current_page_url }}">Light</a></li>
-                <li><a href="{% url 'ddcz:change-skin' %}?skin=dark&redirect={{ current_page_url }}">Dark</a></li>
-                <li><a href="">Timmothy Gold</a></li>
-            </ul>
-        </li>
-    </ul>
+    {% if user.is_authenticated %}
+        <ul>
+            <li>
+                <span class="list_heading">Vzhledy</span>
+                <ul>
+                    <li><a href="">Family Silver</a></li>
+                    <li><a href="{% url 'ddcz:change-skin' %}?skin=historic&redirect={{ current_page_url }}">NeoHistoric</a>
+                    </li>
+                    <li><a href="{% url 'ddcz:change-skin' %}?skin=light&redirect={{ current_page_url }}">Light</a></li>
+                    <li><a href="{% url 'ddcz:change-skin' %}?skin=dark&redirect={{ current_page_url }}">Dark</a></li>
+                    <li><a href="">Timmothy Gold</a></li>
+                </ul>
+            </li>
+        </ul>
+    {% endif %}
 
     <ul>
         <li>
