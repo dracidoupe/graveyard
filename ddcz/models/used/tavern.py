@@ -251,14 +251,14 @@ class TavernTable(models.Model):
         table_acls_models = self.tavernaccess_set.filter(
             access_type__in=[p.value for p in processing_privileges]
         )
-        # Diff in-database ACLs agaist the new set
+        # Diff in-database ACLs against the new set
         # Not in new set = delete from db; is in new set = leave untouched
         for acl in table_acls_models:
             access_type = TavernAccessRights(acl.access_type)
             if acl.pk not in access_map[access_type]:
                 table_acls_to_delete.append(acl.pk)
-
-            access_map[access_type].remove(acl.pk)
+            else:
+                access_map[access_type].remove(acl.pk)
 
         # Adding new privileges
         for access_type in access_map:
@@ -478,7 +478,11 @@ class IgnoredTavernTable(models.Model):
 
 
 class TavernAccess(models.Model):
-    """Tavern access was used in v0. Now it's preferred to store it as attributes in TavernTableVisitor"""
+    """
+    Tavern access was used in v0 and is the normativer version now.
+     Once old version is shut down, it will be preferred to store
+     it as attributes in TavernTableVisitor instead
+    """
 
     tavern_table = models.ForeignKey(
         TavernTable, on_delete=models.CASCADE, db_column="id_stolu"
@@ -498,3 +502,6 @@ class TavernAccess(models.Model):
     class Meta:
         db_table = "putyka_pristup"
         unique_together = (("tavern_table", "access_type", "user_nick_or_id"),)
+
+    def __str__(self):
+        return f"PK {self.pk}: {self.access_type} for user {self.user_nick_or_id}"
