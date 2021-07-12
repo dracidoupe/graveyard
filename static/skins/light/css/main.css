@@ -26,6 +26,9 @@
     --user_star_active_border: #aaaaaa;
     --user_h3_size: 1.2rem;
     --user_h3_bottom: transparent;
+
+   --link-skin-contrast-color: #000050;
+
 }
 
 
@@ -167,7 +170,7 @@ nav ul li a{
 }
 
 nav ul li a::first-letter {
-    color: #000050;
+    color: var(--link-skin-contrast-color);
 }
 
 
@@ -222,4 +225,8 @@ h1.page-heading{
 #page-news footer {
     width: 100%;
     text-align: right;
+}
+
+.tavern_table_name__unread {
+    color: var(--link-skin-contrast-color);
 }
