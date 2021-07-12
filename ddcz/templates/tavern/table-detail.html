@@ -5,7 +5,7 @@
 {% block content %}
     <div id="page-tavern-detail">
     <h1 class="text-blue page-heading">Putyka</h1>
-    <h2>{{ table.name }}</h2>
+    <h2>{{ table.name | render_html | safe }}</h2>
     <header>
         <p>by {{ table.owner }}</p>
         <p>{{ table.description }}</p>
