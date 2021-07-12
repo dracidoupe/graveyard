@@ -29,6 +29,7 @@ from ..tavern import (
     get_tavern_table_list,
     bookmark_table,
     unbook_table,
+    post_table_post,
 )
 
 
@@ -149,15 +150,12 @@ def table_posts(request, tavern_table_id):
         ):
             post_form = TavernPostForm(request.POST)
             if post_form.is_valid():
-                TavernPost.objects.create(
+                post_table_post(
                     tavern_table=table,
+                    author_profile=request.ddcz_profile,
                     text=post_form.cleaned_data["text"],
-                    reputation=0,
-                    user=request.ddcz_profile,
-                    author_nick=request.ddcz_profile.nick,
-                    date=datetime.now(),
                 )
-            return HttpResponseRedirect(request.get_full_path())
+                return HttpResponseRedirect(request.get_full_path())
 
     else:
         if posts_page == 1:
