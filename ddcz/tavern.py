@@ -1,7 +1,7 @@
-import logging
-import sys
 from datetime import datetime
 from dateutil import tz
+import logging
+import sys
 
 
 from django.db.models import (
@@ -14,6 +14,7 @@ from django.db.models import (
     Value,
     When,
     Q,
+    F,
 )
 
 from .models import (
@@ -21,6 +22,7 @@ from .models import (
     TavernAccessRights,
     TavernTable,
     TavernTableVisitor,
+    TavernPost,
     UserProfile,
     TAVERN_SECTION_PRIVATE_ID,
     TAVERN_SECTION_NEW_ID,
@@ -288,3 +290,24 @@ def unbook_table(user_profile, tavern_table):
     TavernBookmark.objects.filter(
         tavern_table=tavern_table, user_profile=user_profile
     ).delete()
+
+
+def post_table_post(tavern_table, author_profile, text):
+    """Add a new post to the table"""
+    TavernPost.objects.create(
+        tavern_table=tavern_table,
+        text=text,
+        reputation=0,
+        user=author_profile,
+        author_nick=author_profile.nick,
+        date=datetime.now(),
+    )
+
+    # Increment the cached number of posts
+    tavern_table.posts_no = F("posts_no") + 1
+    tavern_table.save()
+
+    # Increment the number of unread posts for people who visited the table previously
+    TavernTableVisitor.objects.filter(tavern_table=tavern_table).update(
+        unread=F("unread") + 1
+    )
