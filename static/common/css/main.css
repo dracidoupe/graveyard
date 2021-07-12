@@ -296,3 +296,7 @@ article.link span.actuallink {
 #page-tavern-detail header {
     text-align: center;
 }
+
+.tavern_table_name__unread {
+    font-weight: bold;
+}
