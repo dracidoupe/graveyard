@@ -12,13 +12,15 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from ..forms.comments import TavernPostForm, CommentAction, NoticeBoardForm
+from ..forms.comments import CommentAction
+from ..forms.tavern import TavernPostForm, NoticeBoardForm, TavernTableAdminForm
 from ..models import (
     TavernTable,
     TavernPost,
     TavernTableNoticeBoard,
     TavernTableVisitor,
     TavernBookmark,
+    TavernAccessRights,
 )
 from ..tavern import (
     LIST_ALL,
@@ -71,6 +73,9 @@ def handle_table_visit(view_func):
                     ).count()
                     == 1
                 )
+
+                table.user_can_admin = table.is_admin(request.ddcz_profile)
+
                 # Call the actual view function
                 response = view_func(request, *args, **kwargs)
                 return response
@@ -250,4 +255,67 @@ def table_bookmark(request, tavern_table_id):
 
     return HttpResponseRedirect(
         reverse("ddcz:tavern-posts", kwargs={"tavern_table_id": table.pk})
+    )
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+@handle_table_visit
+def table_administration(request, tavern_table_id):
+    table = request.tavern_table
+    user_can_update_notice_board = table.is_notice_board_update_allowed(
+        user_profile=request.ddcz_profile
+    )
+
+    if request.method == "POST":
+        if not user_can_update_notice_board:
+            return HttpResponseForbidden("Nemáte právo upravit nástěnku.")
+
+        # tavern_table_admin_form = NoticeBoardForm(request.POST)
+        # if tavern_table_admin_form.is_valid():
+        #     if board:
+        #         board.text = tavern_table_admin_form.cleaned_data["text"]
+        #         board.changed_at = datetime.now()
+        #         board.change_author_nick = request.ddcz_profile.nick
+        #         board.save()
+        #     else:
+        #         TavernTableNoticeBoard.objects.create(
+        #             tavern_table=table,
+        #             table_name=table.name,
+        #             text=tavern_table_admin_form.cleaned_data["text"],
+        #             changed_at=datetime.now(),
+        #             change_author_nick=request.ddcz_profile.nick,
+        #         )
+        #
+        #     return HttpResponseRedirect(request.get_full_path())
+    else:
+        privileges = table.get_current_privileges_map()
+
+        tavern_table_admin_form = TavernTableAdminForm(
+            {
+                "name": table.name,
+                "description": table.description,
+                "allow_rep": table.allow_rep == "1",
+                "assistant_admins": ", ".join(
+                    privileges[TavernAccessRights.ASSISTANT_ADMIN]
+                ),
+                "write_allowed": ", ".join(
+                    privileges[TavernAccessRights.WRITE_ALLOWED]
+                ),
+                "access_allowed": ", ".join(
+                    privileges[TavernAccessRights.ACCESS_ALLOWED]
+                ),
+                "access_banned": ", ".join(
+                    privileges[TavernAccessRights.ACCESS_BANNED]
+                ),
+            }
+        )
+
+    return render(
+        request,
+        "tavern/table-admin.html",
+        {
+            "table": table,
+            "admin_form": tavern_table_admin_form,
+        },
     )

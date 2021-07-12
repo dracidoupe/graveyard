@@ -1,0 +1,11 @@
+{% extends 'tavern/table-detail.html' %}
+
+{% block taverntablecontent %}
+    <form method="POST" class="tavern_table_admin_form">
+        {% csrf_token %}
+        <table>
+            {{ admin_form.as_table }}
+        </table>
+        <input type="submit" name="submit" value="Ulož změny" class="form__submit">
+    </form>
+{% endblock %}

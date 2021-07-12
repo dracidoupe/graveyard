@@ -300,3 +300,17 @@ article.link span.actuallink {
 .tavern_table_name__unread {
     font-weight: bold;
 }
+
+.tavern_table_admin_form th {
+    text-align: left;
+    padding-right: 1rem;
+    width: 20%;
+}
+
+.tavern_table_admin_form table, .tavern_table_admin_form input[type="text"] {
+    width: 100%;
+}
+
+.tavern_table_admin_form input[type="submit"] {
+    margin-top: 1rem;
+}

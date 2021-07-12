@@ -113,6 +113,9 @@ class TavernTable(models.Model):
 
         return False
 
+    def is_admin(self, user_profile, acls=None):
+        return user_profile.nick == self.owner
+
     def is_write_restricted(self):
         # FIXME: Looking this up should be an attribute, not a query
         # see #297 <https://github.com/dracidoupe/graveyard/issues/297>
@@ -197,6 +200,37 @@ class TavernTable(models.Model):
             unprocessed_access_map=unprocessed_access_map,
             processing_privileges=processing_privileges,
         )
+
+    def get_current_privileges_map(self):
+        """
+        :return: current privileges as a dictionary in the format of
+        {
+            TavernAccessRights.RELEVANT_ENUM: set(['list', 'of', 'user', 'nicknames'])
+        }
+
+        This is format convenient for form mapping.
+        """
+
+        privileges = TavernAccess.objects.filter(tavern_table=self)
+        privileges_map = {
+            TavernAccessRights.ACCESS_ALLOWED: set([]),
+            TavernAccessRights.WRITE_ALLOWED: set([]),
+            TavernAccessRights.ACCESS_BANNED: set([]),
+            TavernAccessRights.ASSISTANT_ADMIN: set([]),
+        }
+
+        for privilege in privileges:
+            access_type = TavernAccessRights(privilege.access_type)
+            if access_type == TavernAccessRights.ASSISTANT_ADMIN:
+                nick = UserProfile.objects.values("nick").get(
+                    pk=privilege.user_nick_or_id
+                )["nick"]
+            else:
+                nick = privilege.user_nick_or_id
+
+            privileges_map[access_type].add(nick)
+
+        return privileges_map
 
     def update_legacy_privileges(self, unprocessed_access_map, processing_privileges):
         """
