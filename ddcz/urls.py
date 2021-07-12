@@ -84,6 +84,11 @@ urlpatterns = [
         name="tavern-notice-board",
     ),
     path(
+        "putyka/stul/<int:tavern_table_id>/administrace/",
+        tavern.table_administration,
+        name="tavern-table-admin",
+    ),
+    path(
         "putyka/stul/<int:tavern_table_id>/oblibit/",
         tavern.table_bookmark,
         name="tavern-bookmark",

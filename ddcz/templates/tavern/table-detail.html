@@ -20,7 +20,9 @@
                         <a href="{% url "ddcz:tavern-bookmark" tavern_table_id=table.id %}?akce=oblibit">Oblíbit</a>
                     {% endif %}
                 </li>
-                <li>Admin</li>
+                {% if table.user_can_admin %}
+                    <li><a href="{% url "ddcz:tavern-table-admin" tavern_table_id=table.id %}">Admin</a></li>
+                {% endif %}
                 <li><a href="{% url "ddcz:tavern-notice-board" tavern_table_id=table.id %}">Nástěnka</a></li>
             </ul>
         </nav>
