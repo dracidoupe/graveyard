@@ -263,31 +263,34 @@ def table_bookmark(request, tavern_table_id):
 @handle_table_visit
 def table_administration(request, tavern_table_id):
     table = request.tavern_table
-    user_can_update_notice_board = table.is_notice_board_update_allowed(
-        user_profile=request.ddcz_profile
-    )
+    if not table.is_admin(request.ddcz_profile):
+        return HttpResponseForbidden("Nemáte právo administrovat stůl.")
 
     if request.method == "POST":
-        if not user_can_update_notice_board:
-            return HttpResponseForbidden("Nemáte právo upravit nástěnku.")
+        tavern_table_admin_form = TavernTableAdminForm(request.POST)
+        if tavern_table_admin_form.is_valid():
+            table.name = tavern_table_admin_form.cleaned_data["name"]
+            table.description = tavern_table_admin_form.cleaned_data["description"]
+            table.allow_rep = (
+                "1" if tavern_table_admin_form.cleaned_data["allow_rep"] else "0"
+            )
+            table.public = (
+                "1"
+                if len(tavern_table_admin_form.cleaned_data["access_allowed"]) == 0
+                else "0"
+            )
+            table.save()
 
-        # tavern_table_admin_form = NoticeBoardForm(request.POST)
-        # if tavern_table_admin_form.is_valid():
-        #     if board:
-        #         board.text = tavern_table_admin_form.cleaned_data["text"]
-        #         board.changed_at = datetime.now()
-        #         board.change_author_nick = request.ddcz_profile.nick
-        #         board.save()
-        #     else:
-        #         TavernTableNoticeBoard.objects.create(
-        #             tavern_table=table,
-        #             table_name=table.name,
-        #             text=tavern_table_admin_form.cleaned_data["text"],
-        #             changed_at=datetime.now(),
-        #             change_author_nick=request.ddcz_profile.nick,
-        #         )
-        #
-        #     return HttpResponseRedirect(request.get_full_path())
+            table.update_access_privileges(
+                access_banned=tavern_table_admin_form.cleaned_data["access_banned"],
+                access_allowed=tavern_table_admin_form.cleaned_data["access_allowed"],
+                write_allowed=tavern_table_admin_form.cleaned_data["write_allowed"],
+                assistant_admins=tavern_table_admin_form.cleaned_data[
+                    "assistant_admins"
+                ],
+            )
+
+            return HttpResponseRedirect(request.get_full_path())
     else:
         privileges = table.get_current_privileges_map()
 
