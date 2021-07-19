@@ -191,7 +191,7 @@ def create_tavern_table(
         description=description,
         owner=owner.nick,
         public=public_db,
-        allow_rep="1" if allow_reputation else "0",
+        allow_rep=allow_reputation,
         # TODO: Those should go to model defaults
         section=section,
         created=datetime.now(tz.gettz("Europe/Prague")),

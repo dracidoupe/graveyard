@@ -5,7 +5,7 @@ from itertools import chain
 from django.db import models
 
 from .users import UserProfile
-from ..magic import MisencodedCharField, MisencodedTextField
+from ..magic import MisencodedCharField, MisencodedTextField, MisencodedBooleanField
 from ...text import misencode
 
 TAVERN_SECTION_PRIVATE_ID = 19
@@ -26,20 +26,18 @@ class TavernTable(models.Model):
     name = MisencodedCharField(unique=True, max_length=255, db_column="jmeno")
     description = MisencodedCharField(max_length=255, db_column="popis")
     owner = MisencodedCharField(max_length=30, db_column="vlastnik")
-    # TODO: MisencodedBooleanField
-    allow_rep = MisencodedCharField(max_length=1, db_column="povol_hodnoceni")
+    allow_rep = MisencodedBooleanField(max_length=1, db_column="povol_hodnoceni")
     # TODO: Not used, to my knowledge; fine to drop the column, but double-check old code
     min_level = MisencodedCharField(max_length=1, db_column="min_level")
     created = models.DateTimeField(db_column="zalozen")
-    # TODO: MisencodedBooleanField
-    public = MisencodedCharField(max_length=1, db_column="verejny")
+    public = MisencodedBooleanField(max_length=1, db_column="verejny")
     posts_no = models.IntegerField(blank=True, null=True, db_column="celkem")
     # TODO: FK migration
     section = models.IntegerField(db_column="sekce")
 
     @property
     def is_public(self):
-        return self.public == "1"
+        return self.public
 
     class Meta:
         db_table = "putyka_stoly"
