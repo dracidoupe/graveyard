@@ -39,6 +39,26 @@ class MisencodedCharField(models.CharField):
             return value
 
 
+# Note: Derived from CharField and not BooleanField since the underlying
+# storage field is still CharField and not database-native boolean type!
+# Migrate as part of cleanup
+class MisencodedBooleanField(models.CharField):
+    def from_db_value(self, value, expression, connection):
+        if isinstance(value, str):
+            return value == "1"
+        else:
+            return value
+
+    def get_db_prep_value(self, value, connection, prepared=False):
+        if isinstance(value, str) and not prepared:
+            if value:
+                return "1"
+            else:
+                return "0"
+        else:
+            return value
+
+
 class MisencodedIntegerField(models.CharField):
     """
     This represents a field that should be integer, but somehow ended up being

@@ -271,14 +271,11 @@ def table_administration(request, tavern_table_id):
         if tavern_table_admin_form.is_valid():
             table.name = tavern_table_admin_form.cleaned_data["name"]
             table.description = tavern_table_admin_form.cleaned_data["description"]
-            table.allow_rep = (
-                "1" if tavern_table_admin_form.cleaned_data["allow_rep"] else "0"
-            )
+            table.allow_rep = tavern_table_admin_form.cleaned_data["allow_rep"]
             table.public = (
-                "1"
-                if len(tavern_table_admin_form.cleaned_data["access_allowed"]) == 0
-                else "0"
+                len(tavern_table_admin_form.cleaned_data["access_allowed"]) == 0
             )
+
             table.save()
 
             table.update_access_privileges(
@@ -298,7 +295,7 @@ def table_administration(request, tavern_table_id):
             {
                 "name": table.name,
                 "description": table.description,
-                "allow_rep": table.allow_rep == "1",
+                "allow_rep": table.allow_rep,
                 "assistant_admins": ", ".join(
                     privileges[TavernAccessRights.ASSISTANT_ADMIN]
                 ),
