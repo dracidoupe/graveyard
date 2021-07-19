@@ -32,6 +32,8 @@ from ..tavern import (
     post_table_post,
 )
 
+from ..text import escape_user_input
+
 
 @unique
 class BookmarkActions(Enum):
@@ -153,7 +155,7 @@ def table_posts(request, tavern_table_id):
                 post_table_post(
                     tavern_table=table,
                     author_profile=request.ddcz_profile,
-                    text=post_form.cleaned_data["text"],
+                    text=escape_user_input(post_form.cleaned_data["text"]),
                 )
                 return HttpResponseRedirect(request.get_full_path())
 
@@ -204,7 +206,7 @@ def notice_board(request, tavern_table_id):
                 TavernTableNoticeBoard.objects.create(
                     tavern_table=table,
                     table_name=table.name,
-                    text=post_form.cleaned_data["text"],
+                    text=escape_user_input(post_form.cleaned_data["text"]),
                     changed_at=datetime.now(),
                     change_author_nick=request.ddcz_profile.nick,
                 )

@@ -7,6 +7,7 @@ from django.views.decorators.http import require_http_methods
 
 from ..forms.comments import PhorumCommentForm, DeletePhorumCommentForm
 from ..models import Phorum
+from ..text import escape_user_input
 
 
 @require_http_methods(["GET", "POST"])
@@ -29,7 +30,7 @@ def phorum(request):
                     reputation=0,
                     registered_or_ip=1,
                     user=request.user.profile,
-                    text=form.cleaned_data["text"],
+                    text=escape_user_input(form.cleaned_data["text"]),
                     nickname=request.user.profile.nick,
                     email=request.user.profile.email,
                 )
