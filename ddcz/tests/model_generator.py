@@ -30,7 +30,7 @@ def get_valid_article_chain():
 
 
 def get_alphabetic_user_profiles(
-    number_of_users=1, saved=False, with_corresponding_user=False
+    number_of_users=1, saved=False, with_corresponding_user=False, nick_prefix=""
 ):
     if number_of_users > 26:
         raise NotImplementedError("Out of alphabet, reimplement this function")
@@ -38,12 +38,15 @@ def get_alphabetic_user_profiles(
     alphabet_letters = map(chr, range(97, 97 + number_of_users))
     profiles = []
     for letter in alphabet_letters:
-        email = f"{letter}@example.com"
+        nick = letter
+        if nick_prefix:
+            nick = f"{nick_prefix}-{letter}"
+        email = f"{nick}@example.com"
         if with_corresponding_user:
-            user = User(username=letter, email=email)
+            user = User(username=nick, email=email)
             user.set_password(email)
 
-        profile = UserProfile(nick=letter, email=email)
+        profile = UserProfile(nick=nick, email=email)
         profiles.append(profile)
 
         if saved:

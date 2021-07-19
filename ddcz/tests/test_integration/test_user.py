@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 
 from ddcz.models import UserProfile
 
+from ..model_generator import get_alphabetic_user_profiles
+
 
 class PasswordResetTestCase(TestCase):
     fixtures = ["pages"]
@@ -37,3 +39,18 @@ class PasswordResetTestCase(TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertEquals(302, res.status_code)
+
+
+class UserListTestCase(TestCase):
+    def setUp(self):
+        super().setUp()
+        self.client = Client()
+
+        self.users = get_alphabetic_user_profiles(
+            number_of_users=3, saved=True, nick_prefix="generated-user"
+        )
+
+    def test_users_displayed(self):
+        response = self.client.get("/uzivatele/")
+        for user in self.users:
+            self.assertContains(response, user.nick)
