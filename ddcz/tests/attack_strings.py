@@ -19,3 +19,7 @@ and BLoNS <https://github.com/minimaxir/big-list-of-naughty-strings>
 
 SCRIPT_ALERT_INPUT = "Test <script>alert('Attack')</script>"
 SCRIPT_ALERT_ESCAPED = "Test &lt;script&gt;alert('Attack')&lt;/script&gt;"
+
+
+IMG_TAB_SRC_INPUT = "Test <IMG SRC=\"jav&#x09;ascript:alert('Attack');\">"
+IMG_TAB_SRC_ESCAPED = "Test &lt;IMG SRC=\"jav&#x09;ascript:alert('Attack');\"&gt;"
