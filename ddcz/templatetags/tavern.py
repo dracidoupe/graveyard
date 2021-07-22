@@ -16,7 +16,7 @@ def tavern_table_name(listing_table, user_profile):
     show_link = listing_table.show_listing_link(user_profile)
 
     return format_html(
-        '{}<span class="tavern-table-name{}">{}</span>{}&nbsp;[{}{}]',
+        '{}<span class="tavern-table-name{}" data-table-id="{}">{}</span>{}&nbsp;[{}{}]',
         mark_safe(
             f'<a href="{reverse_lazy("ddcz:tavern-posts", kwargs={"tavern_table_id": listing_table.pk})}">'
         )
@@ -26,6 +26,7 @@ def tavern_table_name(listing_table, user_profile):
         if listing_table.new_comments_no is not None
         and listing_table.new_comments_no > 0
         else "",
+        listing_table.pk,
         mark_safe(encode_valid_html(listing_table.name)),
         mark_safe("</a>") if show_link else "",
         f"{listing_table.new_comments_no}/"

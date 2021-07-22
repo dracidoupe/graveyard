@@ -1,16 +1,7 @@
-from enum import Enum
-
-from django.db import transaction
-
 from ddcz.tavern import LIST_ALL
 from ..cases import SeleniumTestCase, MainPage
 from ...model_generator import get_alphabetic_user_profiles, get_tavern_tables
-
-
-class TavernTableListPage(Enum):
-    URL = "/putyka/"
-    TAVERN_TABLE_LIST_NAME = "//table[contains(@class, 'tavern-table-list')]//span[contains(@class, 'tavern-table-name')]"
-    NAVIGATION_LIST_STYLE_TEMPLATE = "//a[@data-list-style='{slug}']"
+from .pages_tavern import TavernTableListPage
 
 
 class TestTavernListing(SeleniumTestCase):
