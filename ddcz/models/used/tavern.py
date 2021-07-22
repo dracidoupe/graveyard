@@ -29,9 +29,9 @@ class TavernTable(models.Model):
     allow_rep = MisencodedBooleanField(max_length=1, db_column="povol_hodnoceni")
     # TODO: Not used, to my knowledge; fine to drop the column, but double-check old code
     min_level = MisencodedCharField(max_length=1, db_column="min_level")
-    created = models.DateTimeField(db_column="zalozen")
+    created = models.DateTimeField(db_column="zalozen", auto_now_add=True)
     public = MisencodedBooleanField(max_length=1, db_column="verejny")
-    posts_no = models.IntegerField(blank=True, null=True, db_column="celkem")
+    posts_no = models.IntegerField(db_column="celkem", default=0)
     # TODO: FK migration
     section = models.IntegerField(db_column="sekce")
 
