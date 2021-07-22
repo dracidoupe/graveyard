@@ -1,32 +1,39 @@
-from urllib.request import urlopen
-from django.conf import settings
+from enum import Enum
 
 from ddcz.models import Phorum
 
-from ..model_generator import get_valid_article_chain
+from ..attack_strings import SCRIPT_ALERT_INPUT
+from ..model_generator import get_alphabetic_user_profiles
 from .cases import SeleniumTestCase
 
 
+class PhorumPage(Enum):
+    POST_TEXTAREA = '//textarea[@id="id_text"]'
+    POST_SUBMIT = '//*[@value="Přidej"]'
+
+
 class TestPhorum(SeleniumTestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUp(self):
+        super().setUp()
 
-        data = get_valid_article_chain()
+        self.user_profile = get_alphabetic_user_profiles(
+            saved=True, with_corresponding_user=True
+        )[0]
 
-        cls.user = data["user"]
-        cls.user.save()
+        self.selenium.get("%s%s" % (self.live_server_url, "/"))
+        self.navigate_to_phorum()
+        self.post_comment()
 
-        cls.comment = Phorum.objects.create(
-            nickname="Author",
-            email="test@example.com",
-            text="Text of the comment",
-            registered_or_ip="1",
-            reputation=0,
-            user=cls.user,
+    def navigate_to_phorum(self):
+        return self.navigate_as_authenticated_user(
+            user_profile=self.user_profile,
+            navigation_element=self.main_page_nav.NAVIGATION_PHORUM,
+            expected_title="Fórum",
         )
 
-        cls.selenium.get("%s%s" % (cls.live_server_url, "/forum/"))
+    def post_comment(self):
+        self.el(PhorumPage.POST_TEXTAREA).send_keys(SCRIPT_ALERT_INPUT)
+        self.el(PhorumPage.POST_SUBMIT).click()
 
     def test_page_heading_present(self):
         text = self.selenium.find_element_by_xpath('//h1[@class="page-heading"]').text
@@ -36,17 +43,17 @@ class TestPhorum(SeleniumTestCase):
         text = self.selenium.find_element_by_xpath(
             '//div[@id="page-phorum"]//span[@class="nick"]'
         ).text.strip()
-        self.assertEquals("Author", text)
+        self.assertEquals(self.user_profile.nick, text)
 
     def test_comment_text_rendered(self):
         text = self.selenium.find_element_by_xpath(
             '//div[@id="page-phorum"]//p[@class="comment_text"]'
         ).text
-        self.assertEquals(self.comment.text, text)
+        self.assertEquals(SCRIPT_ALERT_INPUT, text)
 
     def test_author_link_rendered(self):
         url = self.selenium.find_element_by_xpath(
             '//div[@id="page-phorum"]//span[@class="nick"]/a'
         ).get_attribute("href")
-        self.assertIn(self.user.slug, url)
-        self.assertIn(str(self.user.pk), url)
+        self.assertIn(self.user_profile.slug, url)
+        self.assertIn(str(self.user_profile.pk), url)
