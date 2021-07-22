@@ -101,6 +101,12 @@ class TestUserHtmlRender(TestCase):
         exp = "<h2>Skřetí zabijáci</h2>&lt;"
         self.assert_output(s, exp)
 
+    def test_proper_tag_not_encoded(self):
+        # Verifies <https://github.com/dracidoupe/graveyard/issues/182>
+        s = "&lt;p&gt;&lt;i&gt;&quot;A quote intended to be in italic.&quot;&lt;/p&gt;"
+        exp = "<p>&lt;i&gt;&quot;A quote intended to be in italic.&quot;</p>"
+        self.assert_output(s, exp)
+
 
 class TestDeprecatedUnsafeHtmlRender(TestCase):
     def assert_output(self, entity_string, expected):

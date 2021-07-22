@@ -167,51 +167,107 @@ def encode_valid_html(entity_string):
     # in_tag_braces = False
     encoded_safe_string = ""
 
-    i = 0
-    while i < len(entity_string):
-        char = entity_string[i]
+    current_character_index = 0
+    while current_character_index < len(entity_string):
+        char = entity_string[current_character_index]
 
         # TODO: in_tag_braces recognition will be needed with support for tag
         # attributes, now we can just skip by
         # if not in_tag_braces:
         if char != "&":
             encoded_safe_string += char
-            i += 1
+            current_character_index += 1
             continue
         else:
-            if entity_string[i : i + 4] == "&lt;":
-                if len(entity_string) > (i + 4) and entity_string[i + 4] == "/":
-                    # Looks like a closing of the tag. Do we have tag on stack?
+            if (
+                entity_string[current_character_index : current_character_index + 4]
+                == "&lt;"
+            ):
+                if (
+                    len(entity_string) > (current_character_index + 4)
+                    and entity_string[current_character_index + 4] == "/"
+                ):
+                    # We detected "</", looks like closing of a pair tag
+                    # Do we have a stack or are we at top-level?
                     if len(tag_stack) > 0:
+                        # We do have a stack. Is the tag the last in our stack,
+                        # meaning it's correctly paired?
                         if (
-                            entity_string[i + 5 : i + 5 + len(tag_stack[-1])].lower()
+                            entity_string[
+                                current_character_index
+                                + 5 : current_character_index
+                                + 5
+                                + len(tag_stack[-1])
+                            ].lower()
                             == tag_stack[-1]
                         ):
                             # yup, our tag -- remove, render and move on
                             tag = tag_stack.pop()
                             encoded_safe_string += "</%s>" % tag
-                            i += 5  # &lt;/
-                            i += len(tag)
-                            i += 4  # &gt;
+                            current_character_index += 5  # &lt;/
+                            current_character_index += len(tag)
+                            current_character_index += 4  # &gt;
                             continue
+                        elif (
+                            len(tag_stack) > 1
+                            and entity_string[
+                                current_character_index
+                                + 5 : current_character_index
+                                + 5
+                                + len(tag_stack[-2])
+                            ].lower()
+                            == tag_stack[-2]
+                        ):
+                            # It is a tag that's second from the top of the stack!
+                            # This means unclosed pair tag inside a correctly closed one
+                            # For those, we are rendering the inside tag as an entity
+                            # and render the correctly wrapped envelope
+                            invalid_tag_name = tag_stack.pop()
+                            invalid_tag = f"<{invalid_tag_name}>"
+
+                            # For the invalid tag, look it up as the rightmost
+                            # tag and replace with the encoded version
+                            # Since we are doing this on the encoded_safe_string and NOT
+                            # on the entity_string, we don't need to hack around with the
+                            # current_character_index
+                            fragments = encoded_safe_string.rsplit(invalid_tag, 1)
+                            encoded_safe_string = f"&lt;{invalid_tag_name}&gt;".join(
+                                fragments
+                            )
+
+                            # Afterwards, proceed with the correct envelope version
+                            tag = tag_stack.pop()
+                            encoded_safe_string += "</%s>" % tag
+                            current_character_index += 5  # &lt;/
+                            current_character_index += len(tag)
+                            current_character_index += 4  # &gt;
+                            continue
+
                         else:
+                            # The detected closing of the
                             encoded_safe_string += char
-                            i += 1
+                            current_character_index += 1
                             continue
                     else:
-                        # no stack, hence we are not recognising tags:
-                        # append and move on
+                        # No stack, we are at the top level; hence no pair tag to close
+                        # append the current character and move on
                         encoded_safe_string += char
-                        i += 1
+                        current_character_index += 1
                         continue
                 else:
-                    # Looks like an opening of the tag. Do lookeahead and try
-                    # to decide whether it's valid tag
+                    # Looks like an opening of the tag ("<", but not "</"). Do lookeahead for tag name and
+                    # decide whether it's valid tag
                     # FIXME: Doesn't support <br/> variants
                     # FIXME: Doesn't support </end of tags>
                     # FIXME: Doesn't support tag attributes
                     tag_candidate_string = (
-                        entity_string[i + 4 : i + 3 + MAX_LOOKAHEAD_FROM_LEFT + 3]
+                        entity_string[
+                            current_character_index
+                            + 4 : current_character_index
+                            + 3
+                            + MAX_LOOKAHEAD_FROM_LEFT
+                            + 3
+                        ]
                         .split("&gt;")[0]
                         .lower()
                     )
@@ -229,10 +285,12 @@ def encode_valid_html(entity_string):
                         # Tag detected: render it and move after the tag
                         encoded_safe_string += "<%s>" % tag_candidate_string
 
-                        i += 4  # &lt;
-                        i += len(tag_candidate_string)
-                        i += additional_skip  # account for potential "<tag />" variants
-                        i += 4  # &gt;
+                        current_character_index += 4  # &lt;
+                        current_character_index += len(tag_candidate_string)
+                        current_character_index += (
+                            additional_skip  # account for potential "<tag />" variants
+                        )
+                        current_character_index += 4  # &gt;
 
                         # If it also is a pair tag, put it on stack
                         if not WHITELISTED_TAGS.get(tag_candidate_string, False):
@@ -242,12 +300,12 @@ def encode_valid_html(entity_string):
                     else:
 
                         encoded_safe_string += char
-                        i += 1
+                        current_character_index += 1
                         continue
 
             else:
                 encoded_safe_string += char
-                i += 1
+                current_character_index += 1
                 continue
 
     return encoded_safe_string
