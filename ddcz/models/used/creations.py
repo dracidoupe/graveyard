@@ -387,7 +387,7 @@ class Monster(Creation):
         db_column="SM", max_length=50, blank=True, null=True, verbose_name="Síla mysli"
     )
 
-    legacy_html_attributes = ["popis"]
+    legacy_html_attributes = ["description"]
 
     class Meta:
         db_table = "bestiar"
@@ -545,7 +545,7 @@ class AlchemistTool(Creation):
         max_length=30, db_column="skupina", verbose_name="Skupina"
     )
 
-    legacy_html_attributes = ["popis"]
+    legacy_html_attributes = ["description"]
 
     class Meta:
         db_table = "alchpredmety"
@@ -658,7 +658,7 @@ class WizardSpell(Creation):
     description = MisencodedTextField(db_column="popis")
     group = MisencodedTextField(db_column="skupina")
 
-    legacy_html_attributes = ["popis"]
+    legacy_html_attributes = ["description"]
 
     class Meta:
         db_table = "kouzla"
@@ -717,7 +717,7 @@ class DownloadItem(Creation):
     item = models.FileField(upload_to="soub", null=True, db_column="item")
     download_counter = models.IntegerField(default=0, db_column="download_counter")
 
-    legacy_html_attributes = ["popis"]
+    legacy_html_attributes = ["description"]
 
     class Meta:
         db_table = "downloady"
