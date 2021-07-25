@@ -1,29 +1,17 @@
-from ddcz.models.used.tavern import TavernTableVisitor
-from datetime import date
-from hashlib import md5
 import logging
-from zlib import crc32
 
-from django.apps import apps
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 
-from ..commonarticles import (
-    SLUG_NAME_TRANSLATION_FROM_CZ,
-    COMMON_ARTICLES_CREATIVE_PAGES,
-)
 from ..models import (
     MARKET_SECTION_CHOICES,
     EditorArticle,
     Dating,
     Link,
     Market,
+    UserProfile,
 )
 
 DEFAULT_LIST_SIZE = 10
@@ -85,4 +73,54 @@ def editor_article(request, slug):
         request,
         "info/editor-article.html",
         {"article": article},
+    )
+
+
+@require_http_methods(["GET"])
+def web_authors_and_editors(request):
+    # FIXME: Have this in db/config file
+    TRIBUNE_ID = 2244
+
+    hall_of_fame = [
+        {
+            "user_profile": UserProfile.objects.get(nick="James Timqui"),
+            "role": "programátor",
+        },
+        {
+            "user_profile": UserProfile.objects.get(nick="Alcator"),
+            "role": "programátor",
+        },
+        {
+            "user_profile": UserProfile.objects.get(nick="Legar"),
+            "role": "programátor",
+        },
+        {
+            "user_profile": UserProfile.objects.get(nick="deshi"),
+            "role": "tribun",
+        },
+        {
+            "user_profile": UserProfile.objects.get(nick="Igi"),
+            "role": "tribun",
+        },
+        {
+            "user_profile": UserProfile.objects.get(nick="Suk"),
+            "role": "tribun",
+        },
+        {
+            "user_profile": UserProfile.objects.get(nick="Nathaka"),
+            "role": "tribun",
+        },
+        {
+            "user_profile": UserProfile.objects.get(nick="kamerask"),
+            "role": "tribun",
+        },
+    ]
+
+    return render(
+        request,
+        "info/web-authors-and-editors.html",
+        {
+            "tribune": UserProfile.objects.get(pk=TRIBUNE_ID),
+            "famous_users": hall_of_fame,
+        },
     )
