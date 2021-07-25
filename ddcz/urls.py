@@ -3,12 +3,16 @@ from django.views.generic.base import RedirectView, TemplateView
 
 
 from . import views
-from .views import news, tavern
+from .views import news, tavern, misc
 
 app_name = "ddcz"
 
 urlpatterns = [
     path("", RedirectView.as_view(url="aktuality/", permanent=True)),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
     ### Creations and Creative Pages
     path(
         "rubriky/<creative_page_slug>/", views.creative_page_list, name="creation-list"
@@ -114,7 +118,8 @@ urlpatterns = [
         kwargs={"slug": "otazky-a-odpovedi"},
     ),
     path(
-        "robots.txt",
-        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+        "tvurci-a-redakce/",
+        misc.web_authors_and_editors,
+        name="web-authors-and-editors",
     ),
 ]

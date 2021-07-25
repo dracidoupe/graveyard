@@ -1,0 +1,38 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load pages %}
+{% load creations %}
+
+{% block content %}
+<article id="page-editor-article">
+    <h1 class="page-heading">Tvůrci a Redakce</h1>
+    <h2>Vedení serveru</h2>
+    <h3>Tribun</h3>
+    <picture class="user_icon"></picture>
+    <p><a href="{{ tribune.profile_url }}">{{ tribune.nick }}</a></p>
+    <p>Řízení redakce, prezentace redakčních rozhodnutí, posuzování registrací, řešení uživatelských problémů, sporů a stížností. </p>
+
+    <h3>Redakce</h3>
+    <p>Současná podoba reakce se ustanovuje.</p>
+
+    <hr>
+
+    <h2>Síň slávy</h2>
+    <ul>
+    {% for user in famous_users %}
+        <li>
+            <picture class="user_icon">
+                <img src="{{ user.icon_url }}">
+            </picture>
+            <a href="{{ user.user_profile.profile_url }}">{{ user.user_profile.nick }}</a>
+            <span>Bývalý {{ user.role }}</span>
+        </li>
+    {% endfor %}
+    </ul>
+    <hr>
+
+    <h2>Programování</h2>
+    <p>Inspirováno původními verzemi. Ta prastará byla sepsána v roce 2000-2001 rukami Almada, Jamese Timquiho a Tomashe. Následující přepis "verze 1" byl v provozu od roku 2002 do roku 2021 a podíleli se na ní Almad, James Timqui, Alcator a Legar. Čest její památce. </p>
+    <p>Současná verze je v provozu od roku 2021 a je open source. Seznam autorů a přispivatelů je možné <a href="https://github.com/dracidoupe/graveyard/graphs/contributors" rel="author">sledovat přímo v repozitáři</a>.</p>
+</article>
+{% endblock %}
