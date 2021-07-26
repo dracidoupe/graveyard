@@ -1,5 +1,6 @@
 from django.test import Client, TestCase
 
+from ddcz.creations import ApprovalChoices
 from ddcz.models import CommonArticle
 
 
@@ -10,7 +11,12 @@ class ArticleAccessTestCase(TestCase):
         super().setUp()
         self.client = Client()
 
-        self.article = CommonArticle(pk=1, name="xoxo")
+        self.article = CommonArticle(
+            pk=1,
+            name="xoxo",
+            creative_page_slug="clanky",
+            is_published=ApprovalChoices.APPROVED.value,
+        )
         self.article.save()
 
     def test_article_present(self):
@@ -26,7 +32,12 @@ class ArticleAccessTestCase(TestCase):
         self.assertEquals(200, res.status_code)
 
     def test_redirect_for_empty_slug(self):
-        article = CommonArticle(pk=2, name=" ")
+        article = CommonArticle(
+            pk=2,
+            name=" ",
+            creative_page_slug="clanky",
+            is_published=ApprovalChoices.APPROVED.value,
+        )
         article.save()
 
         res = self.client.get("/rubriky/clanky/2-random-slug/", follow=True)
