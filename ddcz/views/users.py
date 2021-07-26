@@ -44,10 +44,14 @@ def users_list(request):
 
     if searched_nick:
         if len(searched_nick) <= 3:
-            users = UserProfile.objects.filter(nick=misencode(searched_nick))
+            users = UserProfile.objects.filter(nick=misencode(searched_nick)).order_by(
+                "nick"
+            )
             search_limited = True
         else:
-            users = UserProfile.objects.filter(nick__icontains=misencode(searched_nick))
+            users = UserProfile.objects.filter(
+                nick__icontains=misencode(searched_nick)
+            ).order_by("nick")
     else:
         users = UserProfile.objects.all().order_by("-last_login")
 
