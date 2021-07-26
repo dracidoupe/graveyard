@@ -21,7 +21,7 @@ DEFAULT_LIST_SIZE = 10
 logger = logging.getLogger(__name__)
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def links(request):
     item_list = Link.objects.filter(is_approved="a").order_by("-published")
 
@@ -33,7 +33,7 @@ def links(request):
     return render(request, "links/list.html", {"items": items})
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def dating(request):
     item_list = Dating.objects.order_by("-published")
 
@@ -45,7 +45,7 @@ def dating(request):
     return render(request, "dating/list.html", {"items": items})
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def market(request):
     # TODO: Migrate to `-datum`, see https://github.com/dracidoupe/graveyard/issues/195
     item_list = Market.objects.order_by("-id")
@@ -65,7 +65,7 @@ def market(request):
     return render(request, "market/list.html", {"items": items})
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def editor_article(request, slug):
     article = get_object_or_404(EditorArticle, slug=slug)
 
@@ -76,7 +76,7 @@ def editor_article(request, slug):
     )
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def web_authors_and_editors(request):
     # FIXME: Have this in db/config file
     TRIBUNE_ID = 2244

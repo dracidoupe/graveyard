@@ -9,7 +9,7 @@ from ..models import News
 DEFAULT_LIST_SIZE = 10
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 @vary_on_cookie
 def list(request):
     page = request.GET.get("z_s", 1)

@@ -16,7 +16,6 @@ from ..forms.comments import CommentAction
 from ..forms.tavern import TavernPostForm, NoticeBoardForm, TavernTableAdminForm
 from ..models import (
     TavernTable,
-    TavernPost,
     TavernTableNoticeBoard,
     TavernTableVisitor,
     TavernBookmark,
@@ -31,7 +30,6 @@ from ..tavern import (
     unbook_table,
     post_table_post,
 )
-
 from ..text import escape_user_input
 
 
@@ -88,7 +86,7 @@ def handle_table_visit(view_func):
 
 
 @login_required
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 # It would make sense to call it just `list`, but that would make it shadow the build-in list function
 def list_tables(request):
     """
@@ -127,7 +125,7 @@ def list_tables(request):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["HEAD", "GET", "POST"])
 @handle_table_visit
 def table_posts(request, tavern_table_id):
     table = request.tavern_table
@@ -178,7 +176,7 @@ def table_posts(request, tavern_table_id):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["HEAD", "GET", "POST"])
 @handle_table_visit
 def notice_board(request, tavern_table_id):
     table = request.tavern_table
@@ -231,7 +229,7 @@ def notice_board(request, tavern_table_id):
 
 
 @login_required
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 @handle_table_visit
 def table_bookmark(request, tavern_table_id):
     table = request.tavern_table
@@ -259,7 +257,7 @@ def table_bookmark(request, tavern_table_id):
 
 
 @login_required
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["HEAD", "GET", "POST"])
 @handle_table_visit
 def table_administration(request, tavern_table_id):
     table = request.tavern_table

@@ -19,7 +19,7 @@ DEFAULT_USER_LIST_SIZE = 50
 VALID_SKINS = ["light", "dark", "historic"]
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def users_list(request):
     # TODO: Displaying newbies & mentats
     # Original query:
@@ -67,7 +67,7 @@ def users_list(request):
     )
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def user_profile(request, user_profile_id, nick_slug):
     user_profile = get_object_or_404(UserProfile, id=user_profile_id)
     try:
@@ -99,7 +99,7 @@ def user_profile(request, user_profile_id, nick_slug):
     )
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def change_skin(request):
     new_skin = request.GET.get("skin", "light")
     if new_skin not in VALID_SKINS:

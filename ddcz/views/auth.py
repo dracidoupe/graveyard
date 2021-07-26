@@ -63,8 +63,6 @@ def login(request):
         username=form.cleaned_data["nick"], password=form.cleaned_data["password"]
     )
 
-    from django.contrib.auth.models import User
-
     if user is not None:
         login_auth(request, user)
         profile = UserProfile.objects.get(user=user)

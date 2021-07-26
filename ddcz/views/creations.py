@@ -32,7 +32,7 @@ DEFAULT_LIST_SIZE = 10
 DEFAULT_USER_LIST_SIZE = 50
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 @vary_on_cookie
 def creative_page_list(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
@@ -86,7 +86,7 @@ def creative_page_list(request, creative_page_slug):
     )
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split(".")
@@ -124,7 +124,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     )
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def creative_page_concept(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     try:
@@ -143,7 +143,7 @@ def creative_page_concept(request, creative_page_slug):
     )
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["HEAD", "GET", "POST"])
 def creative_page_html_check(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
 
@@ -194,7 +194,7 @@ def creative_page_html_check(request, creative_page_slug):
     return HttpResponseNotAllowed(["GET", "POST"])
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def download_file(request, download_id):
     download_item = get_object_or_404(DownloadItem, pk=download_id)
     download_item.download_counter += 1
@@ -202,7 +202,7 @@ def download_file(request, download_id):
     return HttpResponseRedirect(download_item.item.url)
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def quest_view_redirect(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
     quest.read += 1
@@ -210,7 +210,7 @@ def quest_view_redirect(request, quest_id):
     return HttpResponseRedirect(quest.get_final_url())
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["HEAD", "GET"])
 def author_detail(request, author_id, slug):
     author = get_object_or_404(Author, id=author_id)
 

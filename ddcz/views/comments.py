@@ -10,7 +10,7 @@ from ..models import Phorum
 from ..text import escape_user_input
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["HEAD", "GET", "POST"])
 def phorum(request):
     if request.method == "POST" and request.POST["post_type"] and request.user:
         if request.POST["post_type"] == "d" and request.POST["submit"] == "Smazat":
