@@ -15,6 +15,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
 
+from ..creations import ApprovalChoices
 from ..html import check_creation_html, HtmlTagMismatchException
 from ..models import (
     Author,
@@ -53,9 +54,9 @@ def creative_page_list(request, creative_page_slug):
                 is_published="a", creative_page_slug=creative_page_slug
             ).order_by("-published")
         else:
-            article_list = model_class.objects.filter(is_published="a").order_by(
-                "-published"
-            )
+            article_list = model_class.objects.filter(
+                is_published=ApprovalChoices.APPROVED.value
+            ).order_by("-published")
 
         if creative_page_slug in ["galerie", "fotogalerie"]:
             default_limit = 18
@@ -97,7 +98,17 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     article = cache.get(cache_key)
 
     if not article:
-        article = get_object_or_404(model_class, id=creation_id)
+        if model_class_name == "commonarticle":
+            article = get_object_or_404(
+                model_class,
+                id=creation_id,
+                is_published=ApprovalChoices.APPROVED.value,
+                creative_page_slug=creative_page_slug,
+            )
+        else:
+            article = get_object_or_404(
+                model_class, is_published=ApprovalChoices.APPROVED.value, id=creation_id
+            )
         if article.get_slug() != creation_slug:
             return HttpResponsePermanentRedirect(
                 reverse(
