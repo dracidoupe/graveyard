@@ -71,6 +71,7 @@ urlpatterns = [
     path("nastaveni/zmena-skinu/", views.change_skin, name="change-skin"),
     ### Info sites
     path("aktuality/", news.list, name="news"),
+    path("novinky/", news.newsfeed, name="newsfeed"),
     path("seznamka/", views.dating, name="dating"),
     path("inzerce/", views.market, name="market"),
     path("linky/", views.links, name="links-list"),

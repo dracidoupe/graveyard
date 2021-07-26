@@ -6,27 +6,27 @@
 # is strangled out of its existence
 
 import logging
-import re
 from urllib.parse import urljoin
 
 from django.apps import apps
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
 
-from ...text import create_slug
-from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
 from .users import UserProfile
+from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
+from ...text import create_slug
+
+logger = logging.getLogger(__name__)
+
 
 APPROVAL_CHOICES = (
     ("a", "Schváleno"),
     ("n", "Neschváleno"),
 )
 
-EMPTY_SLUG_PLACEHOLDER = "dilo"
 
-logger = logging.getLogger(__name__)
+EMPTY_SLUG_PLACEHOLDER = "dilo"
 
 
 ###
@@ -273,6 +273,14 @@ class Creation(models.Model):
     def get_slug(self):
         slug = create_slug(self.name)
         return slug or EMPTY_SLUG_PLACEHOLDER
+
+    def get_canonical_url(self):
+        if not getattr(self, "creative_page", None):
+            raise ValueError(
+                "`get_canonical_url` on a creation requires .creative_page attribute set. This will be remediated in the future, but currently there is not a lookup link from creations back to the model registry"
+            )
+
+        return self.creative_page.get_creation_canonical_url(self)
 
     def __str__(self):
         return "{} od {}".format(self.name, self.author_nick)

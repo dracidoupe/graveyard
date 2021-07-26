@@ -1,0 +1,15 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load pages %}
+{% load creations %}
+
+{% block content %}
+<div id="page-newsfeed">
+    <h1 class="text-blue page-heading">Novinky</h1>
+    <ul class="article-list">
+    {% for a in articles %}
+        <li><a href="{{ a.get_canonical_url }}">{{ a.name }}</a> od {% author_display a %} ({{ a.published | articleTime }})</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
