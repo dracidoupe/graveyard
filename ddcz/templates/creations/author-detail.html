@@ -10,7 +10,7 @@
         {% elif author.author_type == author.ANONYMOUS_USER_TYPE %}
             Negistrovaný uživatel
         {% elif author.author_type == author.WEBSITE_TYPE %}
-            <a href="{{ author.website }}">Webová stránka</a>, která nám laskavě svolila publikovat její obsah. 
+            <a href="{{ author.website }}">Webová stránka</a>, která nám laskavě svolila publikovat její obsah.
         {% else %}
             Neznámý typ autora, pravděpodobně došlo k chybě při migraci. Prosím dejte vědět autorům webu.
         {% endif %}
@@ -21,7 +21,7 @@
         <h3>{{ page_dict.page.name }}</h3>
         <ul>
         {% for creation in page_dict.creations %}
-            <li><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.jmeno }}</a> {% creation_rating creation.pochvez skin %}</li>
+            <li><a href="{% creation_canonical_url page_dict.page creation %}">{{ creation.name }}</a> {% creation_rating creation.rating skin %}</li>
         {% endfor %}
         </ul>
     {% endfor %}
