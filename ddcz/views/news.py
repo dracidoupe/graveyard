@@ -15,7 +15,6 @@ def list(request):
     page = request.GET.get("z_s", 1)
     cache_key = "info:news:list"
     news = None
-    from ddcz.models import UserProfile
 
     if page == 1:
         news = cache.get(cache_key)
