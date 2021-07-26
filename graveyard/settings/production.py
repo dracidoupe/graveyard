@@ -33,8 +33,8 @@ DATABASES = {
     }
 }
 
-# if "MEMCACHIER_SERVERS" in os.environ:
-#     logger.info("Using memcachier servers")
+if "MEMCACHEDCLOUD_SERVERS" in os.environ:
+    logger.info("Using Memcached Cloud servers")
 
 KEY_PREFIX = "gy-"
 
