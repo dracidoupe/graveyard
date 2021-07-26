@@ -1,8 +1,5 @@
-from datetime import datetime
-from dateutil import tz
 import logging
 import sys
-
 
 from django.db.models import (
     Count,
@@ -13,9 +10,10 @@ from django.db.models import (
     Case,
     Value,
     When,
-    Q,
     F,
 )
+
+from django.utils import timezone
 
 from .models import (
     TavernAccess,
@@ -194,7 +192,7 @@ def create_tavern_table(
         allow_rep=allow_reputation,
         # TODO: Those should go to model defaults
         section=section,
-        created=datetime.now(tz.gettz("Europe/Prague")),
+        created=timezone.now(),
     )
 
 
@@ -300,7 +298,7 @@ def post_table_post(tavern_table, author_profile, text):
         reputation=0,
         user=author_profile,
         author_nick=author_profile.nick,
-        date=datetime.now(),
+        date=timezone.now(),
     )
 
     # Increment the cached number of posts
