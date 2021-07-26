@@ -20,19 +20,19 @@
                 <p><span class="label">Obtížnost:</span> <span class="value">{{ article.difficulty }}</span></p>
             {% endif %}
             {% if article.check_interval %}
-                <p><span class="label">Ověřování:</span> <span class="value">{{ article.check_interval }}</span></p>
+                <p><span class="label">Ověřování:</span> <span class="value">{{ article.check_interval|render_html_insecurely|safe }}</span></p>
             {% endif %}
             {% if article.total_success %}
-                <p><span class="label">Totální úspěch:</span> <span class="value">{{ article.total_success }}</span></p>
+                <p><span class="label">Totální úspěch:</span> <span class="value">{{ article.total_success|render_html_insecurely|safe }}</span></p>
             {% endif %}
             {% if article.success %}
-                <p><span class="label">Úspěch:</span> <span class="value">{{ article.success }}</span></p>
+                <p><span class="label">Úspěch:</span> <span class="value">{{ article.success|render_html_insecurely|safe }}</span></p>
             {% endif %}
             {% if article.failure %}
-                <p><span class="label">Neúspěch:</span> <span class="value">{{ article.failure }}</span></p>
+                <p><span class="label">Neúspěch:</span> <span class="value">{{ article.failure|render_html_insecurely|safe }}</span></p>
             {% endif %}
             {% if article.fatal_failure %}
-                <p><span class="label">Fatální neúspěch:</span> <span class="value">{{ article.fatal_failure }}</span></p>
+                <p><span class="label">Fatální neúspěch:</span> <span class="value">{{ article.fatal_failure|render_html_insecurely|safe }}</span></p>
             {% endif %}
             <div class="description-row"><div class="label">Popis:</div> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></div>
         </div>
