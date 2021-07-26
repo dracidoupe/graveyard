@@ -1,4 +1,3 @@
-from datetime import datetime
 from enum import Enum, unique
 from functools import wraps
 
@@ -10,6 +9,7 @@ from django.http import (
 )
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
 from ..forms.comments import CommentAction
@@ -60,10 +60,10 @@ def handle_table_visit(view_func):
                 ) = TavernTableVisitor.objects.get_or_create(
                     tavern_table=table,
                     user_profile=request.ddcz_profile,
-                    defaults={"unread": 0, "visit_time": datetime.now()},
+                    defaults={"unread": 0, "visit_time": timezone.now()},
                 )
                 if not created:
-                    request.tavern_table.visitor.visit_time = datetime.now()
+                    request.tavern_table.visitor.visit_time = timezone.now()
                     request.tavern_table.visitor.save()
 
                 # This will be in the future just inferred from the visitor, but for now, the normative
@@ -197,7 +197,7 @@ def notice_board(request, tavern_table_id):
         if post_form.is_valid():
             if board:
                 board.text = post_form.cleaned_data["text"]
-                board.changed_at = datetime.now()
+                board.changed_at = timezone.now()
                 board.change_author_nick = request.ddcz_profile.nick
                 board.save()
             else:
@@ -205,7 +205,7 @@ def notice_board(request, tavern_table_id):
                     tavern_table=table,
                     table_name=table.name,
                     text=escape_user_input(post_form.cleaned_data["text"]),
-                    changed_at=datetime.now(),
+                    changed_at=timezone.now(),
                     change_author_nick=request.ddcz_profile.nick,
                 )
 

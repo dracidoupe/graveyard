@@ -1,4 +1,3 @@
-from datetime import datetime
 from hashlib import md5
 
 from django.conf import settings
@@ -15,6 +14,7 @@ from django.http import (
 )
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
 from ..forms.authentication import LoginForm, PasswordResetForm
@@ -66,7 +66,7 @@ def login(request):
     if user is not None:
         login_auth(request, user)
         profile = UserProfile.objects.get(user=user)
-        profile.last_login = datetime.now()
+        profile.last_login = timezone.now()
         profile.save()
         return HttpResponseRedirect(referer)
     else:
