@@ -28,5 +28,6 @@ def common_variables(request):
         "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.svg" % skin),
         "login_form": LoginForm(),
         "discord_invite_link": settings.DISCORD_INVITE_LINK,
+        "bugfix_tavern_table_id": settings.BUGFIX_TAVERN_TABLE_ID,
         "deploy_info_html": deploy_info_html,
     }

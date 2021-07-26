@@ -17,6 +17,9 @@
         <li><span class="list_heading">Novinky</span>
             <ul class="list_box">
                 <li><a href="{% url 'ddcz:news' %}">Aktuality</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'ddcz:tavern-posts' tavern_table_id=bugfix_tavern_table_id %}">Bugfix</a></li>
+                {% endif %}
             </ul>
         </li>
     </ul>

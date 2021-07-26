@@ -20,7 +20,7 @@ ENVIRONMENT = os.environ.get("ENVIRONMENT", "local")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: keep the secret key used in production secret! Set properly in production.py
 SECRET_KEY = "xoxo"
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -28,10 +28,13 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
-# WARNING: This affects database migrations. See docs for details
+# WARNING: Those two affects database migrations. See docs for details
 TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
-
 DATABASE_IS_SEEDED = False
+
+### Environment variables for DDCZ "design" config
+DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
+BUGFIX_TAVERN_TABLE_ID = 1
 
 
 # Application definition
@@ -175,8 +178,6 @@ SELENIUM_HUB_HOST = None
 # If none, rely on default Django settings as we are running locally
 SELENIUM_PROJECT_HOST = None
 SELENIUM_IMPLICIT_WAIT = 10
-
-DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
 
 # Deployment info from env vars, may get overriden by generated local.py
 if os.environ.get("HEROKU_RELEASE_VERSION", None):
