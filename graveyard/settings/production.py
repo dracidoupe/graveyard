@@ -1,9 +1,9 @@
 import logging
 
 import os
+from .base import BASE_DIR
 
 logger = logging.getLogger(__name__)
-
 
 DEBUG = False
 
