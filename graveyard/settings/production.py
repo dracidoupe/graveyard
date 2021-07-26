@@ -1,5 +1,9 @@
+import logging
+
 import os
-from .base import BASE_DIR
+
+logger = logging.getLogger(__name__)
+
 
 DEBUG = False
 
@@ -27,6 +31,7 @@ DATABASES = {
         "CONN_MAX_AGE": 60,
         "OPTIONS": {"charset": "latin2"},
     }
+}
 
 if "MEMCACHIER_SERVERS" in os.environ:
     logger.info("Using memcachier servers")
@@ -68,7 +73,7 @@ CACHES = {
         },
     }
 }
-}
+
 
 WSGI_APPLICATION = "graveyard.wsgi.application"
 
