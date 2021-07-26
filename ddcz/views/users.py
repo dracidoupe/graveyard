@@ -8,6 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import resolve, Resolver404
 from django.views.decorators.http import require_http_methods
 
+from ..text import misencode
 from ..models import (
     Author,
     UserProfile,
@@ -43,10 +44,10 @@ def users_list(request):
 
     if searched_nick:
         if len(searched_nick) <= 3:
-            users = UserProfile.objects.filter(nick=searched_nick)
+            users = UserProfile.objects.filter(nick=misencode(searched_nick))
             search_limited = True
         else:
-            users = UserProfile.objects.filter(nick__icontains=searched_nick)
+            users = UserProfile.objects.filter(nick__icontains=misencode(searched_nick))
     else:
         users = UserProfile.objects.all().order_by("-last_login")
 
