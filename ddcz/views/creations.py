@@ -24,7 +24,6 @@ from ..models import (
     DownloadItem,
     Quest,
     APPROVAL_CHOICES,
-    PUBLISHED,
 )
 
 # Get an instance of a logger
@@ -53,7 +52,8 @@ def creative_page_list(request, creative_page_slug):
         # For everything else, Creative Page is determined by its model class
         if model_class_name == "commonarticle":
             article_list = model_class.objects.filter(
-                is_published=PUBLISHED, creative_page_slug=creative_page_slug
+                is_published=ApprovalChoices.APPROVED.value,
+                creative_page_slug=creative_page_slug,
             ).order_by("-published")
         else:
             article_list = model_class.objects.filter(
@@ -177,11 +177,12 @@ def creative_page_html_check(request, creative_page_slug):
         # For everything else, Creative Page is determined by its model class
         if model_class_name == "commonarticle":
             creations_list = model_class.objects.filter(
-                is_published=PUBLISHED, creative_page_slug=creative_page_slug
+                is_published=ApprovalChoices.APPROVED.value,
+                creative_page_slug=creative_page_slug,
             ).order_by("-published")
         else:
             creations_list = model_class.objects.filter(
-                is_published=PUBLISHED
+                is_published=ApprovalChoices.APPROVED.value
             ).order_by("-published")
 
         bad_creations = []
