@@ -263,6 +263,14 @@ article.link span.actuallink {
     order: 0;
 }
 
+.comment_list li {
+    list-style: none;
+}
+
+.comment_list footer {
+    text-align: right;
+}
+
 .phorum-delete{
     border: none;
 }
