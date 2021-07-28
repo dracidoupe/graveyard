@@ -41,7 +41,12 @@ Static files (like CSS) are now hosted from within Heroku [using whitenoise](htt
 Error Reporting
 ---------------
 
-Exceptions are sent to [Sentry](https://sentry.io/welcome/). Sentry is configured to push information about new exceptions into [#serverove-novinky Slack channel](https://dracidoupe.slack.com/archives/C7FMV74DT).
+Exceptions are sent to [Sentry](https://sentry.io/welcome/). Sentry is configured to push information about new exceptions into [#production-feed Slack channel](https://dracidoupe.slack.com/archives/C029JA38AAV).
+
+Logs are scanned using [Papertrail](https://www.papertrail.com/) and matching events are send to [#production-feed](https://dracidoupe.slack.com/archives/C029JA38AAV). Alerts currently configured:
+
+* `Warning: OR [WARNING] -("[WARNING] Worker with pid" AND ("was terminated due to signal 19" OR "was terminated due to signal 15")) -"[WARNING] Not Found: /favicon.ico"` (sent every 10 minutes)
+
 
 Installation
 ============
