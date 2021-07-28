@@ -18,6 +18,9 @@ NEWSFEED_OLDEST_ARTICLE_INTERVAL = timedelta(weeks=26)
 NEWSFEED_MAX_CREATIONS = 20
 NEWSFEED_MAX_COMMENTS = 10
 
+NEWSFEED_CACHE_INTERVAL = 10 * 60  # 10 minutes
+NEWSFEED_CACHE_KEY = "newsfeed:list"
+
 
 @require_http_methods(["HEAD", "GET"])
 @vary_on_cookie
@@ -40,44 +43,57 @@ def list(request):
     return render(request, "news/list.html", {"news": news})
 
 
-# @require_http_methods(["HEAD", "GET"])
-# @vary_on_cookie
+@require_http_methods(["HEAD", "GET"])
+@vary_on_cookie
 def newsfeed(request):
-    min_date = timezone.now() - NEWSFEED_OLDEST_ARTICLE_INTERVAL
-    pages = CreativePage.get_all_models()
+    cached = cache.get(NEWSFEED_CACHE_KEY)
+    if cached:
+        articles = cached["articles"]
+        comments = cached["comments"]
+    else:
+        min_date = timezone.now() - NEWSFEED_OLDEST_ARTICLE_INTERVAL
+        pages = CreativePage.get_all_models()
 
-    # This could have been a simple list comprehension. But for a reason unknown to me,
-    # list(queryset) returns 'QuerySet' object has no attribute 'method', whereas iterating
-    # over it works fine, as well as [a for a in queryset] list comprehension
-    # Maybe try out again once we upgrade to newest Django
-    articles = []
-    for page in pages:
-        model = page["model"]
-        query = model.objects.filter(
-            is_published=ApprovalChoices.APPROVED.value, published__gte=min_date
-        ).order_by("-published")
-        if model.__name__ == "CommonArticle":
-            query = query.filter(creative_page_slug=page["page"].slug)
-        query = query[0:NEWSFEED_MAX_CREATIONS]
-        for creation in query:
-            creation.creative_page = page["page"]
-            articles.append(creation)
-    articles.sort(key=lambda article: article.published, reverse=True)
+        # This could have been a simple list comprehension. But for a reason unknown to me,
+        # list(queryset) returns 'QuerySet' object has no attribute 'method', whereas iterating
+        # over it works fine, as well as [a for a in queryset] list comprehension
+        # Maybe try out again once we upgrade to newest Django
+        articles = []
+        for page in pages:
+            model = page["model"]
+            query = model.objects.filter(
+                is_published=ApprovalChoices.APPROVED.value, published__gte=min_date
+            ).order_by("-published")
+            if model.__name__ == "CommonArticle":
+                query = query.filter(creative_page_slug=page["page"].slug)
+            query = query[0:NEWSFEED_MAX_CREATIONS]
+            for creation in query:
+                creation.creative_page = page["page"]
+                articles.append(creation)
+        articles.sort(key=lambda article: article.published, reverse=True)
 
-    comments = CreationComment.objects.all().order_by("-date")[0:NEWSFEED_MAX_COMMENTS]
-    # FIXME: This should be resolvable via GenericRelation once we migrate to it
-    page_slug_map = {page["page"].slug: page for page in pages}
-    for comment in comments:
-        comment_model = page_slug_map[comment.foreign_table]["model"]
-        try:
-            comment.creation = comment_model.objects.get(pk=comment.foreign_id)
-            comment.creation.creative_page = page_slug_map[comment.foreign_table][
-                "page"
-            ]
-        except comment_model.DoesNotExist:
-            logger.exception(
-                f"Can't look up creation for comment {comment.pk} for model {comment_model}"
-            )
+        comments = CreationComment.objects.all().order_by("-date")[
+            0:NEWSFEED_MAX_COMMENTS
+        ]
+        # FIXME: This should be resolvable via GenericRelation once we migrate to it
+        page_slug_map = {page["page"].slug: page for page in pages}
+        for comment in comments:
+            comment_model = page_slug_map[comment.foreign_table]["model"]
+            try:
+                comment.creation = comment_model.objects.get(pk=comment.foreign_id)
+                comment.creation.creative_page = page_slug_map[comment.foreign_table][
+                    "page"
+                ]
+            except comment_model.DoesNotExist:
+                logger.exception(
+                    f"Can't look up creation for comment {comment.pk} for model {comment_model}"
+                )
+
+        cache.set(
+            NEWSFEED_CACHE_KEY,
+            {"articles": articles, "comments": comments},
+            timeout=NEWSFEED_CACHE_INTERVAL,
+        )
 
     return render(
         request, "news/newsfeed.html", {"articles": articles, "comments": comments}
