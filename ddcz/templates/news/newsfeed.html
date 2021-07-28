@@ -1,15 +1,31 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load pages %}
+{% load comments %}
 {% load creations %}
 
 {% block content %}
 <div id="page-newsfeed">
     <h1 class="text-blue page-heading">Novinky</h1>
+    <h2>Příspěvky</h2>
     <ul class="article-list">
     {% for a in articles %}
         <li><a href="{{ a.get_canonical_url }}">{{ a.name }}</a> od {% author_display a %} ({{ a.published | articleTime }})</li>
     {% endfor %}
     </ul>
+    <h2>Komentáře</h2>
+    <ul class="comment_list">
+    {% for c in comments %}
+        <li>
+            <article>
+                <h3>{{ c.nickname }}{% if c.creation %} u příspěvku <a href="{{ c.creation.get_canonical_url }}">{{ c.creation.name }}</a>{% endif %}</h3>
+
+                {{ c.text | render_html | safe }}
+                <footer>{{ c.date | commentTime }}</footer>
+            </article>
+        </li>
+    {% endfor %}
+    </ul>
+
 </div>
 {% endblock %}

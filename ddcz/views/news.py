@@ -1,5 +1,5 @@
 from datetime import timedelta
-from itertools import chain
+import logging
 
 from django.core.cache import cache
 from django.core.paginator import Paginator
@@ -9,11 +9,14 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
 
 from ..creations import ApprovalChoices
-from ..models import News, CreativePage
+from ..models import News, CreativePage, CreationComment
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_LIST_SIZE = 10
 NEWSFEED_OLDEST_ARTICLE_INTERVAL = timedelta(weeks=26)
-NEWSFEED_MAX_ITEMS = 20
+NEWSFEED_MAX_CREATIONS = 20
+NEWSFEED_MAX_COMMENTS = 10
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -55,10 +58,27 @@ def newsfeed(request):
         ).order_by("-published")
         if model.__name__ == "CommonArticle":
             query = query.filter(creative_page_slug=page["page"].slug)
-        query = query[0:NEWSFEED_MAX_ITEMS]
+        query = query[0:NEWSFEED_MAX_CREATIONS]
         for creation in query:
             creation.creative_page = page["page"]
             articles.append(creation)
     articles.sort(key=lambda article: article.published, reverse=True)
 
-    return render(request, "news/newsfeed.html", {"articles": articles})
+    comments = CreationComment.objects.all().order_by("-date")[0:NEWSFEED_MAX_COMMENTS]
+    # FIXME: This should be resolvable via GenericRelation once we migrate to it
+    page_slug_map = {page["page"].slug: page for page in pages}
+    for comment in comments:
+        comment_model = page_slug_map[comment.foreign_table]["model"]
+        try:
+            comment.creation = comment_model.objects.get(pk=comment.foreign_id)
+            comment.creation.creative_page = page_slug_map[comment.foreign_table][
+                "page"
+            ]
+        except comment_model.DoesNotExist:
+            logger.exception(
+                f"Can't look up creation for comment {comment.pk} for model {comment_model}"
+            )
+
+    return render(
+        request, "news/newsfeed.html", {"articles": articles, "comments": comments}
+    )
