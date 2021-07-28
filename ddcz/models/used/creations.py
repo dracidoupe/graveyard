@@ -21,10 +21,11 @@ logger = logging.getLogger(__name__)
 
 
 PUBLISHED = "a"
+UNPUBLISHED = "n"
 
 APPROVAL_CHOICES = (
-    ("a", "Schváleno"),
-    ("n", "Neschváleno"),
+    (PUBLISHED, "Schváleno"),
+    (UNPUBLISHED, "Neschváleno"),
 )
 
 
