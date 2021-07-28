@@ -13,6 +13,10 @@ urlpatterns = [
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
+    path(
+        "ads.txt",
+        TemplateView.as_view(template_name="ads.txt", content_type="text/plain"),
+    ),
     ### Creations and Creative Pages
     path(
         "rubriky/<creative_page_slug>/", views.creative_page_list, name="creation-list"
