@@ -5,6 +5,7 @@
 # "rooms for improvement" that can be done once the original application
 # is strangled out of its existence
 
+from ddcz.creations import ApprovalChoices
 import logging
 from urllib.parse import urljoin
 
@@ -20,12 +21,9 @@ from ...text import create_slug
 logger = logging.getLogger(__name__)
 
 
-PUBLISHED = "a"
-UNPUBLISHED = "n"
-
 APPROVAL_CHOICES = (
-    (PUBLISHED, "Schváleno"),
-    (UNPUBLISHED, "Neschváleno"),
+    (ApprovalChoices.APPROVED.value, "Schváleno"),
+    (ApprovalChoices.WAITING.value, "Neschváleno"),
 )
 
 
