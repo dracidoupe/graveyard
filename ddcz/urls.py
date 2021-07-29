@@ -1,3 +1,4 @@
+from ddcz.views.legacy import legacy_router
 from django.urls import path
 from django.views.generic.base import RedirectView, TemplateView
 
@@ -9,6 +10,7 @@ app_name = "ddcz"
 
 urlpatterns = [
     path("", RedirectView.as_view(url="aktuality/", permanent=True)),
+    path("index.php", views.legacy_router, name="legacy-router"),
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
