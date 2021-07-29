@@ -38,18 +38,28 @@ LEGACY_BASIC_CREATION_ROUTER = {
     "noverasy": "noverasy",
 }
 
+LEGACY_CREATION_ROUTER = [
+    "bestiar",
+    "dobrodruzstvi",
+    "predmety",
+    "kouzla",
+    "alchpredmety",
+    "hranicarkouzla",
+    "dovednosti",
+    "galerie",
+    "fotogalerie",
+]
+
 
 @require_http_methods(["GET"])
 def legacy_router(request):
 
-    # First we will get parameters
     get = dict(request.GET)
-
-    # Plain router
     section = handle_get_key(get, "rub")
     subsection = handle_get_key(get, "co")
     id = handle_get_key(get, "id")
 
+    ### Basic pages and lists
     if section in LEGACY_PLAIN_ROUTER.keys():
         return HttpResponseRedirect(reverse(LEGACY_PLAIN_ROUTER[section]))
 
@@ -58,14 +68,15 @@ def legacy_router(request):
             "/rubriky/" + LEGACY_BASIC_CREATION_ROUTER[subsection]
         )
 
-    if section == CREATION_DETAIL and id is not False:
-        try:
-            creation = CreativePage.objects.get(id=id)
-            print(creation)
-        except:
-            pass
+    for name in LEGACY_CREATION_ROUTER:
+        if section in [name, name + "_komp"]:
+            return HttpResponseRedirect("/rubriky/" + name)
 
-    # Finally if no route is found, redirect to news feed
+    ### The specific creation
+    if section == CREATION_DETAIL and id is not False:
+        pass
+
+    ###  Finally if no route is found, redirect to news feed
     return HttpResponse(reverse("ddcz:news"))
 
 
