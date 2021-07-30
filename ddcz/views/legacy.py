@@ -92,7 +92,7 @@ def legacy_router(request):
             return get_detail_redirect_response(page, id)
 
     ###  Finally if no route is found, redirect to news feed
-    return HttpResponse(reverse("ddcz:news"))
+    return HttpResponseRedirect(reverse("ddcz:news"))
 
 
 def handle_get_key(get, key):
