@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <th>Přidáno:</th>
-                    <td><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></td>
+                    <td><time datetime="{{ article.published | date:"c"  }}">{{ article.published | articleTime }}</time></td>
                 </tr>
                 <tr>
                     <th>Hlasovalo:</th>

@@ -16,7 +16,7 @@
 
         <footer class="table-like">
             <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
-            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ article.published | date:"c" }}">{{ article.published | articleTime }}</time></span></p>
         </footer>
         {% creation_comments creative_page_slug article.pk %}
 

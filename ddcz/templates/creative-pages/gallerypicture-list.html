@@ -24,7 +24,7 @@
                         <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.name }}">
                     </a>
                 </p>
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime}}</time></span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ a.published | date:"c" }}">{{ a.published | articleTime}}</time></span></p>
                 <!--
                 <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
                 -->

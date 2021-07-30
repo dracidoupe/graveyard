@@ -38,7 +38,7 @@
         </div>
         <footer class="table-like">
             <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
-            <p><span class="label">Přidáno:</span> <time class="value" datetime={{ article.published | date:"r"  }}>{{ article.published | date:"j. n. Y v H.i" }}</time></p>
+            <p><span class="label">Přidáno:</span> <time class="value" datetime="{{ article.published | date:"c" }}">{{ article.published | date:"j. n. Y v H.i" }}</time></p>
             <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
         </footer>
         {% creation_comments creative_page_slug article.pk %}
