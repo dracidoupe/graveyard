@@ -7,6 +7,11 @@ from django.urls.base import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_http_methods
 
+# In the constant below: It is possible to vary the redirections.
+# It is preferable to do so via the constants rather than changing
+# the code if there is no real need for it, so the legacy router
+# remains automatized.
+
 CREATION = ["prispevky", "prispevky_komp"]
 CREATION_DETAIL = "prispevky_precti"
 
@@ -61,10 +66,14 @@ def legacy_router(request):
     subsection = handle_get_key(get, "co")
     id = handle_get_key(get, "id")
 
-    ### Basic pages and lists
+    # The LEGACY_PLAIN_ROUTER is redirecting basic pages.
+    # Typically no creative pages are present here.
     if section in LEGACY_PLAIN_ROUTER.keys():
         return HttpResponseRedirect(reverse(LEGACY_PLAIN_ROUTER[section]))
 
+    # Some of the creation have legacy url
+    # index.php?rub=prispevky(_komp)&co=page_slug
+    # Here are lists of such creative pages.
     if section in CREATION and subsection in LEGACY_LEGACY_CREATION_ROUTER.keys():
         return HttpResponseRedirect(
             reverse(
@@ -75,10 +84,19 @@ def legacy_router(request):
             )
         )
 
+    # For index.php?rub=prispevky_jeden&subsection=page_slug&id=article_id
+    # we can find the article by Id. Problem would be, if the ID
+    # if articles can be changed, than this will lead to the new
+    # article. There is probably no way how to pass by this. But
+    # changing the IDs of the articles is probably something no one
+    # will want to do.
     if section == CREATION_DETAIL and id is not False:
         page = get_object_or_404(CreativePage, slug=subsection)
         return get_detail_redirect_response(page, id)
 
+    # There are some special creative pages that are not stored
+    # as the others, those have their own tables in the database.
+    # For those we have lists and details in this for loop.
     for name in LEGACY_CREATION_ROUTER:
         if section in [name, name + "_komp"]:
             return HttpResponseRedirect(
@@ -98,20 +116,20 @@ def legacy_router(request):
 def handle_get_key(get, key):
     try:
         return get[key][0]
-    except KeyError:
+    except:
         return False
 
 
-def get_detail_redirect_response(page, id):
+def get_detail_redirect_response(page, article_id):
     app, class_name = page.model_class.split(".")
     model = apps.get_model(app, class_name)
-    article = get_object_or_404(model, id=id)
+    article = get_object_or_404(model, id=article_id)
     return HttpResponseRedirect(
         reverse(
             "ddcz:creation-detail",
             kwargs={
                 "creative_page_slug": page.slug,
-                "creation_id": id,
+                "creation_id": article_id,
                 "creation_slug": article.get_slug(),
             },
         )
