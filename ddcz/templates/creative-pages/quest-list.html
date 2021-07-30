@@ -24,7 +24,7 @@
                 <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}×</span></p>
                 <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
 
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime }}</time></span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ a.published | date:"c" }}">{{ a.published | articleTime }}</time></span></p>
                 <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
             </div>
         </li>

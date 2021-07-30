@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <th>Přidáno:</th>
-                    <td><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></td>
+                    <td><time datetime="{{ article.published | date:"c" }}">{{ article.published | articleTime }}</time></td>
                 </tr>
                 <tr>
                     <th>Hlasovalo:</th>
@@ -49,7 +49,7 @@
 
             <p><span class="label">Popis:</span> <div class="value">{{ article.description|render_html_insecurely|safe }}</div></p>
 
-            <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ article.published | date:"r"  }}>{{ article.published | articleTime }}</time></span></p>
+            <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ article.published | date:"c" }}">{{ article.published | articleTime }}</time></span></p>
             <p><span class="label">Přečteno:</span> <span class="value">{{ article.read }}</span></p>
             <p><span class="label">Hlasovalo:</span> <span class="value">{{ article.rater_no }}</span></p>
 
