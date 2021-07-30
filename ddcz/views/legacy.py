@@ -1,3 +1,4 @@
+import logging
 from django.apps import apps
 from ddcz.models.used.creations import Creation, CreativePage
 from django.http import HttpResponseRedirect
@@ -15,8 +16,10 @@ from django.views.decorators.http import require_http_methods
 CREATION = ["prispevky", "prispevky_komp"]
 CREATION_DETAIL = "prispevky_precti"
 
-# Forbidden dictionary keys from CREATION and CREATION_DETAIL
-LEGACY_PLAIN_ROUTER = {
+# Forbidden dictionary keys for PAGE_TO_VIEW_MAP:
+#  - Anything from CREATION and CREATION_DETAIL
+#  - Anything from ALLOWED_CREATION_PAGES
+PAGE_TO_VIEW_MAP = {
     "aktuality": "ddcz:news",
     "novinky": "ddcz:newsfeed",
     "uzivatele": "ddcz:users-list",
@@ -31,7 +34,7 @@ LEGACY_PLAIN_ROUTER = {
     "cojetodrd": "ddcz:about-drd",
 }
 
-LEGACY_LEGACY_CREATION_ROUTER = {
+COMMON_ARTICLES_NAME_MAP = {
     "hrbitov": "hrbitov",
     "clanky": "clanky",
     "expanze": "expanze",
@@ -45,7 +48,7 @@ LEGACY_LEGACY_CREATION_ROUTER = {
 }
 
 
-LEGACY_CREATION_ROUTER = [
+ALLOWED_CREATION_PAGES = [
     "bestiar",
     "dobrodruzstvi",
     "predmety",
@@ -61,43 +64,36 @@ LEGACY_CREATION_ROUTER = [
 @require_http_methods(["GET"])
 def legacy_router(request):
 
-    get = dict(request.GET)
-    section = handle_get_key(get, "rub")
-    subsection = handle_get_key(get, "co")
-    id = handle_get_key(get, "id")
+    section = request.GET.get("rub", False)
+    subsection = request.GET.get("co", False)
+    id = request.GET.get("id", False)
 
     # The LEGACY_PLAIN_ROUTER is redirecting basic pages.
     # Typically no creative pages are present here.
-    if section in LEGACY_PLAIN_ROUTER.keys():
-        return HttpResponseRedirect(reverse(LEGACY_PLAIN_ROUTER[section]))
+    if section in PAGE_TO_VIEW_MAP.keys():
+        return HttpResponseRedirect(reverse(PAGE_TO_VIEW_MAP[section]))
 
     # Some of the creation have legacy url
     # index.php?rub=prispevky(_komp)&co=page_slug
     # Here are lists of such creative pages.
-    if section in CREATION and subsection in LEGACY_LEGACY_CREATION_ROUTER.keys():
+    if section in CREATION and subsection in COMMON_ARTICLES_NAME_MAP.keys():
         return HttpResponseRedirect(
             reverse(
                 "ddcz:creation-list",
-                kwargs={
-                    "creative_page_slug": LEGACY_LEGACY_CREATION_ROUTER[subsection]
-                },
+                kwargs={"creative_page_slug": COMMON_ARTICLES_NAME_MAP[subsection]},
             )
         )
 
     # For index.php?rub=prispevky_jeden&subsection=page_slug&id=article_id
-    # we can find the article by Id. Problem would be, if the ID
-    # if articles can be changed, than this will lead to the new
-    # article. There is probably no way how to pass by this. But
-    # changing the IDs of the articles is probably something no one
-    # will want to do.
+    # we can find the article detail by Id.
     if section == CREATION_DETAIL and id is not False:
         page = get_object_or_404(CreativePage, slug=subsection)
-        return get_detail_redirect_response(page, id)
+        return get_creation_detail_redirect(page, id)
 
     # There are some special creative pages that are not stored
     # as the others, those have their own tables in the database.
     # For those we have lists and details in this for loop.
-    for name in LEGACY_CREATION_ROUTER:
+    for name in ALLOWED_CREATION_PAGES:
         if section in [name, name + "_komp"]:
             return HttpResponseRedirect(
                 reverse(
@@ -107,20 +103,23 @@ def legacy_router(request):
             )
         if section in [name + "_jeden"]:
             page = get_object_or_404(CreativePage, slug=name)
-            return get_detail_redirect_response(page, id)
+            return get_creation_detail_redirect(page, id)
 
-    ###  Finally if no route is found, redirect to news feed
+    ###  Finally if no route is found, redirect to news
+    logger = logging.getLogger(__name__)
+    logger.info(
+        "There has been submitted URL address from the old website: index.php | rub: "
+        + section
+        + ", co: "
+        + subsection
+        + ", id: "
+        + id
+        + "."
+    )
     return HttpResponseRedirect(reverse("ddcz:news"))
 
 
-def handle_get_key(get, key):
-    try:
-        return get[key][0]
-    except:
-        return False
-
-
-def get_detail_redirect_response(page, article_id):
+def get_creation_detail_redirect(page, article_id):
     app, class_name = page.model_class.split(".")
     model = apps.get_model(app, class_name)
     article = get_object_or_404(model, id=article_id)
