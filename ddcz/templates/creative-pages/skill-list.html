@@ -26,7 +26,7 @@
                 {% if a.attribute %}
                     <p><span class="label">Vlastnost:</span> <span class="value">{{ a.attribute }}</span></p>
                 {% endif %}
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime={{ a.published | date:"r"  }}>{{ a.published | articleTime }}</time></span></p>
+                <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ a.published | date:"c" }}">{{ a.published | articleTime }}</time></span></p>
                 <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>
                 <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
 
