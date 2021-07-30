@@ -1,4 +1,5 @@
-from ddcz.models.used.creations import CreativePage
+from django.apps import apps
+from ddcz.models.used.creations import Creation, CreativePage
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -25,7 +26,7 @@ LEGACY_PLAIN_ROUTER = {
     "cojetodrd": "ddcz:about-drd",
 }
 
-LEGACY_BASIC_CREATION_ROUTER = {
+LEGACY_LEGACY_CREATION_ROUTER = {
     "hrbitov": "hrbitov",
     "clanky": "clanky",
     "expanze": "expanze",
@@ -37,6 +38,7 @@ LEGACY_BASIC_CREATION_ROUTER = {
     "novapovolani": "novapovolani",
     "noverasy": "noverasy",
 }
+
 
 LEGACY_CREATION_ROUTER = [
     "bestiar",
@@ -63,18 +65,31 @@ def legacy_router(request):
     if section in LEGACY_PLAIN_ROUTER.keys():
         return HttpResponseRedirect(reverse(LEGACY_PLAIN_ROUTER[section]))
 
-    if section in CREATION and subsection in LEGACY_BASIC_CREATION_ROUTER.keys():
+    if section in CREATION and subsection in LEGACY_LEGACY_CREATION_ROUTER.keys():
         return HttpResponseRedirect(
-            "/rubriky/" + LEGACY_BASIC_CREATION_ROUTER[subsection]
+            reverse(
+                "ddcz:creation-list",
+                kwargs={
+                    "creative_page_slug": LEGACY_LEGACY_CREATION_ROUTER[subsection]
+                },
+            )
         )
+
+    if section == CREATION_DETAIL and id is not False:
+        page = get_object_or_404(CreativePage, slug=subsection)
+        return get_detail_redirect_response(page, id)
 
     for name in LEGACY_CREATION_ROUTER:
         if section in [name, name + "_komp"]:
-            return HttpResponseRedirect("/rubriky/" + name)
-
-    ### The specific creation
-    if section == CREATION_DETAIL and id is not False:
-        pass
+            return HttpResponseRedirect(
+                reverse(
+                    "ddcz:creation-list",
+                    kwargs={"creative_page_slug": name},
+                )
+            )
+        if section in [name + "_jeden"]:
+            page = get_object_or_404(CreativePage, slug=name)
+            return get_detail_redirect_response(page, id)
 
     ###  Finally if no route is found, redirect to news feed
     return HttpResponse(reverse("ddcz:news"))
@@ -85,3 +100,19 @@ def handle_get_key(get, key):
         return get[key][0]
     except KeyError:
         return False
+
+
+def get_detail_redirect_response(page, id):
+    app, class_name = page.model_class.split(".")
+    model = apps.get_model(app, class_name)
+    article = get_object_or_404(model, id=id)
+    return HttpResponseRedirect(
+        reverse(
+            "ddcz:creation-detail",
+            kwargs={
+                "creative_page_slug": page.slug,
+                "creation_id": id,
+                "creation_slug": article.get_slug(),
+            },
+        )
+    )
