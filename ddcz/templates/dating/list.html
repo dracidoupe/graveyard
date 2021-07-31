@@ -2,6 +2,7 @@
 {% load html %}
 {% load creations %}
 {% load pages %}
+{% load dating %}
 
 {% block content %}
 
@@ -19,7 +20,7 @@
                 {% endif %}
             </p>
             <p>
-                <span class="label">Sekce:</span><span class="value">{{ i.group }}</span>
+                <span class="label">Sekce:</span><span class="value">{{ i.group | dating_group_map }}</span>
             </p>
             <p>
                 <span class="label">Okres:</span><span class="value">{{ i.area }}</span>
