@@ -2,6 +2,7 @@ from time import time
 from urllib.parse import urljoin
 
 from django.conf import settings
+from django.core.checks.messages import Error
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -303,3 +304,13 @@ class UzivateleCekajici(models.Model):
     @property
     def expected_approval_time(self):
         return self.date + APPROVAL_TIME
+
+    def patronize(self, patron_id):
+        try:
+            self.patron = patron_id
+            self.save()
+        except:
+            raise Error(
+                "The user could not be saved as a patron to awaiting registration."
+            )
+        return True

@@ -1,3 +1,4 @@
+from django.urls.base import reverse
 from ddcz.models.used.users import UzivateleCekajici
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
@@ -5,7 +6,7 @@ from django.http import (
     HttpResponseRedirect,
     HttpResponseBadRequest,
 )
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import resolve, Resolver404
 from django.views.decorators.http import require_POST, require_http_methods
 
@@ -13,10 +14,12 @@ from ..text import misencode
 from ..models import (
     Author,
     UserProfile,
+    UzivateleCekajici,
     LEVEL_DESCRIPTIONS,
 )
 
-DRAGON_KEEPER_HIDDEN_NAME = "dragon_keeper"
+DRAGON_EGG_NAME = "dragon_egg"
+DRAGON_EGG_BIRTH_CONFIRMER_LEVEL = ["6", "8"]
 DEFAULT_USER_LIST_SIZE = 50
 VALID_SKINS = ["light", "dark", "historic"]
 
@@ -126,12 +129,27 @@ def awaiting(request):
     registrations = UzivateleCekajici.objects.all().order_by("-date")
     awaiting = registrations.count() is not 0
 
+    if request.method == "POST":
+        if request.POST.get("f") == "patronize":
+            try:
+                profile_id = request.user.userprofile.id
+                registration = UzivateleCekajici.objects.get(
+                    id=request.POST.get(DRAGON_EGG_NAME)
+                )
+                registration.patronize(profile_id)
+            except UzivateleCekajici.DoesNotExist:
+                pass  # log in the future
+            except:
+                pass  # log if user does not exists or not having permissions
+            return HttpResponseRedirect(reverse("ddcz:awaiting-registrations"))
+
     return render(
         request,
         "users/awaiting-registrations.html",
         {
             "registrations": registrations,
             "awaiting": awaiting,
-            "dragon_keeper": DRAGON_KEEPER_HIDDEN_NAME,
+            "dragon_keeper": DRAGON_EGG_NAME,
+            "dragon_confirming_levels": DRAGON_EGG_BIRTH_CONFIRMER_LEVEL,
         },
     )
