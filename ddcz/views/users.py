@@ -121,14 +121,10 @@ def change_skin(request):
     return HttpResponseRedirect(redirect_url)
 
 
-# @todo Create model form to edit the patron
-# Do not forget for safety check if the patron set it possible
-# User has to be privileged and signed in, it must be the same user.
-# If the registration has already got patron, return PatronError
 @require_http_methods(["HEAD", "GET", "POST"])
 def awaiting(request):
     registrations = UzivateleCekajici.objects.all().order_by("-date")
-    awaiting = True if registrations.count() is not 0 else False
+    awaiting = registrations.count() is not 0
 
     return render(
         request,
