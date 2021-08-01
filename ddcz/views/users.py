@@ -1,3 +1,4 @@
+from ddcz.models.used.users import UzivateleCekajici
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
 from django.http import (
@@ -6,7 +7,7 @@ from django.http import (
 )
 from django.shortcuts import render, get_object_or_404
 from django.urls import resolve, Resolver404
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_POST, require_http_methods
 
 from ..text import misencode
 from ..models import (
@@ -15,6 +16,7 @@ from ..models import (
     LEVEL_DESCRIPTIONS,
 )
 
+DRAGON_KEEPER_HIDDEN_NAME = "dragon_keeper"
 DEFAULT_USER_LIST_SIZE = 50
 VALID_SKINS = ["light", "dark", "historic"]
 
@@ -117,3 +119,23 @@ def change_skin(request):
         redirect_url = "/"
 
     return HttpResponseRedirect(redirect_url)
+
+
+# @todo Create model form to edit the patron
+# Do not forget for safety check if the patron set it possible
+# User has to be privileged and signed in, it must be the same user.
+# If the registration has already got patron, return PatronError
+@require_http_methods(["HEAD", "GET", "POST"])
+def awaiting(request):
+    registrations = UzivateleCekajici.objects.all().order_by("-date")
+    awaiting = True if registrations.count() is not 0 else False
+
+    return render(
+        request,
+        "users/awaiting-registrations.html",
+        {
+            "registrations": registrations,
+            "awaiting": awaiting,
+            "dragon_keeper": DRAGON_KEEPER_HIDDEN_NAME,
+        },
+    )
