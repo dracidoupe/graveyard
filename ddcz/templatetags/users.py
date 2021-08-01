@@ -21,3 +21,4 @@ def level_star(user_profile, skin):
         ),
         "level": level,
     }
+

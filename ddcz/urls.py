@@ -48,6 +48,7 @@ urlpatterns = [
     path("uzivatele/", views.users_list, name="users-list"),
     path("uzivatel/prihlaseni/", views.login, name="login-action"),
     path("registrace/", views.sign_up, name="sign-up"),
+    path("draci-lihen", views.awaiting, name="awaiting-registrations"),
     path("uzivatel/odhlaseni/", views.logout, name="logout-action"),
     path(
         "uzivatel/reset-hesla/",

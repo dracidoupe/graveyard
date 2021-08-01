@@ -1,3 +1,4 @@
+from time import time
 from urllib.parse import urljoin
 
 from django.conf import settings
@@ -11,6 +12,7 @@ from django.contrib.auth.models import User
 from ...text import create_slug
 from ..magic import MisencodedCharField
 
+APPROVAL_TIME = 24 * 60 * 60
 
 LEVEL_DESCRIPTIONS = {
     "0": """
@@ -287,3 +289,17 @@ class UzivateleCekajici(models.Model):
     class Meta:
         db_table = "uzivatele_cekajici"
         unique_together = (("name_given", "name_family"),)
+
+    @property
+    def patron_name(self):
+        return UserProfile.objects.get(id=self.patron).nick
+
+    @property
+    def waiting_time(self):
+        time_now = int(time())
+        time_diff = time_now - self.date
+        return time_diff
+
+    @property
+    def expected_approval_time(self):
+        return self.date + APPROVAL_TIME
