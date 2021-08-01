@@ -322,3 +322,18 @@ article.link span.actuallink {
 .tavern_table_admin_form input[type="submit"] {
     margin-top: 1rem;
 }
+
+#awaiting_registration{
+    border-spacing: 2.5rem .5rem;
+}
+
+#awaiting_registration th,
+#awaiting_registration td{
+    
+    text-align: right;
+}
+
+#awaiting_registration button{
+    background: transparent;
+    color: var(--link-color-hover);
+}

@@ -4,43 +4,52 @@
 
 <h1 class="page-heading">Dračí líheň</h1>
 <p>
-    Kdysi dávno se ve Městě líhlo mnoho draků.
+    
 </p>
 
-<table>
-    {% if awaiting %}
+{% if awaiting %}
+<table id="awaiting_registration">    
     <tr>
         <th>Dračí vejce</th>
         <th>Čas líhnutí</th>
         <th>Očekávané vylíhnutí</th>
         <th>Dračí chovatel</th>
-        <th></th>
+        {% if user.userprofile.level in dragon_confirming_levels %}
+        <th>Měští úředníci</th>
+        {% endif %}
     </tr>
     {% for registration in registrations %}
     <tr>
         <td>{{ registration.nick }}</td>
         <td>{{ registration.waiting_time | timestamp_to_difference }}</td>
         <td>{{ registration.expected_approval_time | timestamp_to_datetime }}</td>
-        <td>
+        <td>            
             {% if registration.patron is not 0 %}
             {{ registration.patron_name }}
-            {% else %}
-            <form method="POST">
+            {% elif user.userprofile is not null %}
+            <form method="post">
                 {% csrf_token %}
+                <input type="hidden" name="f" value="patronize">
                 <input type="hidden" name="{{ dragon_keeper }}" value="{{ registration.id }}">
-                <input type="hidden" name="user" value="">
-                <button type="submit">Chovat dráčka</button>
+                <button type="submit">Ujmout se dráčka</button>
             </form>
             {% endif %}
         </td>
-        <td></td>
+        <td>
+            {% if user.userprofile.level in dragon_confirming_levels %}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="{{ dragon_keeper }}" value="{{ registration.id }}">
+                <button type="submit" disabled>Vylíhnutí vejce</button>
+            </form>
+            {% endif %}            
+        </td>
     </tr>
-    {% endfor %}
-    {% else %}
-    <p>
-        <b>Aktuálně není v procesu líhnutí žádný mladý dráček.</b>
-    </p>
-    {% endif %}
-    
+    {% endfor %}    
 </table>
+{% else %}
+<p>
+    <b>Aktuálně není v procesu líhnutí žádný mladý dráček.</b>
+</p>
+{% endif %}    
 {% endblock %}
