@@ -762,18 +762,6 @@ class Navstevnost(models.Model):
 #         db_table = 'pomocnici'
 
 
-class Posta(models.Model):
-    odesilatel = models.CharField(max_length=25)
-    prijemce = models.CharField(max_length=25)
-    viditelnost = models.CharField(max_length=1)
-    text = models.TextField()
-    datum = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = "posta"
-
-
 class Pravomoci(models.Model):
     id_user = models.IntegerField(primary_key=True)
     funkce = models.CharField(max_length=20)

@@ -1,7 +1,7 @@
 <nav id="top_menu">
     <ul>
         {% if user.is_authenticated %}
-        <li><a href="">Pošta</a></li>
+        <li><a href="{% url 'ddcz:postal-service' %}">Pošta</a></li>
         <li>&#164;</li>
         {% endif %}
         <li><a href="{% url 'ddcz:phorum-list' %}">Fórum</a></li>
