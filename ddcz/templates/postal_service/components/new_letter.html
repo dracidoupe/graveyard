@@ -1,7 +1,9 @@
-<form method="post">
+<section class="postal_service_send">
+    <form method="post">
     {% csrf_token %}
     <input type="hidden" name="fid" value="{{ send_id }}">
-
+    
+    <label for="whom">Drakovi stačí znát příjemce:</label>
     <select name="whom">
         {% for post_user in users %}
         {% if post_user.nick != user.userprofile.nick %}
@@ -9,6 +11,7 @@
         {% endif %}
         {% endfor %}
     </select>
-    <textarea name="text"></textarea>
-    <input type="submit" value="Odešli">
+    <textarea name="text" required></textarea>
+    <input type="submit" value="Pošli draka se zprávou">
 </form>
+</section>
