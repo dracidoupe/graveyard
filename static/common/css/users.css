@@ -193,6 +193,7 @@ table#creation_table td.stars img{
 .postal_info{
     display: flex;
     justify-content: space-between;
+    font-size: 0.85rem;
 }
 
 .postal_letter_body{
