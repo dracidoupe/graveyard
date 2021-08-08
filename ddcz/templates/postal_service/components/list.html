@@ -1,27 +1,56 @@
 {% load comments %}
+{% load users %}
 
+
+<p>
+    Tvůj drak Helimardu ti zatím vyřídil tuto korespondenci:
+</p>
 {% for letter in letters %}
 <article class="postal_service_letter">
     <section class="postal_info">
         <section>
-            {{ letter.sender }}
+            <span class="sender">
+                <a href="{{ letter.sender | nick_url }}">{{ letter.sender }}</a>
+            </span>
             &mapsto;
-            {{ letter.receiver }}
-        </section>
-        <section>
+            <span class="receiver">
+                <a href="{{ letter.receiver | nick_url }}">{{ letter.receiver }}</a>
+            </span>
+            &lbrack;
             {% if letter.sender == user.userprofile.nick %}
             Odchozí
             {% else %}
             Příchozí
             {% endif %}
+            &rbrack;
+        </section>
+        <section>
+            <a href="">Celá konverzace</a>
+        </section>
+        <section>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="fid" value="{{ delete_id }}">
+                <input type="hidden" name="id" value="{{ letter.pk }}">
+                <input type="submit" value="Smazat zprávu">
+            </form>
         </section>
         <section>
             {{ letter.date | commentTime }}
         </section>
     </section>
-    <section class="postal_text">
-        {{ letter.text }}
+    {# Add icon later #}
+    <section class="postal_letter_body">
+        <section class="opponent_icon">
+            
+        </section>
+        <section class="postal_text">
+            {{ letter.text }}
+        </section>
     </section>
 </article>
+{% if not forloop.last %}
+<hr>
+{% endif %}
 {% endfor %}
 
