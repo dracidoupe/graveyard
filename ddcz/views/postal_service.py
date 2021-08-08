@@ -25,11 +25,11 @@ logger = logging.getLogger(__name__)
 @login_required
 @require_http_methods(["HEAD", "GET", "POST"])
 def postal_service(request):
-
     if request.method == "POST":
-        fid = int(request.POST.get("fid"))
 
+        fid = int(request.POST.get("fid"))
         if fid == FORM_SEND:
+
             try:
                 Letters.objects.create(
                     receiver=UserProfile.objects.get(id=request.POST.get("whom")).nick,
@@ -46,7 +46,33 @@ def postal_service(request):
                     f"A message between user has been submitted but the receiver of userprofile can not be found in our database. ID: {id}"
                 )
 
+        elif fid == FORM_DELETE:
+
+            try:
+                letter = Letters.objects.filter(pk=request.POST.get("id")).update(
+                    visibility=0
+                )
+                return HttpResponseRedirect(reverse("ddcz:postal-service"))
+
+            except KeyError:
+                user = request.user.userprofile.nick
+                logger.error(
+                    f"There has been an attemp to delete a message but primary key has not been submitted. User responsible: {user}"
+                )
+                return HttpResponseRedirect(reverse("ddcz:postal-service"))
+
+            except Letters.DoesNotExist:
+                id = request.POST.get("id")
+                user = request.user.userprofile.nick
+                logger.error(
+                    f"There has been an attempt to delete a message with non existing id: {id}, User: {user}"
+                )
+                return HttpResponseRedirect(reverse("ddcz:postal-service"))
+
     nick = request.user.userprofile.nick
+    letters = Letters.objects.filter(
+        (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
+    ).order_by("-date")
 
     return render(
         request,
@@ -57,7 +83,7 @@ def postal_service(request):
             "delete_id": FORM_DELETE,
             "users": UserProfile.objects.all(),
             "letters": Letters.objects.filter(
-                Q(receiver=nick) | Q(sender=nick)
+                (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
             ).order_by("-date"),
         },
     )

@@ -1,3 +1,4 @@
+from ddcz.models.used.users import UserProfile
 import logging
 
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -21,3 +22,11 @@ def level_star(user_profile, skin):
         ),
         "level": level,
     }
+
+
+@register.filter
+def nick_url(nick):
+    try:
+        return UserProfile.objects.get(nick=nick).profile_url
+    except:
+        return "#"
