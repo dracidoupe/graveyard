@@ -6,28 +6,28 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0102_letters_of_postal_service'),
+        ("ddcz", "0102_letters_of_postal_service"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='letters',
-            old_name='datum',
-            new_name='date',
+            model_name="letters",
+            old_name="datum",
+            new_name="date",
         ),
         migrations.RenameField(
-            model_name='letters',
-            old_name='prijemce',
-            new_name='receiver',
+            model_name="letters",
+            old_name="prijemce",
+            new_name="receiver",
         ),
         migrations.RenameField(
-            model_name='letters',
-            old_name='odesilatel',
-            new_name='sender',
+            model_name="letters",
+            old_name="odesilatel",
+            new_name="sender",
         ),
         migrations.RenameField(
-            model_name='letters',
-            old_name='viditelnost',
-            new_name='visibility',
+            model_name="letters",
+            old_name="viditelnost",
+            new_name="visibility",
         ),
     ]
