@@ -1,0 +1,14 @@
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="fid" value="{{ send_id }}">
+
+    <select name="whom">
+        {% for post_user in users %}
+        {% if post_user.nick != user.userprofile.nick %}
+        <option value="{{ post_user.id}}">{{ post_user.nick }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    <textarea name="text"></textarea>
+    <input type="submit" value="Odešli">
+</form>

@@ -1,0 +1,27 @@
+{% load comments %}
+
+{% for letter in letters %}
+<article class="postal_service_letter">
+    <section class="postal_info">
+        <section>
+            {{ letter.sender }}
+            &mapsto;
+            {{ letter.receiver }}
+        </section>
+        <section>
+            {% if letter.sender == user.userprofile.nick %}
+            Odchozí
+            {% else %}
+            Příchozí
+            {% endif %}
+        </section>
+        <section>
+            {{ letter.date | commentTime }}
+        </section>
+    </section>
+    <section class="postal_text">
+        {{ letter.text }}
+    </section>
+</article>
+{% endfor %}
+
