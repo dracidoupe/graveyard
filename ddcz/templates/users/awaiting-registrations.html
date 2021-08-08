@@ -27,12 +27,12 @@
             {% if registration.patron is not 0 %}
             {{ registration.patron_name }}
             {% elif user.userprofile is not null %}
-            <form method="post">
+            {#<form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="f" value="patronize">
                 <input type="hidden" name="{{ dragon_keeper }}" value="{{ registration.id }}">
                 <button type="submit">Ujmout se dráčka</button>
-            </form>
+            </form>#}
             {% endif %}
         </td>
         <td>
