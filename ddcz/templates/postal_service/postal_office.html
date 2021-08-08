@@ -1,0 +1,14 @@
+{% extends 'public.html' %}
+
+{% block content %}
+<h1 class="page-heading">Dračí pošta</h1>
+<p>
+    Protože kdo by dnes používal holuby... Naši cvičení draci doručí poštu kamkoliv a spolehlivě.
+    Pro obyvatele Města je dračí pošta zdarma. Navíc od doby, co byli lovci draků postaveni mimo 
+    zákon, je pošta ještě spolehlivější.
+</p>
+
+{% include 'postal_service/components/new_letter.html' %}
+{% include 'postal_service/components/list.html' %}
+
+{% endblock %}
