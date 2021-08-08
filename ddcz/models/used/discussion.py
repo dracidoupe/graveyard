@@ -57,3 +57,14 @@ class CreationComment(models.Model):
 
     class Meta:
         db_table = "diskuze"
+
+
+class Letters(models.Model):
+    sender = models.CharField(max_length=25, db_column="odesilatel")
+    receiver = models.CharField(max_length=25, db_column="prijemce")
+    visibility = models.CharField(max_length=1, db_column="viditelnost")
+    text = models.TextField()
+    date = models.DateTimeField(db_column="datum")
+
+    class Meta:
+        db_table = "posta"

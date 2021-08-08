@@ -131,4 +131,5 @@ urlpatterns = [
         misc.web_authors_and_editors,
         name="web-authors-and-editors",
     ),
+    path("posta/", views.postal_service, name="postal-service"),
 ]
