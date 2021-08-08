@@ -1,3 +1,4 @@
+import logging
 from django.apps import apps
 from ddcz.models.used.creations import Creation, CreativePage
 from django.http import HttpResponseRedirect
@@ -8,6 +9,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_http_methods
 
 from ..legacy import log_wrong_legacy_route
+
+
+logger = logging.getLogger(__name__)
 
 # In the constant below: It is possible to vary the redirections.
 # It is preferable to do so via the constants rather than changing
@@ -65,10 +69,6 @@ ALLOWED_CREATION_PAGES = [
 @require_http_methods(["HEAD", "GET"])
 def legacy_router(request):
 
-    print("\n")
-    print(request.get_full_path())
-    print("\n")
-
     page_category = request.GET.get("rub", False)
     page_creation_type = request.GET.get("co", False)
     id = request.GET.get("id", False)
@@ -116,7 +116,9 @@ def legacy_router(request):
             return get_creation_detail_redirect(page, id)
 
     ###  Finally if no route is found, redirect to news and log
-    log_wrong_legacy_route(request.get_full_path())
+    logger.warning(
+        f"There has been submitted URL address from the old website: index.php >> No redirect could be found for a legacy URL {request.get_full_path()}"
+    )
     return HttpResponseRedirect(reverse("ddcz:news"))
 
 
