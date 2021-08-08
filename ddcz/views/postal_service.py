@@ -49,15 +49,8 @@ def postal_service(request):
         elif fid == FORM_DELETE:
 
             try:
-                letter = Letters.objects.filter(pk=request.POST.get("id")).update(
+                letter = Letters.objects.filter(pk=request.POST.get("id", 0)).update(
                     visibility=0
-                )
-                return HttpResponseRedirect(reverse("ddcz:postal-service"))
-
-            except KeyError:
-                user = request.user.userprofile.nick
-                logger.error(
-                    f"There has been an attemp to delete a message but primary key has not been submitted. User responsible: {user}"
                 )
                 return HttpResponseRedirect(reverse("ddcz:postal-service"))
 
