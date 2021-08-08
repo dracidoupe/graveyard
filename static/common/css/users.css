@@ -171,3 +171,43 @@ table#creation_table td.date{
 table#creation_table td.stars img{
     margin-bottom: 0rem;
 }
+
+.postal_service_send{
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.postal_service_send textarea{
+    display: block;
+    width: 60%;
+    height: 8rem;
+    margin: 1rem auto;
+    font-size: 1rem;    
+}
+
+.postal_service_letter{
+    margin: 1rem 0;
+}
+
+.postal_info{
+    display: flex;
+    justify-content: space-between;
+}
+
+.postal_letter_body{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.postal_letter_body .opponent_icon{    
+    width: 75px;
+    height: 100px;
+}
+
+.postal_letter_body .postal_text{
+    width: calc(100% - 100px);
+}
+
+
