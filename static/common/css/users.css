@@ -186,6 +186,14 @@ table#creation_table td.stars img{
     font-size: 1rem;    
 }
 
+.postal_service_demands{
+    width: 200px;
+    margin: 0 auto;
+}
+.postal_service_demands select{
+    width: 50px;
+}
+
 .postal_service_letter{
     margin: 1rem 0;
 }

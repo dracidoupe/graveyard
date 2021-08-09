@@ -63,9 +63,14 @@ def postal_service(request):
                 return HttpResponseRedirect(reverse("ddcz:postal-service"))
 
     nick = request.user.userprofile.nick
+    offset = int(request.GET.get("s", 1)) - 1
+    limit = int(request.GET.get("l", 50))
     letters = Letters.objects.filter(
         (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
-    ).order_by("-date")
+    ).order_by("-date")[offset:limit]
+    box_occupancy = Letters.objects.filter(
+        (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
+    ).count()
 
     return render(
         request,
@@ -75,8 +80,7 @@ def postal_service(request):
             "send_id": FORM_SEND,
             "delete_id": FORM_DELETE,
             "users": UserProfile.objects.all(),
-            "letters": Letters.objects.filter(
-                (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
-            ).order_by("-date"),
+            "letters": letters,
+            "box_occupancy": box_occupancy,
         },
     )
