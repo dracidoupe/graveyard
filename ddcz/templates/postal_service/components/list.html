@@ -1,6 +1,18 @@
 {% load comments %}
 {% load users %}
 
+<section class="postal_service_demands">
+    <form method="get">
+        <label for="l">Počet dopisů</label>
+        <select name="l">
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="20">200</option>
+            <option value="{{ box_occupancy }}">vše</option>
+        </select>
+        <input type="submit" value="Zažádej draka o výpis">
+    </form>
+</section>
 
 <p>
     Tvůj drak Helimardu ti zatím vyřídil tuto korespondenci:
