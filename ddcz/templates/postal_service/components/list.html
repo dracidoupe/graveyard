@@ -58,6 +58,11 @@
     {# Add icon later #}
     <section class="postal_letter_body">
         <section class="opponent_icon">
+            {% if letter.sender == user.userprofile.nick %}
+                <img src="{{ letter.receiver | nick_icon }}" alt="">
+            {% else %}
+                <img src="{{ letter.sender | nick_icon }}" alt="">
+            {% endif %}
             
         </section>
         <section class="postal_text">
