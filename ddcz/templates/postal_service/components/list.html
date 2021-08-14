@@ -1,5 +1,9 @@
 {% load comments %}
 {% load users %}
+{% load pages %}
+
+
+{% pagination letters %}
 
 <section class="postal_service_demands">
     <form method="get">
@@ -7,7 +11,7 @@
         <select name="l">
             <option value="50">50</option>
             <option value="100">100</option>
-            <option value="20">200</option>
+            <option value="200">200</option>
             <option value="{{ box_occupancy }}">vše</option>
         </select>
         <input type="submit" value="Zažádej draka o výpis">
@@ -37,7 +41,7 @@
             &rbrack;
         </section>
         <section>
-            <a href="">Celá konverzace</a>
+            
         </section>
         <section>
             <form method="post">
@@ -66,3 +70,4 @@
 {% endif %}
 {% endfor %}
 
+{% pagination letters %}
