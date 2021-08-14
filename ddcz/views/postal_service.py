@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 
 from django.contrib.auth.models import User
+from django.core import paginator
 from django.dispatch.dispatcher import receiver
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -63,14 +64,17 @@ def postal_service(request):
                 return HttpResponseRedirect(reverse("ddcz:postal-service"))
 
     nick = request.user.userprofile.nick
-    offset = int(request.GET.get("s", 1)) - 1
     limit = int(request.GET.get("l", 50))
+    page = int(request.GET.get("p", 1))
     letters = Letters.objects.filter(
         (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
-    ).order_by("-date")[offset:limit]
+    ).order_by("-date")
     box_occupancy = Letters.objects.filter(
         (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
     ).count()
+
+    paginator = Paginator(letters, limit)
+    letters = paginator.get_page(page)
 
     return render(
         request,
