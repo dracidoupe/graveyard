@@ -2,13 +2,13 @@
 <div class="pagination">
     {% if articles.has_previous %}
         <span class="next">
-            <a href="?z_s={{ articles.previous_page_number }}">Další</a>
+            <a href="?z_s={{ articles.previous_page_number }}{% if per_page is not False %}&l={{ per_page }}{% endif %}">Další</a>
         </span>
     {% endif %}
 
     {% if articles.has_next %}
         <span class="previous">
-                <a href="?z_s={{ articles.next_page_number }}">Předchozí</a>
+                <a href="?z_s={{ articles.next_page_number }}{% if per_page is not False %}&l={{ per_page }}{% endif %}">Předchozí</a>
         </span>
     {% endif %}
 </div>
