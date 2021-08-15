@@ -198,6 +198,10 @@ class UserProfile(models.Model):
     def show_email(self):
         return self.public_listing_permissions["email"]
 
+    def update_permissions(self, new_permissions):
+        self.pii_display_permissions = ",".join(new_permissions)
+        self.save()
+
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
@@ -267,6 +271,33 @@ class MentatNewbie(models.Model):
     class Meta:
         db_table = "mentat_newbie"
         unique_together = (("newbie", "mentat"),)
+
+
+class Runes(models.Model):
+    donor_id = models.IntegerField(db_column="id_darce")
+    donor_nick = models.CharField(max_length=30, db_column="nick_darce")
+    receiver_id = models.IntegerField(blank=True, null=True, db_column="id_prijemce")
+    receiver_nick = models.CharField(max_length=30, db_column="nick_prijemce")
+    type = models.CharField(max_length=15, db_column="typ")
+    graphics = models.SmallIntegerField(db_column="grafika")
+    text = models.TextField(db_column="venovani")
+    date = models.DateTimeField(db_column="datum")
+
+    class Meta:
+        db_table = "runy"
+
+
+class UserRatings(models.Model):
+    record_id = models.AutoField(primary_key=True)
+    rating_time = models.IntegerField()
+    by_id = models.IntegerField(db_column="byFK")  # Field name made lowercase.
+    for_id = models.IntegerField(db_column="forFK")  # Field name made lowercase.
+    visible = models.SmallIntegerField()
+    rating_text = models.TextField()
+
+    class Meta:
+        db_table = "user_ratings"
+        unique_together = (("by_id", "for_id"),)
 
 
 class UzivateleCekajici(models.Model):
