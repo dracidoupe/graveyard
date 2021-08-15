@@ -283,6 +283,11 @@ class Runes(models.Model):
     text = models.TextField(db_column="venovani")
     date = models.DateTimeField(db_column="datum")
 
+    @property
+    def image_url(self):
+        id = self.graphics
+        return f"http://www.dracidoupe.cz/code/nastaveni/runy/runa{id}.gif"
+
     class Meta:
         db_table = "runy"
 
