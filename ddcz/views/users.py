@@ -1,3 +1,5 @@
+import logging
+
 from django.urls.base import reverse
 from ddcz.models.used.users import UzivateleCekajici
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -18,10 +20,12 @@ from ..models import (
     LEVEL_DESCRIPTIONS,
 )
 
-DRAGON_EGG_NAME = "dragon_egg"
+DRAGON_EGG_POST_NAME = "dragon_egg"
 DRAGON_EGG_BIRTH_CONFIRMER_LEVEL = ["6", "8"]
 DEFAULT_USER_LIST_SIZE = 50
 VALID_SKINS = ["light", "dark", "historic"]
+
+logger = logging.getLogger(__name__)
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -127,18 +131,20 @@ def change_skin(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 def awaiting(request):
     registrations = UzivateleCekajici.objects.all().order_by("-date")
-    awaiting = registrations.count() is not 0
+    isAwaiting = registrations.count() is not 0
 
     if request.method == "POST":
         if request.POST.get("f") == "patronize":
             try:
                 profile_id = request.user.userprofile.id
                 registration = UzivateleCekajici.objects.get(
-                    id=request.POST.get(DRAGON_EGG_NAME)
+                    id=request.POST.get(DRAGON_EGG_POST_NAME)
                 )
                 registration.patronize(profile_id)
             except UzivateleCekajici.DoesNotExist:
-                pass  # log in the future
+                logger.error(
+                    f"User with primary key ID {profile_id} wanted to get a newbie, but no such user exists."
+                )
             except:
                 pass  # log if user does not exists or not having permissions
             return HttpResponseRedirect(reverse("ddcz:awaiting-registrations"))
@@ -148,8 +154,8 @@ def awaiting(request):
         "users/awaiting-registrations.html",
         {
             "registrations": registrations,
-            "awaiting": awaiting,
-            "dragon_keeper": DRAGON_EGG_NAME,
+            "awaiting": isAwaiting,
+            "dragon_keeper": DRAGON_EGG_POST_NAME,
             "dragon_confirming_levels": DRAGON_EGG_BIRTH_CONFIRMER_LEVEL,
         },
     )
