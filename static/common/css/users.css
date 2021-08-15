@@ -20,8 +20,9 @@
     grid-template-areas: 
         'info info'
         'server_stats server_stats'
+        'runes runes'
         'author author'
-        'patron reputation'
+        'reputation reputation'
     ;
     grid-column: auto auto;
     gap: 2rem;
@@ -70,6 +71,11 @@
 
 #user_patron{
     grid-area: patron;
+    background-color: var(--bg_deb);
+}
+
+#user_runes{
+    grid-area: runes;
     background-color: var(--bg_deb);
 }
 
@@ -171,6 +177,41 @@ table#creation_table td.date{
 table#creation_table td.stars img{
     margin-bottom: 0rem;
 }
+
+.user_rune{
+    display: grid;
+    grid-template-areas: 
+        'rune_graphics rune_donor rune_text rune_date'
+    ;
+    grid-template-columns: 150px 150px auto 175px;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+.user_rune .rune_graphics{
+    grid-area: rune_graphics;
+    text-align: center;
+    font-weight: bold;
+}
+
+.user_rune .rune_donor{
+    grid-area: rune_donor;
+    font-weight: bold;
+    text-align: center;
+}
+
+.user_rune .rune_text{
+    grid-area: rune_text;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.user_rune .rune_date{
+    grid-area: rune_date;
+}
+
+
 
 .postal_service_send{
     margin-top: 2rem;
