@@ -2297,7 +2297,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "runy",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
@@ -2492,7 +2492,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "user_ratings",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(
