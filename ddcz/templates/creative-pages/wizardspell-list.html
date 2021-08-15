@@ -16,47 +16,7 @@
     {% endif %}
 
     {% pagination articles %}
-
-    <ul class="article-list">
-    {% for a in articles %}
-        <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a> <span class="wizard-summmonwords">*{{ a.summon_words }}*</span>{% creation_rating a.rating skin %}</h2>
-            <div class="table-like">
-                <p><span class="label">Skupina:</span> <span class="value">{{ a.group }}</span></p>
-                {% if a.magenergy %}
-                    <p><span class="label">Magenergie:</span> <span class="value">{{ a.magenergy }} {{ a.magenergy_description }}</span></p>
-                {% endif %}
-                {% if a.skill_check %}
-                    <p><span class="label">Past:</span> <span class="value">{{ a.skill_check }}</span></p>
-                {% endif %}
-                {% if a.extent or a.extent_description %}
-                    <p><span class="label">Dosah:</span> <span class="value">{% if a.extent %}{{ a.extent }} {% endif %}{%  if a.a.extent_description %}{{ a.extent_description }}{% endif %}</span></p>
-                {% endif %}
-                {% if a.reach or a.reach_description %}
-                    <p><span class="label">Rozsah:</span> <span class="value">{% if a.reach %}{{ a.reach }} {% endif %}{%  if a.a.reach_description %}{{ a.reach_description }}{% endif %}</span></p>
-                {% endif %}
-                {% if a.invocation %}
-                    <p><span class="label">Vyvolání:</span> <span class="value">{{ a.invocation }} {{ a.invocation_description }}</span></p>
-                {% endif %}
-                {% if a.duration %}
-                    <p><span class="label">Trvání:</span> <span class="value">{{ a.duration }} {{ a.duration_description }}</span></p>
-                {% endif %}
-
-                <div class="description-row"><span class="label">Popis:</span> <div class="value">{{ a.description|render_html_insecurely|safe }}</div></div>
-
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ a.published | date:"c" }}">{{ a.published | articleTime }}</time></span></p>
-                <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>
-                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
-
-                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
-                <!--
-                <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
-                -->
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
-
+    {% list_default articles creative_page_slug skin %}   
     {% pagination articles %}
 
 </div>

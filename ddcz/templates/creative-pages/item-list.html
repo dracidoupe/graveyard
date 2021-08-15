@@ -16,57 +16,7 @@
     {% endif %}
 
     {% pagination articles %}
-
-    <ul class="article-list">
-    {% for a in articles %}
-        <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
-            <div class="table-like">
-                <p><span class="label">Skupina:</span> <span class="value">{{ a.group }}</span></p>
-                {% if a.attack_number %}
-                    <p><span class="label">Síla zbraně:</span> <span class="value">{{ a.attack_number }}</span></p>
-                {% endif %}
-                {% if a.armour_quality %}
-                    <p><span class="label">Kvalita zbroje:</span> <span class="value">{{ a.armour_quality }}</span></p>
-                {% endif %}
-                {% if a.length %}
-                    <p><span class="label">Délka:</span> <span class="value">{{ a.length }}</span></p>
-                {% endif %}
-                {% if a.price %}
-                    <p><span class="label">Cena:</span> <span class="value">{{ a.price }}</span></p>
-                {% endif %}
-                {% if a.range_small %}
-                    <p><span class="label">Malý dostřel:</span> <span class="value">{{ a.range_small }}</span></p>
-                {% endif %}
-                {% if a.range_expected %}
-                    <p><span class="label">Střední dostřel:</span> <span class="value">{{ a.range_expected }}</span></p>
-                {% endif %}
-                {% if a.range_long %}
-                    <p><span class="label">Velký dostřel:</span> <span class="value">{{ a.range_long }}</span></p>
-                {% endif %}
-                {% if a.sphere %}
-                    <p><span class="label">Sféra:</span> <span class="value">{{ a.sphere }}</span></p>
-                {% endif %}
-                {% if a.weight %}
-                    <p><span class="label">Váha:</span> <span class="value">{{ a.weight }}&nbsp;mn</span></p>
-                {% endif %}
-
-
-                <div class="description-row"><span class="label">Popis:</span> <div class="value">{{ a.description|render_html_insecurely|safe }}</div></div>
-
-                <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ a.published | date:"c" }}">{{ a.published | articleTime}}</time></span></p>
-                <p><span class="label">Přečteno:</span> <span class="value">{{ a.read }}</span></p>
-                <p><span class="label">Hlasovalo:</span> <span class="value">{{ a.rater_no }}</span></p>
-
-                <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
-                <!--
-                <p><span class="label">Příspěvků k článku:</span> <span class="value">TODO</span></p>
-                -->
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
-
+    {% list_default articles creative_page_slug skin %}   
     {% pagination articles %}
 
 </div>
