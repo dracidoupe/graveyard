@@ -1,5 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
+from django.dispatch.dispatcher import receiver
 from django.http import (
     HttpResponseRedirect,
     HttpResponseBadRequest,
@@ -12,6 +13,7 @@ from ..text import misencode
 from ..models import (
     Author,
     UserProfile,
+    Runes,
     LEVEL_DESCRIPTIONS,
 )
 
@@ -99,6 +101,9 @@ def user_profile(request, user_profile_id, nick_slug):
             "creations": creations,
             "level_stars": level_stars,
             "level_description": description,
+            "runes": Runes.objects.filter(receiver_id=user_profile.id).order_by(
+                "-date"
+            ),
         },
     )
 
