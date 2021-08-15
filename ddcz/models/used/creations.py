@@ -41,6 +41,7 @@ class CreativePage(models.Model):
     name = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
     model_class = models.CharField(max_length=50)
+    singular_name = models.CharField(max_length=30, null=True)
     # editors = models.ManyToManyField(User)
 
     class Meta:
