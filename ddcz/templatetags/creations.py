@@ -49,8 +49,8 @@ def creation_canonical_url(page, creation):
 
 
 @register.filter
-def singular_name_from_slug(slug):
-    return CreativePage.objects.get(slug=slug).singular_name
+def name_from_slug(slug):
+    return CreativePage.objects.get(slug=slug).name
 
 
 @register.filter
