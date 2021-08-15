@@ -873,21 +873,6 @@ class RubrikyPristup(models.Model):
         unique_together = (("id_usr", "id_cizi", "rubrika"),)
 
 
-class Runy(models.Model):
-    id_darce = models.IntegerField()
-    nick_darce = models.CharField(max_length=30)
-    id_prijemce = models.IntegerField(blank=True, null=True)
-    nick_prijemce = models.CharField(max_length=30)
-    typ = models.CharField(max_length=15)
-    grafika = models.SmallIntegerField()
-    venovani = models.TextField()
-    datum = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = "runy"
-
-
 class Skiny(models.Model):
     nazev = models.CharField(max_length=10)
     jmeno = models.CharField(max_length=50)
@@ -1000,20 +985,6 @@ class StatistikyDila(models.Model):
 #     class Meta:
 #         managed = False
 #         db_table = 'temptable'
-
-
-class UserRatings(models.Model):
-    record_id = models.AutoField(primary_key=True)
-    rating_time = models.IntegerField()
-    byfk = models.IntegerField(db_column="byFK")  # Field name made lowercase.
-    forfk = models.IntegerField(db_column="forFK")  # Field name made lowercase.
-    visible = models.SmallIntegerField()
-    rating_text = models.TextField()
-
-    class Meta:
-        managed = False
-        db_table = "user_ratings"
-        unique_together = (("byfk", "forfk"),)
 
 
 class UserStats(models.Model):
