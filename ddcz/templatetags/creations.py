@@ -4,6 +4,7 @@ from django import template
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 from ..creations import RATING_DESCRIPTIONS
+from ..models import CreativePage
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +46,11 @@ def author_display(creation_subclass):
 @register.simple_tag
 def creation_canonical_url(page, creation):
     return page.get_creation_canonical_url(creation)
+
+
+@register.filter
+def name_from_slug(slug):
+    return CreativePage.objects.get(slug=slug).name
 
 
 @register.filter
