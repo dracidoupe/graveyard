@@ -1,6 +1,8 @@
 {% extends 'public.html' %}
 {% load html %}
 {% load creations %}
+{% load comments %}
+{% load users %}
 {% block content %}
 
 <div id="page-user-detail">
@@ -129,6 +131,20 @@
                 </table>
             {% endfor %}
         </section>
+        {% endif %}
+
+        {% if runes.count != 0 %}
+        <section id="user_runes">
+            <h3>Obdržené runy</h3>
+            {% for rune in runes %}
+            <section class="user_rune">
+                <section class="rune_graphics"><img src="{{ rune.image_url }}" alt=""> <br> {{ rune.type }}</section>
+                <section class="rune_donor"><a href="{{ rune.donor_nick | nick_url}}">{{ rune.donor_nick }}</a></section>
+                <section class="rune_text">{{ rune.text }}</section>
+                <section class="rune_date">{{ rune.date | commentTime }}</section>
+            </section>
+            {% endfor %}
+        </section>            
         {% endif %}
 
     </div>
