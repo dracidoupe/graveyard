@@ -12,20 +12,29 @@
         </header>
         <div id="app" class="flex">
             <main>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+            </ul>
+            {% endif %}
                 {% block content %}{% endblock %}
             </main>
+
             <nav class="menu">
                 <ul>
                     <li><a href="{% url 'dragon:dashboard' %}">Úvod</a></li>
-                    
+
                     {% if user.is_superuser %}
                         <li><a href="{% url 'dragon:levelsystem' %}">Levelsystém</a></li>
+                        <li><a href="{% url 'dragon:emailtest' %}">Test e-mailu</a></li>
                     {% endif %}
                 </ul>
             </nav>
             </div>
         <div id="footer">
-            © 2002-2018 autorem redakčního systému je Almad, na nějž se stále obracejte v případě nouze :-)
+            © 2002-2018 & 2021 autorem redakčního systému je Almad, na nějž se stále obracejte v případě nouze :-)
         </div>
     </body>
 </html>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load html %}
+{% block content %}
+    <h1>Test e-mailu</h1>
+
+    <p>Na této stránce je možné otestovat, zda funguje služba na posílání emailů. Stisknutím tlačítka níže pošlete testovaci e-mail na svoji vlastní adresu.</p>
+    <p>Pro zjištění přičin problémů je potřeba se podívat na <a href="https://app.eu.mailgun.com/app/dashboard">dashboard používané služby</a> a nebo <a href="https://dracidoupe.slack.com/archives/C029JA38AAV">na serverové logy</a>.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Odeslat testovací email">
+    </form>
+{% endblock %}
