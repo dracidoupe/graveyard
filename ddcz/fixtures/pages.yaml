@@ -4,7 +4,6 @@
     name: Články&Eseje
     slug: clanky
     model_class: ddcz.commonarticle
-    singular_name: Článek
 
 - model: ddcz.creativepage
   pk: 2
@@ -12,7 +11,6 @@
     name: Bestiář
     slug: bestiar
     model_class: ddcz.monster
-    singular_name: Bestie
 
 
 - model: ddcz.creativepage
@@ -21,7 +19,6 @@
     name: Nová Povolání
     slug: novapovolani
     model_class: ddcz.commonarticle
-    singular_name: Povolání
 
 - model: ddcz.creativepage
   pk: 4
@@ -29,7 +26,6 @@
     name: Nové Rasy
     slug: noverasy
     model_class: ddcz.commonarticle
-    singular_name: Rasa
 
 - model: ddcz.creativepage
   pk: 5
@@ -37,7 +33,6 @@
     name: Rozvoj DrD
     slug: expanze
     model_class: ddcz.commonarticle
-    singular_name: Featura
 
 - model: ddcz.creativepage
   pk: 6
@@ -45,7 +40,6 @@
     name: Alchymista
     slug: alchymistazvl
     model_class: ddcz.commonarticle
-    singular_name: Alchymista
 
 - model: ddcz.creativepage
   pk: 7
@@ -53,7 +47,6 @@
     name: Hraničář
     slug: hranicar
     model_class: ddcz.commonarticle
-    singular_name: Hraničář
 
 - model: ddcz.creativepage
   pk: 8
@@ -61,7 +54,6 @@
     name: Kouzelník
     slug: kouzelnikzvl
     model_class: ddcz.commonarticle
-    singular_name: Kouzelník
 
 - model: ddcz.creativepage
   pk: 9
@@ -69,7 +61,6 @@
     name: Válečník
     slug: valecnik
     model_class: ddcz.commonarticle
-    singular_name: Válečník
 
 - model: ddcz.creativepage
   pk: 10
@@ -77,7 +68,6 @@
     name: Zloděj
     slug: zlodej
     model_class: ddcz.commonarticle
-    singular_name: Zloděj
 
 - model: ddcz.creativepage
   pk: 11
@@ -85,15 +75,12 @@
     name: Galerie
     slug: galerie
     model_class: ddcz.gallerypicture
-    singular_name: Obraz
-
 - model: ddcz.creativepage
   pk: 12
   fields:
     name: Fotogalerie
     slug: fotogalerie
     model_class: ddcz.photo
-    singular_name: Fotografie
 
 - model: ddcz.creativepage
   pk: 13
@@ -101,7 +88,6 @@
     name: Hřbitov
     slug: hrbitov
     model_class: ddcz.commonarticle
-    singular_name: Parte
 
 - model: ddcz.creativepage
   pk: 14
@@ -109,7 +95,6 @@
     name: Dovednosti
     slug: dovednosti
     model_class: ddcz.skill
-    singular_name: Dovednost
 
 - model: ddcz.creativepage
   pk: 15
@@ -117,7 +102,6 @@
     name: Alchymistické Předměty
     slug: alchpredmety
     model_class: ddcz.alchemisttool
-    singular_name: Předmět
 
 - model: ddcz.creativepage
   pk: 16
@@ -125,7 +109,6 @@
     name: Hraničářská Kouzla
     slug: hranicarkouzla
     model_class: ddcz.rangerspell
-    singular_name: Kouzlo
 
 - model: ddcz.creativepage
   pk: 17
@@ -133,7 +116,6 @@
     name: Kouzelnická Kouzla
     slug: kouzla
     model_class: ddcz.wizardspell
-    singular_name: Kouzlo
 
 - model: ddcz.creativepage
   pk: 18
@@ -141,7 +123,6 @@
     name: Předměty
     slug: predmety
     model_class: ddcz.item
-    singular_name: Předmět
 
 - model: ddcz.creativepage
   pk: 19
@@ -149,7 +130,6 @@
     name: Downloady
     slug: downloady
     model_class: ddcz.downloaditem
-    singular_name: Download
 
 - model: ddcz.creativepage
   pk: 20
@@ -157,4 +137,3 @@
     name: Dobrodružství
     slug: dobrodruzstvi
     model_class: ddcz.quest
-    singular_name: Dobrodružství
