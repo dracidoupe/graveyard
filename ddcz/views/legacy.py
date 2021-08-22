@@ -8,8 +8,6 @@ from django.urls.base import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_http_methods
 
-from ..legacy import log_wrong_legacy_route
-
 
 logger = logging.getLogger(__name__)
 
