@@ -1,0 +1,42 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+{% load pages %}
+
+
+{% block content %}
+<div id="page-common-article">
+    <h1 class="page-heading {% if heading == 'Články&Eseje' %}text-red{% endif %}">{{ heading }}</h1>
+    {% if user.is_authenticated and concept %}
+        <p><a href="{% url 'ddcz:creative-page-concept' creative_page_slug %}">{{ concept }}</a></p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <p>Patříte-li mezi starostlivé skřítky, <a href="{% url 'ddcz:creative_page_html_check' creative_page_slug %}">podívejte se na příspěvky, které potřebují opravit text</a>.</p>
+    {% endif %}
+
+    {% pagination articles %}
+    <table class="list_default">
+        <tr>
+            <th>Dílo</th>
+            <th>Hodnocení</th>
+            <th>Hlasujících</th>
+            <th>Autor</th>
+            <th>Skupina</th>
+            <th>Zveřejněno</th>
+        </tr>
+        {% for article in articles %}
+        <tr>
+            <td><a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=article.id creation_slug=article.get_slug %}">{{ article.name }}</a></td>
+            <td>{% creation_rating article.rating skin %}</td>
+            <td>{{ article.rater_no }}</td>
+            <td>{% author_display article %}</td>
+            <td>{{ article.group }}</td>
+            <td>{{ article.published | articleTime }}</td>        
+        </tr>
+        {% endfor %}
+    </table>
+    {% pagination articles %}
+    
+</div>
+{% endblock %}
