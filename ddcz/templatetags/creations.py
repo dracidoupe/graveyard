@@ -49,11 +49,6 @@ def creation_canonical_url(page, creation):
 
 
 @register.filter
-def singular_name_from_slug(slug):
-    return CreativePage.objects.get(slug=slug).singular_name
-
-
-@register.filter
 def articleTime(datetime):
     try:
         return datetime.strftime("%-d. %-m. %Y v %-H:%M")
