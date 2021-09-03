@@ -49,8 +49,8 @@
         <article class="comment">
             <picture class="user_icon">
                 {% if comment.by_registered_user %}
-                    {% if ddcz_profile.icon_url %}
-                        <p class="user_icon"><img src="{{ ddcz_profile.icon_url }}" alt="Ikonka uživatele {{ comment.nickname }}"></p>
+                    {% if comment.user.icon_url %}
+                        <p class="user_icon"><img src="{{ comment.user.icon_url }}" alt="Ikonka uživatele {{ comment.nickname }}"></p>
                     {% endif %}
                 {% endif %}
             </picture>
