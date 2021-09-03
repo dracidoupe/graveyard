@@ -8,7 +8,7 @@ mkdir $TMPDIR
 
 set -e
 
-for dir in dobrodruzstvi soub galerie fotogalerie; do
+for dir in dobrodruzstvi soub galerie fotogalerie ikonky; do
   rsync -av w-dracidoupe-cz@ddcz-access-point:$REMROOT/$dir/ $TMPDIR/$dir/
   aws s3 sync $TMPDIR/$dir/ $BUCKET/$dir/
 done;
