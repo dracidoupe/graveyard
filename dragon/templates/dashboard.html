@@ -1,7 +1,52 @@
 {% extends 'base.html' %}
 {% load html %}
 {% block content %}
-    <h1>Správa</h1>
+    <h1>Přehled {{ approval }}</h1>
+
+    {% for user in registrations %}
+        {% if forloop.first %}
+            <h2>Uživatelé čekající na schválení</h2>
+
+            <table>
+            <tr>
+                <th>Přezdívka</th>
+                <th>E-mail</th>
+                <th>Jméno</th>
+                <th>Pohlaví</th>
+                <th>Podporovatelé</th>
+                <th>Popis</th>
+                <th>Akce</th>
+            </tr>
+        {% endif %}
+            <tr>
+                <td>{{ user.nick }} ({{ user.salutation }})</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name_given }} {{ user.name_family }}</td>
+                <td>{{ user.gender }}</td>
+                <td>
+                    {% if user.patron %}
+                        Patron: {{ user.patron }}
+                        Přímluva: {{ user.supporters }}
+                    {% else %}
+                        Nikdo
+                    {% endif %}
+                </td>
+                <td><pre>{{ user.description }}</pre></td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="awaiting_registration_id" value="{{ user.id }}">
+                        <input type="hidden" name="form_type" value="{{ FormTypes.REGISTRATIONS.value }}">
+
+                        <input type="submit" name="submission_type" value="{{ RegistrationRequestApproval.APPROVE.value }}"><br>
+                        <input type="submit" name="submission_type" value="{{ RegistrationRequestApproval.REJECT.value }}">
+                    </form>
+                </td>
+            </tr>
+        {% if forloop.last %}
+            </table>
+        {% endif %}
+    {% endfor %}
 
     <p>Tady bude přehled...přehlednější, než býval!</p>
 {% endblock %}
