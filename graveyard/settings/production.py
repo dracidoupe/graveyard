@@ -55,10 +55,15 @@ WSGI_APPLICATION = "graveyard.wsgi.application"
 
 ALLOWED_HOSTS = ["nove.dracidoupe.cz"]
 
-# FIXME: Migrate to whitenoise
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "https://nove.dracidoupe.cz/staticfiles/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+## User-uploaded content that is hosted on S3/cloudfront
+GALLERY_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/galerie/"
+PHOTOGALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/fotogalerie/"
+USER_ICON_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/ikonky/"
+QUEST_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/dobrodruzstvi/"
 
 
 import sentry_sdk
