@@ -57,7 +57,7 @@ ALLOWED_HOSTS = ["nove.dracidoupe.cz"]
 
 # FIXME: Migrate to whitenoise
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = "http://nove.dracidoupe.cz/staticfiles/"
+STATIC_URL = "https://nove.dracidoupe.cz/staticfiles/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
