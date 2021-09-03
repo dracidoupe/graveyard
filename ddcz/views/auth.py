@@ -130,17 +130,15 @@ class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
 def sign_up(request):
     form = SignUpForm()
 
-    if request.method == "POST" and request.POST["submit"]:
-        sgn = SignUpForm(request.POST)
-        if sgn.is_valid():
-            sgn.save()
+    if request.method == "POST" and request.POST.get("submit"):
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
             return render(
                 request,
                 "users/sign_up_after.html",
-                {"addressing": sgn.cleaned_data["salutation"]},
+                {"addressing": form.cleaned_data["salutation"]},
             )
-        else:
-            form = sgn
 
     return render(
         request,

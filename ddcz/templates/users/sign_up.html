@@ -15,7 +15,7 @@
             {% for field in sign_up_form %}
                 {% for error in field.errors %}
                     <div>
-                        <strong>{{ error }}</strong>
+                        <strong>Chyba pro pole {{ field.name }}: {{ error }}</strong>
                     </div>
                 {% endfor %}
             {% endfor %}
