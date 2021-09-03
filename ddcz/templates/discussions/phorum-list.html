@@ -47,7 +47,13 @@
     <section class="article-list">
     {% for comment in discussions %}
         <article class="comment">
-            <picture class="user_icon"></picture>
+            <picture class="user_icon">
+                {% if comment.by_registered_user %}
+                    {% if ddcz_profile.icon_url %}
+                        <p class="user_icon"><img src="{{ ddcz_profile.icon_url }}" alt="Ikonka uživatele {{ comment.nickname }}"></p>
+                    {% endif %}
+                {% endif %}
+            </picture>
             <comment class="comment_main">
                 <div class="comment_header">
                     {% if comment.by_registered_user %}
