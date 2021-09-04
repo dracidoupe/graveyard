@@ -4,7 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth import forms as authforms
 
-from ..models import UserProfile, UzivateleCekajici
+from ..models import UserProfile, AwaitingRegistration
 
 logger = logging.getLogger(__name__)
 

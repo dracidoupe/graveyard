@@ -273,7 +273,7 @@ class MentatNewbie(models.Model):
         unique_together = (("newbie", "mentat"),)
 
 
-class Runes(models.Model):
+class Rune(models.Model):
     donor_id = models.IntegerField(db_column="id_darce")
     donor_nick = models.CharField(max_length=30, db_column="nick_darce")
     receiver_id = models.IntegerField(blank=True, null=True, db_column="id_prijemce")
@@ -292,7 +292,7 @@ class Runes(models.Model):
         db_table = "runy"
 
 
-class UserRatings(models.Model):
+class UserRating(models.Model):
     record_id = models.AutoField(primary_key=True)
     rating_time = models.IntegerField()
     by_id = models.IntegerField(db_column="byFK")  # Field name made lowercase.
@@ -305,7 +305,7 @@ class UserRatings(models.Model):
         unique_together = (("by_id", "for_id"),)
 
 
-class UzivateleCekajici(models.Model):
+class AwaitingRegistration(models.Model):
     id = models.AutoField(primary_key=True, db_column="id_zaznamu")
     nick = models.CharField(unique=True, max_length=30, db_column="nick_uzivatele")
     email = models.CharField(unique=True, max_length=40, db_column="email")

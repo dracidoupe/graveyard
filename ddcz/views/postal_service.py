@@ -14,7 +14,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
 from ..text import escape_user_input
-from ..models import UserProfile, Letters
+from ..models import UserProfile, Letter
 
 FORM_DELETE = 1
 FORM_SEND = 2
@@ -36,11 +36,11 @@ def postal_service(request):
     per_page = int(request.GET.get("l", DEFAULT_LIMIT))
     page = int(request.GET.get("z_s", DEFAULT_PAGE))
 
-    letters = Letters.objects.filter(
+    letters = Letter.objects.filter(
         (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
     ).order_by("-date")
 
-    box_occupancy = Letters.objects.filter(
+    box_occupancy = Letter.objects.filter(
         (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
     ).count()
 
@@ -66,7 +66,7 @@ def handle_postal_service_post_request(request):
     fid = int(request.POST.get("fid"))
     if fid == FORM_SEND:
         try:
-            Letters.objects.create(
+            Letter.objects.create(
                 receiver=UserProfile.objects.get(id=request.POST.get("whom")).nick,
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
@@ -84,11 +84,11 @@ def handle_postal_service_post_request(request):
     elif fid == FORM_DELETE:
 
         try:
-            letter = Letters.objects.filter(pk=request.POST.get("id", 0)).update(
+            letter = Letter.objects.filter(pk=request.POST.get("id", 0)).update(
                 visibility=0
             )
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
-        except Letters.DoesNotExist:
+        except Letter.DoesNotExist:
             id = request.POST.get("id")
             user = request.user.userprofile.nick
             logger.error(
