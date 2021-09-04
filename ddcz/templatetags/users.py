@@ -26,15 +26,9 @@ def level_star(user_profile, skin):
 
 @register.filter
 def nick_icon(nick):
-    try:
-        return UserProfile.objects.get(nick=nick).icon_url
-    except:
-        return ""
+    return UserProfile.objects.get(nick=nick).icon_url
 
 
 @register.filter
 def nick_url(nick):
-    try:
-        return UserProfile.objects.get(nick=nick).profile_url
-    except:
-        return "#"
+    return UserProfile.objects.get(nick=nick).profile_url
