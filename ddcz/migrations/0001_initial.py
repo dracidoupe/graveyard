@@ -2640,7 +2640,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 "db_table": "uzivatele_maillist",
-                "managed": False,
+                "managed": not settings.DATABASE_IS_SEEDED,
             },
         ),
         migrations.CreateModel(

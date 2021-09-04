@@ -25,6 +25,7 @@
             <nav class="menu">
                 <ul>
                     <li><a href="{% url 'dragon:dashboard' %}">Úvod</a></li>
+                    <li><a href="{% url 'dragon:news' %}">Aktuality</a></li>
 
                     {% if user.is_superuser %}
                         <li><a href="{% url 'dragon:levelsystem' %}">Levelsystém</a></li>
@@ -34,7 +35,7 @@
             </nav>
             </div>
         <div id="footer">
-            © 2002-2018 & 2021 autorem redakčního systému je Almad, na nějž se stále obracejte v případě nouze :-)
+            © 2002&mdash;2018 & 2021 autorem redakčního systému je Almad, na nějž se stále obracejte v případě nouze :-)
         </div>
     </body>
 </html>
