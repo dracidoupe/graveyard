@@ -4,6 +4,7 @@ from django import template
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 from ..creations import RATING_DESCRIPTIONS
+from ..models import CreativePage
 
 logger = logging.getLogger(__name__)
 

@@ -1,4 +1,5 @@
 import logging
+from re import template
 from zlib import crc32
 
 from django.apps import apps
@@ -30,8 +31,16 @@ from ..models import (
 logger = logging.getLogger(__name__)
 
 VALID_SKINS = ["light", "dark", "historic"]
-DEFAULT_LIST_SIZE = 10
+DEFAULT_LIST_SIZE = 25
+DEFAULT_GALLERY_LIST_SIZE = 16
 DEFAULT_USER_LIST_SIZE = 50
+
+MAP_CREATION_TEMPLATE = {
+    "downloaditem": "downloaditem-list.html",
+    "photo": "photo-list.html",
+    "gallerypicture": "gallerypicture-list.html",
+    "default": "creations-list.html",
+}
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -61,7 +70,7 @@ def creative_page_list(request, creative_page_slug):
             ).order_by("-published")
 
         if creative_page_slug in ["galerie", "fotogalerie"]:
-            default_limit = 18
+            default_limit = DEFAULT_GALLERY_LIST_SIZE
         else:
             default_limit = DEFAULT_LIST_SIZE
 
@@ -77,9 +86,14 @@ def creative_page_list(request, creative_page_slug):
     except CreativePageConcept.DoesNotExist:
         concept = None
 
+    try:
+        template = MAP_CREATION_TEMPLATE[model_class_name]
+    except KeyError:
+        template = MAP_CREATION_TEMPLATE["default"]
+
     return render(
         request,
-        "creative-pages/%s-list.html" % model_class_name,
+        "creative-pages/" + template,
         {
             "heading": creative_page.name,
             "articles": articles,

@@ -32,6 +32,15 @@ a.link--selected:any-link {
     clear: both;
 }
 
+table.list_default{
+    width: 100%;
+}
+
+table.list_default th,
+table.list_default td{
+    text-align: left;
+}
+
 /* Creative Pages details */
 
 article header .label {
