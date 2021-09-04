@@ -69,10 +69,14 @@ def handle_postal_service_post_request(request):
         try:
             Letter.objects.create(
 <<<<<<< HEAD
+<<<<<<< HEAD
                 receiver=UserProfile.objects.get(nick=request.POST.get("whom")).nick,
 =======
                 receiver=request.POST.get("whom"),
 >>>>>>> Postal service | send message
+=======
+                receiver=UserProfile.objects.get(nick=request.POST.get("whom")).nick,
+>>>>>>> feat(Postal service): Nick through UserProfile
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),
