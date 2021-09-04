@@ -75,6 +75,7 @@
     name: Galerie
     slug: galerie
     model_class: ddcz.gallerypicture
+
 - model: ddcz.creativepage
   pk: 12
   fields:
