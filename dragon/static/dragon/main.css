@@ -1,6 +1,6 @@
 body {
-    font-family: Verdana, Tahoma, Garamond, Arial, Sans-serif; 
-    background-color: black; 
+    font-family: Verdana, Tahoma, Garamond, Arial, Sans-serif;
+    background-color: black;
     color: #b9b9b9;
 }
 
@@ -26,12 +26,9 @@ nav.menu {
 nav.menu ul {
     list-style: none;
 }
-  
-a, input, textarea {
-    color: gold;
-}
 
 a {
+    color: gold;
     text-decoration: none;
 }
 
@@ -42,4 +39,9 @@ a:hover {
 
 h1 {
     text-align: center;
+}
+
+input, textarea {
+    color: gold;
+    background: black;
 }
