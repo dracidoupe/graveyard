@@ -1,4 +1,5 @@
 {% load comments %}
+{% load html %}
 {% load users %}
 {% load pages %}
 
@@ -41,7 +42,7 @@
             &rbrack;
         </section>
         <section>
-            
+
         </section>
         <section>
             <form method="post">
@@ -63,10 +64,10 @@
             {% else %}
                 <img src="{{ letter.sender | nick_icon }}" alt="">
             {% endif %}
-            
+
         </section>
         <section class="postal_text">
-            {{ letter.text }}
+            {{ letter.text | render_html | safe }}
         </section>
     </section>
 </article>
