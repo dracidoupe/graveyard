@@ -14,6 +14,7 @@ from ddcz.models import (
     ScheduledNotification,
     ScheduledEmail,
     UserProfile,
+    CreationEmailSubscription,
 )
 
 logger = logging.getLogger(__name__)
@@ -30,6 +31,10 @@ class Audience(Enum):
     LAST_DECADE = "Všichni z poslední dekády"
     # This should only be used for emergencies like password leaks
     EMERGENCY_EVERYONE = "Úplně všichni (JEN BEZPEČNOSTNÍ UPOZORNĚNÍ)"
+
+
+class MailingSectionSlug(Enum):
+    NEWS = "aktuality"
 
 
 def schedule_notification(*, event, affected_object, extra_data):
@@ -100,20 +105,23 @@ def get_emails_for_news(audience):
     if audience == Audience.EMERGENCY_EVERYONE:
         raise NotImplementedError("Can't sent email to everyone yet")
     elif audience == Audience.ACTIVE:
-        candidate_users = UserProfile.objects.filter(
+        candidate_user_ids = UserProfile.objects.filter(
             last_login__gte=timezone.now() - ACTIVE_USER_INTERVAL
-        )
+        ).values_list("id", flat=True)
     elif audience == Audience.LAST_DECADE:
-        candidate_users = UserProfile.objects.filter(
+        candidate_user_ids = UserProfile.objects.filter(
             last_login__gte=timezone.now() - DECADE_USER_INTERVAL
-        )
+        ).values_list("id", flat=True)
     else:
         raise ValueError(f"Unknown audience {audience}")
 
     # From candidate users, select those who subscribed for News
-
-    # and return their emails
-    return []
+    return list(
+        CreationEmailSubscription.objects.filter(
+            user_profile_id__in=candidate_user_ids,
+            creative_page_slug=MailingSectionSlug.NEWS.value,
+        ).values_list("user_email", flat=True)
+    )
 
 
 def notify_news(affected_object, extra_data):
