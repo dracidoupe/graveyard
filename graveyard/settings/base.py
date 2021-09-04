@@ -171,6 +171,8 @@ else:
 
     EMAIL_FILE_PATH = maildir
 
+    # print(f"Emails are NOT sent and stored in  {EMAIL_FILE_PATH} instead")
+
 
 # Hostname for selenium hub for tests. None means running locally
 SELENIUM_HUB_HOST = None

@@ -25,6 +25,7 @@ def dashboard(request):
             submission = RegistrationRequestApproval(request.POST["submission_type"])
 
             if submission == RegistrationRequestApproval.APPROVE:
+                # TODO: Move this to core app domain logic
                 password = User.objects.make_random_password()
                 profile = UserProfile(
                     nick=reg.nick,
@@ -34,10 +35,13 @@ def dashboard(request):
                     gender=reg.gender,
                     # Magic constants to be fixed in the model
                     registration_approved_date=timezone.now(),
+                    reputation=0,
+                    reputation_available=0,
                     reload="0",
                     status="4",
                     pii_display_permissions=",,,,,,,",
                     level="0",
+                    description_raw="Jsem čerstvě zaregistrován...",
                 )
                 profile.save()
 
