@@ -26,4 +26,8 @@ class Migration(migrations.Migration):
             old_name="UserRatings",
             new_name="UserRating",
         ),
+        migrations.AlterUniqueTogether(
+            name="awaitingregistration",
+            unique_together=set(),
+        ),
     ]
