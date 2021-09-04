@@ -68,7 +68,7 @@ def handle_postal_service_post_request(request):
     if fid == FORM_SEND:
         try:
             Letter.objects.create(
-                receiver=request.POST.get("whom"),
+                receiver=UserProfile.objects.get(nick=request.POST.get("whom")).nick,
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),
