@@ -91,7 +91,9 @@ class SignUpForm(ModelForm):
 
     age = forms.IntegerField(
         label="",
-        widget=forms.NumberInput(attrs={"placeholder": "Tvůj věk", "id": "age"}),
+        widget=forms.NumberInput(
+            attrs={"placeholder": "Tvůj věk", "id": "age", "min": 10, "max": 150}
+        ),
     )
 
     motive = forms.CharField(
