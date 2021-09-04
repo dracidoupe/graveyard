@@ -32,7 +32,7 @@ def postal_service(request):
     if request.method == "POST":
         return handle_postal_service_post_request(request)
 
-    nick = UserProfile.objects.get(nick=request.POST.get("whom")).nick
+    nick = request.user.profile.nick
     per_page = int(request.GET.get("l", DEFAULT_LIMIT))
     page = int(request.GET.get("z_s", DEFAULT_PAGE))
 
@@ -68,15 +68,7 @@ def handle_postal_service_post_request(request):
     if fid == FORM_SEND:
         try:
             Letter.objects.create(
-<<<<<<< HEAD
-<<<<<<< HEAD
                 receiver=UserProfile.objects.get(nick=request.POST.get("whom")).nick,
-=======
-                receiver=request.POST.get("whom"),
->>>>>>> Postal service | send message
-=======
-                receiver=UserProfile.objects.get(nick=request.POST.get("whom")).nick,
->>>>>>> feat(Postal service): Nick through UserProfile
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),
