@@ -74,7 +74,7 @@ def handle_postal_service_post_request(request):
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),
-                visibility=1,
+                visibility=3,
             )
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
         except UserProfile.DoesNotExist:
