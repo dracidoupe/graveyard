@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
-from ..text import escape_user_input
+from ..text import escape_user_input, misencode
 from ..models import UserProfile, Letter
 
 FORM_DELETE = 1
@@ -68,7 +68,9 @@ def handle_postal_service_post_request(request):
     if fid == FORM_SEND:
         try:
             Letter.objects.create(
-                receiver=UserProfile.objects.get(nick=request.POST.get("whom")).nick,
+                receiver=UserProfile.objects.get(
+                    nick=misencode(request.POST.get("whom"))
+                ).nick,
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),
