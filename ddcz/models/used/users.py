@@ -325,4 +325,3 @@ class AwaitingRegistration(models.Model):
 
     class Meta:
         db_table = "uzivatele_cekajici"
-        unique_together = (("name_given", "name_family"),)
