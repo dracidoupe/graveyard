@@ -1,10 +1,8 @@
 from enum import Enum
 
-from ddcz.models import Phorum
-
+from .cases import SeleniumTestCase
 from ..attack_strings import SCRIPT_ALERT_INPUT
 from ..model_generator import get_alphabetic_user_profiles
-from .cases import SeleniumTestCase
 
 
 class PhorumPage(Enum):
