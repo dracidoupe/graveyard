@@ -32,12 +32,14 @@ def postal_service(request):
     if request.method == "POST":
         return handle_postal_service_post_request(request)
 
-    nick = request.user.userprofile.nick
+    nick = UserProfile.objects.get(nick=request.POST.get("whom")).nick
     per_page = int(request.GET.get("l", DEFAULT_LIMIT))
     page = int(request.GET.get("z_s", DEFAULT_PAGE))
 
     letters = Letter.objects.filter(
-        (Q(receiver=nick) | Q(sender=nick)) & Q(visibility=1)
+        ((Q(receiver=nick) | Q(sender=nick)) & Q(visibility=3))
+        | (Q(receiver=nick) & Q(visibility=2))
+        | (Q(sender=nick) & Q(visibility=1))
     ).order_by("-date")
 
     box_occupancy = Letter.objects.filter(
@@ -54,7 +56,6 @@ def postal_service(request):
             "reply_id": FORM_REPLY,
             "send_id": FORM_SEND,
             "delete_id": FORM_DELETE,
-            "users": UserProfile.objects.all(),  # this may be too much for select tag.
             "letters": letters,
             "per_page": per_page if per_page != DEFAULT_LIMIT else False,
             "box_occupancy": box_occupancy,
@@ -67,7 +68,7 @@ def handle_postal_service_post_request(request):
     if fid == FORM_SEND:
         try:
             Letter.objects.create(
-                receiver=UserProfile.objects.get(id=request.POST.get("whom")).nick,
+                receiver=UserProfile.objects.get(nick=request.POST.get("whom")).nick,
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),

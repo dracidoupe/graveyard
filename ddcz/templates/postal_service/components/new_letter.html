@@ -4,13 +4,7 @@
     <input type="hidden" name="fid" value="{{ send_id }}">
     
     <label for="whom">Drakovi stačí znát příjemce:</label>
-    <select name="whom">
-        {% for post_user in users %}
-        {% if post_user.nick != user.userprofile.nick %}
-        <option value="{{ post_user.id }}">{{ post_user.nick }}</option>
-        {% endif %}
-        {% endfor %}
-    </select>
+    <input type="text" name="whom" placeholder="Komu má drak dopis zanést?">    
     <textarea name="text" required></textarea>
     <input type="submit" value="Pošli draka se zprávou">
 </form>
