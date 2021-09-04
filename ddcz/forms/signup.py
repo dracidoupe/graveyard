@@ -5,7 +5,7 @@ from django import forms
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 
-from ..models import UzivateleCekajici
+from ..models import AwaitingRegistration
 
 
 class SignUpForm(ModelForm):
@@ -140,7 +140,7 @@ class SignUpForm(ModelForm):
     description = forms.CharField(required=False)
 
     class Meta:
-        model = UzivateleCekajici
+        model = AwaitingRegistration
         fields = [
             "nick",
             "email",

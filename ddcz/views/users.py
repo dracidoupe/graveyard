@@ -13,7 +13,7 @@ from ..text import misencode
 from ..models import (
     Author,
     UserProfile,
-    Runes,
+    Rune,
     LEVEL_DESCRIPTIONS,
 )
 
@@ -101,9 +101,7 @@ def user_profile(request, user_profile_id, nick_slug):
             "creations": creations,
             "level_stars": level_stars,
             "level_description": description,
-            "runes": Runes.objects.filter(receiver_id=user_profile.id).order_by(
-                "-date"
-            ),
+            "runes": Rune.objects.filter(receiver_id=user_profile.id).order_by("-date"),
         },
     )
 

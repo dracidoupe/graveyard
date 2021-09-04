@@ -59,7 +59,7 @@ class CreationComment(models.Model):
         db_table = "diskuze"
 
 
-class Letters(models.Model):
+class Letter(models.Model):
     sender = models.CharField(max_length=25, db_column="odesilatel")
     receiver = models.CharField(max_length=25, db_column="prijemce")
     visibility = models.CharField(max_length=1, db_column="viditelnost")
