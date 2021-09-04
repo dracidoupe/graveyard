@@ -11,5 +11,4 @@ def pagination(articles, per_page=False):
 
 @register.inclusion_tag("creative-pages/list-default.html")
 def list_default(articles, page_slug=False, skin="light"):
-    print("\n\n\n\n")
     return {"articles": articles, "creative_page_slug": page_slug, "skin": skin}
