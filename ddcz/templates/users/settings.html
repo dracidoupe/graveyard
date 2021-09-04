@@ -1,0 +1,102 @@
+{% extends 'public.html' %}
+{% load html %}
+{% load creations %}
+{% load comments %}
+{% load users %}
+{% block content %}
+
+
+<div id="page-user-detail">
+    <h1 class="page-heading">Uživatel{% if user.profile.is_female %}ka{% endif %} {{ user.profile.nick }}</h1>
+    {% if profile.icon_url %}<p><img src="{{ user.profile.icon_url }}" alt="Ikonka uživatele"></p>{% endif %}
+
+
+    <div id="user_container">
+        <section id="user_info">            
+            <h3>Info o uživatel{% if user.profile.is_female %}ce{%else%}i{% endif %}</h3>
+            {% if user_form.errors %}
+                {% for field in user_form %}
+                    {% for error in field.errors %}
+                        <div>
+                            <strong>Chyba pro pole {{ field.name }}: {{ error }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in user_form.non_field_errors %}
+                    <div>
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <table>
+                <tr>
+                    <th>Jméno</th>
+                    <td>{{ user_form.name_given }}</td>
+                </tr>
+                <tr>
+                    <th>Příjmení</th>
+                    <td>{{ user_form.name_family }}</td>
+                </tr>
+                <tr>
+                    <th>E-mail</th>
+                    <td>{{ user_form.email }}</td>
+                </tr>
+                <tr>
+                    <th>Pohlaví</th>
+                    <td>{{ user_form.gender }}</td>
+                </tr>
+                <tr>
+                    <th>Věk</th>
+                    <td>{{ user_form.age }}</td>
+                </tr>
+                <tr>
+                    <th>Kraj</th>
+                    <td>{{ user_form.shire }}</td>
+                </tr>
+                <tr>
+                    <th>ICQ</th>
+                    <td>{{ user_form.icq }}</td>
+                </tr>
+                <tr>
+                    <th>Popis</th>
+                    <td>{{ user_form.description_raw }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" name="submit" value="Upravit údaje"></td>
+                </tr>
+            </table>
+            </form>
+        </section>
+
+
+        <section id="user_stats">
+            <h3>Přihlašovací údaje</h3>
+            <table>
+                <tr>
+                    <th>Staré heslo</th>
+                    <td>{{ profile.id }}</td>
+                </tr>
+                
+                <tr>
+                    <th>Nové Heslo</th>
+                    <td>{% if permission.name_given %}{{ profile.name_given }} {% endif %}{% if permission.name_family %}{{ profile.name_family }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Kontrola hesla</th>
+                    <td>{{ profile.email }}</td>
+                </tr>
+                <tr>
+                    <th><button>button</button></th>
+                    <td></td>
+                </tr>
+            </table>
+        </section>
+
+
+        
+
+    </div>
+</div>
+{% endblock %}
