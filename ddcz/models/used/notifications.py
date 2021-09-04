@@ -29,7 +29,7 @@ class ScheduledEmail(models.Model):
 
 
 class CreationEmailSubscription(models.Model):
-    user_profile_id = models.IntegerField(primary_key=True, db_column="id_uz")
+    user_profile_id = models.IntegerField(db_column="id_uz")
     creative_page_slug = models.CharField(max_length=20, db_column="rubrika")
     user_email = models.CharField(max_length=40, db_column="email_uz")
     # MIME can be ignored for now (I think it was meant to be used to select between HTML
@@ -38,7 +38,7 @@ class CreationEmailSubscription(models.Model):
         db_column="MIME", max_length=1
     )  # Field name made lowercase.
 
-    django_id = models.IntegerField(null=True, blank=True)
+    django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "uzivatele_maillist"
