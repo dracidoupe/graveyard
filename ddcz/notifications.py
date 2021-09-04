@@ -47,7 +47,7 @@ def schedule_notification(*, event, affected_object, extra_data):
     # and others should be added
     # All other events triggering emails should also migrate to use notification center once API is figured out
     ScheduledNotification.objects.create(
-        event=event,
+        event=event.value,
         serialized_model=serializers.serialize("json", [affected_object]),
         extra_data=json.dumps(extra_data),
     )
@@ -71,7 +71,9 @@ def send_email_batch():
             sent_ids.append(scheduled_email.id)
 
     ScheduledEmail.objects.filter(id__in=sent_ids).delete()
-    ScheduledEmail.objects.filter(id__in=failures).update(failures=F("failures") + 1)
+    ScheduledEmail.objects.filter(id__in=failures).update(
+        sending_failures=F("sending_failures") + 1
+    )
 
 
 def notify_scheduled():
@@ -84,9 +86,9 @@ def notify_scheduled():
     for notification in ScheduledNotification.objects.all()[0:MAX_NOTIFICATION_BATCH]:
         try:
             EVENT_DISPATCH_MAP[NotificationEvent(notification.event)](
-                affected_object=serializers.deserialize(
-                    "json", notification.serialized_model
-                )[0],
+                affected_object=list(
+                    serializers.deserialize("json", notification.serialized_model)
+                )[0].object,
                 extra_data=json.loads(notification.extra_data),
             )
         except Exception as e:
@@ -131,8 +133,8 @@ def notify_news(affected_object, extra_data):
 
     email_subject = "Aktualita serveru DraciDoupe.cz"
     email_text = f"""{affected_object.text}
-
-    — {extra_data['author_nick']}
+           
+    {extra_data['author_nick']}
     """
 
     for email in emails:
