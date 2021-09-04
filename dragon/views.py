@@ -135,15 +135,23 @@ def news(request):
     if request.method == "POST":
         form = NewsForm(request.POST)
         if form.is_valid():
-            added_news = News.objects.create(form.text)
+            added_news = News.objects.create(
+                text=form.cleaned_data["text"],
+                date=timezone.now(),
+                author=request.ddcz_profile.nick,
+                author_mail=request.ddcz_profile.email,
+            )
             schedule_notification(
                 event=NotificationEvent.NEWS_ADDED,
                 affected_object=added_news,
                 extra_data={
-                    "audience": Audience(form.audience).value,
+                    "audience": Audience[form.cleaned_data["audience"]].value,
                     "author_nick": request.ddcz_profile.nick,
                 },
             )
+            messages.success(request, "Aktualita úspěšně odeslána")
+            return HttpResponseRedirect(request.get_full_path())
+
     else:
         form = NewsForm()
 
