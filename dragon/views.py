@@ -1,14 +1,13 @@
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.admin.views import decorators
 from django.contrib import messages
+from django.contrib.admin.views import decorators
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
 
 from ddcz.models import LevelSystemParams, UserProfile, AwaitingRegistration
-
 from .forms.dashboard import FormTypes
 from .forms.users import RegistrationRequestApproval
 
@@ -57,9 +56,22 @@ def dashboard(request):
 
                 reg.delete()
 
+                # TODO: Registration and user should not be deleted until email is sent so in case of
+                # email failure, there is a way to retry
+                # That said, sort it out when doing notification framework
+                # TODO: Properly sent and design both HTML and plain text version
+                # see https://stackoverflow.com/questions/2809547/creating-email-templates-with-django
+
                 send_mail(
                     "Schválení registrace na DraciDoupe.cz",
-                    f"Vítejte na DraciDoupe.cz! Vaše heslo {password}, po příhlášení si jej prosím zmeňte. Budeme se těšit!",
+                    f"""Vítejte na DraciDoupe.cz!
+
+                    Vaše heslo je {password}, po příhlášení si jej prosím zmeňte v sekci Nastavení. Doporučujeme též k přečetení Dračí Manuál a Otázky a Odpovědi. Můžete se též přidat na náš Discord server {settings.DISCORD_INVITE_LINK} .
+
+                    Děkujeme za Vaši registraci a doufáme, že se vám ve Městě bude líbit.
+
+                    — Redakce a vývojový tým DraciDoupe.cz
+                    """,
                     settings.DDCZ_TRANSACTION_EMAIL_FROM,
                     [reg.email],
                 )
@@ -72,7 +84,15 @@ def dashboard(request):
 
                 send_mail(
                     "Zamítnutí registrace na DraciDoupe.cz",
-                    "Vše funguje, jak má!",
+                    f"""Zdravíme,
+
+                    Vaše žádost o registraci na DraciDoupe.cz byla bohužel zamítnuta. Pokud máte pocit, že se tak stalo neprávem, můžete se zeptat na podrobnosti na našem Discord serveru na {settings.DISCORD_INVITE_LINK} .
+
+                    I přes toto nedorozumění Vám přejeme příjemný den,
+
+                    — Redakce a vývojový tým DraciDoupe.cz
+                    """,
+                    # TODO: editor email so there is contact?
                     settings.DDCZ_TRANSACTION_EMAIL_FROM,
                     [reg.email],
                 )
