@@ -252,10 +252,14 @@ table#creation_table td.stars img{
     margin: 1rem;
 }
 
-.postal_letter_body .opponent_icon{    
+.postal_letter_body .opponent_icon{
     width: 75px;
     height: 100px;
-    background: #333;
+    background: transparent;
+}
+
+.postal_letter_body .opponent_icon img{
+    width: 100%;
 }
 
 .postal_letter_body .postal_text{
