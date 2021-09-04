@@ -6,24 +6,24 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ddcz', '0104_runes_and_userrating_table'),
+        ("ddcz", "0104_runes_and_userrating_table"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='UzivateleCekajici',
-            new_name='AwaitingRegistration',
+            old_name="UzivateleCekajici",
+            new_name="AwaitingRegistration",
         ),
         migrations.RenameModel(
-            old_name='Letters',
-            new_name='Letter',
+            old_name="Letters",
+            new_name="Letter",
         ),
         migrations.RenameModel(
-            old_name='Runes',
-            new_name='Rune',
+            old_name="Runes",
+            new_name="Rune",
         ),
         migrations.RenameModel(
-            old_name='UserRatings',
-            new_name='UserRating',
+            old_name="UserRatings",
+            new_name="UserRating",
         ),
     ]
