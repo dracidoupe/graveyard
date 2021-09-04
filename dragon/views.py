@@ -7,9 +7,12 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
 
-from ddcz.models import LevelSystemParams, UserProfile, AwaitingRegistration
+from ddcz.models import LevelSystemParams, UserProfile, AwaitingRegistration, News
+from ddcz.notifications import NotificationEvent, schedule_notification, Audience
+
 from .forms.dashboard import FormTypes
 from .forms.users import RegistrationRequestApproval
+from .forms.news import News as NewsForm
 
 
 @decorators.staff_member_required()
@@ -125,6 +128,26 @@ def levelsystem(request):
     params = LevelSystemParams.objects.all()
 
     return render(request, "levelsystem/view.html", {"level_params": params})
+
+
+@decorators.staff_member_required()
+def news(request):
+    if request.method == "POST":
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            added_news = News.objects.create(form.text)
+            schedule_notification(
+                event=NotificationEvent.NEWS_ADDED,
+                affected_object=added_news,
+                extra_data={
+                    "audience": Audience(form.audience).value,
+                    "author_nick": request.ddcz_profile.nick,
+                },
+            )
+    else:
+        form = NewsForm()
+
+    return render(request, "news.html", {"form": form})
 
 
 @decorators.staff_member_required()

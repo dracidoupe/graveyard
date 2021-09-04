@@ -1008,20 +1008,6 @@ class UzivateleFiltry(models.Model):
         unique_together = (("id_uz", "rubrika", "filtr"),)
 
 
-class UzivateleMaillist(models.Model):
-    id_uz = models.IntegerField(primary_key=True)
-    rubrika = models.CharField(max_length=20)
-    email_uz = models.CharField(max_length=40)
-    mime = models.CharField(
-        db_column="MIME", max_length=1
-    )  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = "uzivatele_maillist"
-        unique_together = (("id_uz", "rubrika"),)
-
-
 class UzivateleZamitnuti(models.Model):
     nick_uzivatele = models.CharField(max_length=30)
     email = models.CharField(max_length=50)

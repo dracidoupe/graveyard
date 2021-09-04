@@ -8,6 +8,13 @@ We capture major decisions about the development here. Similar to `architecture 
 2021
 ****
 
+September
+=========
+
+* There is small enough active users that we'll be using Mailgun even for batch sending
+* Batch sending is thus decoupled and send using database as a queue as a starter
+
+
 June
 ====
 
