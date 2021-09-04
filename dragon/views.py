@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
 
-from ddcz.models import LevelSystemParams, UserProfile, UzivateleCekajici
+from ddcz.models import LevelSystemParams, UserProfile, AwaitingRegistration
 
 from .forms.dashboard import FormTypes
 from .forms.users import RegistrationRequestApproval
@@ -18,7 +18,7 @@ def dashboard(request):
     if request.method == "POST" and request.POST.get("form_type"):
         form_type = FormTypes(request.POST["form_type"])
         if form_type == FormTypes.REGISTRATIONS:
-            reg = UzivateleCekajici.objects.get(
+            reg = AwaitingRegistration.objects.get(
                 id=request.POST["awaiting_registration_id"]
             )
 
@@ -83,7 +83,7 @@ def dashboard(request):
 
         return HttpResponseRedirect(request.get_full_path())
 
-    registrations = UzivateleCekajici.objects.all().order_by("-date")
+    registrations = AwaitingRegistration.objects.all().order_by("-date")
     return render(
         request,
         "dashboard.html",
