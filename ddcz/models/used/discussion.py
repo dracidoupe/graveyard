@@ -62,6 +62,11 @@ class CreationComment(models.Model):
 class Letter(models.Model):
     sender = models.CharField(max_length=25, db_column="odesilatel")
     receiver = models.CharField(max_length=25, db_column="prijemce")
+    # TODO: Make this enum for readability
+    # 3 = visible for both
+    # 2 = visible for receiver only
+    # 1 = visible for sender only
+    # 0 = deleted by both, should be pruned
     visibility = models.CharField(max_length=1, db_column="viditelnost")
     text = models.TextField()
     date = models.DateTimeField(db_column="datum")

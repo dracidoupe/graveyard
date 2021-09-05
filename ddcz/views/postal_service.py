@@ -70,27 +70,64 @@ def handle_postal_service_post_request(request):
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),
-                visibility=3,
+                visibility="3",
             )
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
         except UserProfile.DoesNotExist:
             logger.info(f"Letter receiver {receiver_nick} could not be found")
             messages.error(
-                f"Helimardovi se nepodařilo nalézt nikoho se jménem f{receiver_nick}. Ověřte prosím jeho práci v seznamu uživatelů a případně dejte vědět, zda si zaslouží nášup při dalším krmení."
+                request,
+                f"Helimardovi se nepodařilo nalézt nikoho se jménem f{receiver_nick}. Ověřte prosím jeho práci v seznamu uživatelů a případně dejte vědět, zda si zaslouží nášup při dalším krmení.",
             )
-            return HttpResponseRedirect(reverse("ddcz:postal-service"))
+            return HttpResponseRedirect(request.get_full_path())
 
     elif fid == FORM_DELETE:
+        if "id" not in request.POST:
+            return HttpResponseBadRequest("Pro smazání dopisu je nutné říct jakého!")
+
+        letter_id = request.POST.get("id")
         try:
-            Letter.objects.filter(pk=request.POST.get("id", 0)).update(visibility=0)
-            return HttpResponseRedirect(reverse("ddcz:postal-service"))
+            letter = Letter.objects.get(pk=letter_id)
+            if (
+                letter.sender != request.ddcz_profile.nick
+                and letter.receiver != request.ddcz_profile.nick
+            ):
+                logger.warning(
+                    f"User {request.ddcz_profile.nick} attempted to delete message {letter_id} that doesn't belong to him!"
+                )
+                return HttpResponseBadRequest(
+                    "Pokud tento dopis existuje, tak ti nepatří."
+                )
         except Letter.DoesNotExist:
             letter_id = request.POST.get("id")
-            user = request.user.userprofile.nick
+            user_nick = request.ddcz_profile.nick
             logger.info(
-                f"There has been an attempt to delete a letter with non existing id {letter_id} by user {user}"
+                f"There has been an attempt to delete a letter with non existing id {letter_id} by user {user_nick}"
             )
             messages.error(
-                "Ať koukáme, jak koukáme, tento dopis ke spálení nemůžeme nalézt."
+                request,
+                "Ať koukáme, jak koukáme, tento dopis ke spálení nemůžeme nalézt.",
             )
-            return HttpResponseRedirect(reverse("ddcz:postal-service"))
+            return HttpResponseRedirect(request.get_full_path())
+
+        else:
+            # TODO: Make visitility an Enum for readability
+            if letter.visibility == "3":
+                if letter.sender == request.ddcz_profile.nick:
+                    letter.visibility = "2"
+                elif letter.receiver == request.ddcz_profile.nick:
+                    letter.visibility = "1"
+
+            if (
+                letter.visibility == "2"
+                and letter.receiver == request.ddcz_profile.nick
+            ):
+                letter.visibility = "1"
+
+            if letter.visibility == "1" and letter.sender == request.ddcz_profile.nick:
+                letter.visibility = "0"
+
+            letter.save()
+            messages.success(request, "Dopis byl úspěšně spálen.")
+
+            return HttpResponseRedirect(request.get_full_path())
