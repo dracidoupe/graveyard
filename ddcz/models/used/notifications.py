@@ -62,7 +62,7 @@ class BlacklistedEmail(models.Model):
     email_hash = models.CharField(max_length=255, primary_key=True)
 
 
-class UnsubscribedEmail(models.Model):
+class EmailSubscriptionAuth(models.Model):
     # TODO: Foreign Key is only usable between InnoDB tables
     # Migrate after all tables are migrated, see <https://github.com/dracidoupe/graveyard/issues/109>
     # user_profile = models.OneToOneField(

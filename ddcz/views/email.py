@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from ..email import validate_unsubscribe_token, blacklist_email
-from ..models import UnsubscribedEmail
+from ..models import EmailSubscriptionAuth
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ def antispam(request, email_base64, unsub_token):
 
     try:
         validate_unsubscribe_token(email_base64, unsub_token)
-    except UnsubscribedEmail.DoesNotExist:
+    except EmailSubscriptionAuth.DoesNotExist:
         logger.warning(
             f"User tried to unsubscribe email {email_base64}, but it wasn't found in a database"
         )
