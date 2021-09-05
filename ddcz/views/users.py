@@ -112,13 +112,15 @@ def user_profile(request, user_profile_id, nick_slug):
 @require_http_methods(["HEAD", "GET", "POST"])
 def user_settings(request):
     profile = request.user.profile
-    user_form = SettingsForm(instance=profile)
+    permissions = profile.public_listing_permissions
 
     if request.method == "POST" and request.POST.get("submit"):
         user_form = SettingsForm(request.POST, instance=profile)
         if user_form.is_valid():
             user = user_form.save()
             messages.success(request, "Údaje byly úspěšny změněny")
+    else:
+        user_form = SettingsForm(instance=profile)
 
     return render(
         request,

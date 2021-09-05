@@ -17,6 +17,10 @@ class SettingsForm(ModelForm):
         M = "mužské"
         F = "ženské"
 
+    class VisibilityChoices(Enum):
+        FALSE = "Nezobrazovat na profilu"
+        TRUE = "Zobrazit pro všechny"
+
     email = forms.EmailField(
         label="",
         widget=forms.EmailInput(
@@ -26,7 +30,7 @@ class SettingsForm(ModelForm):
 
     gender = forms.ChoiceField(
         label="",
-        widget=forms.Select(attrs={"id": "sex"}),
+        widget=forms.Select(),
         choices=[(tag.name, tag.value) for tag in SexChoices],
     )
 
@@ -35,6 +39,48 @@ class SettingsForm(ModelForm):
         widget=forms.NumberInput(
             attrs={"placeholder": "Tvůj věk", "id": "age", "min": MIN_AGE, "max": 150}
         ),
+    )
+
+    name_given_visibility = forms.ChoiceField(
+        label="",
+        widget=forms.Select(),
+        choices=[(tag.name, tag.value) for tag in VisibilityChoices],
+    )
+
+    name_family_visibility = forms.ChoiceField(
+        label="",
+        widget=forms.Select(),
+        choices=[(tag.name, tag.value) for tag in VisibilityChoices],
+    )
+
+    email_visibility = forms.ChoiceField(
+        label="",
+        widget=forms.Select(),
+        choices=[(tag.name, tag.value) for tag in VisibilityChoices],
+    )
+
+    gender_visibility = forms.ChoiceField(
+        label="",
+        widget=forms.Select(),
+        choices=[(tag.name, tag.value) for tag in VisibilityChoices],
+    )
+
+    age_visibility = forms.ChoiceField(
+        label="",
+        widget=forms.Select(),
+        choices=[(tag.name, tag.value) for tag in VisibilityChoices],
+    )
+
+    shire_visibility = forms.ChoiceField(
+        label="",
+        widget=forms.Select(),
+        choices=[(tag.name, tag.value) for tag in VisibilityChoices],
+    )
+
+    icq_visibility = forms.ChoiceField(
+        label="",
+        widget=forms.Select(),
+        choices=[(tag.name, tag.value) for tag in VisibilityChoices],
     )
 
     description_raw = forms.CharField(required=False, label="", widget=forms.Textarea())

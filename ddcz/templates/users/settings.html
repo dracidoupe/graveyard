@@ -33,35 +33,43 @@
                 <table>
                 <tr>
                     <th>Jméno</th>
-                    <td>{{ user_form.name_given }}</td>
+                    <td>{{ user_form.name_given }} </td>
+                    <td>{{ user_form.name_given_visibility }} </td>
                 </tr>
                 <tr>
                     <th>Příjmení</th>
                     <td>{{ user_form.name_family }}</td>
+                    <td>{{ user_form.name_family_visibility }} </td>
                 </tr>
                 <tr>
                     <th>E-mail</th>
                     <td>{{ user_form.email }}</td>
+                    <td>{{ user_form.email_visibility }} </td>
                 </tr>
                 <tr>
                     <th>Pohlaví</th>
                     <td>{{ user_form.gender }}</td>
+                    <td>{{ user_form.gender_visibility }} </td>
                 </tr>
                 <tr>
                     <th>Věk</th>
                     <td>{{ user_form.age }}</td>
+                    <td>{{ user_form.age_visibility }} </td>
                 </tr>
                 <tr>
                     <th>Kraj</th>
                     <td>{{ user_form.shire }}</td>
+                    <td>{{ user_form.shire_visibility }} </td>
                 </tr>
                 <tr>
                     <th>ICQ</th>
                     <td>{{ user_form.icq }}</td>
+                    <td>{{ user_form.icq_visibility }} </td>
                 </tr>
                 <tr>
                     <th>Popis</th>
                     <td>{{ user_form.description_raw }}</td>
+                    <td> </td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="submit" name="submit" value="Upravit údaje"></td>
