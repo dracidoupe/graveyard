@@ -36,7 +36,11 @@ DATABASES = {
 if "MEMCACHEDCLOUD_SERVERS" in os.environ:
     logger.info("Using Memcached Cloud servers")
 
+# Use custom and short prefix for cache
 KEY_PREFIX = "gy-"
+# VERSION variable used for cache versioning is written as part of the release
+# see manage.py writerelease command
+# VERSION = 1
 
 # See https://devcenter.heroku.com/articles/memcachedcloud#using-memcached-from-python
 CACHES = {
