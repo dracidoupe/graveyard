@@ -145,6 +145,10 @@ span.label {
     top: 0.5em;
 }
 
+img#gallery-detail{
+    max-width: 100%;
+}
+
 /* Styling for Wizard Spells */
 
 span.wizard-summmonwords {
