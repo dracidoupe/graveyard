@@ -3,10 +3,7 @@ from enum import Enum
 import logging
 import json
 
-from django.conf import settings
 from django.core import serializers
-from django.core.mail import send_mail
-from django.db.models import F
 from django.utils import timezone
 
 from ddcz.models import (
@@ -53,29 +50,6 @@ def schedule_notification(*, event, affected_object, extra_data):
     )
 
 
-def send_email_batch():
-    sent_ids = []
-    failures = []
-    for scheduled_email in ScheduledEmail.objects.all()[0:MAX_EMAIL_BATCH]:
-        try:
-            send_mail(
-                scheduled_email.email_subject,
-                scheduled_email.email_text,
-                settings.DDCZ_TRANSACTION_EMAIL_FROM,
-                [scheduled_email.recipient_email],
-            )
-        except Exception as e:
-            logger.warning(f"Sending email {scheduled_email.pk} failed: ", e)
-            failures.append(scheduled_email.id)
-        else:
-            sent_ids.append(scheduled_email.id)
-
-    ScheduledEmail.objects.filter(id__in=sent_ids).delete()
-    ScheduledEmail.objects.filter(id__in=failures).update(
-        sending_failures=F("sending_failures") + 1
-    )
-
-
 def notify_scheduled():
     """
     Go through scheduled notifications and generate actual notifications from them.
@@ -92,7 +66,7 @@ def notify_scheduled():
                 extra_data=json.loads(notification.extra_data),
             )
         except Exception as e:
-            logger.warning("Notification failed: ", e)
+            logger.warning(e, exc_info=True)
         else:
             successful_notifications_id.append(notification.id)
 
@@ -103,7 +77,7 @@ def notify_scheduled():
         logger.warning(f"{remaining} notifications left")
 
 
-def get_emails_for_news(audience):
+def get_news_subscribers(audience):
     if audience == Audience.EMERGENCY_EVERYONE:
         raise NotImplementedError("Can't sent email to everyone yet")
     elif audience == Audience.ACTIVE:
@@ -122,24 +96,27 @@ def get_emails_for_news(audience):
         CreationEmailSubscription.objects.filter(
             user_profile_id__in=candidate_user_ids,
             creative_page_slug=MailingSectionSlug.NEWS.value,
-        ).values_list("user_email", flat=True)
+        ).values("user_email", "user_profile_id")
     )
 
 
 def notify_news(affected_object, extra_data):
     audience = Audience(extra_data["audience"])
 
-    emails = get_emails_for_news(audience)
+    subscribers = get_news_subscribers(audience)
 
     email_subject = "Aktualita serveru DraciDoupe.cz"
     email_text = f"""{affected_object.text}
-           
+
     {extra_data['author_nick']}
     """
 
-    for email in emails:
+    for subscriber in subscribers:
         ScheduledEmail.objects.create(
-            recipient_email=email, email_subject=email_subject, email_text=email_text
+            recipient_email=subscriber["user_email"],
+            user_profile_id=subscriber["user_profile_id"],
+            email_subject=email_subject,
+            email_text=email_text,
         )
 
 

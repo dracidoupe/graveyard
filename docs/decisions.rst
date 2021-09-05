@@ -13,6 +13,8 @@ September
 
 * There is small enough active users that we'll be using Mailgun even for batch sending
 * Batch sending is thus decoupled and send using database as a queue as a starter
+* E-mail list is small enough for blacklisted e-mails to be loaded in memory for every sending. This should be revisited should the userbase grow significantly
+* Beside registration e-mail, no e-mails should be send to unregistered users. This is because we'd have to track unsubscribe tokens for all combinations and it's "complicated" to avoid either spamming or unsubscription attack; not worth it for now
 
 
 June
@@ -25,6 +27,7 @@ June
     * Write ``migrate$modelname`` management command
     * Run it upon deploy
     * Write it to the `data migration ticket <https://github.com/dracidoupe/graveyard/issues/128>`_ for final migration when old version is shut down
+    * See `the detailed writeup <https://almad.blog/notes/2021/django-composite-primary-key/>`_
 
 * For comments and tavern posts, we are using the same endpoint and POST action. Action is designated by a POST attribute. "Correctly", this would be done better by using different HTTP method, unfortunately `Mike's proposal is not implemented <http://amundsen.com/examples/put-delete-forms/>`_
 
