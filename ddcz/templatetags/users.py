@@ -1,8 +1,10 @@
-from ddcz.models.used.users import UserProfile
 import logging
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django import template
+
+from ddcz.models.used.users import UserProfile
+from ddcz.text import misencode
 
 logger = logging.getLogger(__name__)
 register = template.Library()
@@ -26,9 +28,15 @@ def level_star(user_profile, skin):
 
 @register.filter
 def nick_icon(nick):
-    return UserProfile.objects.get(nick=nick).icon_url
+    try:
+        return UserProfile.objects.get(nick=misencode(nick)).icon_url
+    except UserProfile.DoesNotExist:
+        return "#"
 
 
 @register.filter
 def nick_url(nick):
-    return UserProfile.objects.get(nick=nick).profile_url
+    try:
+        return UserProfile.objects.get(nick=misencode(nick)).profile_url
+    except UserProfile.DoesNotExist:
+        return "#"

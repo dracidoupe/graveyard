@@ -60,6 +60,7 @@ class CreationComment(models.Model):
 
 
 class Letter(models.Model):
+    # TODO: Migrate those to have a profile_id relation, same as with Phorum posts etc.
     sender = models.CharField(max_length=25, db_column="odesilatel")
     receiver = models.CharField(max_length=25, db_column="prijemce")
     # TODO: Make this enum for readability
