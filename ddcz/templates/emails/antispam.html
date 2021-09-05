@@ -1,0 +1,14 @@
+{% extends 'public.html' %}
+
+{% block content %}
+<article id="page-antispam">
+    <h1 class="page-heading">Odstranění E-mailu</h1>
+    <p>Omlouváme se za obtěžování! E-mail jsme poslali v dobré víře, že jste našimi uživateli. Pokud Vám nevyhovuje, jaké e-maily dostáváte, prosím změňte pravidla doručování v nastavení.</p>
+    <p>Pokud se však skutečně chcete odhlásit z veškeré e-mailové komunikace, klikněte na tlačítko níže. <b>Tato možnost je nadřazena všem e-mailovým nastavením a znamená, že s Vámi již nebudeme komunikovat.</b></p>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" name="confirm" value="Žádám odhlášení z veškeré e-mailové komunikace">
+    </form>
+</article>
+{% endblock %}

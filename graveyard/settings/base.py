@@ -22,6 +22,7 @@ ENVIRONMENT = os.environ.get("ENVIRONMENT", "local")
 
 # SECURITY WARNING: keep the secret key used in production secret! Set properly in production.py
 SECRET_KEY = "xoxo"
+CRYPTO_TEXT_ENCODING = "utf8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -152,8 +153,10 @@ AWS_S3_SECURE_URLS = False
 DDCZ_TRANSACTION_EMAIL_FROM = "noreply@example.com"
 if ENVIRONMENT == "production":
     EMAIL_FAIL_SILENTLY = False
+    EMAIL_LINKS_BASE_URI = "https://www.dracidoupe.cz"
 else:
     EMAIL_FAIL_SILENTLY = True
+    EMAIL_LINKS_BASE_URI = "http://localhost:8000"
 
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 

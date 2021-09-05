@@ -3,7 +3,7 @@ from django.views.generic.base import RedirectView, TemplateView
 
 
 from . import views
-from .views import news, tavern, misc
+from .views import news, tavern, misc, email
 
 app_name = "ddcz"
 
@@ -77,6 +77,17 @@ urlpatterns = [
     path("autor/<int:author_id>-<slug>/", views.author_detail, name="author-detail"),
     ### User settings
     path("nastaveni/zmena-skinu/", views.change_skin, name="change-skin"),
+    ### Emails
+    path(
+        "e-mail/antispam/potvrzeni/",
+        TemplateView.as_view(template_name="emails/unsub-confirm.html"),
+        name="email-antispam-confirm",
+    ),
+    path(
+        "e-mail/antispam/<email_base64>-<unsub_token>/",
+        email.antispam,
+        name="email-antispam",
+    ),
     ### Info sites
     path("aktuality/", news.list, name="news"),
     path("novinky/", news.newsfeed, name="newsfeed"),

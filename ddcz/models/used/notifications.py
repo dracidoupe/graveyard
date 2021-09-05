@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+from base64 import urlsafe_b64decode
 from enum import Enum
+from secrets import token_urlsafe
 
 from django.db import models
 
@@ -26,6 +28,8 @@ class ScheduledEmail(models.Model):
     email_text = models.TextField()
     sending_failures = models.IntegerField(default=0)
     scheduled_at = models.DateTimeField(auto_now_add=True)
+    # TODO: Migration to foreign key
+    user_profile_id = models.IntegerField()
 
 
 class CreationEmailSubscription(models.Model):
@@ -43,3 +47,35 @@ class CreationEmailSubscription(models.Model):
     class Meta:
         db_table = "uzivatele_maillist"
         unique_together = (("user_profile_id", "creative_page_slug"),)
+
+
+class BlacklistedEmail(models.Model):
+    # SHA512 is used. In case of extending, we cannot rehash anyway, so we'll add
+    # additional field with cipher type
+    # If the purpose would be to only validate links, it would be better to use password-like
+    # strong crypt (blake/scrypt/...), but here we need to do a global lookup against the whole
+    # table, not per-item validation. sha512 seems like a good tradeoff for lookup ability
+    # vs. how hard it would be to get the mails in case of the leak
+    # The database is not large enough to be worth it given the current state of the black market
+    CIPHER_NAME = "sha3_512"
+    CIPHER_CLEARTEXT_ENCODING = "utf8"
+    email_hash = models.CharField(max_length=255, primary_key=True)
+
+
+class UnsubscribedEmail(models.Model):
+    # TODO: Foreign Key is only usable between InnoDB tables
+    # Migrate after all tables are migrated, see <https://github.com/dracidoupe/graveyard/issues/109>
+    # user_profile = models.OneToOneField(
+    #     "UserProfile", primary_key=True, on_delete=models.CASCADE
+    # )
+    user_profile_id = models.IntegerField(primary_key=True)
+    token_secret = models.CharField(max_length=255)
+
+    def generate_token(self):
+        self.token_secret = token_urlsafe()
+        return self.token_secret
+
+    def save(self, *args, **kwargs):
+        if not self.token_secret:
+            self.generate_token()
+        super().save(*args, **kwargs)
