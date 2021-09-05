@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
@@ -81,7 +81,6 @@ def handle_postal_service_post_request(request):
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
 
     elif fid == FORM_DELETE:
-
         try:
             Letter.objects.filter(pk=request.POST.get("id", 0)).update(visibility=0)
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
