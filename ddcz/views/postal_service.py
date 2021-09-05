@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
 from ..models import UserProfile, Letter
@@ -69,7 +70,7 @@ def handle_postal_service_post_request(request):
                 receiver=UserProfile.objects.get(nick=misencode(receiver_nick)).nick,
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
-                date=datetime.now(),
+                date=timezone.now(),
                 visibility="3",
             )
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
