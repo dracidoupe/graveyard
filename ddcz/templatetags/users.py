@@ -28,10 +28,14 @@ def level_star(user_profile, skin):
 
 @register.filter
 def nick_icon(nick):
+    icon_url = None
     try:
-        return UserProfile.objects.get(nick=misencode(nick)).icon_url
-    except UserProfile.DoesNotExist:
-        return "#"
+        icon_url = UserProfile.objects.get(nick=misencode(nick)).icon_url
+    except (UserProfile.DoesNotExist, AttributeError):
+        pass
+
+    # FIXME: Hardcoded, problematic and ugly: nuke it fom orbit together with this filter
+    return icon_url or "https://uploady.dracidoupe.cz/ikonky/Default.GIF"
 
 
 @register.filter

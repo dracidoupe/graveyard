@@ -60,9 +60,9 @@
     <section class="postal_letter_body">
         <section class="opponent_icon">
             {% if letter.sender == user.userprofile.nick %}
-                <img src="{{ letter.receiver | nick_icon }}" alt="">
+                <img src="{{ letter.receiver | nick_icon }}" alt="Ikonka uživatele {{ letter.receiver }}">
             {% else %}
-                <img src="{{ letter.sender | nick_icon }}" alt="">
+                <img src="{{ letter.sender | nick_icon }}" alt="Ikonka uživatele {{ letter.sender }}">
             {% endif %}
 
         </section>
