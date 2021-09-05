@@ -6,7 +6,7 @@ Graveyard is an attempt at open-source reimplementation of [DraciDoupe.cz](https
 
 Developer's documentation is [at Read the Docs](https://ddcz.readthedocs.io/en/latest/).
 
-Production is running at http://nove.dracidoupe.cz/
+Production is running at http://nove.dracidoupe.cz/ . But be warned, we are heading for the root domain soon!
 
 ## Contributions
 
