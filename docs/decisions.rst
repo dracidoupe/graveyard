@@ -14,6 +14,7 @@ September
 * There is small enough active users that we'll be using Mailgun even for batch sending
 * Batch sending is thus decoupled and send using database as a queue as a starter
 * E-mail list is small enough for blacklisted e-mails to be loaded in memory for every sending. This should be revisited should the userbase grow significantly
+* Backup is still done by cron on the old EC2 instance with upload to S3 there. This can only be reasonably fixed after InnoDB migration
 * Beside registration e-mail, no e-mails should be send to unregistered users. This is because we'd have to track unsubscribe tokens for all combinations and it's "complicated" to avoid either spamming or unsubscription attack; not worth it for now
 
 
