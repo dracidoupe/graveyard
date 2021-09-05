@@ -1,20 +1,17 @@
 import logging
 from datetime import datetime
 
-from django.contrib.auth.models import User
-from django.core import paginator
-from django.dispatch.dispatcher import receiver
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth.decorators import login_required
 
-from ..text import escape_user_input, misencode
 from ..models import UserProfile, Letter
+from ..text import misencode
 
 FORM_DELETE = 1
 FORM_SEND = 2
@@ -66,11 +63,10 @@ def postal_service(request):
 def handle_postal_service_post_request(request):
     fid = int(request.POST.get("fid"))
     if fid == FORM_SEND:
+        receiver_nick = request.POST.get("whom")
         try:
             Letter.objects.create(
-                receiver=UserProfile.objects.get(
-                    nick=misencode(request.POST.get("whom"))
-                ).nick,
+                receiver=UserProfile.objects.get(nick=misencode(receiver_nick)).nick,
                 sender=request.user.userprofile.nick,
                 text=request.POST.get("text"),
                 date=datetime.now(),
@@ -78,23 +74,24 @@ def handle_postal_service_post_request(request):
             )
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
         except UserProfile.DoesNotExist:
-            id = request.POST.get("whom")
-            logger.error(
-                f"A message between user has been submitted but the receiver of userprofile can not be found in our database. ID: {id}"
+            logger.info(f"Letter receiver {receiver_nick} could not be found")
+            messages.error(
+                f"Helimardovi se nepodařilo nalézt nikoho se jménem f{receiver_nick}. Ověřte prosím jeho práci v seznamu uživatelů a případně dejte vědět, zda si zaslouží nášup při dalším krmení."
             )
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
 
     elif fid == FORM_DELETE:
 
         try:
-            letter = Letter.objects.filter(pk=request.POST.get("id", 0)).update(
-                visibility=0
-            )
+            Letter.objects.filter(pk=request.POST.get("id", 0)).update(visibility=0)
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
         except Letter.DoesNotExist:
-            id = request.POST.get("id")
+            letter_id = request.POST.get("id")
             user = request.user.userprofile.nick
-            logger.error(
-                f"There has been an attempt to delete a message with non existing id: {id}, User: {user}"
+            logger.info(
+                f"There has been an attempt to delete a letter with non existing id {letter_id} by user {user}"
+            )
+            messages.error(
+                "Ať koukáme, jak koukáme, tento dopis ke spálení nemůžeme nalézt."
             )
             return HttpResponseRedirect(reverse("ddcz:postal-service"))
