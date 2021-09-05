@@ -10,7 +10,7 @@ from django.db.models import F
 from ddcz.models import (
     ScheduledEmail,
     BlacklistedEmail,
-    UnsubscribedEmail,
+    EmailSubscriptionAuth,
     UserProfile,
     CreationEmailSubscription,
 )
@@ -30,11 +30,11 @@ def hash_email(email):
 
 def get_unsubscribe_link(user_profile_id, email):
     try:
-        token_secret = UnsubscribedEmail.objects.get(
+        token_secret = EmailSubscriptionAuth.objects.get(
             user_profile_id=user_profile_id
         ).token_secret
-    except UnsubscribedEmail.DoesNotExist:
-        unsub = UnsubscribedEmail(
+    except EmailSubscriptionAuth.DoesNotExist:
+        unsub = EmailSubscriptionAuth(
             # The query is to double-check we are using valid profile PK and not an arbitrary number
             user_profile_id=UserProfile.objects.get(id=user_profile_id).id
         )
@@ -64,7 +64,7 @@ def validate_unsubscribe_token(email_base64, unsub_token):
         settings.CRYPTO_TEXT_ENCODING
     )
     profile = UserProfile.objects.only("id").get(email=email)
-    token_secret = UnsubscribedEmail.objects.get(
+    token_secret = EmailSubscriptionAuth.objects.get(
         user_profile_id=profile.id
     ).token_secret
 
@@ -95,7 +95,7 @@ def blacklist_email(email_base64):
     CreationEmailSubscription.objects.filter(user_email=email).delete()
     if profile:
         CreationEmailSubscription.objects.filter(user_profile_id=profile.id).delete()
-        UnsubscribedEmail.objects.filter(user_profile_id=profile.id).delete()
+        EmailSubscriptionAuth.objects.filter(user_profile_id=profile.id).delete()
 
     # TODO: Do the same for diskuze_maillist
 
