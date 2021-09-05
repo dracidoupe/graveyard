@@ -9,6 +9,7 @@ from django.http import (
 )
 from django.shortcuts import render, get_object_or_404
 from django.urls import resolve, Resolver404
+from django.urls.base import reverse
 from django.views.decorators.http import require_http_methods
 
 from ..text import misencode
@@ -119,6 +120,7 @@ def user_settings(request):
         if user_form.is_valid():
             user = user_form.save()
             messages.success(request, "Údaje byly úspěšny změněny")
+            return HttpResponseRedirect(reverse("ddcz:user-settings"))
     else:
         user_form = SettingsForm(instance=profile)
 
