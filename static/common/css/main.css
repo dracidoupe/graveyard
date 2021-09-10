@@ -109,8 +109,18 @@ span.label {
 /* Fieldset-like styling taken from https://stackoverflow.com/a/2213946 */
 /* Copyright Mathias Bynens, licensed under CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/ */
 
+.gallery-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: row;
+    align-content: flex-start;
+    align-items: stretch;
+}
+
 .gallery-item {
-    float: left;
+    height: 10rem;
+    width: 22%;
     border: 2px groove threedface;
     border-top: none;
     padding: 0.5em;
@@ -119,7 +129,8 @@ span.label {
 
 .gallery-item > h2 {
     margin: -1em -0.5em 0;
-    font: 1em normal;
+    font: 1.4em normal;
+    letter-spacing: 0.03em;
 }
 
 .gallery-item > h2 > a {
