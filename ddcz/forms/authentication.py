@@ -19,7 +19,7 @@ class LoginForm(forms.Form):
 class PasswordResetForm(authforms.PasswordResetForm):
     def get_users(self, email):
         """Given an email, return matching user(s) who should receive a reset.
-        This is overridem from original form to use UserProfile instead of standard
+        This is overrides from original form to use UserProfile instead of standard
         user model since that is normative for email storage.
         """
 
@@ -29,7 +29,12 @@ class PasswordResetForm(authforms.PasswordResetForm):
             list(
                 up.user
                 for up in user_profiles
-                if up.user.has_usable_password() and up.user.is_active
+                # no profile.user means user has not been migrated to a new
+                # version and therefore password reset is allowed
+                # Exception should be made for banned users, but those
+                # are not much of our concern anymore
+                if not up.user
+                or (up.user and up.user.has_usable_password() and up.user.is_active)
             )
         )
 
