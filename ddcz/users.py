@@ -4,8 +4,13 @@ from django.contrib.auth.models import User
 SESSION_KEYS_TO_PRESERVE = ["skin"]
 
 
-def migrate_user(profile, password):
-    """Create proper Django user for an existing (presumably authenticated) UserProfile"""
+def migrate_user(profile, password=""):
+    """
+    Create proper Django user for an existing UserProfile
+
+    If the password is not given (because i.e. migration is happening on a password reset field),
+    it's set to unusable password and password reset is required before logging in.
+    """
     user = User.objects.create_user(
         id=profile.id,
         username=profile.nick,
@@ -13,6 +18,10 @@ def migrate_user(profile, password):
         date_joined=profile.registration_approved_date,
         last_login=profile.last_login,
     )
+    if not password:
+        user.set_unusable_password()
+        user.save()
+
     profile.user = user
     profile.save()
 

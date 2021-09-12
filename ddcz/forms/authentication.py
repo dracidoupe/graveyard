@@ -1,10 +1,10 @@
 import logging
 
 from django import forms
-from django.forms import ModelForm
 from django.contrib.auth import forms as authforms
 
-from ..models import UserProfile, AwaitingRegistration
+from ..models import UserProfile
+from ..users import migrate_user
 
 logger = logging.getLogger(__name__)
 
@@ -25,16 +25,20 @@ class PasswordResetForm(authforms.PasswordResetForm):
 
         user_profiles = UserProfile.objects.filter(email__iexact=email)
 
+        # Allow resetting password of users that were not migrated yet
+        # This is the only moment beside login that supports migration
+        for up in user_profiles:
+            if not up.user:
+                migrate_user(profile=up)
+
         users = tuple(
             list(
                 up.user
                 for up in user_profiles
-                # no profile.user means user has not been migrated to a new
-                # version and therefore password reset is allowed
-                # Exception should be made for banned users, but those
-                # are not much of our concern anymore
-                if not up.user
-                or (up.user and up.user.has_usable_password() and up.user.is_active)
+                # Note that we are allowing password reset for users with unusable password; we expect not to
+                # be using SSO etc.
+                # Banned users should have is_active = False
+                if up.user and up.user.is_active
             )
         )
 
