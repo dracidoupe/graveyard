@@ -204,11 +204,20 @@ class UserProfile(models.Model):
         self.save()
 
 
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+# Allow for `profile` property to link back from user to profile
+# Given UserProfile is in fact primary field for the old version, it HAS to be created
+# Users without the profile with fail randomly
+# This means manage.py create(super)user will cause problems and we need to have our own
+# custom commands
+User.profile = property(lambda u: UserProfile.objects.get(user=u))
 
 
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
+def update_user_profile(sender, instance, created, **kwargs):
+    """
+    Whenever Django User model is updated, the user profile is saved as well
+    We are currently NOT automatically synchronizing attributes (like email)
+    """
     # Note that unlike the normal model, we are creating the User lazily
     # (instead of UserProfile as usual). Hence, on creation, UserProfile is assumed
     # to exist (and needs to be updated with proper relation manually), whereas
@@ -216,7 +225,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         # YOU are responsible for properly linking User and UserProfile
         # outside of signal handling!
-        # ALWAYS use .users.create_user
+        # Initially, we always use ddcz.users.migrate_user
         pass
     else:
         instance.profile.save()

@@ -18,12 +18,12 @@ def migrate_user(profile, password=""):
         date_joined=profile.registration_approved_date,
         last_login=profile.last_login,
     )
+    profile.user = user
+    profile.save()
+
     if not password:
         user.set_unusable_password()
         user.save()
-
-    profile.user = user
-    profile.save()
 
     # TODO: Presumably, we could fix more things during migration...like foreign keys.
 
