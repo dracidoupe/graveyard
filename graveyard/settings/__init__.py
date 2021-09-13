@@ -2,6 +2,11 @@ import os
 
 from .base import *
 
+if os.environ.get("CIRCLECI", False) == "true":
+    print("CircleCI environment detected, importing circle settings...")
+    from .circle import *
+
+
 runtime = os.environ.get("ENVIRONMENT", "local")
 
 if runtime == "production":
