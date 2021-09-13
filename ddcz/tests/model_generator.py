@@ -55,6 +55,8 @@ def get_alphabetic_user_profiles(
 
         if saved and with_corresponding_user:
             user.save()
+            # This needs reassigning to properly mark the field dirty with the correct foreign ID
+            profile.user = user
             profile.save()
 
     return profiles

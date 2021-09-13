@@ -1,4 +1,5 @@
 DEBUG = True
+OVERRIDE_SELENIUM_DEBUG = True
 
 ALLOWED_HOSTS = ["yourcomputer", "yourcomputer.local", "localhost", "127.0.0.1", "::1"]
 EMAIL_LINKS_BASE_URI = "http://localhost:8080"
