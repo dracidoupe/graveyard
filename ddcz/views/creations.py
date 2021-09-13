@@ -232,7 +232,7 @@ def download_file(request, download_id):
 
 
 @require_http_methods(["HEAD", "GET"])
-def quest_view_redirect(request, quest_id):
+def quest_view_redirect(request, quest_id, dash_slug=None):
     quest = get_object_or_404(Quest, pk=quest_id)
     quest.read += 1
     quest.save()
