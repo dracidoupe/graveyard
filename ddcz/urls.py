@@ -1,16 +1,15 @@
-from ddcz.views.legacy import legacy_router
 from django.urls import path
 from django.views.generic.base import RedirectView, TemplateView
 
-
 from . import views
 from .views import news, tavern, misc, email
+from .views.legacy import legacy_router
 
 app_name = "ddcz"
 
 urlpatterns = [
     path("", RedirectView.as_view(url="aktuality/", permanent=True)),
-    path("index.php", views.legacy_router, name="legacy-router"),
+    path("index.php", legacy_router, name="legacy-router"),
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
@@ -45,7 +44,11 @@ urlpatterns = [
     # Standard list and detail are under creation pages above,
     # Those are for executing redirect to download/quest location
     path("download/<int:download_id>/", views.download_file, name="download-file"),
-    path("dobrodruzstvi/<int:quest_id>/", views.quest_view_redirect, name="quest-view"),
+    path(
+        "dobrodruzstvi/<int:quest_id>-?<quest-slug>?/",
+        views.quest_view_redirect,
+        name="quest-view",
+    ),
     ### User handling
     path("uzivatele/", views.users_list, name="users-list"),
     path("uzivatel/prihlaseni/", views.login, name="login-action"),
