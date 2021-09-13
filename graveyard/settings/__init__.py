@@ -2,9 +2,9 @@ import os
 
 from .base import *
 
-if os.environ.get("CIRCLECI", False) == "true":
-    print("CircleCI environment detected, importing circle settings...")
-    from .circle import *
+if os.environ.get("SERVER_CI", False) == "true":
+    print("Server CI environment detected, importing circle settings...")
+    from .ci_server import *
 
 
 runtime = os.environ.get("ENVIRONMENT", "local")
