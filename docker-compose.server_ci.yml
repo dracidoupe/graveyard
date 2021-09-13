@@ -1,8 +1,8 @@
 version: '3'
 
-# This docker-compose is same as docker-compose.yml except it's not using 
+# This docker-compose is same as docker-compose.yml except it's not using
 # volumes since they are not allowed under "docker" CircleCI environment
-# See https://circleci.com/docs/2.0/executor-types/ 
+# See https://circleci.com/docs/2.0/executor-types/
 
 services:
   db:
@@ -12,7 +12,7 @@ services:
       - MYSQL_DATABASE=ddcz
   web:
     environment:
-      - CIRCLECI=true
+      - SERVER_CI=true
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
     expose:
