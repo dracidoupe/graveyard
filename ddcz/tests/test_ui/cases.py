@@ -29,6 +29,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        if not settings.DEBUG and settings.OVERRIDE_SELENIUM_DEBUG:
+            settings.DEBUG = True
+
         self.main_page_nav = MainPage
 
     @classproperty

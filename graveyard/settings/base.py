@@ -26,6 +26,8 @@ CRYPTO_TEXT_ENCODING = "utf8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+# Same: Set to True if you want to see debug traceback for Selenium UI tests
+OVERRIDE_SELENIUM_DEBUG = False
 
 ALLOWED_HOSTS = []
 

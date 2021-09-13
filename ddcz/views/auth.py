@@ -65,9 +65,8 @@ def login(request):
 
     if user is not None:
         login_auth(request, user)
-        profile = UserProfile.objects.get(user=user)
-        profile.last_login = timezone.now()
-        profile.save()
+        user.profile.last_login = timezone.now()
+        user.profile.save()
         return HttpResponseRedirect(referer)
     else:
         m = md5()
