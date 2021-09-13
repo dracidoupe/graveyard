@@ -37,6 +37,7 @@ DEFAULT_USER_LIST_SIZE = 50
 
 MAP_CREATION_TEMPLATE = {
     "downloaditem": "downloaditem-list.html",
+    "quest": "quest-list.html",
     "photo": "photo-list.html",
     "gallerypicture": "gallerypicture-list.html",
     "default": "creations-list.html",
