@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.test import Client, TestCase
 
-from ...model_generator import get_alphabetic_user_profiles
+from ...model_generator import get_alphabetic_user_profiles, create_profiled_user
 
 from ddcz.tavern import (
     LIST_ALL,
@@ -33,10 +33,10 @@ class TestListingDoesNotHaveRunawayQueries(TavernListingTestCase):
             number_of_users=2, saved=True
         )
 
-        self.owner_user = User.objects.create_user(
+        self.owner_user = create_profiled_user(
             username="owner", password="bobr-evropsky"
         )
-        self.banned_user = User.objects.create_user(
+        self.banned_user = create_profiled_user(
             username="banned", password="bobrice-evropska"
         )
 

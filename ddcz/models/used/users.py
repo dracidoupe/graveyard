@@ -212,25 +212,6 @@ class UserProfile(models.Model):
 User.profile = property(lambda u: UserProfile.objects.get(user=u))
 
 
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    """
-    Whenever Django User model is updated, the user profile is saved as well
-    We are currently NOT automatically synchronizing attributes (like email)
-    """
-    # Note that unlike the normal model, we are creating the User lazily
-    # (instead of UserProfile as usual). Hence, on creation, UserProfile is assumed
-    # to exist (and needs to be updated with proper relation manually), whereas
-    # afterwards profiles can be updated as usual
-    if created:
-        # YOU are responsible for properly linking User and UserProfile
-        # outside of signal handling!
-        # Initially, we always use ddcz.users.migrate_user
-        pass
-    else:
-        instance.profile.save()
-
-
 class LevelSystemParams(models.Model):
     parametr = MisencodedCharField(primary_key=True, max_length=40, db_column="")
     hodnota = MisencodedCharField(max_length=30, db_column="")

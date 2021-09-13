@@ -42,20 +42,32 @@ def get_alphabetic_user_profiles(
         if nick_prefix:
             nick = f"{nick_prefix}-{letter}"
         email = f"{nick}@example.com"
-        if with_corresponding_user:
-            user = User(username=nick, email=email)
-            user.set_password(email)
 
         profile = UserProfile(nick=nick, email=email)
         profiles.append(profile)
-
         if saved:
-            if with_corresponding_user:
-                user.save()
-                profile.user = user
+            profile.save()
+
+        if with_corresponding_user:
+            user = User(username=nick, email=email)
+            user.set_password(email)
+            profile.user = user
+
+        if saved and with_corresponding_user:
+            user.save()
             profile.save()
 
     return profiles
+
+
+def create_profiled_user(username, password, email=False):
+    if not email:
+        email = f"{username}@example.com"
+    profile = UserProfile(nick=username, email=email)
+    user = User.objects.create_user(username=username, password=password)
+    profile.user = user
+    profile.save()
+    return user
 
 
 def create_test_tavern_table(all_users, bookmark, public):
