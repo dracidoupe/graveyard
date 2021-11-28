@@ -55,7 +55,7 @@ def market(request):
         if not section in [i[0] for i in MARKET_SECTION_CHOICES]:
             raise Http404()
 
-        item_list = item_list.filter(sekce=request.GET.get("sekce"))
+        item_list = item_list.filter(group=request.GET.get("sekce"))
 
     paginator = Paginator(item_list, DEFAULT_LIST_SIZE)
     page = request.GET.get("z_s", 1)
