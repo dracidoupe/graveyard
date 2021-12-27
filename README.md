@@ -26,6 +26,8 @@ Running in Docker requires familiarity with it, but it makes setup easier and gu
 
 In both cases, first clone this repository and run all commands in its directory.
 
+Graveyard is not yet compatible with Python 3.10+.
+
 ### Installing in Docker
 
 Requirements:

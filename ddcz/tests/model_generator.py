@@ -1,10 +1,21 @@
+from datetime import date
+from random import randint
+
 from django.contrib.auth.models import User
-from ddcz.models import Author, CommonArticle, UserProfile
+from ddcz.models import (
+    Author,
+    CommonArticle,
+    UserProfile,
+    Market,
+    MARKET_SECTION_CHOICES,
+)
 
 from ddcz.tavern import (
     create_tavern_table,
     bookmark_table,
 )
+
+from .attack_strings import SCRIPT_ALERT_INPUT
 
 
 def get_valid_article_chain():
@@ -121,3 +132,20 @@ def get_tavern_tables(owner, allowed_user, banned_user, visiting_user):
             all_users, bookmark=False, public=False
         ),
     }
+
+
+def create_market_entries(number=1):
+    """Create random group of markete entries submitted by anonymous users"""
+
+    entries = [
+        Market.objects.create(
+            name=f"Seller #{i+1}",
+            mail=f"seller{i}@example.com",
+            text=SCRIPT_ALERT_INPUT,
+            group=MARKET_SECTION_CHOICES[randint(0, len(MARKET_SECTION_CHOICES))][0],
+            published_varchar=date.today().strftime("%d. %m. %Y"),
+        )
+        for i in range(0, number)
+    ]
+
+    return entries
