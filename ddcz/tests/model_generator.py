@@ -142,7 +142,9 @@ def create_market_entries(number=1):
             name=f"Seller #{i+1}",
             mail=f"seller{i}@example.com",
             text=SCRIPT_ALERT_INPUT,
-            group=MARKET_SECTION_CHOICES[randint(0, len(MARKET_SECTION_CHOICES))][0],
+            group=MARKET_SECTION_CHOICES[randint(0, len(MARKET_SECTION_CHOICES) - 1)][
+                0
+            ],
             published_varchar=date.today().strftime("%d. %m. %Y"),
         )
         for i in range(0, number)
