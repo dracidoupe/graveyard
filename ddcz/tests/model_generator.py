@@ -141,7 +141,9 @@ def create_market_entries(number=1):
         Market.objects.create(
             name=f"Seller #{i+1}",
             mail=f"seller{i}@example.com",
-            text=SCRIPT_ALERT_INPUT,
+            # Escaping happens on (old version) text input, not here; test once this changes
+            # text=SCRIPT_ALERT_INPUT,
+            text=f"Seller Text #{i}",
             group=MARKET_SECTION_CHOICES[randint(0, len(MARKET_SECTION_CHOICES) - 1)][
                 0
             ],
