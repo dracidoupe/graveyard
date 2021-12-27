@@ -136,10 +136,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-GALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/galerie/"
-PHOTOGALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/fotogalerie/"
-USER_ICON_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/ikonky/"
-QUEST_MEDIA_ROOT_URL = "http://uploady.dracidoupe.cz/dobrodruzstvi/"
+GALLERY_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/galerie/"
+PHOTOGALLERY_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/fotogalerie/"
+USER_ICON_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/ikonky/"
+QUEST_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/dobrodruzstvi/"
 CREATION_PICTURES_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/obr_pris/"
 
 

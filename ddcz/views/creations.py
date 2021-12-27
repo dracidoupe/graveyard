@@ -127,16 +127,16 @@ def get_creation_info(creative_page_slug, creation_id, creation_slug):
                 model_class, is_published=ApprovalChoices.APPROVED.value, id=creation_id
             )
         if article.get_slug() != creation_slug:
-            raise ValueError(
-                reverse(
-                    "ddcz:creation-detail",
-                    kwargs={
-                        "creative_page_slug": creative_page_slug,
-                        "creation_id": article.pk,
-                        "creation_slug": article.get_slug(),
-                    },
-                )
+            e = ValueError()
+            e.url = reverse(
+                "ddcz:creation-detail",
+                kwargs={
+                    "creative_page_slug": creative_page_slug,
+                    "creation_id": article.pk,
+                    "creation_slug": article.get_slug(),
+                },
             )
+            raise e
         else:
             cache.set(cache_key, article)
 
@@ -155,7 +155,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
             creative_page_slug, creation_id, creation_slug
         )
     except ValueError as e:
-        return HttpResponsePermanentRedirect(e.message)
+        return HttpResponsePermanentRedirect(e.url)
 
     return render(
         request,
@@ -181,7 +181,7 @@ def creation_detail_image(
     try:
         get_creation_info(creative_page_slug, creation_id, creation_slug)
     except ValueError as e:
-        return HttpResponsePermanentRedirect(e.message)
+        return HttpResponsePermanentRedirect(e.url)
 
     return HttpResponsePermanentRedirect(
         f"{settings.CREATION_PICTURES_MEDIA_ROOT_URL}{image_path}"
