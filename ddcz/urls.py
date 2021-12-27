@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from django.views.generic.base import RedirectView, TemplateView
 
 from . import views
@@ -36,10 +36,20 @@ urlpatterns = [
         views.creative_page_html_check,
         name="creative_page_html_check",
     ),
-    path(
-        "rubriky/<creative_page_slug>/<int:creation_id>-<creation_slug>/",
+    # path(
+    #     "rubriky/<creative_page_slug>/<int:creation_id>-<creation_slug>/",
+    #     views.creation_detail,
+    #     name="creation-detail",
+    # ),
+    re_path(
+        "^rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>\w+)/$",
         views.creation_detail,
         name="creation-detail",
+    ),
+    re_path(
+        "rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>\w+)/obr_pris/(?P<image_path>.+)",  # /(?P<image_path_name>\w+)",
+        views.creation_detail_image,
+        name="creation-detail-image",
     ),
     # Standard list and detail are under creation pages above,
     # Those are for executing redirect to download/quest location
