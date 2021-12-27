@@ -40,7 +40,7 @@
                 <span class="label">Přidáno: </span><span class="value"><time datetime={{ i.published | date:"c"  }}>{{ i.published | czech_date }}</time></span>
             </p>
             <p>
-                <span class="label">Text: </span><span class="value">{{ i.text|render_html|safe }}</span>
+                <span class="label">Text: </span><span class="market_text value">{{ i.text|render_html|safe }}</span>
             </p>
         </article>
 

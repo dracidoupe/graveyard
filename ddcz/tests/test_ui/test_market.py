@@ -30,10 +30,10 @@ class TestMarket(SeleniumTestCase):
 
     def test_page_heading_present(self):
         text = self.selenium.find_element_by_xpath('//h1[@class="page-heading"]').text
-        self.assertEquals("Market", text)
+        self.assertEquals("Inzerce", text)
 
     def test_entry_text_rendered(self):
         text = self.selenium.find_element_by_xpath(
-            '//div[@id="page-market"]//p[@class="comment_text"]'
+            '//div[@id="page-market"]//span[contains(@class, "market_text")]'
         ).text
-        self.assertEquals(SCRIPT_ALERT_INPUT, text)
+        self.assertEquals("Seller Text #0", text)
