@@ -10,7 +10,7 @@
     <ul class="nav_links">
         <li><a class="text-red" href="">Pošta</a></li>
         <li><a class="text-red" href="{% url 'ddcz:tavern-list' %}">Putyka</a></li>
-        <li><a class="text-red" href="">Nastavení</a></li>
+        <li><a class="text-red" href="{% url 'ddcz:user-settings' %}">Nastavení</a></li>
     </ul>
 
     <form method="post" action="{% url 'ddcz:logout-action' %}">

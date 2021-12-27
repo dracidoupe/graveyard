@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.urls import path
 from django.views.generic.base import RedirectView, TemplateView
 
@@ -51,6 +52,7 @@ urlpatterns = [
     ),
     ### User handling
     path("uzivatele/", views.users_list, name="users-list"),
+    path("nastaveni", views.user_settings, name="user-settings"),
     path("uzivatel/prihlaseni/", views.login, name="login-action"),
     path("registrace/", views.sign_up, name="sign-up"),
     path("uzivatel/odhlaseni/", views.logout, name="logout-action"),

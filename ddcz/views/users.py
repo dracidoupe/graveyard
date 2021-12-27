@@ -1,3 +1,5 @@
+import re
+from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
 from django.dispatch.dispatcher import receiver
@@ -7,9 +9,11 @@ from django.http import (
 )
 from django.shortcuts import render, get_object_or_404
 from django.urls import resolve, Resolver404
+from django.urls.base import reverse
 from django.views.decorators.http import require_http_methods
 
 from ..text import misencode
+from ..forms.settings import SettingsForm
 from ..models import (
     Author,
     UserProfile,
@@ -103,6 +107,27 @@ def user_profile(request, user_profile_id, nick_slug):
             "level_description": description,
             "runes": Rune.objects.filter(receiver_id=user_profile.id).order_by("-date"),
         },
+    )
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+def user_settings(request):
+    profile = request.user.profile
+    permissions = profile.public_listing_permissions
+
+    if request.method == "POST" and request.POST.get("submit"):
+        user_form = SettingsForm(request.POST, instance=profile)
+        if user_form.is_valid():
+            user = user_form.save()
+            messages.success(request, "Údaje byly úspěšny změněny")
+            return HttpResponseRedirect(reverse("ddcz:user-settings"))
+    else:
+        user_form = SettingsForm(instance=profile)
+
+    return render(
+        request,
+        "users/settings.html",
+        {"user_form": user_form, "pass_form": ""},
     )
 
 
