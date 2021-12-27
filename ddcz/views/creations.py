@@ -3,6 +3,7 @@ from re import template
 from zlib import crc32
 
 from django.apps import apps
+from django.conf import settings
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import (
@@ -104,8 +105,7 @@ def creative_page_list(request, creative_page_slug):
     )
 
 
-@require_http_methods(["HEAD", "GET"])
-def creation_detail(request, creative_page_slug, creation_id, creation_slug):
+def get_creation_info(creative_page_slug, creation_id, creation_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
     app, model_class_name = creative_page.model_class.split(".")
     model_class = apps.get_model(app, model_class_name)
@@ -127,7 +127,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
                 model_class, is_published=ApprovalChoices.APPROVED.value, id=creation_id
             )
         if article.get_slug() != creation_slug:
-            return HttpResponsePermanentRedirect(
+            raise ValueError(
                 reverse(
                     "ddcz:creation-detail",
                     kwargs={
@@ -140,15 +140,51 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
         else:
             cache.set(cache_key, article)
 
+    return {
+        "article": article,
+        "model_class": model_class,
+        "model_class_name": model_class_name,
+        "creative_page": creative_page,
+    }
+
+
+@require_http_methods(["HEAD", "GET"])
+def creation_detail(request, creative_page_slug, creation_id, creation_slug):
+    try:
+        creation_info = get_creation_info(
+            creative_page_slug, creation_id, creation_slug
+        )
+    except ValueError as e:
+        return HttpResponsePermanentRedirect(e.message)
+
     return render(
         request,
-        "creative-pages/%s-detail.html" % model_class_name,
+        f"creative-pages/{creation_info['model_class_name']}-detail.html",
         {
-            "heading": creative_page.name,
-            "article": article,
+            "heading": creation_info["creative_page"].name,
+            "article": creation_info["article"],
             "creative_page_slug": creative_page_slug,
             "comment_page": request.GET.get("z_s", 1),
         },
+    )
+
+
+@require_http_methods(["HEAD", "GET"])
+def creation_detail_image(
+    # TODO: Deduplicate
+    request,
+    creative_page_slug,
+    creation_id,
+    creation_slug,
+    image_path,
+):
+    try:
+        get_creation_info(creative_page_slug, creation_id, creation_slug)
+    except ValueError as e:
+        return HttpResponsePermanentRedirect(e.message)
+
+    return HttpResponsePermanentRedirect(
+        f"{settings.CREATION_PICTURES_MEDIA_ROOT_URL}{image_path}"
     )
 
 

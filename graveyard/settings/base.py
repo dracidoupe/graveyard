@@ -140,6 +140,7 @@ GALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/galerie/"
 PHOTOGALLERY_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/fotogalerie/"
 USER_ICON_MEDIA_ROOT_URL = "https://www.dracidoupe.cz/ikonky/"
 QUEST_MEDIA_ROOT_URL = "http://uploady.dracidoupe.cz/dobrodruzstvi/"
+CREATION_PICTURES_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/obr_pris/"
 
 
 # File Storage, used for Downloady, Dobrodruzstvi etc.
