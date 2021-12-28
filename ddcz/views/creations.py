@@ -126,6 +126,7 @@ def get_creation_info(creative_page_slug, creation_id, creation_slug):
             article = get_object_or_404(
                 model_class, is_published=ApprovalChoices.APPROVED.value, id=creation_id
             )
+
         if article.get_slug() != creation_slug:
             e = ValueError()
             e.url = reverse(
@@ -138,6 +139,7 @@ def get_creation_info(creative_page_slug, creation_id, creation_slug):
             )
             raise e
         else:
+            print("OK cache")
             cache.set(cache_key, article)
 
     return {
@@ -194,7 +196,7 @@ def creative_page_concept(request, creative_page_slug):
     try:
         concept = creative_page.creativepageconcept
     except CreativePageConcept.DoesNotExist:
-        raise Http404
+        raise Http404()
 
     return render(
         request,

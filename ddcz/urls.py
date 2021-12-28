@@ -42,12 +42,12 @@ urlpatterns = [
     #     name="creation-detail",
     # ),
     re_path(
-        "^rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>\w+)/$",
+        "^rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>[a-zA-Z0-9_-]+)/$",
         views.creation_detail,
         name="creation-detail",
     ),
     re_path(
-        "rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>\w+)/obr_pris/(?P<image_path>.+)",  # /(?P<image_path_name>\w+)",
+        "rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>[a-zA-Z0-9_-]+)/obr_pris/(?P<image_path>.+)",  # /(?P<image_path_name>\w+)",
         views.creation_detail_image,
         name="creation-detail-image",
     ),
