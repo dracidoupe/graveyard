@@ -1,0 +1,7 @@
+<h2>Hlasování</h2>
+
+<ul>
+{% for vote in votes %}
+    <li>{{ vote.user.nick }} {{ vote.rating }}</li>
+{% endfor %}
+</ul>

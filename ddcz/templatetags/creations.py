@@ -2,9 +2,13 @@ import logging
 
 from django import template
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.db.models import (
+    OuterRef,
+    Subquery,
+)
 
 from ..creations import RATING_DESCRIPTIONS
-from ..models import CreativePage
+from ..models import CreationVote, UserProfile
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +29,15 @@ def creation_rating(rating, skin):
             "skins/%s/img/rating-star-dragon.svg" % skin
         ),
     }
+
+
+@register.inclusion_tag("creations/votes.html", takes_context=True)
+def creation_votes(context, creative_page_slug, creation_pk):
+    votes = CreationVote.objects.filter(
+        creative_page_slug=creative_page_slug, creation_id=creation_pk
+    ).annotate(voter=Subquery(UserProfile.objects.get(pk=OuterRef("user_profile_id"))))
+
+    return {"votes": votes, "user": context["user"], "skin": context["skin"]}
 
 
 @register.inclusion_tag("creations/author-display-link.html")

@@ -42,8 +42,9 @@ Creative Pages
 In this context, Crative Pages correspond to sections of the site where content is provided by our authors, after review. Creative page has Categories (= Sekce) that serve to further classify the Creations.
 
 * schváleno = published
-* hlasování = rating
-* hlasující = rater
+* hlasování = voting
+* hlasující = voter
+* hodnocení (díla, ve smyslu počtu zvězdiček) = rating
 
 * Rubriky (= Creative Pages)
 * Sekce (= Section)
