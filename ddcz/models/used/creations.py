@@ -295,19 +295,20 @@ class Creation(models.Model):
 ###
 
 
-class CreationVotes(models.Model):
+class CreationVote(models.Model):
     # creation = models.OneToMany(Creation) -- to be introduced later
     # TODO: Would conversion to ForeignKey work..and would it work to User?
     user_profile_id = models.IntegerField(primary_key=True, db_column="id_uz")
     creation_id = models.IntegerField(db_column="id_cizi")
-    creative_page_name = MisencodedCharField(max_length=20, db_column="rubrika")
+    creative_page_slug = MisencodedCharField(max_length=20, db_column="rubrika")
     rating = models.IntegerField(db_column="pochvez")
     time = models.IntegerField(db_column="time")
     changed = MisencodedCharField(max_length=1, db_column="opraveno")
+    django_id = models.IntegerField(null=True, blank=True)
 
     class Meta:
         db_table = "hlasovani_prispevky"
-        unique_together = (("user_profile_id", "creation_id", "creative_page_name"),)
+        unique_together = (("user_profile_id", "creation_id", "creative_page_slug"),)
 
 
 ###
