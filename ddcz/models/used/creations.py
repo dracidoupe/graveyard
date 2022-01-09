@@ -296,9 +296,10 @@ class Creation(models.Model):
 
 
 class CreationVote(models.Model):
+    user_profile = models.ForeignKey(
+        UserProfile, db_constraint=False, on_delete=models.CASCADE, db_column="id_uz"
+    )
     # creation = models.OneToMany(Creation) -- to be introduced later
-    # TODO: Would conversion to ForeignKey work..and would it work to User?
-    user_profile_id = models.IntegerField(db_column="id_uz")
     creation_id = models.IntegerField(db_column="id_cizi")
     creative_page_slug = MisencodedCharField(max_length=20, db_column="rubrika")
     rating = models.IntegerField(db_column="pochvez")
@@ -308,7 +309,7 @@ class CreationVote(models.Model):
 
     class Meta:
         db_table = "hlasovani_prispevky"
-        unique_together = (("user_profile_id", "creation_id", "creative_page_slug"),)
+        unique_together = (("user_profile", "creation_id", "creative_page_slug"),)
 
 
 ###
