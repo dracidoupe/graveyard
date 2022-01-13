@@ -33,9 +33,10 @@ def creation_rating(rating, skin):
 
 @register.inclusion_tag("creations/votes.html", takes_context=True)
 def creation_votes(context, creative_page_slug, creation_pk):
-    votes = CreationVote.objects.filter(
-        creative_page_slug=creative_page_slug, creation_id=creation_pk
-    ).annotate(voter=Subquery(UserProfile.objects.get(pk=OuterRef("user_profile_id"))))
+    votes = CreationVote.get_creation_votes(
+        creative_page_slug=creative_page_slug,
+        creation_id=creation_pk,
+    )
 
     return {"votes": votes, "user": context["user"], "skin": context["skin"]}
 
