@@ -12,7 +12,7 @@ Production is running at http://nove.dracidoupe.cz/ . But be warned, we are head
 
 Contributions are welcome provided you agree your work will be shared under the same license as Graveyard (MIT). Please use [black](https://pypi.org/project/black/) for code formatting.
 
-If you don't know where to start, take a look [at the roadmap](https://github.com/dracidoupe/graveyard/milestones) or ask Almad on [development Slack](https://dracidoupe.slack.com/messages/C7F0YCTFU) or in Pošta on [DraciDoupe.cz](https://www.dracidoupe.cz/).
+If you don't know where to start, take a look [at the roadmap](https://github.com/dracidoupe/graveyard/milestones) or ask Almad on [development Slack](https://dracidoupe.slack.com/messages/C7F0YCTFU) or [community Discord](https://discord.gg/SnFux2x3Vw) or in Pošta on [DraciDoupe.cz](https://www.dracidoupe.cz/).
 
 *Please install [EditorConfig](https://editorconfig.org/) support for your editor* ([plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig), [plugin for PyCharm/WebStorm/IDEAJ](https://plugins.jetbrains.com/plugin/7294-editorconfig))
 
