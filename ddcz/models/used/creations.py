@@ -302,14 +302,23 @@ class CreationVote(models.Model):
     # creation = models.OneToMany(Creation) -- to be introduced later
     creation_id = models.IntegerField(db_column="id_cizi")
     creative_page_slug = MisencodedCharField(max_length=20, db_column="rubrika")
+    # 0-5 is normal rating of a creation
+    # 8 denotes "rating deleted"
     rating = models.IntegerField(db_column="pochvez")
     time = models.IntegerField(db_column="time")
+    # 0 or 1 for True/False; the vote can be changed only once
     changed = MisencodedCharField(max_length=1, db_column="opraveno")
     django_id = models.AutoField(primary_key=True)
 
     class Meta:
         db_table = "hlasovani_prispevky"
         unique_together = (("user_profile", "creation_id", "creative_page_slug"),)
+
+    @classmethod
+    def get_creation_votes(cls, creative_page_slug, creation_id):
+        return CreationVote.objects.filter(
+            creative_page_slug=creative_page_slug, creation_id=creation_id, rating__lt=7
+        ).select_related("user_profile")
 
 
 ###

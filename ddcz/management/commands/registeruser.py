@@ -2,6 +2,7 @@ from django.apps import apps
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
 from django.core.validators import validate_email
+from django.contrib.auth.password_validation import validate_password
 
 from ddcz.models import User, UserProfile
 
@@ -27,6 +28,7 @@ class Command(BaseCommand):
             raise CommandError("User email already taken")
 
         validate_email(options["email"])
+        validate_password(options["password"])
 
         # TODO/FIXME: Extract to method to be also used
         # for user registration

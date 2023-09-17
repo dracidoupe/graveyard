@@ -1,7 +1,18 @@
-<h2>Hlasování</h2>
+{% load creations %}
 
-<ul>
+<h3>Hlasování</h3>
+
+<details class="votes">
+<summary>Jak kdo hlasoval</summary>
+
+<table>
+    <tr>
+        <th>Uživatel</th><th>Hlasování</th>
+    </tr>
 {% for vote in votes %}
-    <li>{{ vote.user.nick }} {{ vote.rating }}</li>
+    <tr>
+        <td>{{ vote.user_profile.nick }}</td><td>{% creation_rating vote.rating skin %}</td>
+    </tr>
 {% endfor %}
-</ul>
+</table>
+</details>
