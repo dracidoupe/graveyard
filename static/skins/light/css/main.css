@@ -1,6 +1,6 @@
 @import "../../../common/css/main.css";
 
-:root{
+:root {
     --debug_bg_color: rgba(255, 255, 255, 0);
 
     --page_bg_color: #c0c0c0;
@@ -27,13 +27,13 @@
     --user_h3_size: 1.2rem;
     --user_h3_bottom: transparent;
 
-   --link-skin-contrast-color: #000050;
+    --link-skin-contrast-color: #000050;
 
 }
 
 
 /* =========== BASIC SETTINGS ============ */
-body{
+body {
     background-color: var(--page_bg_color);
     color: var(--page_txt_color);
     font-family: Verdana, Arial, sans-serif;
@@ -41,13 +41,13 @@ body{
 
 h1,
 h2,
-h3{
+h3 {
     text-align: center;
 }
 
 input,
 textarea,
-select{
+select {
     background-color: var(--input-bg-color);
 }
 
@@ -58,17 +58,18 @@ a:visited {
     text-decoration: none;
 }
 
-a:hover, a:active{
+a:hover,
+a:active {
     color: var(--link-color-hover);
 }
 
-hr{
+hr {
     color: var(--hr_color);
 }
 
 /* =========== GRID LAYOUT ============ */
 
-#container{
+#container {
     display: grid;
     grid-template-areas:
         'header         header      header'
@@ -81,30 +82,30 @@ hr{
     margin: 0rem auto;
 }
 
-header#page_header{
+header#page_header {
     grid-area: header;
     background-color: var(--debug_bg_color);
 }
 
-nav#left_menu{
+nav#left_menu {
     grid-area: left_menu;
     width: 100%;
     background-color: var(--debug_bg_color);
 }
 
-nav#right_menu{
+nav#right_menu {
     grid-area: right_menu;
     width: 100%;
     background-color: var(--debug_bg_color);
 }
 
-main#page_content{
+main#page_content {
     grid-area: main;
     width: 100%;
     background-color: var(--debug_bg_color);
 }
 
-footer#page_footer{
+footer#page_footer {
     margin: 0rem auto;
     width: 60%;
     grid-area: footer;
@@ -115,27 +116,27 @@ footer#page_footer{
 
 
 /* =========== HEADER ============ */
-header#page_header h1{
+header#page_header h1 {
     text-align: center;
 }
 
-header#page_header h1 img{
+header#page_header h1 img {
     width: 600px;
 }
 
 
 /* =========== MENU ============ */
-nav ul{
+nav ul {
     list-style-type: none;
     padding: 0rem;
 }
 
-nav ul.nav_border{
+nav ul.nav_border {
     display: block;
     border: 1px solid var(--navbox-border-color);
 }
 
-nav .list_heading{
+nav .list_heading {
     display: block;
     background-color: var(--heading_bg_color);
     color: var(--heading_color);
@@ -144,7 +145,7 @@ nav .list_heading{
     padding: 4px 0px;
 }
 
-nav .list_subheading{
+nav .list_subheading {
     display: block;
     background-color: var(--subheading_bg_color);
     text-align: center;
@@ -160,11 +161,11 @@ nav .list_subheading::after {
     content: " -";
 }
 
-nav .list_box{
+nav .list_box {
     padding: 5px;
 }
 
-nav ul li a{
+nav ul li a {
     display: block;
     font-weight: bold;
 }
@@ -180,11 +181,11 @@ nav ul li a::first-letter {
 .nav_border .admin_link {
     text-align: center;
     font-weight: bold;
- }
+}
 
-.nav_border .nick{
-     color: var(--nick_color);
- }
+.nav_border .nick {
+    color: var(--nick_color);
+}
 
 .nav_border .user_icon {
     text-align: center;
@@ -198,7 +199,7 @@ nav ul li a::first-letter {
 
 
 /* =========== MAIN CONTENT ============ */
-h1.page-heading{
+h1.page-heading {
     width: 100%;
     font-weight: bold;
     border-top: 0px;
@@ -210,11 +211,11 @@ h1.page-heading{
     padding: 3px 0px;
 }
 
-.pagination a::before{
+.pagination a::before {
     content: "[";
 }
 
-.pagination a::after{
+.pagination a::after {
     content: "]";
 }
 
@@ -229,4 +230,18 @@ h1.page-heading{
 
 .tavern_table_name__unread {
     color: var(--link-skin-contrast-color);
+}
+
+
+/* =========== PAGE FRAGMENTS ============ */
+
+details.votes {
+    text-align: center;
+}
+
+.votes table {
+    text-align: center;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 1em;
 }
