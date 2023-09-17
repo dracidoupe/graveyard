@@ -25,7 +25,12 @@ def creation_comments(context, creative_page_slug, creation_pk):
     paginator = Paginator(comments, COMMENT_DEFAULT_LIMIT)
     comments = paginator.get_page(context["comment_page"])
 
-    return {"comments": comments, "user": context["user"], "skin": context["skin"]}
+    return {
+        "comments": comments,
+        "user": context["user"],
+        "skin": context["skin"],
+        "creation_comment_form": context["creation_comment_form"],
+    }
 
 
 @register.inclusion_tag("discussions/creation-comments.html", takes_context=True)

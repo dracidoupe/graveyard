@@ -39,7 +39,7 @@ class CreationComment(models.Model):
     email = MisencodedCharField(max_length=40, db_column="email")
     text = MisencodedTextField(db_column="text")
     date = models.DateTimeField(auto_now_add=True, db_column="datum")
-    reputation = models.IntegerField(db_column="reputace")
+    reputation = models.IntegerField(db_column="reputace", default=0)
     user = models.ForeignKey(
         UserProfile, on_delete=models.SET_NULL, blank=True, null=True
     )

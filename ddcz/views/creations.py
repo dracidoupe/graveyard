@@ -18,15 +18,18 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
 
 from ..creations import ApprovalChoices
+from ..forms.comments import CreationCommentForm, CommentAction
 from ..html import check_creation_html, HtmlTagMismatchException
 from ..models import (
     Author,
     CreativePage,
     CreativePageConcept,
+    CreationComment,
     DownloadItem,
     Quest,
     APPROVAL_CHOICES,
 )
+from ..text import escape_user_input
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -150,7 +153,7 @@ def get_creation_info(creative_page_slug, creation_id, creation_slug):
     }
 
 
-@require_http_methods(["HEAD", "GET"])
+@require_http_methods(["HEAD", "GET", "POST"])
 def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     try:
         creation_info = get_creation_info(
@@ -158,6 +161,51 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
         )
     except ValueError as e:
         return HttpResponsePermanentRedirect(e.url)
+
+    if request.method == "POST" and request.POST["post_type"] and request.user:
+        # TODO: Comment deletion
+        # if (
+        #     request.POST["post_type"] == DELETE_PHORUM_COMMENT
+        #     and request.POST["submit"] == "Smazat"
+        # ):
+        #     try:
+        #         Phorum.objects.get(
+        #             id=request.POST["post_id"],
+        #             nickname=request.user.profile.nick,
+        #         ).delete()
+        #     except Phorum.DoesNotExist as e:
+        #         messages.error(request, "Zprávu se nepodařilo smazat.")
+        #         return HttpResponseRedirect(reverse("ddcz:phorum-list"))
+
+        if (
+            request.POST["post_type"] == CommentAction.ADD.value
+            and request.POST["submit"] == "Přidej"
+        ):
+            creation_comment_form = CreationCommentForm(request.POST)
+            if creation_comment_form.is_valid():
+                # TODO DISPATCH: Here we need to dispatch e-mails etc.
+                CreationComment.objects.create(
+                    reputation=0,
+                    user=request.user.profile,
+                    text=escape_user_input(creation_comment_form.cleaned_data["text"]),
+                    nickname=request.user.profile.nick,
+                    email=request.user.profile.email,
+                    foreign_id=creation_info["article"].pk,
+                    # Yes this looks weird, but see docs for CreationComment model
+                    foreign_table=creative_page_slug,
+                )
+                return HttpResponseRedirect(
+                    reverse(
+                        "ddcz:creation-detail",
+                        kwargs={
+                            "creative_page_slug": creative_page_slug,
+                            "creation_id": creation_info["article"].pk,
+                            "creation_slug": creation_info["article"].get_slug(),
+                        },
+                    )
+                )
+    else:
+        creation_comment_form = CreationCommentForm()
 
     return render(
         request,
@@ -167,6 +215,7 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
             "article": creation_info["article"],
             "creative_page_slug": creative_page_slug,
             "comment_page": request.GET.get("z_s", 1),
+            "creation_comment_form": CreationCommentForm(),
         },
     )
 

@@ -21,3 +21,12 @@ class DeletePhorumCommentForm(forms.Form):
         widget=forms.HiddenInput(attrs={"value": CommentAction.DELETE.value})
     )
     post_id = forms.CharField(widget=forms.HiddenInput)
+
+
+class CreationCommentForm(forms.Form):
+    post_type = forms.CharField(
+        widget=forms.HiddenInput(attrs={"value": CommentAction.ADD.value})
+    )
+    text = forms.CharField(
+        label="", widget=forms.Textarea(attrs={"class": "comment__textarea"})
+    )

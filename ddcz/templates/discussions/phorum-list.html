@@ -34,6 +34,11 @@
         </p>
         <form method="post" action="{% url 'ddcz:phorum-list' %}">
             {% csrf_token %}
+            {% for error in phorum_comment_form.non_field_errors %}
+                <div class="form-error">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
             {{ phorum_comment_form.as_p }}
             <input type="submit" name="submit" value="Přidej" class="comment__submit">
         </form>
