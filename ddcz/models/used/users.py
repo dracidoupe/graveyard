@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 from ...text import create_slug
-from ..magic import MisencodedCharField
+from ..magic import MisencodedCharField, MisencodedTextField
 
 
 LEVEL_DESCRIPTIONS = {
@@ -271,7 +271,7 @@ class Rune(models.Model):
     receiver_nick = models.CharField(max_length=30, db_column="nick_prijemce")
     type = models.CharField(max_length=15, db_column="typ")
     graphics = models.SmallIntegerField(db_column="grafika")
-    text = models.TextField(db_column="venovani")
+    text = MisencodedTextField(db_column="venovani")
     date = models.DateTimeField(db_column="datum")
 
     @property
