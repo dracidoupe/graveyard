@@ -38,7 +38,6 @@ class Command(BaseCommand):
                             user=profile, author_type=author_type
                         )
                     except Author.DoesNotExist:
-
                         try:
                             author_encoded = creation.author_nick.encode("latin2")
                         except UnicodeEncodeError:

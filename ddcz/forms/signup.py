@@ -9,7 +9,6 @@ from ..models import AwaitingRegistration
 
 
 class SignUpForm(ModelForm):
-
     MIN_AGE = 13
 
     class SexChoices(Enum):

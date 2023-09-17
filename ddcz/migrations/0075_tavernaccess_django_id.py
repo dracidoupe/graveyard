@@ -16,7 +16,6 @@ def fill_relation_table_ids(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0074_tavernbookmark_manytomany"),
     ]

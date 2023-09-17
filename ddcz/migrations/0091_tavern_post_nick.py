@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0090_prune_lost_tavern_posts"),
     ]

@@ -41,7 +41,6 @@ def migrate_ignores(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0081_taverntable_access_migration"),
     ]

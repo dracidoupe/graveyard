@@ -25,7 +25,6 @@ def migrate_item_path(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0043_download_item_filefield"),
     ]
