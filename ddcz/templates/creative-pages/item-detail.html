@@ -74,6 +74,9 @@
 
         </footer>
 
+        {% if user.is_authenticated %}
+            {% creation_votes creative_page_slug article.pk  %}
+        {% endif %}
         {% creation_comments creative_page_slug article.pk %}
 
     </article>

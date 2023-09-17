@@ -18,6 +18,9 @@
             <p><span class="label">Autor:</span> <span class="value">{% author_display article %}</span></p>
             <p><span class="label">Přidáno:</span> <span class="value"><time datetime="{{ article.published | date:"c" }}">{{ article.published | articleTime }}</time></span></p>
         </footer>
+        {% if user.is_authenticated %}
+            {% creation_votes creative_page_slug article.pk  %}
+        {% endif %}
         {% creation_comments creative_page_slug article.pk %}
 
     </article>
