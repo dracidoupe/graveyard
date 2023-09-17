@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 from ..cases import SeleniumTestCase, MainPage
 from ...attack_strings import IMG_TAB_SRC_INPUT
 from ...model_generator import get_alphabetic_user_profiles, get_tavern_tables
@@ -35,17 +37,19 @@ class TestTavernPosts(SeleniumTestCase):
 
     def navigate_to_bookmarked_table(self, user_profile, table):
         self.navigate_to_tavern(user_profile)
-        self.selenium.find_element_by_xpath(
+        self.selenium.find_element(
+            By.XPATH,
             TavernTableListPage.TAVERN_TABLE_LINK_TEMPLATE.value.format(
                 table_id=table.id
-            )
+            ),
         ).click()
 
     def select_listing(self, listing):
-        self.selenium.find_element_by_xpath(
+        self.selenium.find_element(
+            By.XPATH,
             TavernTableListPage.NAVIGATION_LIST_STYLE_TEMPLATE.value.format(
                 slug=listing
-            )
+            ),
         ).click()
 
     def add_post(self, text):
@@ -58,8 +62,8 @@ class TestTavernPosts(SeleniumTestCase):
         )
         self.add_post(IMG_TAB_SRC_INPUT)
 
-        text = self.selenium.find_element_by_xpath(
-            TavernTablePostPage.FIRST_COMMENT.value
+        text = self.selenium.find_element(
+            By.XPATH, TavernTablePostPage.FIRST_COMMENT.value
         ).text
 
         self.assertEquals(IMG_TAB_SRC_INPUT, text)

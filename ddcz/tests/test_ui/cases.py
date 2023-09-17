@@ -6,6 +6,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.utils.decorators import classproperty
 
 from selenium import webdriver
+from selenium.webdriver.chromium.options import ChromiumOptions
+from selenium.webdriver.common.by import By
 
 
 class MainPage(Enum):
@@ -50,8 +52,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             cls.selenium = webdriver.Chrome()
         else:
             cls.selenium = webdriver.Remote(
-                desired_capabilities=webdriver.DesiredCapabilities.CHROME,
+                # desired_capabilities=webdriver.DesiredCapabilities.CHROME,
                 command_executor="http://%s:4444/wd/hub" % settings.SELENIUM_HUB_HOST,
+                options=ChromiumOptions(),
             )
 
         cls.selenium.implicitly_wait(settings.SELENIUM_IMPLICIT_WAIT)
@@ -97,10 +100,10 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     ###
 
     def el(self, enum):
-        return self.selenium.find_element_by_xpath(enum.value)
+        return self.selenium.find_element(By.XPATH, enum.value)
 
     def els(self, enum):
-        return self.selenium.find_elements_by_xpath(enum.value)
+        return self.selenium.find_elements(By.XPATH, enum.value)
 
     def is_logged_in(self):
         return self.el(MainPage.BODY).get_attribute("data-logged-in") == "1"

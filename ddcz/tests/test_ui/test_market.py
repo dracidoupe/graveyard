@@ -1,5 +1,7 @@
 from enum import Enum
 
+from selenium.webdriver.common.by import By
+
 from .cases import SeleniumTestCase, MainPage
 from ..attack_strings import SCRIPT_ALERT_INPUT
 from ..model_generator import create_market_entries
@@ -29,11 +31,11 @@ class TestMarket(SeleniumTestCase):
         )
 
     def test_page_heading_present(self):
-        text = self.selenium.find_element_by_xpath('//h1[@class="page-heading"]').text
+        text = self.selenium.find_element(By.XPATH, '//h1[@class="page-heading"]').text
         self.assertEquals("Inzerce", text)
 
     def test_entry_text_rendered(self):
-        text = self.selenium.find_element_by_xpath(
-            '//div[@id="page-market"]//span[contains(@class, "market_text")]'
+        text = self.selenium.find_element(
+            By.XPATH, '//div[@id="page-market"]//span[contains(@class, "market_text")]'
         ).text
         self.assertEquals("Seller Text #0", text)

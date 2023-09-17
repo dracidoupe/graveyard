@@ -1,6 +1,8 @@
 from urllib.request import urlopen
 from django.conf import settings
 
+from selenium.webdriver.common.by import By
+
 from .cases import SeleniumTestCase
 
 
@@ -17,7 +19,7 @@ class TestNews(SeleniumTestCase):
         self.assertEquals("DraciDoupe.cz", self.selenium.title)
 
     def test_page_heading_present(self):
-        text = self.selenium.find_element_by_xpath(
-            '//h1[contains(@class,"page-heading")]'
+        text = self.selenium.find_element(
+            By.XPATH, '//h1[contains(@class,"page-heading")]'
         ).text
         self.assertEquals("Aktuality", text)
