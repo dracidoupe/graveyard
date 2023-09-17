@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0104_runes_and_userrating_table"),
     ]

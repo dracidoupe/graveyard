@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0126_creationvote_userprofile_fk"),
     ]

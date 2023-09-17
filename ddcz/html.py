@@ -298,7 +298,6 @@ def encode_valid_html(entity_string):
 
                         continue
                     else:
-
                         encoded_safe_string += char
                         current_character_index += 1
                         continue

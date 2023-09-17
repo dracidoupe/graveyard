@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0048_author_squashed_0050_author_anonymous"),
     ]

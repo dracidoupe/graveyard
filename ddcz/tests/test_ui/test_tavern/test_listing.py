@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 from ddcz.tavern import LIST_ALL
 from ..cases import SeleniumTestCase, MainPage
 from ...model_generator import get_alphabetic_user_profiles, get_tavern_tables
@@ -34,10 +36,11 @@ class TestTavernListing(SeleniumTestCase):
         )
 
     def select_listing(self, listing):
-        self.selenium.find_element_by_xpath(
+        self.selenium.find_element(
+            By.XPATH,
             TavernTableListPage.NAVIGATION_LIST_STYLE_TEMPLATE.value.format(
                 slug=listing
-            )
+            ),
         ).click()
 
     def assertTablesInListing(self, expected_tables):

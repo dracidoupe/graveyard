@@ -5,7 +5,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0100_fix_reputation_encoding"),
     ]

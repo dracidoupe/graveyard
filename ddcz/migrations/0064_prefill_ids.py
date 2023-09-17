@@ -15,7 +15,6 @@ def fill_mentat_ids(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0063_mentatnewbie_django_id"),
     ]

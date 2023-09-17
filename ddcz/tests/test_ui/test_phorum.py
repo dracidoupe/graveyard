@@ -1,5 +1,7 @@
 from enum import Enum
 
+from selenium.webdriver.common.by import By
+
 from .cases import SeleniumTestCase
 from ..attack_strings import SCRIPT_ALERT_INPUT
 from ..model_generator import get_alphabetic_user_profiles
@@ -34,24 +36,24 @@ class TestPhorum(SeleniumTestCase):
         self.el(PhorumPage.POST_SUBMIT).click()
 
     def test_page_heading_present(self):
-        text = self.selenium.find_element_by_xpath('//h1[@class="page-heading"]').text
+        text = self.selenium.find_element(By.XPATH, '//h1[@class="page-heading"]').text
         self.assertEquals("Fórum", text)
 
     def test_author_rendered(self):
-        text = self.selenium.find_element_by_xpath(
-            '//div[@id="page-phorum"]//span[@class="nick"]'
+        text = self.selenium.find_element(
+            By.XPATH, '//div[@id="page-phorum"]//span[@class="nick"]'
         ).text.strip()
         self.assertEquals(self.user_profile.nick, text)
 
     def test_comment_text_rendered(self):
-        text = self.selenium.find_element_by_xpath(
-            '//div[@id="page-phorum"]//p[@class="comment_text"]'
+        text = self.selenium.find_element(
+            By.XPATH, '//div[@id="page-phorum"]//p[@class="comment_text"]'
         ).text
         self.assertEquals(SCRIPT_ALERT_INPUT, text)
 
     def test_author_link_rendered(self):
-        url = self.selenium.find_element_by_xpath(
-            '//div[@id="page-phorum"]//span[@class="nick"]/a'
+        url = self.selenium.find_element(
+            By.XPATH, '//div[@id="page-phorum"]//span[@class="nick"]/a'
         ).get_attribute("href")
         self.assertIn(self.user_profile.slug, url)
         self.assertIn(str(self.user_profile.pk), url)

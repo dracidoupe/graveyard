@@ -16,7 +16,6 @@ def fill_ids(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0111_creationemailsubscription_django_id"),
     ]

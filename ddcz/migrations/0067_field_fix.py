@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0066_mentat_fix_autoincrement"),
     ]

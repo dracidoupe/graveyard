@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0078_taverntablevisitor_django_id"),
     ]
