@@ -745,7 +745,7 @@ class DownloadItem(Creation):
 
 
 class Quest(Creation):
-    abstract = models.TextField(db_column="anotace")
+    abstract = MisencodedTextField(db_column="anotace")
     path = models.TextField(blank=True, null=True, db_column="cesta")
     keywords = models.TextField(db_column="klicsl")
 
