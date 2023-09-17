@@ -160,6 +160,12 @@ Old setuptools: `pip install setuptools -U`
 
 Use ``python manage.py registeruser`` command, see ``manage.py registeruser --help`` for parameters.
 
+Example:
+
+```
+python manage.py registeruser mytestuser mytestuser@example.com logintograveyard
+```
+
 ### Debugging with Django Debug Toolbar
 
 * `pip install django-debug-toolbar==2.2.1`
