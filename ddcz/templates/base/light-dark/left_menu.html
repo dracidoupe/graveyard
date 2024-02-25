@@ -40,7 +40,9 @@
                     <span class="list_subheading">Všeobecné</span>
                     <ul class="list_box">
                         <li><a href="{% url 'ddcz:creation-list' creative_page_slug='downloady' %}">Downloady</a></li>
-                        <li><a href="{% url 'ddcz:links-list' %}">Linky</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'ddcz:links-list' %}">Linky</a></li>
+                        {% endif %}
                         <li><a href="{% url 'ddcz:creation-list' creative_page_slug='expanze' %}">Rozvoj DrD</a></li>
                     </ul>
                 </li>
