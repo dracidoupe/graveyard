@@ -11,7 +11,10 @@ DATABASES = {
         "USER": "root",
         "HOST": "db",
         "PASSWORD": "docker",
-        "OPTIONS": {"charset": "latin2"},
+        "OPTIONS": {
+            "init_command": "SET NAMES 'latin2';SET sql_mode='STRICT_TRANS_TABLES';",
+            "charset": "latin2",
+        },
         "TEST": {
             "NAME": "test_dracidoupe_cz",
             "CHARSET": "latin2",

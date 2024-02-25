@@ -29,7 +29,10 @@ DATABASES = {
         "PASSWORD": os.environ["DB_PASSWORD"],
         "PORT": os.environ["DB_PORT"],
         "CONN_MAX_AGE": 60,
-        "OPTIONS": {"charset": "latin2"},
+        "OPTIONS": {
+            'init_command': "SET NAMES 'latin2';SET sql_mode='STRICT_TRANS_TABLES';",
+            "charset": "latin2"
+            },
     }
 }
 

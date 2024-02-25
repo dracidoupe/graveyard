@@ -2,19 +2,22 @@
 
 from django.db import models
 
-from ..magic import MisencodedTextField
+from ..magic import MisencodedTextField, MisencodedCharField
 
 
 class EditorArticle(models.Model):
     """Static editor article written by editors and maintained via admin"""
 
-    title = models.CharField(max_length=40, verbose_name="Jméno")
+    title = MisencodedCharField(max_length=40, verbose_name="Jméno")
     slug = models.CharField(max_length=40, unique=True)
-    text = models.TextField()
+    text = MisencodedTextField()
 
     class Meta:
         verbose_name = "Redakční článek"
         verbose_name_plural = "Redakční články"
+
+    def __str__(self):
+        return self.title
 
 
 class News(models.Model):
