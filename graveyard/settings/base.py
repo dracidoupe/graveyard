@@ -1,6 +1,7 @@
 """
 Django settings for DDCZ project.
 """
+
 from datetime import datetime
 import logging
 import os, os.path
