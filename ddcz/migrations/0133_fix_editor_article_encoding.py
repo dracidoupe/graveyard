@@ -10,8 +10,16 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL("ALTER TABLE ddcz_editorarticle CONVERT TO CHARACTER SET latin2 COLLATE latin2_czech_cs;"),
-        migrations.RunSQL("ALTER TABLE ddcz_editorarticle MODIFY title VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;"),
-        migrations.RunSQL("ALTER TABLE ddcz_editorarticle MODIFY slug VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;"),
-        migrations.RunSQL("ALTER TABLE ddcz_editorarticle MODIFY text LONGTEXT CHARACTER SET latin2 COLLATE latin2_czech_cs;"),
+        migrations.RunSQL(
+            "ALTER TABLE ddcz_editorarticle CONVERT TO CHARACTER SET latin2 COLLATE latin2_czech_cs;"
+        ),
+        migrations.RunSQL(
+            "ALTER TABLE ddcz_editorarticle MODIFY title VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;"
+        ),
+        migrations.RunSQL(
+            "ALTER TABLE ddcz_editorarticle MODIFY slug VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;"
+        ),
+        migrations.RunSQL(
+            "ALTER TABLE ddcz_editorarticle MODIFY text LONGTEXT CHARACTER SET latin2 COLLATE latin2_czech_cs;"
+        ),
     ]
