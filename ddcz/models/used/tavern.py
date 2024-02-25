@@ -185,9 +185,9 @@ class TavernTable(models.Model):
             )
             processing_privileges.add(TavernAccessRights.ACCESS_BANNED)
         if assistant_admins is not None:
-            unprocessed_access_map[
-                TavernAccessRights.ASSISTANT_ADMIN
-            ] = assistant_admins
+            unprocessed_access_map[TavernAccessRights.ASSISTANT_ADMIN] = (
+                assistant_admins
+            )
             processing_privileges.add(TavernAccessRights.ASSISTANT_ADMIN)
 
         self.update_legacy_privileges(
