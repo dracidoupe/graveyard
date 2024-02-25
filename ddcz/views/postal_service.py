@@ -78,7 +78,7 @@ def handle_postal_service_post_request(request):
             logger.info(f"Letter receiver {receiver_nick} could not be found")
             messages.error(
                 request,
-                f"Helimardovi se nepodařilo nalézt nikoho se jménem f{receiver_nick}. Ověřte prosím jeho práci v seznamu uživatelů a případně dejte vědět, zda si zaslouží nášup při dalším krmení.",
+                f"Helimardovi se nepodařilo nalézt nikoho se jménem {receiver_nick}. Ověřte prosím jeho práci v seznamu uživatelů a případně dejte vědět, zda si zaslouží nášup při dalším krmení.",
             )
             return HttpResponseRedirect(request.get_full_path())
 
