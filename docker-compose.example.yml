@@ -1,26 +1,33 @@
-version: '3'
+version: '3.9'
 
-services:  
-  db:
-    image: mysql:5.5
-    volumes:
-      - .db:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=docker
-      - MYSQL_DATABASE=dracidoupe_cz
+services:
+
   web:
-    build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    build:
+      context: .docker/web
+      dockerfile: Dockerfile
+    depends_on:
+      - db
     volumes:
       - .:/code
     ports:
       - "8000:8000"
-        - "32768-65535"
-    depends_on:
-      - db
+    command: /bin/bash -c "python3 manage.py runserver 0.0.0.0:8000"
+
+  db:
+    build:
+      context: .docker/database
+      dockerfile: Dockerfile
+    volumes:
+      - .docker/database/.db-data:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD=docker
+      - MARIADB_DATABASE=dracidoupe_cz
+
   adminer:
     image: adminer
-    links:
-      - db
     ports:
-      - 81:80
+      - "8080:8080"
+    depends_on:
+      - db
+

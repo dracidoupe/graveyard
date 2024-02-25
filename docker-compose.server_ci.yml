@@ -5,6 +5,7 @@ version: '3'
 # See https://circleci.com/docs/2.0/executor-types/
 
 services:
+
   db:
     image: mysql:5.5
     environment:
@@ -13,8 +14,12 @@ services:
   web:
     environment:
       - SERVER_CI=true
-    build: .
+    build:
+      context: .docker/web
+      dockerfile: Dockerfile
     command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
     expose:
       - "8000"
       - "32768-65535"
