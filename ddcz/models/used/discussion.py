@@ -61,15 +61,15 @@ class CreationComment(models.Model):
 
 class Letter(models.Model):
     # TODO: Migrate those to have a profile_id relation, same as with Phorum posts etc.
-    sender = models.CharField(max_length=25, db_column="odesilatel")
-    receiver = models.CharField(max_length=25, db_column="prijemce")
+    sender = MisencodedCharField(max_length=25, db_column="odesilatel")
+    receiver = MisencodedCharField(max_length=25, db_column="prijemce")
     # TODO: Make this enum for readability
     # 3 = visible for both
     # 2 = visible for receiver only
     # 1 = visible for sender only
     # 0 = deleted by both, should be pruned
     visibility = models.CharField(max_length=1, db_column="viditelnost")
-    text = models.TextField()
+    text = MisencodedTextField()
     date = models.DateTimeField(db_column="datum")
 
     class Meta:
