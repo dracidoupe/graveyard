@@ -5,25 +5,28 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ddcz', '0130_runes_encoding_20230917_1920'),
+        ("ddcz", "0130_runes_encoding_20230917_1920"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='letter',
-            name='receiver',
-            field=ddcz.models.magic.MisencodedCharField(db_column='prijemce', max_length=25),
+            model_name="letter",
+            name="receiver",
+            field=ddcz.models.magic.MisencodedCharField(
+                db_column="prijemce", max_length=25
+            ),
         ),
         migrations.AlterField(
-            model_name='letter',
-            name='sender',
-            field=ddcz.models.magic.MisencodedCharField(db_column='odesilatel', max_length=25),
+            model_name="letter",
+            name="sender",
+            field=ddcz.models.magic.MisencodedCharField(
+                db_column="odesilatel", max_length=25
+            ),
         ),
         migrations.AlterField(
-            model_name='letter',
-            name='text',
+            model_name="letter",
+            name="text",
             field=ddcz.models.magic.MisencodedTextField(),
         ),
     ]
