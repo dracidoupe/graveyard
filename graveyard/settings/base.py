@@ -6,7 +6,7 @@ from datetime import datetime
 import logging
 import os, os.path
 import sys
-from tempfile import gettempdir, mkdtemp
+from tempfile import gettempdir
 
 logger = logging.getLogger(__name__)
 
@@ -156,31 +156,15 @@ AWS_DEFAULT_ACL = None  # Default to bucket settings
 
 # Which email address we are sending transaction emails from
 DDCZ_TRANSACTION_EMAIL_FROM = "noreply@example.com"
-if ENVIRONMENT == "production":
-    EMAIL_FAIL_SILENTLY = False
-    EMAIL_LINKS_BASE_URI = "https://www.dracidoupe.cz"
-else:
-    EMAIL_FAIL_SILENTLY = True
-    EMAIL_LINKS_BASE_URI = "http://localhost:8000"
+EMAIL_FAIL_SILENTLY = True
+EMAIL_LINKS_BASE_URI = "http://localhost:8000"
 
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-
-    maildir = os.path.join(gettempdir(), "ddcz-devserver-emails")
-    if not os.path.exists(maildir):
-        try:
-            os.mkdir(maildir)
-        except BaseException:
-            maildir = None
-    elif not os.access(maildir, os.W_OK):
-        maildir = None
-
-    if not maildir:
-        maildir = mkdtemp(prefix="ddcz-devserver-emails-")
-
-    EMAIL_FILE_PATH = maildir
-
-    # print(f"Emails are NOT sent and stored in  {EMAIL_FILE_PATH} instead")
-
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# This is a spammy stopgap measure; you should override it, see local.example.py
+# Not including it here as a default to avoid creating a directory on server startup
+# to support a use case of running on RO webserver container
+EMAIL_FILE_PATH = gettempdir()
+# It's a bit questionable to up temporary dir on sever start
 
 # Hostname for selenium hub for tests. None means running locally
 SELENIUM_HUB_HOST = None

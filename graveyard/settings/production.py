@@ -30,9 +30,9 @@ DATABASES = {
         "PORT": os.environ["DB_PORT"],
         "CONN_MAX_AGE": 60,
         "OPTIONS": {
-            'init_command': "SET NAMES 'latin2';SET sql_mode='STRICT_TRANS_TABLES';",
-            "charset": "latin2"
-            },
+            "init_command": "SET NAMES 'latin2';SET sql_mode='STRICT_TRANS_TABLES';",
+            "charset": "latin2",
+        },
     }
 }
 
@@ -85,6 +85,8 @@ sentry_sdk.init(
 )
 
 # Production way of sending email
+EMAIL_FAIL_SILENTLY = False
+EMAIL_LINKS_BASE_URI = "https://www.dracidoupe.cz"
 EMAIL_HOST = os.environ.get("MAILGUN_SMTP_SERVER", "")
 EMAIL_PORT = os.environ.get("MAILGUN_SMTP_PORT", "")
 EMAIL_HOST_USER = os.environ.get("MAILGUN_SMTP_LOGIN", "")
