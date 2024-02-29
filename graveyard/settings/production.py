@@ -60,10 +60,10 @@ CACHES = {
 
 WSGI_APPLICATION = "graveyard.wsgi.application"
 
-ALLOWED_HOSTS = ["nove.dracidoupe.cz"]
+ALLOWED_HOSTS = ["www.dracidoupe.cz", "nove.dracidoupe.cz"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = "https://nove.dracidoupe.cz/staticfiles/"
+STATIC_URL = "https://www.dracidoupe.cz/staticfiles/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ## User-uploaded content that is hosted on S3/cloudfront
