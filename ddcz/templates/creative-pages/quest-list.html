@@ -17,7 +17,7 @@
     <ul class="article-list">
     {% for a in articles %}
         <li class="creation-detail">
-            <h2><a href="{% url 'ddcz:quest-view' quest_id=a.id %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
+            <h2><a href="{% url 'ddcz:quest-view' quest_id=a.id quest_slug=a.get_slug %}">{{ a.name }}</a>{% creation_rating a.rating skin %}</h2>
             <p>{{  a.abstract }}</p>
 
             <div class="table-like">

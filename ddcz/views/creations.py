@@ -319,8 +319,16 @@ def download_file(request, download_id):
 
 
 @require_http_methods(["HEAD", "GET"])
-def quest_view_redirect(request, quest_id, dash_slug=None):
+def quest_view_redirect(request, quest_id, quest_slug=None):
     quest = get_object_or_404(Quest, pk=quest_id)
+    if quest_slug is None:
+        return HttpResponsePermanentRedirect(
+            reverse(
+                "ddcz:quest-view",
+                kwargs={"quest_id": quest_id, "quest_slug": quest.get_slug()},
+            )
+        )
+
     quest.read += 1
     quest.save()
     return HttpResponseRedirect(quest.get_final_url())

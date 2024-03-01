@@ -55,7 +55,12 @@ urlpatterns = [
     # Those are for executing redirect to download/quest location
     path("download/<int:download_id>/", views.download_file, name="download-file"),
     path(
-        "dobrodruzstvi/<int:quest_id>-?<quest-slug>?/",
+        "dobrodruzstvi/<int:quest_id>/",
+        views.quest_view_redirect,
+        name="quest-view-legacy-redirect",
+    ),
+    re_path(
+        "dobrodruzstvi/(?P<quest_id>\d+)-(?P<quest_slug>[a-zA-Z0-9_-]+)/$",
         views.quest_view_redirect,
         name="quest-view",
     ),
