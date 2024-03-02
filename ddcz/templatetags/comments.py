@@ -30,6 +30,7 @@ def creation_comments(context, creative_page_slug, creation_pk):
         "user": context["user"],
         "skin": context["skin"],
         "creation_comment_form": context["creation_comment_form"],
+        "display_comment_header": True,
     }
 
 
