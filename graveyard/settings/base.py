@@ -85,6 +85,9 @@ TEMPLATES = [
     },
 ]
 
+# "To avoid unwanted migrations in the future"
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Login configuration
 LOGIN_REDIRECT_URL = "ddcz:news"
 LOGIN_URL = "ddcz:news"
