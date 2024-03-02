@@ -7,6 +7,8 @@ from .pages_tavern import TavernTableListPage, TavernTablePostPage
 
 
 class TestTavernPosts(SeleniumTestCase):
+    reset_sequences = True
+
     def setUp(self):
         super().setUp()
 
