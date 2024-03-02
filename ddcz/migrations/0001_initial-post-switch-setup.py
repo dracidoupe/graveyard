@@ -23,6 +23,9 @@ import django.db.models.deletion
 # ddcz.migrations.0112_emaillist_autofill
 # ddcz.migrations.0122_creationvote_datafill
 
+# As part of upgrade to Django 1.1, some migrations were commented out as migration to primary key
+# creates the respective index automatically, which wasn't the case before and was causing duplicate primary key issues
+
 
 class Migration(migrations.Migration):
 
@@ -6126,12 +6129,12 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             sql="ALTER TABLE `mentat_newbie` DROP PRIMARY KEY;",
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE mentat_newbie MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
-        ),
-        migrations.RunSQL(
-            sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM mentat_newbie);\n                SET @s = CONCAT('ALTER TABLE mentat_newbie AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE mentat_newbie MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM mentat_newbie);\n                SET @s = CONCAT('ALTER TABLE mentat_newbie AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
+        # ),
         migrations.AlterField(
             model_name="mentatnewbie",
             name="django_id",
@@ -6408,12 +6411,12 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             sql="ALTER TABLE `putyka_book` DROP PRIMARY KEY;",
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE putyka_book MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
-        ),
-        migrations.RunSQL(
-            sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM putyka_book);\n                SET @s = CONCAT('ALTER TABLE putyka_book AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE putyka_book MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM putyka_book);\n                SET @s = CONCAT('ALTER TABLE putyka_book AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
+        # ),
         migrations.AlterField(
             model_name="tavernbookmark",
             name="django_id",
@@ -6466,12 +6469,12 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             sql="ALTER TABLE `putyka_pristup` DROP PRIMARY KEY;",
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE putyka_pristup MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
-        ),
-        migrations.RunSQL(
-            sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM putyka_pristup);\n                SET @s = CONCAT('ALTER TABLE putyka_pristup AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE putyka_pristup MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM putyka_pristup);\n                SET @s = CONCAT('ALTER TABLE putyka_pristup AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
+        # ),
         migrations.AlterField(
             model_name="tavernaccess",
             name="django_id",
@@ -6529,12 +6532,12 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             sql="ALTER TABLE `putyka_uzivatele` DROP PRIMARY KEY;",
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE putyka_uzivatele MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
-        ),
-        migrations.RunSQL(
-            sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM putyka_uzivatele);\n                SET @s = CONCAT('ALTER TABLE putyka_uzivatele AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE putyka_uzivatele MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM putyka_uzivatele);\n                SET @s = CONCAT('ALTER TABLE putyka_uzivatele AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
+        # ),
         migrations.AlterField(
             model_name="taverntablevisitor",
             name="django_id",
@@ -11330,12 +11333,12 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             sql="ALTER TABLE `uzivatele_maillist` DROP PRIMARY KEY;",
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE uzivatele_maillist MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
-        ),
-        migrations.RunSQL(
-            sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM uzivatele_maillist);\n                SET @s = CONCAT('ALTER TABLE uzivatele_maillist AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE uzivatele_maillist MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM uzivatele_maillist);\n                SET @s = CONCAT('ALTER TABLE uzivatele_maillist AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
+        # ),
         migrations.AlterField(
             model_name="creationemailsubscription",
             name="django_id",
@@ -11404,12 +11407,12 @@ class Migration(migrations.Migration):
         migrations.RunSQL(
             sql="ALTER TABLE `hlasovani_prispevky` DROP PRIMARY KEY;",
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE hlasovani_prispevky MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
-        ),
-        migrations.RunSQL(
-            sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM hlasovani_prispevky);\n                SET @s = CONCAT('ALTER TABLE hlasovani_prispevky AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE hlasovani_prispevky MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="\n                SET @m = (SELECT IFNULL(MAX(django_id) + 1, 1) FROM hlasovani_prispevky);\n                SET @s = CONCAT('ALTER TABLE hlasovani_prispevky AUTO_INCREMENT=', @m);\n                PREPARE stmt1 FROM @s;\n                EXECUTE stmt1;\n                DEALLOCATE PREPARE stmt1;\n            ",
+        # ),
         migrations.AlterField(
             model_name="creationvote",
             name="django_id",
