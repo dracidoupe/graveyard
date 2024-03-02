@@ -24,12 +24,19 @@ class PasswordResetForm(authforms.PasswordResetForm):
         """
 
         user_profiles = UserProfile.objects.filter(email__iexact=email)
+        users = []
 
         # Allow resetting password of users that were not migrated yet
         # This is the only moment beside login that supports migration
         for up in user_profiles:
             if not up.user:
                 migrate_user(profile=up)
+            if up.user and up.user.is_active:
+                user = up.user
+                # This is a bit hacky as we rely on Django not to save the changed email field,
+                # however it's good enough hack to make emails to be sent for now.
+                # Reconsider email handling once we're fully migrated and on lates Django
+                user.email = up.email
 
         users = tuple(
             list(
