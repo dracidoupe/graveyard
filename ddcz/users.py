@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 
@@ -11,6 +13,9 @@ def migrate_user(profile, password=""):
     If the password is not given (because i.e. migration is happening on a password reset field),
     it's set to unusable password and password reset is required before logging in.
     """
+    if not profile.last_login:
+        profile.last_login = datetime.now()
+
     user = User.objects.create_user(
         id=profile.id,
         username=profile.nick,
@@ -26,7 +31,6 @@ def migrate_user(profile, password=""):
         user.save()
 
     # TODO: Presumably, we could fix more things during migration...like foreign keys.
-
     return user
 
 
