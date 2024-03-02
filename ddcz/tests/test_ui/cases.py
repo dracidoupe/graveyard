@@ -3,7 +3,7 @@ import socket
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.utils.decorators import classproperty
+from django.utils.functional import classproperty
 
 from selenium import webdriver
 from selenium.webdriver.chromium.options import ChromiumOptions

@@ -1,5 +1,5 @@
-Django>=3.0.0,<3.1
-mysqlclient
+Django>=3.1.0,<3.2
+mysqlclient>=1.4.0,<2.0
 gunicorn
 sqlparse
 argon2-cffi
