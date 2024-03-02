@@ -5,12 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-    replaces = [
-        ("ddcz", "0048_author"),
-        ("ddcz", "0049_author_rename"),
-        ("ddcz", "0050_author_anonymous"),
-    ]
-
     dependencies = [
         ("ddcz", "0047_quests_rename"),
     ]
