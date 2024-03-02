@@ -4,21 +4,24 @@
 {% load users %}
 
 <section class="comments">
-    {% pagination comments %}
-    <h3>Diskuze</h3>
-
-    {% if user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            {% for error in creation_comment_form.non_field_errors %}
-                <div class="form-error">
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-            {{ creation_comment_form.as_p }}
-            <input type="submit" name="submit" value="Přidej" class="comment__submit">
-        </form>
+    {% comment %} Comment header is displayed in Creation comments, but not in Tavern {% endcomment %}
+    {% if display_comment_header %}
+        <h3>Diskuze</h3>
+        {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                {% for error in creation_comment_form.non_field_errors %}
+                    <div class="form-error">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+                {{ creation_comment_form.as_p }}
+                <input type="submit" name="submit" value="Přidej" class="comment__submit">
+            </form>
+        {% endif %}
     {% endif %}
+
+    {% pagination comments %}
 
     {% for comment in comments %}
         <article class="comment">
