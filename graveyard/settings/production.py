@@ -85,6 +85,7 @@ sentry_sdk.init(
 )
 
 # Production way of sending email
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_FAIL_SILENTLY = False
 EMAIL_LINKS_BASE_URI = "https://www.dracidoupe.cz"
 EMAIL_HOST = os.environ.get("MAILGUN_SMTP_SERVER", "")
