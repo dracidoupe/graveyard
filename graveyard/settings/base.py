@@ -151,7 +151,7 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 AWS_STORAGE_BUCKET_NAME = "uploady.dracidoupe.cz"
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_CUSTOM_DOMAIN = "uploady.dracidoupe.cz"
-AWS_S3_SECURE_URLS = False
+AWS_S3_SECURE_URLS = True
 AWS_DEFAULT_ACL = None  # Default to bucket settings
 
 # Which email address we are sending transaction emails from
