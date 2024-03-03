@@ -30,28 +30,23 @@ class PasswordResetForm(authforms.PasswordResetForm):
         # This is the only moment beside login that supports migration
         for up in user_profiles:
             if not up.user:
+                logger.info(f"Migrating user profile {up.nick} to Django user")
                 migrate_user(profile=up)
             if up.user and up.user.is_active:
                 user = up.user
-                # This is a bit hacky as we rely on Django not to save the changed email field,
+                # This is a bit hacky as we rely on Django not to save the changed email field (as we do not want to store email on Django field for time being),
                 # however it's good enough hack to make emails to be sent for now.
                 # Reconsider email handling once we're fully migrated and on lates Django
                 user.email = up.email
-
-        users = tuple(
-            list(
-                up.user
-                for up in user_profiles
-                # Note that we are allowing password reset for users with unusable password; we expect not to
-                # be using SSO etc.
-                # Banned users should have is_active = False
-                if up.user and up.user.is_active
-            )
-        )
+                users.append(user)
+            else:
+                logger.warn(
+                    f"NOT selecting user {up.nick} as a password reset candidate since user is not active or migration failed"
+                )
 
         logger.info(
             "Selected users for password reset: %s"
             % ", ".join([str(u.pk) for u in users])
         )
 
-        return users
+        return tuple(users)
