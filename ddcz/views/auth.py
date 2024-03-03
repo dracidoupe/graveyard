@@ -1,4 +1,5 @@
 from hashlib import md5
+import logging
 
 from django.conf import settings
 from django.contrib import messages
@@ -20,6 +21,8 @@ from django.views.decorators.http import require_http_methods
 from ..forms.authentication import LoginForm, PasswordResetForm
 from ..forms.signup import SignUpForm
 from ..users import migrate_user, logout_user_without_losing_session
+
+logger = logging.getLogger(__name__)
 
 
 @require_http_methods(["POST"])
@@ -94,6 +97,7 @@ def login(request):
             )
 
             if not user:
+                logger.error(f"Error when migrating user {form.cleaned_data["nick"]} to User table, see logs")
                 return HttpResponseServerError(
                     "Chyba během migrace na nový systém! Prosím kontaktujte Almada"
                 )
