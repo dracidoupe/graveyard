@@ -97,7 +97,9 @@ def login(request):
             )
 
             if not user:
-                logger.error(f"Error when migrating user {form.cleaned_data["nick"]} to User table, see logs")
+                logger.error(
+                    f"Error when migrating user {form.cleaned_data['nick']} to User table, see logs"
+                )
                 return HttpResponseServerError(
                     "Chyba během migrace na nový systém! Prosím kontaktujte Almada"
                 )
