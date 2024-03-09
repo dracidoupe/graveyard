@@ -3,13 +3,18 @@ from django.views.generic.base import RedirectView, TemplateView
 
 from . import views
 from .views import news, tavern, misc, email
-from .views.legacy import legacy_router
+from .views.legacy import legacy_router, print_legacy_router
 
 app_name = "ddcz"
 
 urlpatterns = [
     path("", RedirectView.as_view(url="aktuality/", permanent=True)),
     path("index.php", legacy_router, name="legacy-router"),
+    re_path(
+        "code/(?P<page_category>[a-zA-Z0-9_-]+)/(?P<page_category_second>[a-zA-Z0-9_-]+)_tisk.php",
+        print_legacy_router,
+        name="legacy-router-print",
+    ),
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),

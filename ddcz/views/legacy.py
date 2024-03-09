@@ -1,7 +1,7 @@
 import logging
 from django.apps import apps
 from ddcz.models.used.creations import Creation, CreativePage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls.base import reverse
@@ -48,6 +48,11 @@ COMMON_ARTICLES_NAME_MAP = {
     "zlodej": "zlodej",
     "novapovolani": "novapovolani",
     "noverasy": "noverasy",
+}
+
+PRINT_CATEGORIES_TO_CREATIVE_PAGE_MAP = {
+    "dovednosti": "dovednosti",
+    "hranicarkouzla": "hranicar",
 }
 
 
@@ -123,7 +128,7 @@ def get_creation_detail_redirect(page, article_id):
     app, class_name = page.model_class.split(".")
     model = apps.get_model(app, class_name)
     article = get_object_or_404(model, id=article_id)
-    return HttpResponseRedirect(
+    return HttpResponsePermanentRedirect(
         reverse(
             "ddcz:creation-detail",
             kwargs={
@@ -133,3 +138,19 @@ def get_creation_detail_redirect(page, article_id):
             },
         )
     )
+
+
+@require_http_methods(["HEAD", "GET"])
+def print_legacy_router(request, page_category, page_category_second):
+    id = request.GET.get("id", False)
+
+    if page_category in ALLOWED_CREATION_PAGES:
+        page = CreativePage.objects.get(slug=page_category)
+        return get_creation_detail_redirect(page, id)
+    else:
+        raise ValueError(id)
+    ###  Finally if no route is found, redirect to news and log
+    logger.warning(
+        f"Bad print redirect: No redirect could be found for a legacy URL {request.get_full_path()}"
+    )
+    return HttpResponseRedirect(reverse("ddcz:news"))
