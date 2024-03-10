@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.urls import path, re_path
 from django.views.generic.base import RedirectView, TemplateView
 
@@ -8,12 +9,18 @@ from .views.legacy import legacy_router, print_legacy_router
 app_name = "ddcz"
 
 urlpatterns = [
-    path("", RedirectView.as_view(url="aktuality/", permanent=True)),
+    path("", RedirectView.as_view(url="aktuality/", permanent=False)),
+    ### Legacy redirects from stare.dracidoupe.cz
     path("index.php", legacy_router, name="legacy-router"),
     re_path(
         "code/(?P<page_category>[a-zA-Z0-9_-]+)/(?P<page_category_second>[a-zA-Z0-9_-]+)_tisk.php",
         print_legacy_router,
         name="legacy-router-print",
+    ),
+    re_path(
+        r"^ikonky/(?P<file>.+)$",
+        RedirectView.as_view(url=f"{settings.USER_ICON_MEDIA_ROOT_URL}%(file)s"),
+        name="redirect_ikonky",
     ),
     ### Common pages for bots etc.
     path(
