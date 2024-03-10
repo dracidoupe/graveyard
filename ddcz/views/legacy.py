@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 CREATION_LIST = ["prispevky", "prispevky_komp"]
 CREATION_DETAIL = "prispevky_precti"
-USER_DETAIL = "uzivatele_podrobnosti"
+USER_DETAIL = ["uzivatele_podrobnosti", "runy_ciziod", "runy_cizipro"]
 
 # Forbidden dictionary keys for PAGE_TO_VIEW_MAP:
 #  - Anything from CREATION and CREATION_DETAIL
@@ -107,7 +107,8 @@ def legacy_router(request):
         return get_creation_detail_redirect(page, id)
 
     # For index.php?rub=uzivatele_podrobnosti&skin=light&id=13591
-    if page_category == USER_DETAIL and id is not False:
+    # Also for runes, just redirect here
+    if page_category in USER_DETAIL and id is not False:
         user_profile = get_object_or_404(UserProfile)
         return HttpResponsePermanentRedirect(
             reverse(
