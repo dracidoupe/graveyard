@@ -22,6 +22,8 @@ urlpatterns = [
         RedirectView.as_view(url=f"{settings.USER_ICON_MEDIA_ROOT_URL}%(file)s"),
         name="redirect_ikonky",
     ),
+    # It's gone, Dave
+    re_path(r"^moudrasova/", RedirectView.as_view()),
     ### Common pages for bots etc.
     path(
         "robots.txt",
