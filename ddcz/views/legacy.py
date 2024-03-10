@@ -38,6 +38,7 @@ PAGE_TO_VIEW_MAP = {
     "faq": "ddcz:website-manual",
     "oao": "ddcz:faq",
     "cojetodrd": "ddcz:about-drd",
+    "posta": "ddcz:postal-service",
 }
 
 COMMON_ARTICLES_NAME_MAP = {
