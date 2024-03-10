@@ -15,6 +15,7 @@ urlpatterns = [
         print_legacy_router,
         name="legacy-router-print",
     ),
+    ### Common pages for bots etc.
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
@@ -26,6 +27,15 @@ urlpatterns = [
     path(
         ".well-known/security.txt",
         TemplateView.as_view(template_name="security.txt", content_type="text/plain"),
+    ),
+    # Prefetch for Google Chrome
+    # Courtesy of https://webmasters.stackexchange.com/a/139570
+    path(
+        ".well-known/traffic-advice",
+        TemplateView.as_view(
+            template_name="traffic-advice.json",
+            content_type="application/trafficadvice+json",
+        ),
     ),
     ### Creations and Creative Pages
     path(
