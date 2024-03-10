@@ -1,7 +1,14 @@
+from typing import Any
 from django.template import Context, Template
 from django.test import Client, TestCase
 
-from ddcz.models import ApprovalChoices, CommonArticle, RangerSpell, Skill, Quest
+from ddcz.models import (
+    ApprovalChoices,
+    RangerSpell,
+    Skill,
+    UserProfile,
+    Quest,
+)
 
 
 class RedirectTestCase(TestCase):
@@ -60,3 +67,17 @@ class TestRangerSpellRedirect(RedirectTestCase):
             f"/code/hranicarkouzla/hranicarkouzla_tisk.php?id={self.creation.id}",
             "/rubriky/hranicarkouzla",
         )
+
+
+class TestUserProfileRedirect(TestCase):
+    def setUp(self):
+        super().setUp()
+        self.user = UserProfile.objects.create(id=1, nick="test")
+        self.client = Client()
+
+    def test_redirect(self):
+        response = self.client.get(
+            f"/index.php?rub=uzivatele_podrobnosti&skin=light&id={self.user.id}"
+        )
+        self.assertEquals(response.status_code, 301)
+        self.assertEquals(response.url, f"/uzivatel/{self.user.id}-test/")

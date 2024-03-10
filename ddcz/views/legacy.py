@@ -1,12 +1,14 @@
 import logging
+
 from django.apps import apps
-from ddcz.models.used.creations import Creation, CreativePage
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls.base import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_http_methods
+
+from ddcz.models import CreativePage, UserProfile
 
 
 logger = logging.getLogger(__name__)
@@ -18,6 +20,7 @@ logger = logging.getLogger(__name__)
 
 CREATION_LIST = ["prispevky", "prispevky_komp"]
 CREATION_DETAIL = "prispevky_precti"
+USER_DETAIL = "uzivatele_podrobnosti"
 
 # Forbidden dictionary keys for PAGE_TO_VIEW_MAP:
 #  - Anything from CREATION and CREATION_DETAIL
@@ -102,6 +105,19 @@ def legacy_router(request):
         page = get_object_or_404(CreativePage, slug=page_creation_type)
         return get_creation_detail_redirect(page, id)
 
+    # For index.php?rub=uzivatele_podrobnosti&skin=light&id=13591
+    if page_category == USER_DETAIL and id is not False:
+        user_profile = get_object_or_404(UserProfile)
+        return HttpResponsePermanentRedirect(
+            reverse(
+                "ddcz:user-detail",
+                kwargs={
+                    "user_profile_id": user_profile.id,
+                    "nick_slug": user_profile.slug,
+                },
+            )
+        )
+
     # There are some special creative pages that are not stored
     # as the others, those have their own tables in the database.
     # For those we have lists and details in this for loop.
@@ -147,8 +163,7 @@ def print_legacy_router(request, page_category, page_category_second):
     if page_category in ALLOWED_CREATION_PAGES:
         page = CreativePage.objects.get(slug=page_category)
         return get_creation_detail_redirect(page, id)
-    else:
-        raise ValueError(id)
+
     ###  Finally if no route is found, redirect to news and log
     logger.warning(
         f"Bad print redirect: No redirect could be found for a legacy URL {request.get_full_path()}"
