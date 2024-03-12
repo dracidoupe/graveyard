@@ -109,7 +109,7 @@ def legacy_router(request):
     # For index.php?rub=uzivatele_podrobnosti&skin=light&id=13591
     # Also for runes, just redirect here
     if page_category in USER_DETAIL and id is not False:
-        user_profile = get_object_or_404(UserProfile)
+        user_profile = get_object_or_404(UserProfile, id=id)
         return HttpResponsePermanentRedirect(
             reverse(
                 "ddcz:user-detail",
