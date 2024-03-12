@@ -83,11 +83,11 @@
                 {% endif %}
                 <tr>
                     <th>Naposledy spatřen{% if profile.is_female %}a{% endif %} </th>
-                    <td>{{ profile.last_login | articleTime }}</td>
+                    <td>{% if profile.last_login %}{{ profile.last_login | articleTime }}{% else %}V dávné historii{% endif %}</td>
                 </tr>
                 <tr>
                     <th>Registrován{% if profile.is_female %}a{% endif %} </th>
-                    <td>{{ profile.registration_date | articleTime }}</td>
+                    <td>{% if profile.registration_date %}{{ profile.registration_date | articleTime }}{% else %}V dávné historii{% endif %}</td>
                 </tr>
             </table>
         </section>
@@ -144,7 +144,7 @@
                 <section class="rune_date">{{ rune.date | commentTime }}</section>
             </section>
             {% endfor %}
-        </section>            
+        </section>
         {% endif %}
 
     </div>
