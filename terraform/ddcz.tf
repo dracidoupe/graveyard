@@ -28,6 +28,7 @@ provider "aws" {
 
 locals {
   internet_cidr       = "0.0.0.0/0"
+  ipv6_internet_cidr  = "::/0"
   az                  = "eu-central-1b"
   secondary_az        = "eu-central-1a"
   user_uploads_domain = "uploady.dracidoupe.cz"
@@ -35,6 +36,13 @@ locals {
   heroku_az           = "eu-west-1b"
   heroku_secondary_az = "eu-west-1a"
 
+  eu_central_vpc_cidr      = "2a05:d014:1f64:7900::/56"
+  eu_central_subnet_1_cidr = "2a05:d014:1f64:7900::/64"
+  eu_central_subnet_2_cidr = "2a05:d014:1f64:7901::/64"
+
+  eu_west_vpc_cidr      = "2a05:d018:193b:a400::/56"
+  eu_west_subnet_1_cidr = "2a05:d018:193b:a400::/64"
+  eu_west_subnet_2_cidr = "2a05:d018:193b:a401::/64"
 }
 
 variable "DDCZ_RDS_ADMIN_PASSWORD" {
@@ -57,10 +65,11 @@ resource "aws_key_pair" "penpen" {
 }
 
 resource "aws_vpc" "ddcz_prod" {
-  cidr_block           = "192.168.0.0/16"
-  instance_tenancy     = "default"
-  enable_dns_support   = "true"
-  enable_dns_hostnames = "true"
+  cidr_block                       = "192.168.0.0/16"
+  instance_tenancy                 = "default"
+  enable_dns_support               = "true"
+  enable_dns_hostnames             = "true"
+  assign_generated_ipv6_cidr_block = true
 
   tags = {
     "product" = "ddcz"
@@ -72,6 +81,7 @@ resource "aws_subnet" "ddcz_prod" {
   availability_zone       = local.az
   vpc_id                  = aws_vpc.ddcz_prod.id
   cidr_block              = "192.168.1.0/24"
+  ipv6_cidr_block         = local.eu_central_subnet_1_cidr
   map_public_ip_on_launch = true
 
   tags = {
@@ -83,6 +93,7 @@ resource "aws_subnet" "ddcz_secondary_az" {
   availability_zone       = local.secondary_az
   vpc_id                  = aws_vpc.ddcz_prod.id
   cidr_block              = "192.168.2.0/24"
+  ipv6_cidr_block         = local.eu_central_subnet_2_cidr
   map_public_ip_on_launch = true
 
   tags = {
@@ -93,11 +104,12 @@ resource "aws_subnet" "ddcz_secondary_az" {
 
 
 resource "aws_vpc" "ddcz_prod_heroku" {
-  provider             = aws.heroku_eu_home
-  cidr_block           = "192.168.0.0/16"
-  instance_tenancy     = "default"
-  enable_dns_support   = "true"
-  enable_dns_hostnames = "true"
+  provider                         = aws.heroku_eu_home
+  cidr_block                       = "192.168.0.0/16"
+  instance_tenancy                 = "default"
+  enable_dns_support               = "true"
+  enable_dns_hostnames             = "true"
+  assign_generated_ipv6_cidr_block = true
 
   tags = {
     "product" = "ddcz"
@@ -110,6 +122,7 @@ resource "aws_subnet" "ddcz_prod_heroku" {
   availability_zone       = local.heroku_az
   vpc_id                  = aws_vpc.ddcz_prod_heroku.id
   cidr_block              = "192.168.1.0/24"
+  ipv6_cidr_block         = local.eu_west_subnet_1_cidr
   map_public_ip_on_launch = true
 
   tags = {
@@ -118,10 +131,12 @@ resource "aws_subnet" "ddcz_prod_heroku" {
 }
 
 resource "aws_subnet" "ddcz_secondary_az_heroku" {
-  provider                = aws.heroku_eu_home
-  availability_zone       = local.heroku_secondary_az
-  vpc_id                  = aws_vpc.ddcz_prod_heroku.id
-  cidr_block              = "192.168.2.0/24"
+  provider          = aws.heroku_eu_home
+  availability_zone = local.heroku_secondary_az
+  vpc_id            = aws_vpc.ddcz_prod_heroku.id
+  cidr_block        = "192.168.2.0/24"
+  ipv6_cidr_block   = local.eu_west_subnet_2_cidr
+
   map_public_ip_on_launch = true
 
   tags = {
@@ -239,6 +254,7 @@ resource "aws_security_group" "ddcz" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = [local.internet_cidr]
+    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   ingress {
@@ -247,6 +263,7 @@ resource "aws_security_group" "ddcz" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = [local.internet_cidr]
+    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   egress {
@@ -254,6 +271,7 @@ resource "aws_security_group" "ddcz" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = [local.internet_cidr]
+    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   tags = {
@@ -323,6 +341,7 @@ resource "aws_security_group" "ddcz_heroku" {
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = [local.internet_cidr]
+    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   egress {
@@ -330,6 +349,7 @@ resource "aws_security_group" "ddcz_heroku" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = [local.internet_cidr]
+    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   tags = {
