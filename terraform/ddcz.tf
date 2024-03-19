@@ -249,29 +249,29 @@ resource "aws_security_group" "ddcz" {
   vpc_id      = aws_vpc.ddcz_prod.id
 
   ingress {
-    description = "SSH from the world"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [local.internet_cidr]
-    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
+    description      = "SSH from the world"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = [local.internet_cidr]
+    ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   ingress {
-    description = "HTTP from the world"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = [local.internet_cidr]
-    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
+    description      = "HTTP from the world"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = [local.internet_cidr]
+    ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = [local.internet_cidr]
-    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = [local.internet_cidr]
+    ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   tags = {
@@ -336,20 +336,20 @@ resource "aws_security_group" "ddcz_heroku" {
   vpc_id      = aws_vpc.ddcz_prod_heroku.id
 
   ingress {
-    description = "RDS  from the world (because Heroku)"
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = [local.internet_cidr]
-    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
+    description      = "RDS  from the world (because Heroku)"
+    from_port        = 3306
+    to_port          = 3306
+    protocol         = "tcp"
+    cidr_blocks      = [local.internet_cidr]
+    ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = [local.internet_cidr]
-    # ipv6_cidr_blocks = [local.ipv6_internet_cidr]
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = [local.internet_cidr]
+    ipv6_cidr_blocks = [local.ipv6_internet_cidr]
   }
 
   tags = {
