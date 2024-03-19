@@ -22,3 +22,6 @@ docker-compose.yml
 ## Local IDEs dirs
 /.idea
 /.vscode
+
+# IaaS / Terraform state
+/terraform/.terraform*
