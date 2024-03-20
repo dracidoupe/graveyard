@@ -64,6 +64,14 @@ ALLOWED_HOSTS = ["www.dracidoupe.cz", "nove.dracidoupe.cz"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "https://static.dracidoupe.cz/"
+
+# On Django 4.2+:
+# STORAGES = {
+#     # ...
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ## User-uploaded content that is hosted on S3/cloudfront
