@@ -63,7 +63,7 @@ WSGI_APPLICATION = "graveyard.wsgi.application"
 ALLOWED_HOSTS = ["www.dracidoupe.cz", "nove.dracidoupe.cz"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = "https://www.dracidoupe.cz/staticfiles/"
+STATIC_URL = "https://static.dracidoupe.cz/"
 
 # On Django 4.2+:
 # STORAGES = {
