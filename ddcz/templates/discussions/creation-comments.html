@@ -25,7 +25,13 @@
 
     {% for comment in comments %}
         <article class="comment">
-            <picture class="user_icon"></picture>
+            <picture class="user_icon">
+                {% if comment.by_registered_user %}
+                    {% if comment.user.icon_url %}
+                        <p class="user_icon"><img src="{{ comment.user.icon_url }}" alt="Ikonka uživatele {{ comment.nickname }}"></p>
+                    {% endif %}
+                {% endif %}
+            </picture>
             <comment class="comment_main">
                 <div class="comment_header">
                     <span class="nick">

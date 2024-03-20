@@ -393,6 +393,10 @@ class TavernPost(models.Model):
     def nickname(self):
         return self.author_nick
 
+    @property
+    def by_registered_user(self):
+        return True
+
     class Meta:
         db_table = "putyka_prispevky"
 
