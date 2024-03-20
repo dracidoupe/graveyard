@@ -27,11 +27,13 @@ provider "aws" {
 }
 
 locals {
-  internet_cidr       = "0.0.0.0/0"
-  ipv6_internet_cidr  = "::/0"
-  az                  = "eu-central-1b"
-  secondary_az        = "eu-central-1a"
-  user_uploads_domain = "uploady.dracidoupe.cz"
+  internet_cidr               = "0.0.0.0/0"
+  ipv6_internet_cidr          = "::/0"
+  az                          = "eu-central-1b"
+  secondary_az                = "eu-central-1a"
+  user_uploads_domain         = "uploady.dracidoupe.cz"
+  staticfiles_domain          = "static.dracidoupe.cz"
+  staticfiles_upstream_domain = "www.dracidoupe.cz"
 
   heroku_az           = "eu-west-1b"
   heroku_secondary_az = "eu-west-1a"
@@ -39,6 +41,8 @@ locals {
   eu_central_vpc_cidr      = "2a05:d014:1f64:7900::/56"
   eu_central_subnet_1_cidr = "2a05:d014:1f64:7900::/64"
   eu_central_subnet_2_cidr = "2a05:d014:1f64:7901::/64"
+
+  ddcz_old_ip = "2a05:d014:1f64:7900::5"
 
   eu_west_vpc_cidr      = "2a05:d018:193b:a400::/56"
   eu_west_subnet_1_cidr = "2a05:d018:193b:a400::/64"
@@ -415,16 +419,18 @@ resource "aws_eip" "ddcz" {
   depends_on = [aws_internet_gateway.ddcz_prod, aws_instance.ddcz]
 }
 
+resource "aws_network_interface" "ddcz_nic" {
+  subnet_id       = aws_subnet.ddcz_prod.id
+  ipv6_addresses  = [local.ddcz_old_ip]
+  security_groups = [aws_security_group.ddcz.id]
+}
+
 resource "aws_instance" "ddcz" {
-  ami                     = "ami-041855a8b7934ebae"
+  ami                     = "ami-0d377e5025859105e"
   instance_type           = "t2.nano"
   disable_api_termination = "true"
   key_name                = aws_key_pair.penpen.key_name
   availability_zone       = local.az
-
-  associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.ddcz.id]
-  subnet_id                   = aws_subnet.ddcz_prod.id
 
   root_block_device {
     volume_type           = "standard"
@@ -432,30 +438,35 @@ resource "aws_instance" "ddcz" {
     delete_on_termination = true
   }
 
-
-  connection {
-    type        = "ssh"
-    user        = "root"
-    private_key = file("~/.ssh/aws-penpen.pem")
-    host        = self.public_ip
+  network_interface {
+    network_interface_id = aws_network_interface.ddcz_nic.id
+    device_index         = 0
   }
+
+
+  #   connection {
+  #     type        = "ssh"
+  #     user        = "root"
+  #     private_key = file("~/.ssh/aws-penpen.pem")
+  #     host        = self.public_ip
+  #   }
 
   #  user_data = file("setup.sh")
 
-  provisioner "file" {
-    source      = "etc/services/run"
-    destination = "/etc/service/dracidoupe.cz/run"
-  }
+  #   provisioner "file" {
+  #     source      = "etc/services/run"
+  #     destination = "/etc/service/dracidoupe.cz/run"
+  #   }
 
-  provisioner "file" {
-    source      = "etc/lighttpd.conf"
-    destination = "/etc/lighttpd/lighttpd.conf"
-  }
+  #   provisioner "file" {
+  #     source      = "etc/lighttpd.conf"
+  #     destination = "/etc/lighttpd/lighttpd.conf"
+  #   }
 
-  provisioner "file" {
-    source      = "dbcore.php"
-    destination = "/var/www/dracidoupe.cz/www_root/www/htdocs/dbcore.php"
-  }
+  #   provisioner "file" {
+  #     source      = "dbcore.php"
+  #     destination = "/var/www/dracidoupe.cz/www_root/www/htdocs/dbcore.php"
+  #   }
 
   #   provisioner "file" {
   #     source      = "etc/modules/custom-access-log"
@@ -502,12 +513,12 @@ resource "aws_instance" "ddcz" {
   #   }
 }
 
-resource "aws_volume_attachment" "ebs_att" {
-  device_name  = "/dev/xvdf"
-  volume_id    = aws_ebs_volume.ddcz_userdata_backup.id
-  instance_id  = aws_instance.ddcz.id
-  skip_destroy = true
-}
+# resource "aws_volume_attachment" "ebs_att" {
+#   device_name  = "/dev/xvdf"
+#   volume_id    = aws_ebs_volume.ddcz_userdata_backup.id
+#   instance_id  = aws_instance.ddcz.id
+#   skip_destroy = true
+# }
 
 resource "aws_acm_certificate" "ddcz_certificate" {
   domain_name       = local.user_uploads_domain
@@ -520,8 +531,19 @@ resource "aws_acm_certificate" "ddcz_certificate" {
   // certificate MUST be located in us-east-1 in order to be used for global
   // services, like CloudFront
   provider = aws.global_home
+}
 
-  # subject_alternative_names = ["dracidoupe.cz"]
+resource "aws_acm_certificate" "staticfiles_certificate" {
+  domain_name       = local.staticfiles_domain
+  validation_method = "DNS"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  // certificate MUST be located in us-east-1 in order to be used for global
+  // services, like CloudFront
+  provider = aws.global_home
 }
 
 resource "aws_cloudfront_distribution" "s3_ddcz_uploads_dist" {
@@ -583,6 +605,78 @@ resource "aws_cloudfront_distribution" "s3_ddcz_uploads_dist" {
     acm_certificate_arn      = aws_acm_certificate.ddcz_certificate.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1"
+  }
+
+  tags = {
+    "product" = "ddcz"
+  }
+}
+
+resource "aws_cloudfront_distribution" "ddcz_staticfiles" {
+  origin {
+    domain_name = local.staticfiles_upstream_domain
+    origin_id   = "ddcz_staticfiles_origin"
+    origin_path = "/staticfiles"
+
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+  }
+
+  enabled             = true
+  is_ipv6_enabled     = true
+  default_root_object = "index.html"
+  price_class         = "PriceClass_100"
+
+  aliases = [local.staticfiles_domain]
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "ddcz_staticfiles_origin"
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+    viewer_protocol_policy = "allow-all"
+    min_ttl                = 0
+    default_ttl            = 31536000 # Set to 1 year
+    max_ttl                = 31536000 # Set to 1 year
+  }
+
+  ordered_cache_behavior {
+    path_pattern     = "/*"
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "ddcz_staticfiles_origin"
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+    min_ttl                = 0
+    default_ttl            = 31536000 # Set to 1 year
+    max_ttl                = 31536000 # Set to 1 year
+    compress               = true
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
+  viewer_certificate {
+    acm_certificate_arn      = aws_acm_certificate.staticfiles_certificate.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1" # It's static files for a fan site. Accessibility > security
   }
 
   tags = {
