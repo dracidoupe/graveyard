@@ -1,7 +1,11 @@
 import logging
 
 from django.apps import apps
-from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.http import (
+    HttpResponseRedirect,
+    HttpResponsePermanentRedirect,
+    HttpResponseBadRequest,
+)
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls.base import reverse
@@ -78,6 +82,11 @@ def legacy_router(request):
     page_category = request.GET.get("rub", False)
     page_creation_type = request.GET.get("co", False)
     id = request.GET.get("id", False)
+
+    try:
+        id = int(id)
+    except ValueError:
+        return HttpBadRequest("id musí být číslo")
 
     # The LEGACY_PLAIN_ROUTER is redirecting basic pages.
     # Typically no creative pages are present here.
