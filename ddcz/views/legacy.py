@@ -86,7 +86,7 @@ def legacy_router(request):
     try:
         id = int(id)
     except ValueError:
-        return HttpBadRequest("id musí být číslo")
+        return HttpResponseBadRequest("id musí být číslo")
 
     # The LEGACY_PLAIN_ROUTER is redirecting basic pages.
     # Typically no creative pages are present here.
