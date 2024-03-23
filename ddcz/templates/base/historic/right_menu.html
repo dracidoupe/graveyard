@@ -8,9 +8,15 @@
     <div class="state">online</div>
 
     <ul class="nav_links">
-        <li><a class="text-red" href="">Pošta</a></li>
+
+        <li><a class="text-red" href="{% url 'ddcz:postal-service' %}">Pošta</a></li>
+
         <li><a class="text-red" href="{% url 'ddcz:tavern-list' %}">Putyka</a></li>
+
+        {% comment %}
         <li><a class="text-red" href="">Nastavení</a></li>
+        {% endcomment %}
+
     </ul>
 
     <form method="post" action="{% url 'ddcz:logout-action' %}">
