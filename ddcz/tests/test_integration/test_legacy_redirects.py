@@ -1,5 +1,3 @@
-from typing import Any
-from django.template import Context, Template
 from django.test import Client, TestCase
 
 from ddcz.models import (

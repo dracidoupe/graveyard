@@ -1,5 +1,4 @@
-import ddcz.models.magic
-from django.db import migrations, models
+from django.db import migrations
 
 # When migrating from unmanaged to managed models,
 # CreateModel must be explicitly used in order for table

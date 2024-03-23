@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from base64 import urlsafe_b64decode
 from enum import Enum
 from secrets import token_urlsafe
 

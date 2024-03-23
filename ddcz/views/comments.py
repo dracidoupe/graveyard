@@ -22,7 +22,7 @@ def phorum(request):
                     id=request.POST["post_id"],
                     nickname=request.user.profile.nick,
                 ).delete()
-            except Phorum.DoesNotExist as e:
+            except Phorum.DoesNotExist:
                 messages.error(request, "Zprávu se nepodařilo smazat.")
                 return HttpResponseRedirect(reverse("ddcz:phorum-list"))
 

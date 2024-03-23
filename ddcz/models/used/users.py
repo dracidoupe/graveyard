@@ -3,8 +3,6 @@ from urllib.parse import urljoin
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
 
 from django.contrib.auth.models import User
@@ -276,7 +274,6 @@ class Rune(models.Model):
 
     @property
     def image_url(self):
-        id = self.graphics
         return staticfiles_storage.url(
             "common/runes/runa%(rune)s.gif" % {"rune": self.graphics}
         )

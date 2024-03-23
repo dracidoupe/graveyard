@@ -1,6 +1,5 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
-from django.dispatch.dispatcher import receiver
 from django.http import (
     HttpResponseRedirect,
     HttpResponseBadRequest,
@@ -78,7 +77,7 @@ def user_profile(request, user_profile_id, nick_slug):
     user_profile = get_object_or_404(UserProfile, id=user_profile_id)
     try:
         creations = Author.objects.get(user=user_profile).get_all_creations()
-    except Author.DoesNotExist as e:
+    except Author.DoesNotExist:
         creations = False
 
     description = LEVEL_DESCRIPTIONS["0"]

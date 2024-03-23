@@ -1,5 +1,4 @@
 import logging
-from re import template
 from zlib import crc32
 
 from django.apps import apps
@@ -27,7 +26,6 @@ from ..models import (
     CreationComment,
     DownloadItem,
     Quest,
-    APPROVAL_CHOICES,
 )
 from ..text import escape_user_input
 

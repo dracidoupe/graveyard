@@ -6,10 +6,8 @@ from django.http import (
     HttpResponsePermanentRedirect,
     HttpResponseBadRequest,
 )
-from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls.base import reverse
-from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_http_methods
 
 from ddcz.models import CreativePage, UserProfile

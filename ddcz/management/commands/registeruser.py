@@ -1,5 +1,3 @@
-from django.apps import apps
-from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password

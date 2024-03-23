@@ -1,12 +1,10 @@
 import logging
 import sys
 
-from django.apps import apps
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from ddcz.text import misencode
 
 from ddcz.models import Phorum, UserProfile
-from ddcz.text import misencode
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,4 @@
 from urllib.request import urlopen
-from django.conf import settings
 
 from selenium.webdriver.common.by import By
 

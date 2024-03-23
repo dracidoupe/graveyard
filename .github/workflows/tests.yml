@@ -18,6 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - uses: psf/black@stable
-        with:
-          options: ". --check"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Ruff Check Linhting
+        run: ruff check --output-format=github .
+      - name: Ruff Check Formatting
+        run: ruff format --check

@@ -5,7 +5,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("ddcz", "0131_letter_encoding_20240225_1412"),
     ]

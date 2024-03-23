@@ -15,8 +15,6 @@ from ddcz.tavern import (
     bookmark_table,
 )
 
-from .attack_strings import SCRIPT_ALERT_INPUT
-
 
 def get_valid_article_chain():
     user = UserProfile(nick="Author", email="test@example.com")

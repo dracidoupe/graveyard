@@ -1,4 +1,5 @@
-import os, os.path
+import os
+import os.path
 from tempfile import gettempdir, mkdtemp
 
 
