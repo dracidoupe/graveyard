@@ -342,6 +342,9 @@ class HtmlTagMismatchException(Exception):
 
 
 def check_creation_html(entity_string):
-    html_string = unsafe_encode_any_creation_html(entity_string)
+    unsafe_encode_any_creation_html(entity_string)
     parser = HtmlChecker()
     parser.feed(entity_string)
+    # TODO: Explore this version
+    # html_string = unsafe_encode_any_creation_html(entity_string)
+    # parser.feed(html_string)

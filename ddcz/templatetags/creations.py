@@ -2,13 +2,9 @@ import logging
 
 from django import template
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.db.models import (
-    OuterRef,
-    Subquery,
-)
 
 from ..creations import RATING_DESCRIPTIONS
-from ..models import CreationVote, UserProfile
+from ..models import CreationVote
 
 logger = logging.getLogger(__name__)
 

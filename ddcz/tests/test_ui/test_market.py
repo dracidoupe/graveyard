@@ -3,7 +3,6 @@ from enum import Enum
 from selenium.webdriver.common.by import By
 
 from .cases import SeleniumTestCase, MainPage
-from ..attack_strings import SCRIPT_ALERT_INPUT
 from ..model_generator import create_market_entries
 
 

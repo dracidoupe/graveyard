@@ -1,7 +1,6 @@
 from .case import TemplateTestCase
 from ..model_generator import get_valid_article_chain
 
-from ddcz.models import Author, CommonArticle, UserProfile
 
 
 class TestAuthorLinkRender(TemplateTestCase):

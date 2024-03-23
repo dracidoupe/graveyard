@@ -1,5 +1,4 @@
 from django import template
-from django.http import request
 
 register = template.Library()
 

@@ -1,0 +1,9 @@
+[lint.per-file-ignores]
+# Those are intentional global namespace populations so that importer
+# doesn't have to care about the package's internal structure, and they can
+# be moved around flexibly
+"ddcz/models/__init__.py" = ["F403"]
+"ddcz/models/views/__init__.py" = ["F403"]
+"ddcz/models/used/__init__.py" = ["F403"]
+"graveyard/settings/__init__.py" = ["F403"]
+"ddcz/views/__init__.py" = ["F403"]

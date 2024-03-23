@@ -14,7 +14,7 @@ from ddcz.models import (
     UserProfile,
     CreationEmailSubscription,
 )
-from ddcz.notifications import MAX_EMAIL_BATCH, logger
+from ddcz.notifications import MAX_EMAIL_BATCH
 from django.urls import reverse
 
 logger = logging.getLogger(__name__)
