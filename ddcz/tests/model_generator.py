@@ -16,7 +16,6 @@ from ddcz.tavern import (
 )
 
 
-
 def get_valid_article_chain():
     user = UserProfile(nick="Author", email="test@example.com")
 

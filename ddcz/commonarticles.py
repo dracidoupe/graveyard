@@ -4,7 +4,6 @@ Module for helping with and handling common articles.
 
 # TODO: Redo into pages fixtures
 
-
 # Normative directory of Creative Pages allowed on the page
 # Key is the common "short" identification of creative page,
 # as present in database (as string) and data model

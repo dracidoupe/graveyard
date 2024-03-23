@@ -194,8 +194,7 @@ def encode_valid_html(entity_string):
                         # meaning it's correctly paired?
                         if (
                             entity_string[
-                                current_character_index
-                                + 5 : current_character_index
+                                current_character_index + 5 : current_character_index
                                 + 5
                                 + len(tag_stack[-1])
                             ].lower()
@@ -211,8 +210,7 @@ def encode_valid_html(entity_string):
                         elif (
                             len(tag_stack) > 1
                             and entity_string[
-                                current_character_index
-                                + 5 : current_character_index
+                                current_character_index + 5 : current_character_index
                                 + 5
                                 + len(tag_stack[-2])
                             ].lower()
@@ -262,8 +260,7 @@ def encode_valid_html(entity_string):
                     # FIXME: Doesn't support tag attributes
                     tag_candidate_string = (
                         entity_string[
-                            current_character_index
-                            + 4 : current_character_index
+                            current_character_index + 4 : current_character_index
                             + 3
                             + MAX_LOOKAHEAD_FROM_LEFT
                             + 3

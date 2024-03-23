@@ -28,7 +28,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     replaces = [
         ("ddcz", "0001_initial"),
         ("ddcz", "0002_dating_userprofile"),

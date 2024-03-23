@@ -253,7 +253,10 @@ class Creation(models.Model):
     # with a nickname that relies on being string equal with `UserProfile.nick_uzivatele`
     # Should be NOT NULL in the future, null allowed for transition period
     author = models.ForeignKey(
-        Author, on_delete=models.SET_NULL, blank=True, null=True  # , db_column="author"
+        Author,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,  # , db_column="author"
     )
 
     # section = models.ForeignKey(CreativePageSection, on_delete=models.SET_NULL, null=True, blank=True)

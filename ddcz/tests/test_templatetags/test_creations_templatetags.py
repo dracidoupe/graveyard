@@ -2,7 +2,6 @@ from .case import TemplateTestCase
 from ..model_generator import get_valid_article_chain
 
 
-
 class TestAuthorLinkRender(TemplateTestCase):
     fixtures = ["pages"]
 

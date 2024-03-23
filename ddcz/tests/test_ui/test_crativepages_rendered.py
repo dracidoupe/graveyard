@@ -1,4 +1,3 @@
-
 from .cases import SeleniumTestCase
 from selenium.webdriver.common.by import By
 
