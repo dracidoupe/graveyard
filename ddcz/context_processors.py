@@ -13,6 +13,13 @@ def common_variables(request):
     if settings.DEPLOY_DATE:
         deploy_info_html = f"{deploy_info_html} ze dne {settings.DEPLOY_DATE}"
 
+    if skin == "historic":
+        logo_width = "475px"
+        logo_height = "175px"
+    else:
+        logo_width = "600px"
+        logo_height = "87.2px"
+
     return {
         "user": request.user,
         "ddcz_profile": request.ddcz_profile,
@@ -26,6 +33,8 @@ def common_variables(request):
             "skins/%(skin)s/img/drak.ico" % {"skin": skin}
         ),
         "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.svg" % skin),
+        "logo_width": logo_width,
+        "logo_height": logo_height,
         "login_form": LoginForm(),
         "discord_invite_link": settings.DISCORD_INVITE_LINK,
         "bugfix_tavern_table_id": settings.BUGFIX_TAVERN_TABLE_ID,
