@@ -192,7 +192,7 @@ class SignUpForm(ModelForm):
         age = self.cleaned_data.get("age")
         if age < self.MIN_AGE:
             raise forms.ValidationError(
-                "Bohužel ti není " + self.MIN_AGE + " let. Zkus to, až budeš starší."
+                f"Bohužel ti není {self.MIN_AGE} let. Zkus to, až budeš starší"
             )
         return age
 
