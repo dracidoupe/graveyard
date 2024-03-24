@@ -1,13 +1,14 @@
 @import "./fonts.css";
 @import "../../../common/css/main.css";
 
-:root{
+:root {
     --debug_bg_color: rgba(255, 255, 255, 0);
 
     --page_bg_color: #000;
     --page_txt_color: gray;
 
     --heading-color: gold;
+    --heading-news-color: #ab8a3f;
 
     --hr_color: #ab8a3f;
     --input-color: gold;
@@ -20,94 +21,98 @@
     --navbox-border-color: #000000;
     --nick_color: #ff0000;
 
-    --user_border: transparent;    
+    --user_border: transparent;
     --user_bg_heading: transparent;
     --user_txt_heading: gray;
     --user_border_radius: 0rem;
     --user_star_active_border: gray;
     --user_h3_size: 2rem;
     --user_h3_bottom: rgba(100, 100, 100, .8);
-    
+
 }
 
 
 /* =========== BASIC SETTINGS ============ */
-body{
+body {
     background-color: var(--page_bg_color);
     color: var(--page_txt_color);
     font-size: 10pt;
     font-family: "Tahoma CE", "Tahoma", sans-serif;
 }
 
-h1, 
-h2, 
-h3{
+h1,
+h2,
+h3 {
     text-align: center;
 }
 
+#page-news h1 {
+    color: var(--heading-news-color);
+}
 
 input,
 textarea,
-select{
+select {
     color: var(--input-color);
     background-color: var(--input-bg-color);
 }
 
-a, 
-a:link, 
+a,
+a:link,
 a:visited {
     color: var(--link-color);
     text-decoration: none;
 }
 
-a:hover, a:active{
+a:hover,
+a:active {
     color: var(--link-color-hover);
 }
 
-hr{
+hr {
     color: var(--hr_color);
 }
 
 .text-gold,
 a.text-gold:link,
-a.text-gold:visited{
+a.text-gold:visited {
     color: gold;
 }
 
 a.text-gold:hover,
-a.text-gold:active{
+a.text-gold:active {
     color: goldenrod;
 }
 
 .text-red,
 a.text-red:link,
-a.text-red:visited{
+a.text-red:visited {
     color: red;
 }
 
 a.text-red:hover,
-a.text-red:active{
+a.text-red:active {
     color: darkred;
 }
 
 .text-blue,
 a.text-blue:link,
-a.text-blue:visited{
+a.text-blue:visited {
     color: aqua;
 }
 
 a.text-blue:hover,
 a.text-blue:active,
-a.text-red:hover > span.text-blue,
-a.text-gold:hover > span.text-blue{
+a.text-red:hover>span.text-blue,
+a.text-gold:hover>span.text-blue {
     color: lightblue;
 }
 
 /* =========== GRID LAYOUT ============ */
 
-#container{
+#container {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         'header         header      header      '
         'top_menu       top_menu    top_menu    '
         'left_menu      main        right_menu  '
@@ -119,36 +124,36 @@ a.text-gold:hover > span.text-blue{
     margin: 0rem auto;
 }
 
-header#page_header{
+header#page_header {
     grid-area: header;
     padding: 0px;
     background-color: var(--debug_bg_color);
 }
 
-nav#top_menu{
+nav#top_menu {
     grid-area: top_menu;
     background-color: var(--debug_bg_color);
 }
 
-nav#left_menu{
+nav#left_menu {
     grid-area: left_menu;
     width: 100%;
     background-color: var(--debug_bg_color);
 }
 
-nav#right_menu{
+nav#right_menu {
     grid-area: right_menu;
     width: 100%;
     background-color: var(--debug_bg_color);
 }
 
-main#page_content{
+main#page_content {
     grid-area: main;
     width: 100%;
     background-color: var(--debug_bg_color);
 }
 
-footer#page_footer{
+footer#page_footer {
     margin: 0rem auto;
     width: 60%;
     grid-area: footer;
@@ -159,25 +164,25 @@ footer#page_footer{
 
 
 /* =========== HEADER ============ */
-header#page_header h1{
+header#page_header h1 {
     text-align: center;
     margin: 0rem;
 }
 
-header#page_header h1 img{
+header#page_header h1 img {
     width: 475px;
-    margin: 0px;    
+    margin: 0px;
 }
 
 
 /* =========== MENU ============ */
-nav ul{
+nav ul {
     list-style-type: none;
-    padding: 0rem; 
+    padding: 0rem;
 }
 
 nav#left_menu ul li a,
-nav#right_menu ul.nav_links li a{
+nav#right_menu ul.nav_links li a {
     display: block;
     font-size: 1rem;
     font-family: var(--link-font);
@@ -187,13 +192,13 @@ nav#right_menu ul.nav_links li a{
 }
 
 nav#left_menu ul li a::first-letter,
-nav#right_menu ul.nav_links li a::first-letter{    
+nav#right_menu ul.nav_links li a::first-letter {
     font-size: 1.4rem;
     vertical-align: middle;
 }
 
 
-.list_heading{
+.list_heading {
     display: block;
     margin: 1rem 0rem;
     text-align: center;
@@ -201,35 +206,35 @@ nav#right_menu ul.nav_links li a::first-letter{
     font-weight: bold;
 }
 
-nav#right_menu a{
+nav#right_menu a {
     display: block;
     text-align: center;
 }
 
-nav#top_menu{
+nav#top_menu {
     text-align: center;
 }
 
-nav#top_menu ul{
+nav#top_menu ul {
     list-style-type: "\00A4";
 }
 
-nav#top_menu ul li{   
+nav#top_menu ul li {
     display: inline;
-    padding: 0rem .5rem;    
+    padding: 0rem .5rem;
 }
 
 
-.nick, 
+.nick,
 .state,
 .admin_link {
     text-align: center;
     font-weight: bold;
- }
+}
 
-.nick{
-     color: var(--nick_color);
- }
+.nick {
+    color: var(--nick_color);
+}
 
 .user_icon {
     text-align: center;
@@ -238,7 +243,7 @@ nav#top_menu ul li{
 }
 
 
-#logout_button{
+#logout_button {
     display: block;
     width: 100%;
     border: none;
@@ -249,51 +254,51 @@ nav#top_menu ul li{
     font-size: 1rem;
 }
 
-#logout_button:hover{
+#logout_button:hover {
     color: goldenrod;
     cursor: pointer;
 }
 
 
 /* =========== MAIN CONTENT ============ */
-h1.page-heading{
-    width: 100%;    
+h1.page-heading {
+    width: 100%;
     border: none;
     color: var(--heading-color);
-    background-color: var(--heading_bg_color);    
+    background-color: var(--heading_bg_color);
     text-align: center;
     font-size: 2rem;
     font-weight: 200;
     font-family: var(--link-font);
-    letter-spacing: -.1rem;    
-    margin: 0rem 0rem 2rem 0rem;    
+    letter-spacing: -.1rem;
+    margin: 0rem 0rem 2rem 0rem;
 }
 
-h1.page-heading.text-blue{
+h1.page-heading.text-blue {
     color: aqua;
 }
 
-h1.page-heading.text-red{
+h1.page-heading.text-red {
     color: red;
 }
 
-h1.page-heading::first-letter{
+h1.page-heading::first-letter {
     font-size: 2.8rem;
     vertical-align: middle;
 }
 
 
-main p{
+main p {
     text-indent: 1.5rem;
     word-spacing: 0rem;
     margin-bottom: 0rem;
 }
 
-.pagination a::before{
+.pagination a::before {
     content: "[";
 }
 
-.pagination a::after{
+.pagination a::after {
     content: "]";
 }
 
@@ -303,11 +308,10 @@ main p{
 
 #page-news footer {
     width: 100%;
-    text-align: right; 
+    text-align: right;
 }
 
 
-.user_icon{
+.user_icon {
     width: 5rem;
 }
-
