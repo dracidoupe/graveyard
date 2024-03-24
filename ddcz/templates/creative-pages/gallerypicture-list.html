@@ -21,7 +21,7 @@
                     <p><span class="label">Autor:</span> <span class="value">{% author_display a %}</span></p>
                     <p>
                         <a href="{% url 'ddcz:creation-detail' creative_page_slug=creative_page_slug creation_id=a.id creation_slug=a.get_slug %}">
-                            <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.name }}">
+                            <img src="{{ a.get_thumbnail_url }}" alt="Náhled obrázku {{ a.name }}" loading="lazy" decoding="async">
                         </a>
                     </p>
                     <!--
