@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     AlchemistTool,
+    AwaitingRegistration,
     CommonArticle,
     CreativePageConcept,
     Dating,
@@ -41,3 +42,5 @@ admin.site.register(Skill, SearchableName)
 admin.site.register(WizardSpell, SearchableName)
 
 admin.site.register(EditorArticle)
+
+admin.site.register(AwaitingRegistration)
