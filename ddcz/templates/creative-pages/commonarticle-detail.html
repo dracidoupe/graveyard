@@ -3,6 +3,8 @@
 {% load creations %}
 {% load comments %}
 
+{% block meta_description %}{{ article.anotace }}{% endblock %}
+
 {% block content %}
 <div id="page-article-detail">
     <h1 class="page-heading">{{ heading }}</h1>
