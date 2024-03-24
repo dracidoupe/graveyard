@@ -3,10 +3,12 @@
 {% load pages %}
 {% load creations %}
 
+{% block meta_description %}Domov všech hráčů Dračího Doupěte. Přes dvacet let doplňků, povolání, nestvůr do bestíáře, dobrodružství a debat o nich. Prostor pro seznámení hráčů a hráček a tvorbu družit.{% endblock %}
+
 {% block content %}
 <div id="page-news">
     <h1 class="text-blue page-heading">Aktuality</h1>
-    <div>Vítejte na největším serveru o Dračím Doupěti. Najdete zde spoustu doplňků, článků či diskuzí k tématům. Pomocí menu "Skiny" si můžete změnit i vzhled tohoto webu, přesně podle Vašeho vkusu. Chcete-li využít všech funkcí tohoto webu, měli byste se zaregistrovat. </div>
+    <p>Vítejte na největším serveru o Dračím Doupěti. Najdete zde spoustu doplňků, článků či diskuzí k tématům. Pomocí menu "Skiny" si můžete změnit i vzhled tohoto webu, přesně podle Vašeho vkusu. {% if not user.is_authenticated %} Chcete-li využít všech funkcí tohoto webu, <a href="{% url 'ddcz:sign-up' %}">měli byste se zaregistrovat</a>.{% endif %}</p>
     {% pagination news %}
     <div class="article-list">
     {% for n in news %}
