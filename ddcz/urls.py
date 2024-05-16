@@ -2,6 +2,7 @@ from django.conf import settings
 from django.urls import path, re_path
 from django.views.generic.base import RedirectView, TemplateView
 
+from .feeds import PhorumFeed
 from . import views
 from .views import news, tavern, misc, email
 from .views.legacy import legacy_router, print_legacy_router
@@ -161,6 +162,9 @@ urlpatterns = [
         tavern.table_bookmark,
         name="tavern-bookmark",
     ),
+    ### RSS & Feeds
+    path("rss/forum/", PhorumFeed(), name="phorum-feed"),
+    path("rss/forum.xml", RedirectView.as_view(url="/rss/forum/", permanent=True)),
     ### Static Editorial Pages
     ### Would be easier to give them /static prefix, but it makes for ugly URL
     path(
