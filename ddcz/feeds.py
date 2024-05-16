@@ -20,5 +20,4 @@ class PhorumFeed(Feed):
         return item.text
 
     def item_link(self, item):
-        # TODO: Well, we should probably have at least a focus link
-        return reverse("ddcz:phorum-list")
+        return reverse("ddcz:phorum-item", args=[item.id])

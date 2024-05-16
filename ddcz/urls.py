@@ -141,6 +141,12 @@ urlpatterns = [
     path("linky/", views.links, name="links-list"),
     ### Discussions & Tavern
     path("forum/", views.phorum, name="phorum-list"),
+    ### RSS cheat: pretend we have unique links for items. We may in the future.
+    path(
+        "forum/<int:comment_id>/",
+        RedirectView.as_view(url="/forum/", permanent=False),
+        name="phorum-item",
+    ),
     path("putyka/", tavern.list_tables, name="tavern-list"),
     path(
         "putyka/stul/<int:tavern_table_id>/prispevky/",
