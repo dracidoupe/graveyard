@@ -60,7 +60,8 @@ CACHES = {
 
 WSGI_APPLICATION = "graveyard.wsgi.application"
 
-ALLOWED_HOSTS = ["www.dracidoupe.cz", "nove.dracidoupe.cz"]
+ALLOWED_HOSTS = ["www.dracidoupe.cz", "nove.dracidoupe.cz", "dracidoupe.cz"]
+PREPEND_WWW = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_HOST = STATIC_URL = "https://static.dracidoupe.cz/"
