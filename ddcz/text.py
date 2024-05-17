@@ -3,6 +3,8 @@ from unicodedata import normalize, combining
 
 from django.utils.html import escape
 
+from sentry_sdk import capture_exception
+
 
 def create_slug(text):
     slug = normalize("NFD", text)
@@ -20,7 +22,11 @@ def misencode(text):
     Has to be used when querying database for data stored by original application,
     represented by MisencodedChar/TextField.
     """
-    return text.encode("cp1250").decode("latin2")
+    try:
+        return text.encode("cp1250").decode("latin2")
+    except (UnicodeEncodeError, UnicodeDecodeError) as err:
+        capture_exception(err)
+        return text.encode("cp1250", "ignore").decode("latin2", "ignore")
 
 
 def escape_user_input(text, newline_to_br=True):
