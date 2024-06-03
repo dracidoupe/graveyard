@@ -319,6 +319,6 @@ class AwaitingRegistration(models.Model):
 
     def __str__(self):
         return "{} ze dne {}".format(
-            self.name,
+            self.nick,
             make_aware(datetime.fromtimestamp(self.date)),
         )
