@@ -10,7 +10,7 @@ jobs:
       - name: Start MySQL
         run: docker-compose -f docker-compose.server_ci.yml start db
       - name: Wait for MySQL to create initial database
-        run: sleep 5
+        run: sleep 10
       - name: run tests
         run: docker-compose -f docker-compose.server_ci.yml run --rm web python3 manage.py test
   lint:
