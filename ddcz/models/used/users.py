@@ -1,9 +1,11 @@
+from datetime import datetime
 from urllib.parse import urljoin
 
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
 from django.urls import reverse
+from django.utils.timezone import make_aware
 
 from django.contrib.auth.models import User
 
@@ -312,3 +314,11 @@ class AwaitingRegistration(models.Model):
 
     class Meta:
         db_table = "uzivatele_cekajici"
+        verbose_name = "Uživatel ke schválení"
+        verbose_name_plural = "Uživatelé ke schválení"
+
+    def __str__(self):
+        return "{} ze dne {}".format(
+            self.name,
+            make_aware(datetime.fromtimestamp(self.date)),
+        )
