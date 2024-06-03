@@ -4,7 +4,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
+      - uses: actions/checkout@v4
       - name: Build docker images
         run: docker-compose -f docker-compose.server_ci.yml build --pull && docker-compose -f docker-compose.server_ci.yml up --no-start
       - name: Start MySQL
@@ -16,8 +16,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-python
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.9'
           cache: 'pip'
