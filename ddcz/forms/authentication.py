@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 class LoginForm(forms.Form):
     nick = forms.CharField(label="Nick", max_length=25)
     password = forms.CharField(
-        label="Heslo", max_length=100, widget=forms.PasswordInput
+        label="Heslo",
+        max_length=100,
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
     )
 
 
