@@ -1,6 +1,10 @@
 User-agent: barkrowler
 Disallow: /
 
+User-agent: dotbot
+Disallow: /
+
+
 User-Agent: *
 Disallow: /admin/
 Disallow: /sprava/
