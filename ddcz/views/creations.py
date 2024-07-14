@@ -140,7 +140,6 @@ def get_creation_info(creative_page_slug, creation_id, creation_slug):
             )
             raise e
         else:
-            print("OK cache")
             cache.set(cache_key, article)
 
     return {
