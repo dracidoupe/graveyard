@@ -185,7 +185,7 @@ class TavernTable(models.Model):
             )
             processing_privileges.add(TavernAccessRights.ACCESS_BANNED)
         if assistant_admins is not None:
-            unprocessed_access_map[TavernAccessRights.ASSISTANT_ADMIN] = (
+            unprocessed_access_map[TavernAccessRights.ASSISTANT_ADMIN] = set(
                 assistant_admins
             )
             processing_privileges.add(TavernAccessRights.ASSISTANT_ADMIN)
@@ -219,7 +219,9 @@ class TavernTable(models.Model):
 
         for privilege in privileges:
             access_type = TavernAccessRights(privilege.access_type)
-            if access_type == TavernAccessRights.ASSISTANT_ADMIN:
+            if access_type == TavernAccessRights.ASSISTANT_ADMIN and isinstance(
+                privilege.user_nick_or_id, int
+            ):
                 nick = UserProfile.objects.values("nick").get(
                     pk=privilege.user_nick_or_id
                 )["nick"]
@@ -242,7 +244,7 @@ class TavernTable(models.Model):
         * Add new privileges
         * Drop the deleted ones
         """
-        # Copy as we are using it as processing queue and it needs to be reatined
+        # Copy as we are using it as processing queue and it needs to be retained
         # for updating future privileges
         access_map = deepcopy(unprocessed_access_map)
         table_acls_to_delete = []
