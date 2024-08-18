@@ -6,13 +6,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build docker images
-        run: docker-compose -f docker-compose.server_ci.yml build --pull && docker-compose -f docker-compose.server_ci.yml up --no-start
+        run: docker compose -f docker-compose.server_ci.yml build --pull && docker-compose -f docker-compose.server_ci.yml up --no-start
       - name: Start MySQL
-        run: docker-compose -f docker-compose.server_ci.yml start db
+        run: docker compose -f docker-compose.server_ci.yml start db
       - name: Wait for MySQL to create initial database
         run: sleep 10
       - name: run tests
-        run: docker-compose -f docker-compose.server_ci.yml run --rm web python3 manage.py test
+        run: docker compose -f docker-compose.server_ci.yml run --rm web python3 manage.py test
   lint:
     runs-on: ubuntu-latest
     steps:
