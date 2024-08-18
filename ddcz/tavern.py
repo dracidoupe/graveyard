@@ -184,6 +184,11 @@ def create_tavern_table(
         section = TAVERN_SECTION_PRIVATE_ID
         public_db = "0"
 
+    if allow_reputation:
+        allow_reputation = "1"
+    else:
+        allow_reputation = "0"
+
     return TavernTable.objects.create(
         name=name,
         description=description,
