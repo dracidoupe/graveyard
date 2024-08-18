@@ -75,6 +75,8 @@ class MisencodedIntegerField(models.CharField):
     """
 
     def from_db_value(self, value, expression, connection):
+        if value == "":
+            return 0
         try:
             return int(value)
         except ValueError:
