@@ -194,27 +194,26 @@ def fetch_compatible_chromedriver(version):
     elif system == "Linux":
         platform_key = "linux64"
 
+    url = "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json"
+    with urllib.request.urlopen(url) as response:
+        if response.status != 200:
+            raise ValueError("Failed to fetch ChromeDriver versions.")
 
-url = "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json"
-with urllib.request.urlopen(url) as response:
-    if response.status != 200:
-        raise ValueError("Failed to fetch ChromeDriver versions.")
+        data = json.loads(response.read().decode())
+        data["versions"].sort(key=lambda x: x["version"], reverse=True)
+        for entry in data["versions"]:
+            if entry[
+                "version"
+            ].startswith(
+                ".".join(
+                    version.split(".")[:-1]
+                )  # ignore the last minor version since not all are released, but they are compatible
+            ):
+                for download_option in entry["downloads"]["chromedriver"]:
+                    if download_option["platform"] == platform_key:
+                        return download_option["url"]
 
-    data = json.loads(response.read().decode())
-    data["versions"].sort(key=lambda x: x["version"], reverse=True)
-    for entry in data["versions"]:
-        if entry[
-            "version"
-        ].startswith(
-            ".".join(
-                version.split(".")[:-1]
-            )  # ignore the last minor version since not all are released, but they are compatible
-        ):
-            for download_option in entry["downloads"]["chromedriver"]:
-                if download_option["platform"] == platform_key:
-                    return download_option["url"]
-
-    raise ValueError(f"Compatible chromedriver for version {version} not found.")
+        raise ValueError(f"Compatible chromedriver for version {version} not found.")
 
 
 def download_and_extract_chromedriver(url, download_path):
