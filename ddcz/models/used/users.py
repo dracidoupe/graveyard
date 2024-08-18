@@ -125,6 +125,8 @@ class UserProfile(models.Model):
 
     class Meta:
         db_table = "uzivatele"
+        verbose_name = "Uživatelský profil"
+        verbose_name_plural = "Uživatelské profily"
 
     @property
     def slug(self):
