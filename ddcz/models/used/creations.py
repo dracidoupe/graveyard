@@ -644,6 +644,8 @@ class RangerSpell(Creation):
 
     class Meta:
         db_table = "hranicarkouzla"
+        verbose_name = "Hraníčářské kouzlo"
+        verbose_name_plural = "Hraníčářská kouzla"
 
     def __str__(self):
         return "{} od {}".format(self.name, self.author_nick)

@@ -20,6 +20,10 @@ class ScheduledNotification(models.Model):
     extra_data = models.TextField()
     scheduled_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = "Plánovaná notifikace"
+        verbose_name_plural = "Plánované notifikace"
+
 
 class ScheduledEmail(models.Model):
     recipient_email = models.CharField(max_length=150)
@@ -29,6 +33,10 @@ class ScheduledEmail(models.Model):
     scheduled_at = models.DateTimeField(auto_now_add=True)
     # TODO: Migration to foreign key
     user_profile_id = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Plánovaný e-mail"
+        verbose_name_plural = "Plánované e-maily"
 
 
 class CreationEmailSubscription(models.Model):

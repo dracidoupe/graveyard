@@ -11,6 +11,8 @@ from .models import (
     Link,
     Monster,
     News,
+    ScheduledNotification,
+    ScheduledEmail,
     Skill,
     RangerSpell,
     WizardSpell,
@@ -44,3 +46,5 @@ admin.site.register(WizardSpell, SearchableName)
 admin.site.register(EditorArticle)
 
 admin.site.register(AwaitingRegistration)
+admin.site.register(ScheduledNotification)
+admin.site.register(ScheduledEmail)
