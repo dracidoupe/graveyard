@@ -14,7 +14,7 @@
                 <th>Jméno</th>
                 <th>Pohlaví</th>
                 <th>Podporovatelé</th>
-                <th>Popis</th>
+                {% comment %} <th>Popis</th> {% endcomment %}
                 <th>Akce</th>
             </tr>
         {% endif %}
@@ -31,7 +31,7 @@
                         Nikdo
                     {% endif %}
                 </td>
-                <td><pre>{{ user.description }}</pre></td>
+                {% comment %} <td><pre>{{ user.description }}</pre></td> {% endcomment %}
                 <td>
                     <form method="post">
                         {% csrf_token %}
