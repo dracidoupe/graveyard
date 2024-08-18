@@ -25,6 +25,11 @@ def dashboard(request):
             )
 
             submission = RegistrationRequestApproval(request.POST["submission_type"])
+            message = request.POST["message"]
+            if message:
+                message = (
+                    f"\nKapitán studující tvé lejstro k tomu poznamenal: {message}\n"
+                )
 
             if submission == RegistrationRequestApproval.APPROVE:
                 # TODO: Move this to core app domain logic
@@ -70,7 +75,7 @@ def dashboard(request):
                     f"""Vítejte na DraciDoupe.cz!
 
                     Vaše heslo je {password}, po příhlášení si jej prosím zmeňte v sekci Nastavení. Doporučujeme též k přečetení Dračí Manuál a Otázky a Odpovědi. Můžete se též přidat na náš Discord server {settings.DISCORD_INVITE_LINK} .
-
+                    {message}
                     Děkujeme za Vaši registraci a doufáme, že se vám ve Městě bude líbit.
 
                     — Redakce a vývojový tým DraciDoupe.cz
@@ -90,7 +95,7 @@ def dashboard(request):
                     f"""Zdravíme,
 
                     Vaše žádost o registraci na DraciDoupe.cz byla bohužel zamítnuta. Pokud máte pocit, že se tak stalo neprávem, můžete se zeptat na podrobnosti na našem Discord serveru na {settings.DISCORD_INVITE_LINK} .
-
+                    {message}
                     I přes toto nedorozumění Vám přejeme příjemný den,
 
                     — Redakce a vývojový tým DraciDoupe.cz
@@ -149,7 +154,7 @@ def news(request):
                     "author_nick": request.ddcz_profile.nick,
                 },
             )
-            messages.success(request, "Aktualita úspěšně odeslána")
+            messages.success(request, "Aktualita přidána a připravena k odeslání")
             return HttpResponseRedirect(request.get_full_path())
 
     else:
@@ -169,7 +174,9 @@ def emailtest(request):
             [profile.email],
         )
         messages.add_message(
-            request, messages.SUCCESS, "Testovací e-mail byl v pořádku odeslán."
+            request,
+            messages.SUCCESS,
+            f"Testovací e-mail byl v pořádku odeslán na {profile.email}.",
         )
 
     return render(request, "emailtest.html")

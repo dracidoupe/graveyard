@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load html %}
-{% block content %}
+{% load creations %}
+{{% block content %}
     <h1>Přehled {{ approval }}</h1>
 
     {% for user in registrations %}
@@ -9,6 +10,7 @@
 
             <table>
             <tr>
+                <th>Dne</th>
                 <th>Přezdívka</th>
                 <th>E-mail</th>
                 <th>Jméno</th>
@@ -19,6 +21,7 @@
             </tr>
         {% endif %}
             <tr>
+                <td>{{ user.registration_date | articleTime }}</td>
                 <td>{{ user.nick }} ({{ user.salutation }})</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.name_given }} {{ user.name_family }}</td>
@@ -37,7 +40,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="awaiting_registration_id" value="{{ user.id }}">
                         <input type="hidden" name="form_type" value="{{ FormTypes.REGISTRATIONS.value }}">
-
+                        <textarea name="message" placeholder="Dodatečná zpráva pro uživatele"></textarea><br>
                         <input type="submit" name="submission_type" value="{{ RegistrationRequestApproval.APPROVE.value }}"><br>
                         <input type="submit" name="submission_type" value="{{ RegistrationRequestApproval.REJECT.value }}">
                     </form>

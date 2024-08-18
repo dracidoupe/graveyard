@@ -313,6 +313,9 @@ class AwaitingRegistration(models.Model):
     )
     description = models.TextField(db_column="popis_text")
 
+    def registration_date(self):
+        return make_aware(datetime.fromtimestamp(self.date))
+
     class Meta:
         db_table = "uzivatele_cekajici"
         verbose_name = "Uživatel ke schválení"
