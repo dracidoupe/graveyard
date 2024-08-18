@@ -38,7 +38,9 @@ class SeleniumTestCase(StaticLiveServerTestCase):
     host = "0.0.0.0"
 
     def __init__(self, *args, **kwargs):
-        self.check_chromedriver()
+        # Only check for chrome/driver locally, we do trust CI pipeline to set this up correctly
+        if not os.environ.get("SERVER_CI", False) == "true":
+            self.check_chromedriver()
 
         super().__init__(*args, **kwargs)
 
