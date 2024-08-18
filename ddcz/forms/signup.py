@@ -5,7 +5,7 @@ from django import forms
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 
-from ..models import AwaitingRegistration
+from ..models import AwaitingRegistration, UserProfile
 
 
 class SignUpForm(ModelForm):
@@ -187,7 +187,30 @@ class SignUpForm(ModelForm):
                 + ", ".join(bad_characters)
                 + ")."
             )
+
+        if len(nick) < 3:
+            raise forms.ValidationError("Nick musí mít alespoň 3 znaky.")
+
+        if UserProfile.objects.filter(nick=nick).exists():
+            raise forms.ValidationError("Tento nick je již obsazený.")
+        elif AwaitingRegistration.objects.filter(nick=nick).exists():
+            raise forms.ValidationError(
+                "Žádost o registraci již byla odeslána, buď prosím trpělivý. Máš-li pocit že to je příliš dlouho, připomeň se prosím na Discordu."
+            )
+
         return nick
+
+    def clean_email(self, *args, **kwargs):
+        email = self.cleaned_data.get("email")
+        if UserProfile.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                "S tímto emailem jsi se již registroval, zkusi si prosím restovat heslo."
+            )
+        elif AwaitingRegistration.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                "Žádost o registraci již byla odeslána, buď prosím trpělivý. Máš-li pocit že to je příliš dlouho, připomeň se prosím na Discordu."
+            )
+        return email
 
     def clean_age(self, *args, **kwargs):
         age = self.cleaned_data.get("age")
