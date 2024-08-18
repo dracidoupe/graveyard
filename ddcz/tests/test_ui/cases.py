@@ -1,13 +1,13 @@
 import os
-import requests
-import zipfile
 import subprocess
 from enum import Enum
+import json
 import platform
 import socket
 import sys
 import tempfile
 import urllib.request
+import zipfile
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -194,13 +194,13 @@ def fetch_compatible_chromedriver(version):
     elif system == "Linux":
         platform_key = "linux64"
 
-    url = "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json"
-    response = requests.get(url)
-    if response.status_code != 200:
-        print("Failed to fetch ChromeDriver versions.")
-        return None
 
-    data = response.json()
+url = "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json"
+with urllib.request.urlopen(url) as response:
+    if response.status != 200:
+        raise ValueError("Failed to fetch ChromeDriver versions.")
+
+    data = json.loads(response.read().decode())
     data["versions"].sort(key=lambda x: x["version"], reverse=True)
     for entry in data["versions"]:
         if entry[
