@@ -128,6 +128,9 @@ class UserProfile(models.Model):
         verbose_name = "Uživatelský profil"
         verbose_name_plural = "Uživatelské profily"
 
+    def __str__(self):
+        return f"Profil uživatele {self.nick} ID {self.pk}"
+
     @property
     def slug(self):
         slug = create_slug(self.nick)
