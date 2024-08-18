@@ -53,6 +53,7 @@ Installation
 
 Graveyard is not yet intended to be universally installable, but it plans to be. Current assumptions about production follows.
 
+.. configuration:
 Configuration
 -------------
 
@@ -89,3 +90,26 @@ Test can be run locally, but there is a testing infrastructure run on every push
 To have the Selenium running properly, we are running the Docker container version of everything and with dedicated ``docker-compose.circle.yml``.
 
 Main web container exposes the application server to the Docker network and the Selenium server uses the generated hostname.
+
+
+Restore strategy
+================
+
+To maintain low-cost operation, offsite backup is done to Almad's NAS and restore needs to be done manually. Currently backed up:
+
+* `uploady.dracidoupe.cz` S3 bucket via Cloud Sync
+* `graveyard` repository is not backed up (it's on Github, and devs maintain a full copy)
+
+Restore means:
+
+If no changes has been done, then ``terraform apply`` should set up all infra. Otherwise:
+
+* Deploy the code somewhere (currently Heroku, `git push` is enough)
+    * TLS needs to be set up
+    * DB credentials needs to be set up per ``configuration``
+
+* Upload static data somewhere, `aws s3 sync` or just `rsync` to any static storage
+    * `uploady.dracidoupe.cz` can/should be a proxy, underlying data can be from whatever static storage
+
+* Database needs to be restored via direct connection and mysql dump
+
