@@ -153,6 +153,7 @@ class SignUpForm(ModelForm):
             "patron",
             "supporters",
             "description",
+            "age",
         ]
 
     def clean(self):

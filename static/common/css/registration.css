@@ -1,23 +1,23 @@
-#registration_page {    
-    text-align:         justify;
-    font-size:          1rem;
-    width:              calc(100% - 10rem);
-    max-width:          1024px;
-    letter-spacing:     0.05em;
-    line-height:        1.5rem;
-    margin:             1rem auto;
-    padding:            2rem;
-    border-radius:      1rem;
+#registration_page {
+    text-align: justify;
+    font-size: 1rem;
+    width: calc(100% - 10rem);
+    max-width: 1024px;
+    letter-spacing: 0.05em;
+    line-height: 1.5rem;
+    margin: 1rem auto;
+    padding: 2rem;
+    border-radius: 1rem;
 }
 
-#registration_page .first_paragraph{    
+#registration_page .first_paragraph {
     text-indent: 0rem;
 }
 
 .caps {
     border: 0.2rem solid var(--page_txt_color);
     border-radius: 0.5rem;
-    float:left;
+    float: left;
     font-size: 3.5rem;
     line-height: 3.5rem;
     padding: .2rem 1rem;
@@ -26,101 +26,102 @@
 
 p.guard,
 p.merchant,
-p.character{
+p.character {
     margin-left: 3rem;
     text-indent: 0rem;
 }
 
 p.guard::before,
 p.merchant::before,
-p.character::before{
+p.character::before {
     font-weight: bolder;
     font-variant: small-caps;
 }
 
-p.guard::before{
+p.guard::before {
     content: "Strážný Enda Bhůt: ";
 }
 
-p.merchant::before{    
+p.merchant::before {
     content: "Virga Tenson: ";
 }
 
-.ds::before{
+.ds::before {
     content: "\201E";
 }
 
-.ds::after{
+.ds::after {
     content: "\201C";
 }
 
 #registration_form input,
-#registration_form select{
+#registration_form select {
     background: transparent;
     border: none;
     border-bottom: 3px solid var(--page_txt_color);
     text-align: center;
 }
 
-#registration_form input[id="age"]{
+#registration_form input[id="age"] {
     width: 5rem;
 }
 
-#registration_form textarea{    
+#registration_form textarea {
     margin: 0rem auto;
     margin-left: 3rem;
     width: calc(31% - 3rem);
 }
 
-#registration_form [id=gdpr]{
+#registration_form [id=gdpr] {
     text-align: left;
     width: calc(100% - 10rem);
 }
 
 
-#registration_form span#drd{
+#registration_form span#drd {
     font-weight: bold;
 }
 
-#registration_form .story_break{
+#registration_form .story_break {
     text-indent: 0rem;
     text-align: center;
 }
 
-#registration_form #after_signature{
+#registration_form #after_signature {
     opacity: 0;
     transition: opacity 3s;
 }
 
-#registration_form #sign{
+#registration_form #sign {
     text-align: right;
     vertical-align: middle;
 }
 
 
-#registration_form #signature{
+#registration_form #signature {
     display: inline-block;
-    font-family: 'Great Vibes';
+    font-family: 'Great Vibes', 'Arial', sans-serif;
     font-size: 6rem;
     line-height: 6rem;
     margin: 3rem 1rem;
 }
 
-#registration_form #seal{
+#registration_form #seal {
     height: 12rem;
     float: right;
 }
 
 
-#registration_form input[type=submit]{
+#registration_form input[type=submit] {
     width: calc(100% - 2rem);
     margin: 0rem;
     padding: 0.5rem 1rem;
     border: 2px outset var(--page_txt_color);
-    transition: background-color .5s, letter-spacing 1s;
+    /* transition disabled for now because it breaks layout */
+    /* transition: background-color .5s, letter-spacing 1s; */
 }
 
-#registration_form input[type=submit]:hover{
+#registration_form input[type=submit]:hover {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.2);
     border-style: inset;

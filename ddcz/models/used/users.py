@@ -305,6 +305,7 @@ class AwaitingRegistration(models.Model):
     name_family = models.CharField(max_length=40, db_column="prijmeni")
     gender = models.CharField(max_length=4, db_column="pohlavi")
     date = models.IntegerField(db_column="datum")
+    age = models.IntegerField(db_column="vek")
     patron = models.IntegerField(db_column="patron")
     supporters = models.IntegerField(db_column="primluvy")
     salutation = models.CharField(

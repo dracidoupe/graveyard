@@ -4,6 +4,7 @@ from time import sleep
 from selenium.webdriver.support.ui import Select
 
 from .cases import SeleniumTestCase, MainPage
+from ddcz.models import AwaitingRegistration
 
 
 class SignUpPage(Enum):
@@ -25,9 +26,7 @@ class TestValidSignupSubmission(SeleniumTestCase):
         super().setUp()
         self.selenium.get("%s%s" % (self.live_server_url, "/registrace/"))
 
-        self.fill_valid_data()
-
-    def fill_valid_data(self):
+    def fill_signup_form(self):
         self.nick = "přílišžluťoučkýkůňúělďábelskéó"
 
         self.el(SignUpPage.NICK).send_keys(self.nick)
@@ -41,19 +40,26 @@ class TestValidSignupSubmission(SeleniumTestCase):
 
         Select(self.el(SignUpPage.GDPR)).select_by_value("T")
 
+    def assert_registration_saved(self):
+        self.assertEquals(
+            1, AwaitingRegistration.objects.filter(nick=self.nick).count()
+        )
+        awaiting_registration = AwaitingRegistration.objects.get(nick=self.nick)
+        self.assertEquals(self.nick, awaiting_registration.nick)
+        self.assertEquals(self.nick, awaiting_registration.name_given)
+        self.assertEquals(self.nick, awaiting_registration.name_family)
+        self.assertEquals(self.nick, awaiting_registration.salutation)
+        self.assertEquals(50, awaiting_registration.age)
+
     def test_submission(self):
-        # TODO: `text` does not contain the nick, and `get_css_attribute("::before") doesn't work
-
-        # page_character_name = self.els(SignUpPage.CHARACTER_PARAGRAPHS)[0].text[
-        #     0 : len(self.nick)
-        # ]
-        # self.assertEquals(self.nick, page_character_name)
-
-        # This should wait implicitly in the modern selenium, but if flaky, add explicit wait
-        self.el(SignUpPage.POST_SUBMIT).click()
-
+        self.fill_signup_form()
+        # wait for transition
         sleep(0.1)
+
+        self.el(SignUpPage.POST_SUBMIT).click()
 
         self.assertEquals(
             f"Vítej ve Městě, {self.nick}!", self.el(MainPage.MAIN_TITLE).text
         )
+
+        self.assert_registration_saved()
