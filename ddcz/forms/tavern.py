@@ -58,6 +58,13 @@ class TavernTableAdminForm(forms.Form):
         else:
             return list(verified_profile_ids)
 
+    def clean_allow_rep(self):
+        rep = self.cleaned_data.get("allow_rep", False)
+        if rep:
+            return "1"
+        else:
+            return "0"
+
     def clean_assistant_admins(self):
         return self.get_verified_profile_ids(
             self.cleaned_data.get("assistant_admins", None)
