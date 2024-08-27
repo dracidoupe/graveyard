@@ -77,6 +77,10 @@ ALLOWED_CREATION_PAGES = [
 
 @require_http_methods(["HEAD", "GET"])
 def legacy_router(request):
+    # just index.php, return to /
+    if not request.GET:
+        return HttpResponseRedirect(reverse("ddcz:news"))
+
     page_category = request.GET.get("rub", False)
     page_creation_type = request.GET.get("co", False)
     id = request.GET.get("id", False)

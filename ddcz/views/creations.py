@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import urljoin
 from zlib import crc32
 
 from django.apps import apps
@@ -329,6 +330,13 @@ def quest_view_redirect(request, quest_id, quest_slug=None):
     quest.read += 1
     quest.save()
     return HttpResponseRedirect(quest.get_final_url())
+
+
+# For content like /dobrodruzstvi/13/img/kylmar.gif
+@require_http_methods(["HEAD", "GET"])
+def quest_view_redirect_rest(request, quest_id, quest_slug=None, leftover=None):
+    quest = get_object_or_404(Quest, pk=quest_id)
+    return HttpResponseRedirect(urljoin(quest.get_final_url(), leftover))
 
 
 @require_http_methods(["HEAD", "GET"])

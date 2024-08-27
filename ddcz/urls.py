@@ -89,6 +89,11 @@ urlpatterns = [
         views.quest_view_redirect,
         name="quest-view",
     ),
+    re_path(
+        "dobrodruzstvi/(?P<quest_id>\d+)(-)?(?P<quest_slug>[a-zA-Z0-9_-]+)?/(?P<leftover>.*)$",
+        views.quest_view_redirect_rest,
+        name="quest-view-rest",
+    ),
     ### User handling
     path("uzivatele/", views.users_list, name="users-list"),
     path("uzivatel/prihlaseni/", views.login, name="login-action"),
