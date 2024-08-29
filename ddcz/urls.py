@@ -76,6 +76,11 @@ urlpatterns = [
         views.creation_detail_image,
         name="creation-detail-image",
     ),
+    re_path(
+        r"obr_pris/(?P<image_path>[\w\/]+\.[\w]+)",
+        views.creation_detail_image_legacy,
+        name="creation-legacy-detail-image",
+    ),
     # Standard list and detail are under creation pages above,
     # Those are for executing redirect to download/quest location
     path("download/<int:download_id>/", views.download_file, name="download-file"),
