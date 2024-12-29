@@ -4,26 +4,37 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ddcz', '0002_auto_20240818_1740'),
+        ("ddcz", "0002_auto_20240818_1740"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='rangerspell',
-            options={'verbose_name': 'Hraníčářské kouzlo', 'verbose_name_plural': 'Hraníčářská kouzla'},
+            name="rangerspell",
+            options={
+                "verbose_name": "Hraníčářské kouzlo",
+                "verbose_name_plural": "Hraníčářská kouzla",
+            },
         ),
         migrations.AlterModelOptions(
-            name='scheduledemail',
-            options={'verbose_name': 'Plánovaný e-mail', 'verbose_name_plural': 'Plánované e-maily'},
+            name="scheduledemail",
+            options={
+                "verbose_name": "Plánovaný e-mail",
+                "verbose_name_plural": "Plánované e-maily",
+            },
         ),
         migrations.AlterModelOptions(
-            name='schedulednotification',
-            options={'verbose_name': 'Plánovaná notifikace', 'verbose_name_plural': 'Plánované notifikace'},
+            name="schedulednotification",
+            options={
+                "verbose_name": "Plánovaná notifikace",
+                "verbose_name_plural": "Plánované notifikace",
+            },
         ),
         migrations.AlterModelOptions(
-            name='userprofile',
-            options={'verbose_name': 'Uživatelský profil', 'verbose_name_plural': 'Uživatelské profily'},
+            name="userprofile",
+            options={
+                "verbose_name": "Uživatelský profil",
+                "verbose_name_plural": "Uživatelské profily",
+            },
         ),
     ]
