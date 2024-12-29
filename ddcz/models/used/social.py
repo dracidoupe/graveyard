@@ -92,18 +92,14 @@ class Market(models.Model):
         max_length=12, db_column="datum", verbose_name="Přidáno"
     )
 
-    created = models.DateTimeField(blank=True, null=True, verbose_name="Přidáno")
+    created = models.DateTimeField(verbose_name="Přidáno")
 
     def __str__(self):
         return f"{self.name} ({self.group}) z {self.published}"
 
     @property
     def published(self):
-        # Windows workaround as `%-d` is platform-specific
-        try:
-            return date(*(strptime(self.published_varchar, "%-d. %-m. %Y")[0:3]))
-        except ValueError:
-            return date(*(strptime(self.published_varchar, "%d. %m. %Y")[0:3]))
+        return self.created
 
     class Meta:
         db_table = "inzerce"
