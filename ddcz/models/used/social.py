@@ -1,6 +1,3 @@
-from datetime import date
-from time import strptime
-
 from django.db import models
 
 from ..magic import MisencodedCharField, MisencodedTextField
@@ -92,7 +89,7 @@ class Market(models.Model):
         max_length=12, db_column="datum", verbose_name="Přidáno"
     )
 
-    created = models.DateTimeField(verbose_name="Přidáno")
+    created = models.DateTimeField(verbose_name="Přidáno", auto_now_add=True)
 
     def __str__(self):
         return f"{self.name} ({self.group}) z {self.published}"
