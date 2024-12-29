@@ -207,4 +207,5 @@ urlpatterns = [
         name="web-authors-and-editors",
     ),
     path("posta/", views.postal_service, name="postal-service"),
+    path("market/create/", views.market_create, name="market_create"),
 ]

@@ -2,17 +2,12 @@ import logging
 
 from django.core.paginator import Paginator
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
-from ..models import (
-    MARKET_SECTION_CHOICES,
-    EditorArticle,
-    Dating,
-    Link,
-    Market,
-    UserProfile,
-)
+from ..models import Market
+from ..forms.market import MarketForm
 
 DEFAULT_LIST_SIZE = 10
 
@@ -123,3 +118,15 @@ def web_authors_and_editors(request):
             "famous_users": hall_of_fame,
         },
     )
+
+
+def market_create(request):
+    if request.method == "POST":
+        form = MarketForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ddcz:market")
+    else:
+        form = MarketForm()
+
+    return render(request, "market/create.html", {"form": form})

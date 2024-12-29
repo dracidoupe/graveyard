@@ -1,6 +1,7 @@
 from django.db import models
 
 from ..magic import MisencodedCharField, MisencodedTextField
+from ..used.users import UserProfile
 
 MARKET_SECTION_CHOICES = (
     ("nabizim", "Nabízím"),
@@ -56,6 +57,9 @@ class Dating(models.Model):
 
 
 class Market(models.Model):
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
+    )
     group = MisencodedCharField(
         max_length=20,
         choices=MARKET_SECTION_CHOICES,
@@ -63,10 +67,10 @@ class Market(models.Model):
         verbose_name="Sekce",
     )
     name = MisencodedCharField(
-        max_length=30, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
+        max_length=100, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
     )
     mail = MisencodedCharField(
-        max_length=30, blank=True, null=True, db_column="mail", verbose_name="E-mail"
+        max_length=50, blank=True, null=True, db_column="mail", verbose_name="E-mail"
     )
     phone = MisencodedCharField(
         max_length=15,
@@ -78,8 +82,10 @@ class Market(models.Model):
     mobile = MisencodedCharField(
         max_length=15, blank=True, null=True, db_column="mobil", verbose_name="Mobil"
     )
+    # Originally okres, but those stopped being used meanwhile, and kraj makes more sense
+    # than underlying counties or whatever
     area = MisencodedCharField(
-        max_length=20, blank=True, null=True, db_column="okres", verbose_name="Okres"
+        max_length=20, blank=True, null=True, db_column="okres", verbose_name="Kraj"
     )
     text = MisencodedTextField()
     # WARNING WARNING WARNING, not a Date, but a varchar instead!
