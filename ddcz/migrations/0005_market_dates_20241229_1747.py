@@ -12,7 +12,7 @@ def migrate_dates(apps, schema_editor):
     for market in Market.objects.all():
         if not market.published_varchar:
             sentry_sdk.capture_message(
-                f"Market entry without date",
+                "Market entry without date",
                 level="error",
                 extras={
                     "market_id": market.id,
@@ -25,7 +25,7 @@ def migrate_dates(apps, schema_editor):
         except ValueError:
             # If both formats fail, report to Sentry
             sentry_sdk.capture_message(
-                f"Failed to parse date in Market record",
+                "Failed to parse date in Market record",
                 level="error",
                 extras={
                     "market_id": market.id,
