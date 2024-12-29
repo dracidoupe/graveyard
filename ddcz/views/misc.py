@@ -47,8 +47,7 @@ def dating(request):
 
 @require_http_methods(["HEAD", "GET"])
 def market(request):
-    # TODO: Migrate to `-datum`, see https://github.com/dracidoupe/graveyard/issues/195
-    item_list = Market.objects.order_by("-id")
+    item_list = Market.objects.order_by("-created")
 
     section = request.GET.get("sekce", None)
     if section:
