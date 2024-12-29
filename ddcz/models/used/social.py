@@ -94,6 +94,9 @@ class Market(models.Model):
 
     created = models.DateTimeField(blank=True, null=True, verbose_name="Přidáno")
 
+    def __str__(self):
+        return f"{self.name} ({self.group}) z {self.published}"
+
     @property
     def published(self):
         # Windows workaround as `%-d` is platform-specific
