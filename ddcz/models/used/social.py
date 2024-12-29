@@ -92,6 +92,8 @@ class Market(models.Model):
         max_length=12, db_column="datum", verbose_name="Přidáno"
     )
 
+    created = models.DateTimeField(blank=True, null=True, verbose_name="Přidáno")
+
     @property
     def published(self):
         # Windows workaround as `%-d` is platform-specific
