@@ -157,10 +157,19 @@ def dating_create(request):
         form = DatingForm(request.POST)
         if form.is_valid():
             dating_item = form.save(commit=False)
-            dating_item.published = timezone.now()
+            dating_item.user_profile = request.ddcz_profile
             form.save()
             return redirect("ddcz:dating")
     else:
         form = DatingForm()
 
     return render(request, "dating/create.html", {"form": form})
+
+
+@login_required
+@require_http_methods(["POST"])
+def dating_delete(request, id):
+    dating_item = get_object_or_404(Dating, id=id)
+    if dating_item.user_profile == request.ddcz_profile:
+        dating_item.delete()
+    return redirect("ddcz:dating")

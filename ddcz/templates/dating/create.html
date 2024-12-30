@@ -4,7 +4,7 @@
 {% block content %}
 <div id="page-dating">
     <h1 class="page-heading">Přidat inzerát do seznamky</h1>
-    <p>Zadejte pouze údaje, které chcete zveřejnit.</p>
+    <p>Zadejte pouze údaje, které chcete zveřejnit. {% if not user.is_authenticated %}Pokud chcete mít možnost smazat inzerát po zveřejnění, přihlašte se. {% endif %}</p>
     <form method="POST">
         {% csrf_token %}
 

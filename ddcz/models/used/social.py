@@ -20,6 +20,9 @@ DATING_SECTION_CHOICES = (
 
 
 class Dating(models.Model):
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
+    )
     name = MisencodedCharField(
         max_length=40, db_column="jmeno", verbose_name="Jméno", default="Anonym"
     )
@@ -50,7 +53,7 @@ class Dating(models.Model):
     published = models.DateTimeField(
         blank=True, null=True, db_column="datum", verbose_name="Datum"
     )
-    text = MisencodedTextField(db_column="text", default="")
+    text = MisencodedTextField(db_column="text")
     group = MisencodedCharField(
         max_length=20,
         choices=DATING_SECTION_CHOICES,
