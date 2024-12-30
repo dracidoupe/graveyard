@@ -144,7 +144,6 @@ def create_market_entries(number=1):
             group=MARKET_SECTION_CHOICES[randint(0, len(MARKET_SECTION_CHOICES) - 1)][
                 0
             ],
-            published_varchar=date.today().strftime("%d. %m. %Y"),
         )
         for i in range(0, number)
     ]

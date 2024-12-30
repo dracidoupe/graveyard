@@ -88,13 +88,6 @@ class Market(models.Model):
         max_length=20, blank=True, null=True, db_column="okres", verbose_name="Kraj"
     )
     text = MisencodedTextField()
-    # WARNING WARNING WARNING, not a Date, but a varchar instead!
-    # Old version stores in the Czech format: dd. mm. YYYY (where d/m is without leading 0)
-    # See https://github.com/dracidoupe/graveyard/issues/195
-    published_varchar = MisencodedCharField(
-        max_length=12, db_column="datum", verbose_name="Přidáno"
-    )
-
     created = models.DateTimeField(verbose_name="Přidáno", auto_now_add=True)
 
     def __str__(self):
