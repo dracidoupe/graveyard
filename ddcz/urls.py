@@ -24,7 +24,7 @@ urlpatterns = [
         name="redirect_ikonky",
     ),
     # It's gone, Dave
-    re_path(r"^moudrasova/", RedirectView.as_view()),
+    re_path(r"^(moudrasova|img|static)/", RedirectView.as_view()),
     ### Common pages for bots etc.
     path(
         "robots.txt",
