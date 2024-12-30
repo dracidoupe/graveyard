@@ -146,6 +146,21 @@ def legacy_router(request):
             page = get_object_or_404(CreativePage, slug=name)
             return get_creation_detail_redirect(page, id)
 
+    # Putyka table redirects (we have a referral from DrD2 official site, actually)
+    if page_category == "putyka_jeden":
+        return HttpResponsePermanentRedirect(
+            reverse(
+                "ddcz:tavern-posts",
+                kwargs={"tavern_table_id": id},
+            )
+        )
+
+    # Galerie is also somewhat often referenced
+    if page_category == "galerie_diskuze":
+        return get_creation_detail_redirect(
+            CreativePage.objects.get(slug="galerie"), id
+        )
+
     ###  Finally if no route is found, redirect to news and log
     logger.warning(
         f"There has been submitted URL address from the old website: index.php >> No redirect could be found for a legacy URL {request.get_full_path()}"
