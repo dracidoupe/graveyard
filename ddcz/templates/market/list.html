@@ -24,7 +24,7 @@
                 <span class="label">Sekce: </span><span class="value"><a href="{% url 'ddcz:market' %}?sekce={{ i.group | urlencode }}">{{ i.get_group_display }}</a></span>
             </p>
             <p>
-                <span class="label">Okres: </span><span class="value">{{ i.area }}</span>
+                <span class="label">Kraj: </span><span class="value">{{ i.area }}</span>
             </p>
             {% if i.telefon %}
             <p>
