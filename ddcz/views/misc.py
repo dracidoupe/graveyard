@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -124,9 +125,20 @@ def market_create(request):
     if request.method == "POST":
         form = MarketForm(request.POST)
         if form.is_valid():
+            market_item = form.save(commit=False)
+            market_item.user_profile = request.ddcz_profile
             form.save()
             return redirect("ddcz:market")
     else:
         form = MarketForm()
 
     return render(request, "market/create.html", {"form": form})
+
+
+@login_required
+@require_http_methods(["POST"])
+def market_delete(request, id):
+    market_item = get_object_or_404(Market, id=id)
+    if market_item.user_profile == request.ddcz_profile:
+        market_item.delete()
+    return redirect("ddcz:market")

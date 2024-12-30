@@ -148,6 +148,8 @@ urlpatterns = [
     path("novinky/", news.newsfeed, name="newsfeed"),
     path("seznamka/", views.dating, name="dating"),
     path("inzerce/", views.market, name="market"),
+    path("inzerce/pridej/", views.market_create, name="market_create"),
+    path("inzerce/smaz/<int:id>/", views.market_delete, name="market_delete"),
     path("linky/", views.links, name="links-list"),
     ### Discussions & Tavern
     path("forum/", views.phorum, name="phorum-list"),
@@ -207,5 +209,4 @@ urlpatterns = [
         name="web-authors-and-editors",
     ),
     path("posta/", views.postal_service, name="postal-service"),
-    path("market/create/", views.market_create, name="market_create"),
 ]

@@ -44,6 +44,15 @@
             </p>
         </article>
 
+        {% if user.is_authenticated and ddcz_profile.id == i.user_profile_id %}
+            <p>
+                <form method="POST" action="{% url 'ddcz:market_delete' i.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">Smazat inzerát</button>
+                </form>
+            </p>
+        {% endif %}
+
         <hr>
     {% endfor %}
     {% pagination items %}
