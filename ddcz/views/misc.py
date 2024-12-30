@@ -5,7 +5,6 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods
-from django.utils import timezone
 
 from ..models import (
     Market,
