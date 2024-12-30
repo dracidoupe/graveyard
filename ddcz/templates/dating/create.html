@@ -1,0 +1,31 @@
+{% extends 'public.html' %}
+{% load html %}
+
+{% block content %}
+<div id="page-dating">
+    <h1 class="page-heading">Přidat inzerát do seznamky</h1>
+    <p>Zadejte pouze údaje, které chcete zveřejnit.</p>
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="field-error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+                {% if field.help_text %}
+                    <div class="field-help">
+                        {{ field.help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Přidat inzerát</button>
+    </form>
+</div>
+{% endblock %}

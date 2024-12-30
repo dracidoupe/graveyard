@@ -10,10 +10,18 @@ MARKET_SECTION_CHOICES = (
     ("daruji", "Daruji"),
 )
 
+DATING_SECTION_CHOICES = (
+    ("hledam_hrace", "Hledám hráče"),
+    ("hledam_druzinu", "Hledám družinu"),
+    ("hledam_pj", "Hledám PJ"),
+    ("nabizim_druzinu", "Nabízím družinu"),
+    ("nabizim_pj", "Nabízím se jako PJ"),
+)
+
 
 class Dating(models.Model):
     name = MisencodedCharField(
-        max_length=40, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
+        max_length=40, db_column="jmeno", verbose_name="Jméno", default="Anonym"
     )
     email = MisencodedCharField(max_length=40, blank=True, null=True)
     phone = MisencodedCharField(
@@ -30,7 +38,7 @@ class Dating(models.Model):
         blank=True, null=True, db_column="vek", verbose_name="Věk"
     )
     area = MisencodedCharField(
-        max_length=40, blank=True, null=True, db_column="okres", verbose_name="Okres"
+        max_length=40, blank=True, null=True, db_column="okres", verbose_name="Kraj"
     )
     experience = MisencodedCharField(
         max_length=20,
@@ -42,9 +50,12 @@ class Dating(models.Model):
     published = models.DateTimeField(
         blank=True, null=True, db_column="datum", verbose_name="Datum"
     )
-    text = MisencodedTextField(blank=True, null=True, db_column="text")
+    text = MisencodedTextField(db_column="text", default="")
     group = MisencodedCharField(
-        max_length=20, blank=True, null=True, db_column="sekce", verbose_name="Sekce"
+        max_length=20,
+        choices=DATING_SECTION_CHOICES,
+        db_column="sekce",
+        verbose_name="Sekce",
     )
 
     class Meta:

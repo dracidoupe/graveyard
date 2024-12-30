@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods
+from django.utils import timezone
 
 from ..models import (
     Market,
@@ -15,6 +16,7 @@ from ..models import (
     MARKET_SECTION_CHOICES,
 )
 from ..forms.market import MarketForm
+from ..forms.dating import DatingForm
 
 DEFAULT_LIST_SIZE = 10
 
@@ -148,3 +150,17 @@ def market_delete(request, id):
     if market_item.user_profile == request.ddcz_profile:
         market_item.delete()
     return redirect("ddcz:market")
+
+
+def dating_create(request):
+    if request.method == "POST":
+        form = DatingForm(request.POST)
+        if form.is_valid():
+            dating_item = form.save(commit=False)
+            dating_item.published = timezone.now()
+            form.save()
+            return redirect("ddcz:dating")
+    else:
+        form = DatingForm()
+
+    return render(request, "dating/create.html", {"form": form})

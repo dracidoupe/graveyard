@@ -1,37 +1,8 @@
 from django import forms
 from django.core.validators import EmailValidator
+from django.utils.html import escape
 from ddcz.models import Market
-
-
-CZECH_REGIONS = [
-    ("", "-- Vyberte kraj --"),
-    ("Celá ČR", "Celá ČR"),
-    ("Celá SR", "Celá SR"),
-    # Czech Republic
-    ("Praha", "Praha"),
-    ("Středočeský", "Středočeský"),
-    ("Jihočeský", "Jihočeský"),
-    ("Plzeňský", "Plzeňský"),
-    ("Karlovarský", "Karlovarský"),
-    ("Ústecký", "Ústecký"),
-    ("Liberecký", "Liberecký"),
-    ("Královéhradecký", "Královéhradecký"),
-    ("Pardubický", "Pardubický"),
-    ("Vysočina", "Vysočina"),
-    ("Jihomoravský", "Jihomoravský"),
-    ("Olomoucký", "Olomoucký"),
-    ("Zlínský", "Zlínský"),
-    ("Moravskoslezský", "Moravskoslezský"),
-    # Slovak Republic
-    ("Bratislavský", "Bratislavský"),
-    ("Trnavský", "Trnavský"),
-    ("Trenčianský", "Trenčianský"),
-    ("Nitrianský", "Nitrianský"),
-    ("Žilinský", "Žilinský"),
-    ("Banskobystrický", "Banskobystrický"),
-    ("Prešovský", "Prešovský"),
-    ("Košický", "Košický"),
-]
+from ddcz.geo import CZECHOSLOVAK_REGIONS
 
 
 class MarketForm(forms.ModelForm):
@@ -42,7 +13,7 @@ class MarketForm(forms.ModelForm):
     )
 
     area = forms.ChoiceField(
-        choices=CZECH_REGIONS,
+        choices=CZECHOSLOVAK_REGIONS,
         label="Kraj",
         required=True,
     )
@@ -59,3 +30,7 @@ class MarketForm(forms.ModelForm):
             "mobile": "Mobil",
             "text": "Text inzerátu",
         }
+
+    def clean_text(self):
+        text = self.cleaned_data["text"]
+        return escape(text) if text else ""
