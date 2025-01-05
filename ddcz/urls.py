@@ -28,6 +28,11 @@ urlpatterns = [
         RedirectView.as_view(url=f"{settings.PHOTOGALLERY_MEDIA_ROOT_URL}%(file)s"),
         name="redirect-photogallery",
     ),
+    re_path(
+        r"^galerie/(?P<file>.+)$",
+        RedirectView.as_view(url=f"{settings.PHOTOGALLERY_MEDIA_ROOT_URL}%(file)s"),
+        name="redirect-gallery",
+    ),
     # It's gone, Dave
     re_path(r"^(moudrasova|img|static|skiny|chat)/", RedirectView.as_view()),
     ### Common pages for bots etc.
