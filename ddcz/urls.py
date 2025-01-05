@@ -21,15 +21,21 @@ urlpatterns = [
     re_path(
         r"^ikonky/(?P<file>.+)$",
         RedirectView.as_view(url=f"{settings.USER_ICON_MEDIA_ROOT_URL}%(file)s"),
-        name="redirect_ikonky",
+        name="redirect-icons",
+    ),
+    re_path(
+        r"^fotogalerie/(?P<file>.+)$",
+        RedirectView.as_view(url=f"{settings.PHOTOGALLERY_MEDIA_ROOT_URL}%(file)s"),
+        name="redirect-photogallery",
     ),
     # It's gone, Dave
-    re_path(r"^(moudrasova|img|static|skiny)/", RedirectView.as_view()),
+    re_path(r"^(moudrasova|img|static|skiny|chat)/", RedirectView.as_view()),
     ### Common pages for bots etc.
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
+    path("/staticfiles/robots.txt", RedirectView.as_view(url="/robots.txt")),
     path(
         "ads.txt",
         TemplateView.as_view(template_name="ads.txt", content_type="text/plain"),
