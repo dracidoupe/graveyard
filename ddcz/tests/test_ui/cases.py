@@ -30,6 +30,7 @@ class MainPage(Enum):
     NAVIGATION_TAVERN = '//*[@id="ddcz_nav_tavern"]'
     NAVIGATION_PHORUM = '//*[@id="ddcz_nav_phorum"]'
     NAVIGATION_MARKET = '//*[@id="ddcz_nav_market"]'
+    NAVIGATION_DATING = '//*[@id="ddcz_nav_dating"]'
 
 
 class SeleniumTestCase(StaticLiveServerTestCase):

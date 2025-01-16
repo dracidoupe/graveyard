@@ -51,7 +51,11 @@ class Dating(models.Model):
         verbose_name="Doba hraní DrD",
     )
     published = models.DateTimeField(
-        blank=True, null=True, db_column="datum", verbose_name="Datum"
+        blank=True,
+        null=True,
+        db_column="datum",
+        verbose_name="Datum",
+        auto_now_add=True,
     )
     text = MisencodedTextField(db_column="text")
     group = MisencodedCharField(
