@@ -1,7 +1,7 @@
 import logging
 
 import os
-from .base import BASE_DIR
+from .base import BASE_DIR, MIDDLEWARE
 
 logger = logging.getLogger(__name__)
 
