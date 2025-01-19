@@ -31,6 +31,10 @@ class DatingSearch(admin.ModelAdmin):
     search_fields = ("name", "email", "phone", "mobile")
 
 
+class UserProfileSearch(admin.ModelAdmin):
+    search_fields = ("nick",)
+
+
 admin.site.register(Dating, DatingSearch)
 
 admin.site.register(AlchemistTool, SearchableName)
@@ -50,4 +54,4 @@ admin.site.register(AwaitingRegistration)
 admin.site.register(ScheduledNotification)
 admin.site.register(ScheduledEmail)
 
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserProfileSearch)
