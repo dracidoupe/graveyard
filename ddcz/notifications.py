@@ -108,7 +108,7 @@ def notify_news(affected_object, extra_data):
     email_subject = "Aktualita serveru DraciDoupe.cz"
     email_text = f"""{affected_object.text}
 
-    {extra_data['author_nick']}
+    {extra_data["author_nick"]}
     """
 
     for subscriber in subscribers:
