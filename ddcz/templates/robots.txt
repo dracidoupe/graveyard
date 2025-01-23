@@ -4,7 +4,9 @@ Disallow: /
 User-agent: dotbot
 Disallow: /
 
+User-agent: BLEXBot
+Disallow: /
 
-User-Agent: *
+User-agent: *
 Disallow: /admin/
 Disallow: /sprava/
