@@ -1,7 +1,7 @@
 - model: ddcz.editorarticle
   pk: 1
   fields:
-    title: Co je to Dračí Doupě? 
+    title: Co je to Dračí Doupě?
     slug: co-je-draci-doupe
     text: |
       <p><i>In my thoughts and in my dreams,<br />
@@ -86,7 +86,7 @@
       <br/>
       (Blind Guardian: The Bards Song)</i></p>
 
-      <p>V létě 2005 sepsal</p> 
+      <p>V létě 2005 sepsal</p>
       <p><i>Lischai</i></p>
 
 - model: ddcz.editorarticle
@@ -178,7 +178,7 @@
                 <li><a href="#golden">O Hlavu Zlatého Draka</a>
           </li></ul></li>
         <li><a href="#reputation">Reputace</a></li>
-          <li><a href="#chat">Chat</a></li>
+          <li><a href="#discord">Discord</a></li>
         </ul></li>
       <li><a href="#troubleshooting">Řešení problémů</a>
         <ul type="square">
@@ -201,13 +201,13 @@
 
       <p>Důvod, proč o tom tak obšírně mluvím, je ten, že v každém skinu vypadá náš server jinak a hlavně - odkazy do jednotlivých sekcí jsou na různých místech. Proto je možné, že některý odkaz budete chvíli hledat, případně že ve vámi zvoleném skinu vůbec není.</p>
 
-      <p>V každém případě však server používá třísloupcové zobrazení: Vlevo je v úzkém sloupci nabídka, uprostřed je skutečný "obsah", vpravo je opět v úzkém sloupci další nabídka. Levá nabídka sdružuje oficiální obsah serveru (příspěvky v rubrikách), pravá je méně oficiální (Chat, Fórum). Toto je porušeno pouze u "Family Silver", tam je vše nalevo.</p>
+      <p>V každém případě však server používá třísloupcové zobrazení: Vlevo je v úzkém sloupci nabídka, uprostřed je skutečný "obsah", vpravo je opět v úzkém sloupci další nabídka. Levá nabídka sdružuje oficiální obsah serveru (příspěvky v rubrikách), pravá je méně oficiální (Discord, Fórum). Toto je porušeno pouze u "Family Silver", tam je vše nalevo.</p>
 
       <p>Jako úvodní stránka jsou zobrazeny aktuality. Ty jsou určeny převážně registrovaným uživatelům, proto se v nich zhusta objevují pojmy či narážky, které anonymním návštěvníkům nic neřeknou.</p>
 
       <p>Vyskytne-li se nějaký vážný technický problém, který vám například znemožňuje se zaregistrovat, můžete jej oznámit ve Fóru (Odkaz Fórum vpravo - skin Simple Dark).</p>
 
-      <p>Anonymní návštěvníci mohou také navštívit <a href="#chat">Chat</a>, který se od chatů na jiných serverech liší v některých podstatných bodech, proto si nejprve přečtěte stručný přehled těchto odlišností <a href="#chat">níže</a>.</p>
+      <p>Anonymní návštěvníci mohou také navštívit <a href="#discord">Discord</a>, který se od chatů na jiných serverech liší v některých podstatných bodech, proto si nejprve přečtěte stručný přehled těchto odlišností <a href="#discord">níže</a>.</p>
 
       <a name="registration"></a>
       <h2>Registrace</a></h2>
@@ -230,7 +230,7 @@
 
       <p>Chci zdůraznit ještě tři věci:</p>
       <ol type="1">
-        <li>E-mailová adresa by měla patřit jen vám. Jestli žádnou nemáte, zřiďte si ji na některém z free-mailů (yahoo.com, seznam.cz, zoznam.sk, post.cz, post.sk, email.cz...). </li>
+        <li>E-mailová adresa by měla patřit jen vám. Jestli žádnou nemáte, zřiďte si ji na některém z free-mailů (seznam.cz, zoznam.sk, post.cz, post.sk, email.cz, google.com, yahoo.com...). </li>
         <li>Reálné jméno a příjmení. Pokud máte skutečně "exotické jméno" (například "River Phoenix" nebo "Jasmína Lásková"), doporučuji po odeslání registračního formuláře napsat e-mail na adresu tribuna (viz "Tvůrci a redakce -> Tribun"), protože jinak bude vaše registrace pravděpodobně zamítnuta kvůli podezření, že se nejmenujete tak, jak uvádíte. Nebojte se, že by všichni po vaší registraci viděli, že se jmenujete Kryštof Jebavý - vaše jméno a příjmení je ve výchozím nastavení neviditelné, jen vy rozhodnete o tom, zda ho zviditelníte.</li>
         <li>Dříve nebyly schvalovány nicky beznadějně naivní nebo stupidní. Dnes můžete najít pár uživatelů, jejichž jméno na první pohled tomuto požadavku již neodpovídá. Trochu více už totiž rozhoduje, co napíšete do kolonky "Něco o sobě" než do kolonky "Nick". Přesto si uvědomte, že Váš nick je to první, co každý uživatel uvidí, a může podle toho jednat.</li>
       </ol>
@@ -274,7 +274,7 @@
 
       <h3>Úroveň (level / hvězdička) uživatele</h3>
 
-      <p>Každý uživatel našeho serveru má jeden ze sedti levelů (jednu ze sedmi úrovní). Vy se nyní nacházíte na nulté úrovni, indikované žlutou hvězdičkou. Někteří uživatelé pro označení těch na nulté úrovni kvůli barvě hvězdičky používají slovo "žluťásci" či "žluťáci". Spatříte-li u nějakého jiného uživatele hvězdičku jiné barvy, vězte, že jde o uživatele na vyšší úrovni. Platí, že uživatel na vyšší úrovni má všechny možnosti, které mají uživatelé na úrovni nižší, plus "něco navíc". Následující tabulka obsahuje přehled všech sedmi různých hvězdiček:</p>
+      <p>Každý uživatel našeho serveru má jeden ze sedmi levelů (1 ze 7 úrovní). Vy se nyní nacházíte na nulté úrovni, indikované žlutou hvězdičkou. Někteří uživatelé pro označení těch na nulté úrovni kvůli barvě hvězdičky používají slovo "žluťáci" či "žluťásci". Spatříte-li u nějakého jiného uživatele hvězdičku jiné barvy, vězte, že jde o uživatele na vyšší úrovni. Platí, že uživatel na vyšší úrovni má všechny možnosti, které mají uživatelé na úrovni nižší, plus "něco navíc". Následující tabulka obsahuje přehled všech sedmi různých hvězdiček:</p>
       &nbsp;<br>
       <TABLE cellPadding=3 border=1>
         <TBODY>
@@ -328,7 +328,7 @@
 
       <p>Ze stejného důvodu není od věci zviditelnit věk (poté, co jej vyplníte - pravdivě, pokud možno), protože k 12-letým jsou dospělí uživatelé tolerantnější než k dvacetiletým.</p>
 
-      <p>Uvedete-li své ICQ, otvíráte si tím cestu k získání nových kamarádů, protože když někde napíšete zajímavý názor nebo prozradíte své zájmy, možná vás přes ICQ bude kontaktovat někdo, kdo smýšlí stejně.</p>
+      <p>Uvedete-li svůj Discord, otvíráte si tím cestu k získání nových kamarádů, protože když někde napíšete zajímavý názor nebo prozradíte své zájmy, možná vás přes Discord bude kontaktovat někdo, kdo smýšlí stejně.</p>
 
       <p>Nejdůležitější ale je změna hesla, kterou provedete tak, že do pole "Staré heslo:" zadáte dosavadní heslo (to, které jste obdrželi e-mailem) a do polí "Nové heslo:" a "Nové heslo znova:" zadáte dvakrát zcela identicky nějaké snáze zapamatovatelné heslo. Ovšem pozor: Je rozdíl mezi "zapamatovatelné" a "uhodnutelné". Bohužel, jsou na našem serveru tací, kteří jako své heslo používají svou přezdívku, což v žádném případě nedoporučujeme. Klidně si jako heslo zvolte jméno vaší dětské hračky či datum narození vaší maminky, ale dbejte na to, aby vaše heslo nemohl uhodnout nikdo jiný.</p>
 
@@ -371,7 +371,7 @@
 
       <p><b>Všechny vs. Oblíbené vs. Vše bez neoblíbených (Putyka):</b> V Putyce si můžete určitý stůl oblíbit (když jej navštívíte a kliknete na OBLÍBIT), nebo jej naopak "ignorovat" (když ve výpisu stolů kliknete na [ig.]). Po čase budete mít zřejmě několik desítek oblíbených stolů a ostatní stoly vás příliš zajímat nebudou. Pak zřejmě bude čas přepnout "Pouze oblíbené", abyste nemuseli při hledání svých oblíbených stolů "klopýtat" přes nezajímavé stoly.<br>
           Určitou alternativou je označování krajně nezajímavých stolů jako "ignorované" a používání výpisu "Vše bez neoblíbených".</p>
-          
+
       <p><b>Podle sekcí vs. neroztříděno (Putyka):</b> Každý stůl v Putyce je zařazen v určité sekci. Stoly v rámci jedné sekce mají obvykle obdobné téma, případně obdobný princip. Je proto možné snáze najít všechny stoly věnované tématu, které vás zajímá, pokud si výpis stolů necháte primárně roztřídit podle sekcí.</p>
 
       <p><b>Putyka - nové stoly:</b> můžete si též nastavit zobrazování nových stolů. Stačí vybrat v řádku "Putyka" v nabídce "Nové stoly" volbu "Zobrazovat" a když kliknete na putyku, tak úplně nahoře budou zobrazeny stoly mladší 14 dní (ale starší zhruba půl hodiny; nelekejte se, pokud tam svůj nově založený stůl ihned po založení nenajdete).</p>
@@ -383,7 +383,7 @@
 
       <p>Na našem serveru funguje možnost automatického přihlašování, kterou však nedoporučujeme využívat. Není to totiž příliš bezpečné. Tato možnost je tu především kvůli osobám handicapovaným, kterým vyťukávání hesla může činit potíže. A proč je to tolik nebezpečné? Inu, odpověď je jednoduchá: Přijdete třeba na školní počítač, kam mají, samozřejmě, přístup skoro všichni žáci, a zadáte tuto funkci. Když od počítače odejdete, stačí, aby KDOKOLIV zadal pouze [http://www.dracidoupe.cz] a je zalogován právě pod VAŠÍM nickem a logicky má i stejná práva a možnosti.</p>
 
-      <p>Zajímavější je možnost nastavit si vzhled (skin) stránek. Asi nejrozumnější je postupně si vyzkoušet všechny čtyři možnosti, vždy si některou z nich zvolit a "prolézt" si server, zjistit, jak vám vyhovuje rozložení odkazů a čitelnost textu. Na některé části serveru, konkrétně Chat a Moudrou Sovu, se vaše volba skinu nevztahuje - tyto části mají vždy svůj vlastní vzhled. Volbu skinu provedete z nabídky pod přehledem skinů a následně potvrdíte tlačítkem "Nastavit".</p>
+      <p>Zajímavější je možnost nastavit si vzhled (skin) stránek. Asi nejrozumnější je postupně si vyzkoušet všechny čtyři možnosti, vždy si některou z nich zvolit a "prolézt" si server, zjistit, jak vám vyhovuje rozložení odkazů a čitelnost textu. Na některé části serveru, konkrétně Moudrou Sovu, se vaše volba skinu nevztahuje - tyto části mají vždy svůj vlastní vzhled. Volbu skinu provedete z nabídky pod přehledem skinů a následně potvrdíte tlačítkem "Nastavit".</p>
 
       <a name="mentors_novices"></a>
       <h2>Rádci a nováčci</h2>
@@ -393,8 +393,8 @@
       <p><b><u>Rádce</u></b> = člověk, který se nabídne pomoci nováčkovi poté, co úspěšně prošel registrací. Počet rádců není omezen.</p>
       <p><b><u>Nováček</u></b> = uživatel, jenž má ve statistikách uvedeno "nováček".</p>
 
-      <p>Když jste dobře vyplnili registrační formulář, tak jste byli zařazeni do takzvané "Dračí Líhně". Zde si vás mohou (ale nemusí) vzít pod ochranná křídla zkušení uživatelé, kteří vám po úspěšné registraci budou pomáhat v rozkoukání se na serveru, ukážou vám možnosti a funkce serveru. Dračí Líheň je tedy seznam lidí, kteří žádají o registraci na tomto serveru. Zde si zkušení uživatelé mohou brát nováčky pod patronát, stávají se jejich patrony. Pokud tedy budete mít jakoukoliv otázku, která se týká serveru, neváhejte a svému patronovi napište <a href="#mail">poštou</a>. 
-      Pokud je váš dotaz  akutní a je třeba ho vyřešit rychle, koukněte se, zda je zrovna váš patron či rádce na serveru (neboli online). To zjistíte tak, že kliknete na odkaz "Uživatelé", kde uvidíte přezdívky všech uživatelů, kteří jsou právě na serveru. Když tam jméno svého patrona či rádce uvidíte, tak jim napište a oni vám odpoví. V opačném případě (tedy pokud patron ani rádce není zrovna na serveru) klikněte na odkaz <a href="#chat">"chat"</a> a zeptejte se uživatelů, kteří tam právě jsou, ti skoro vždy poradí. Taky můžete poštou kontaktovat jiné uživatele, nejlépe ty, kteří mají pod svým jménem ve výpisu přihlášených uživatelů uvedeno [Rádce] (což je také klikací odkaz přímo k nim do pošty), ti by měli být vždy nápomocni. Též je možno se obrátit na stůl <i>"Poradna"</i> (ID stolu: 1713). U tohoto stolu vám na jakýkoli dotaz ohledně fungování serveru odpoví některý ochotný uživatel; ačkoli to není tak rychlé jako na chatu, obvykle do druhého dne (spíše dřív) dostanete odpověď. Výhodou ptaní se v Poradně je to, že další uživatelé si přečtou jak otázku, tak odpověď, a v případě potřeby doplní a upřesní informace - víc hlav víc ví.</p>
+      <p>Když jste dobře vyplnili registrační formulář, tak jste byli zařazeni do takzvané "Dračí Líhně". Zde si vás mohou (ale nemusí) vzít pod ochranná křídla zkušení uživatelé, kteří vám po úspěšné registraci budou pomáhat v rozkoukání se na serveru, ukážou vám možnosti a funkce serveru. Dračí Líheň je tedy seznam lidí, kteří žádají o registraci na tomto serveru. Zde si zkušení uživatelé mohou brát nováčky pod patronát, stávají se jejich patrony. Pokud tedy budete mít jakoukoliv otázku, která se týká serveru, neváhejte a svému patronovi napište <a href="#mail">poštou</a>.
+      Pokud je váš dotaz  akutní a je třeba ho vyřešit rychle, koukněte se, zda je zrovna váš patron či rádce na serveru (neboli online). To zjistíte tak, že kliknete na odkaz "Uživatelé", kde uvidíte přezdívky všech uživatelů, kteří jsou právě na serveru. Když tam jméno svého patrona či rádce uvidíte, tak jim napište a oni vám odpoví. V opačném případě (tedy pokud patron ani rádce není zrovna na serveru) klikněte na odkaz <a href="#discord">"Discord"</a> a zeptejte se uživatelů, kteří tam právě jsou, ti skoro vždy poradí. Taky můžete poštou kontaktovat jiné uživatele, nejlépe ty, kteří mají pod svým jménem ve výpisu přihlášených uživatelů uvedeno [Rádce] (což je také klikací odkaz přímo k nim do pošty), ti by měli být vždy nápomocni. Též je možno se obrátit na stůl <i>"Poradna"</i> (ID stolu: 1713). U tohoto stolu vám na jakýkoli dotaz ohledně fungování serveru odpoví některý ochotný uživatel; ačkoli to není tak rychlé jako na discordu, obvykle do druhého dne (spíše dřív) dostanete odpověď. Výhodou ptaní se v Poradně je to, že další uživatelé si přečtou jak otázku, tak odpověď, a v případě potřeby doplní a upřesní informace - víc hlav víc ví.</p>
 
       <p>Je jasné, že někteří radí dobře, jiní hůře. Chcete-li tedy ukázat, že vám váš rádce pomáhá a jeho rady jsou dobré, klikněte na svoje statistiky a tam ho ohodnoťte třemi stupni. Vaše statistiky najdete ve všech skinech "Simple&#8230;" vpravo dole (odkaz "Statistiky"), v ostatních skinech musíte kliknout na "Uživatelé" a vybrat ze seznamu své jméno.</p>
 
@@ -412,13 +412,13 @@
         <li>&lt;B&gt;Text&lt;/B&gt; - Takto ohraničený text bude napsán tučně: <font color="blue"><B>Text</B></font></li>
         <li>&lt;U&gt;Text&lt;/U&gt; - Podtržení: <font color="blue"><u>Text</u></font></li>
         <li>&lt;I&gt;Text&lt;/I&gt; - Kurzíva: <font color="blue"><i>Text</i></font></li>
-        <li>&lt;h1&gt;Text&lt;/h1&gt; - Nadpis nejvyšší úrovně (Pozor, napsat takto celý příspěvek je považováno za krajně nevhodné a je trestáno.): 
+        <li>&lt;h1&gt;Text&lt;/h1&gt; - Nadpis nejvyšší úrovně (Pozor, napsat takto celý příspěvek je považováno za krajně nevhodné a je trestáno.):
         <table width="30%">
       <tr><td width="100%">
       <font color="blue"><h1>Text</h1></font>
       </td></tr>
       </table></li>
-        <li>&lt;h2&gt;Text&lt;/h2&gt; - Nadpis druhé úrovně 
+        <li>&lt;h2&gt;Text&lt;/h2&gt; - Nadpis druhé úrovně
         <table width="30%">
       <tr><td width="100%">
       <font color="blue"><h2>Text</h2></font>
@@ -431,7 +431,7 @@
       </td></tr>
       </table></li>
         <li>&lt;hr&gt; - Oddělovací vodorovná čára:<br>
-        - výsledkem je 
+        - výsledkem je
         <table width="50%">
       <tr><td width="100%">
       <font color="blue"><hr></font>
@@ -507,7 +507,7 @@
 
       <p>V době vzniku tohoto dokumentu Fórum prochází určitým "přehodnocováním smyslu", je tedy možné, že výše uvedený odstavec již neplatí. Každopádně v době vzniku dalšího z přepisů tohoto dokumentu je nad textovým polem pro zprávu šest odkazů &ndash; jeden, "Hlášení chyb", vede do Putyky ke stolu, kde se mají oznamovat chyby ve fungování serveru a náměty na jeho vylepšení. Druhý, "Zaujalo v putyce", pak vede rovněž do Putyky, ovšem ke stolu, kde mají být zveřejňovány "reklamy" na nové stoly v Putyce, což je jedna z věcí, která dříve ve Fóru zabírala hodně místa. Další odkaz je podobný tomuto, je to odkaz "Zaujalo v MS", což je odkaz na další reklamní stůl, který shromažďuje pozvánky k vláknům v Moudré Sově. Čtvrtým odkazem je "Poradna - Kde-Co-Jak najít", který vás odkáže do Putyky ke stolu Poradna, který je určen především pro nováčky, ale své dotazy zde může položit každý. Pátý odkaz ("Ptejte se tribuna") vede ke stolu Tribun - hlas lidu, který slouží k otázkám či zprávám směřovaným přímo osobě tribuna. Další odkaz ("Diskuze o Fóru") vás přenese ke stolu Fórum, oficiálního stolu Fóra, kde najdete krom koncepce také diskuzi na téma Fóra. To je také nejlepší způsob, jak si ověřit platnost prvního odstavce této kapitoly, neboť Fórum se vyvíjí a mění neuvěřitelnou rychlostí. Poslední odkaz "Jen tak pokecat..." vede ke stolu, kde můžete nezávazně mluvit o čemkoliv a pokud se budete chovat slušně, nebudete napomínáni, že tato diskuse tam nepatří.</p>
 
-      <p>V případě anonymních uživatelů je před odesláním zprávy do Fóra zapotřebí vyplnit nějakou identifikaci (přezdívku, jméno) a případně též e-mailovou adresu (jejím vyplněním prudce zvyšujete šanci na reakci). Fórum je přístupné pro anonymy i pro případ, že by se někomu nedařilo přihlásit; v takovém případě lze rovněž zkusit vyhledat pomoc na Chatu.</p>
+      <p>V případě anonymních uživatelů je před odesláním zprávy do Fóra zapotřebí vyplnit nějakou identifikaci (přezdívku, jméno) a případně též e-mailovou adresu (jejím vyplněním prudce zvyšujete šanci na reakci). Fórum je přístupné pro anonymy i pro případ, že by se někomu nedařilo přihlásit; v takovém případě lze rovněž zkusit vyhledat pomoc na Discordu.</p>
 
       <p>Fórum je "nejméně oficiálním ze všech oficiálních míst tohoto serveru" - máte-li tedy na srdci něco opravdu závažného, je vhodné sdělit to jinou cestou než skrze Fórum. Fórum rovněž není vhodné na "praní špinavého prádla", protože, na rozdíl od Pošty či Putyky, je vidět i "zvenku".</p>
 
@@ -664,7 +664,7 @@
       <a name="general"></a>
       <h3>Obecné informace</h3>
 
-      <p>Rubriky jsou nejpodstatnější částí našeho serveru, nachází se zde nejrozsáhlejší sbírka doplňků pro Dračí Doupě - nestvůr, dovedností, povolání, kouzel, schopností, předmětů atd. - a právě proto zde od uživatelů očekáváme a vyžadujeme nejzodpovědnější chování a jednání. To, co vám s mírným pokáráním projde v Putyce a nad čím se na Chatu nikdo nepozastaví, může být v rubrice (v diskusi u díla) trestáno (např. stržením reputace). Tím vám nechci vyhrožovat, spíše vás nabádám k rozumu a zodpovědnosti. Než v jakékoliv rubrice na cokoliv kliknete (zejména na hlasovací mechanismus a tlačítko pro přidání diskusního příspěvku či díla), raději si to celé znovu promyslete, zvlášť, jste-li tu noví (prvních pár dnů či týdnů).</p>
+      <p>Rubriky jsou nejpodstatnější částí našeho serveru, nachází se zde nejrozsáhlejší sbírka doplňků pro Dračí Doupě - nestvůr, dovedností, povolání, kouzel, schopností, předmětů atd. - a právě proto zde od uživatelů očekáváme a vyžadujeme nejzodpovědnější chování a jednání. To, co vám s mírným pokáráním projde v Putyce a nad čím se na Discordu nikdo nepozastaví, může být v rubrice (v diskusi u díla) trestáno (např. stržením reputace). Tím vám nechci vyhrožovat, spíše vás nabádám k rozumu a zodpovědnosti. Než v jakékoliv rubrice na cokoliv kliknete (zejména na hlasovací mechanismus a tlačítko pro přidání diskusního příspěvku či díla), raději si to celé znovu promyslete, zvlášť, jste-li tu noví (prvních pár dnů či týdnů).</p>
 
       <a name="works"></a>
       <p>V každé rubrice se nachází <b>díla</b>. Někdy jsou díla označována jako příspěvky, ale protože toto slovo též označuje diskusní příspěvek (= komentář, kritika), může to být matoucí, proto tento dokument mluví zásadně o <b>dílech v rubrikách</b> a <b>příspěvcích v diskusích</b>.</p>
@@ -770,7 +770,7 @@
       <a name="gallery"></a>
       <h3>Galerie</h3>
 
-      <p>Najdete zde spoustu obrázků, maleb a počítačem renderované grafiky s fantasy tématikou.</p> 
+      <p>Najdete zde spoustu obrázků, maleb a počítačem renderované grafiky s fantasy tématikou.</p>
 
       <p>Zvláštností této rubriky je, že díla v ní nejsou hodnocena hvězdičkami a že Galerie není pouze místem prezentace vlastních prací, ale především místem, kde má autor možnost obdržet konstruktivní kritiku.</p>
 
@@ -920,7 +920,7 @@
             <li>Toto je druhá reakce na první odpověď
             <li>Toto je námitka proti první reakci na první odpověď
           </ul>
-          
+
       <h3>Části Moudré Sovy</h3>
       <p>Moudrá sova má v současné době 7 hlavních částí (poněkud nesmyslně označovaných jako "témata"):</p>
       <ol>
@@ -929,7 +929,7 @@
             Poté kontaktuje příslušného redaktora a slušně jej požádá, aby navštívil toto vlákno (které musí mít smysluplný název "Rubrika - Název_díla", žádné "Proč!!!???" ani "Ty hajzle!!!" netolerujeme!) a vyjádřil se.<br>
             Počítejte s tím, že do diskuse budou přispívat i jiní uživatelé. Je to jejich právo, a dokonce to svědčí o tom, že si svých redaktorů váží, protože jim "odlehčí" tím, že vaše dílo zkritizují ze svého pohledu, takže redaktor se může věnovat prospěšnější činnosti.<br>
             Pozor: Tato sekce NENÍ WORKSHOP (Autorská dílna), takže otázka "A jak bych to měl vylepšit?" je krajně nevhodná a bude zřejmě ignorována.
-            
+
         <li><b>Dílna</b><br />
             Toto je Autorská dílna (Workshop), kde vám budou ostatní uživatelé (případně redaktoři) radit, jak vylepšit vaše rozpracované dílo. Prosím, nepleťte si "radu" a "spolupráci": Rada je například "Podle mě Balrog nemůže mít takto nízké obranné číslo", spolupráce by spočívala v sepsání pěti odstavců textu na téma "Balrogovo obranné číslo", na jejichž konci by byla uvedena správná hodnota.<br>
             Vy jste stále autorem/autorkou díla a očekává se tedy, že "oddřete" 99% práce. Ostatní vás pouze mohou naťuknout správným směrem, naznačit vám, co děláte špatně a co by bylo vhodné vzít do úvahy.<br>
@@ -937,21 +937,21 @@
             <a name="moderators"></a>
             <u>Dílna je jedinou částí Moudré Sovy, kde lze používat HTML tagy. <b>Dílna je moderovaná</b>, bdí nad ní trojice moderátorů, kteří chrání autory před hloupostí a zlomyslností některých humanoidních bytostí. Nejsou to ovšem jen kati, ale také rádci.</u><br>
             Poměrně novou částí dílny je Obrazárna. Po jejím založení se Dílna dále větví na Obecnou dílnu a Obrazárnu. Obrazárna je ve své podstatě původní dílně velice podobná, jenom namísto textových děl jsou zde diskutovány obrázky, které lze do Obrazárny nahrát jako přílohu vašeho příspěvku do vlákna. Nejdříve měla být Obrazárna určena pro rubriku Galerie, zatím se ovšem osvědčila pro prezentaci map, návrhů na příšery a objevil se tam i jeden screenshot. Obrazárna není příliš využívaná ani navštěvovaná, ale vzhledem k jejímu útlému věku to není nic neočekávaného.
-            
+
         <li><b>DraciDoupe.cz</b><br />
-            
-          Tato část Moudré Sovy je určena pro "rozjímání" o možných vylepšeních serveru. Máte-li nějaký nápad, měli byste jej uvést zde, zkusit tu myšlenku co nejdůkladněji popsat (ale zase to nepřehánějte, osm A4 se nikomu nebude chtít číst, navíc je zde riziko, že to bude naprosto nerealizovatelný nápad typu "DrD On-line ala World Of Warcraft") a poté sem přilákat někoho z redaktorů či ještě lépe programátorů. Alternativně lze takové nápady uvádět u stolu "DraciDoupe.cz: Bug&Wish list" v Putyce, což je vhodnější pro stručné nápady a nepatrné změny. 
-          
-            
+
+          Tato část Moudré Sovy je určena pro "rozjímání" o možných vylepšeních serveru. Máte-li nějaký nápad, měli byste jej uvést zde, zkusit tu myšlenku co nejdůkladněji popsat (ale zase to nepřehánějte, osm A4 se nikomu nebude chtít číst, navíc je zde riziko, že to bude naprosto nerealizovatelný nápad typu "DrD On-line ala World Of Warcraft") a poté sem přilákat někoho z redaktorů či ještě lépe programátorů. Alternativně lze takové nápady uvádět u stolu "DraciDoupe.cz: Bug&Wish list" v Putyce, což je vhodnější pro stručné nápady a nepatrné změny.
+
+
         <li><b>Pravidla DrD</b><br />
-            Toto je poměrně jasné: Není-li vám jasné nějaké pravidlo, můžete sem napsat svůj dotaz, případně nápad, jak pravidlo pozměnit. 
-            
+            Toto je poměrně jasné: Není-li vám jasné nějaké pravidlo, můžete sem napsat svůj dotaz, případně nápad, jak pravidlo pozměnit.
+
         <li><b>Pro PJ</b><br />
             Zde se rozebírají různá úskalí, na která narážejí PJ-ové při vedení hry - hádající se hráči, líní hráči, dominantní/agresivní hráči, problematika kreslení či nekreslení map, improvizace nebo naopak pevného scénáře atd. VŘELE DOPORUČUJI PŘED POLOŽENÍM DOTAZU PROJÍT JIŽ EXISTUJÍCÍ VLÁKNA - většina věcí už se řešila.
-            
+
         <li><b>Roleplaying</b><br />
             Podobně jako "Pro PJ", ovšem tentokrát zaměřeno na Roleplaying: Jak hrát charaktery, a ne hromádku čísel.
-            
+
         <li><b>Ostatní</b><br />
             Sem patří veškeré ostatní věci, které ovšem mají alespoň trochu vztah buď k našemu serveru, naší komunitě, nebo hrám na hrdiny (Stačí si prohlédnout, co se zde probíralo v minulosti, a bude to zřejmé). Prosím, CDčka Sámera Issy a Filipa Jankoviče shánějte jinde...
       </ol>
@@ -963,38 +963,30 @@
 
       <p>Buďte trpěliví. Moudrá sova je pomalá, klidně se může stát, že se reakce dočkáte třeba až po týdnu. Ale vyplatí se to. V Putyce vám jistě někdo na váš dotaz odpoví dřív, jenže kvalita odpovědi asi nebude tak vysoká jako u MS.</p>
 
-      <a name="chat"></a>
-      <h2>Chat</h2>
+      <a name="discord"></a>
+      <h2>Discord</h2>
 
       <h3>Varování</h3>
 
-      <p>Trochu netradičně začnu důrazným varováním: Toto není xChat. Pokud se na našem chatu budete chovat jako primitivové nebo hulváti, pokud budete ostatní obtěžovat zbytečným opakováním stále stejného duchaprostého příspěvku, dopadnete špatně.</p>
+      <p>Trochu netradičně začnu důrazným varováním: Toto není xChat. Pokud se na našem discordu budete chovat jako primitivové nebo hulváti, pokud budete ostatní obtěžovat zbytečným opakováním stále stejného duchaprostého příspěvku, dopadnete špatně.</p>
 
-      <h3>Vstup na Chat</h3>
+      <h3>Vstup do Discordu</h3>
 
-      <p>Nejrozumnější je vstupovat na Chat po přihlášení na server, protože nebudete muset vyplňovat přihlašovací formulář. Chat se otevírá v novém okně, tzn. můžete v jednom okně chatovat a v druhém procházet server.</p>
+      <p>Do discordu lze vstoupit schválením pozvánky po prokliknutí na odkaz. Bude vám zobrazeno několik místností do kterých můžete nakouknout a případně vyplnit ticket. Po vyplnění, nebo jiným způsobem získání role se vám zpřístupní i další kanály, které jsou pro ověřené uživatele.</p>
 
-      <h3>Místnosti na Chatu</h3>
+      <p>Nejrozumnější je vstupovat do Discordu po přihlášení na server, protože nebudete-li něco vědět, nebo s něčím si být jistí, tam vám určitě odpoví a poradí. Discord se otevírá v samostatné aplikaci, tzn. můžete tam komunikovat a v prohlížeči brouzdat server.</p>
 
-      <p>Náš chat podporuje tzv. "místnosti", které mohou zakládat přihlášení uživatelé. Standardně jsou k dispozici čtyři stálé místnosti (Stálá místnost I., Stálá místnost II., Klub u dvou zubů a Krčma U Vyděděnce), které nikdy nezanikají. "Klub u dvou zubů a Krčma U Vyděděnce" jsou herní místnosti, takže se tam hraje DrD. Ostatní, uživatelsky založené místnosti, zanikají v okamžiku, kdy je z pohledu systému opustí poslední uživatel (kdy jsou prázdné). Pokud tedy založíte místnost, chvíli v ní čekáte a pak ji opustíte a jdete do ní "pozvat" další lidi z jiné místnosti, vaše místnost mezitím zmizí.</p>
+      <p>Jestliže vás někdo odkazuje na kanál, který se vám nezobrazuje, tak ještě nemáte vhodnou roli pro jeho otevření. Je třeba o roli zažádat pomocí rockerů, nebo oslovení administrace.</p>
 
-      <h3>Vstup do místnosti</h3>
+      <h3>Kanály v Discordu</h3>
 
-      <p>Do místnosti lze vstoupit dvěma způsoby. Buď do ní vstoupíte z jakési "chodby", seznamu všech místností, který se vám nabízí poté, co se přihlásíte na chat/otevřete okno s Chatem, a rovněž kdykoliv opustíte nějakou místnost; nebo do ní vstoupíte pomocí "přecházecího formuláře", který je v každé místnosti vpravo nahoře.</p>
+      <p>Náš discord má tzv. "místnosti" (obecněji "kanály", které jsou tématicky přednastavené. Standardně vás zajímají dva kanály (Náměstí a Začátečníci), které nikdy nezanikají. V budoucnu bude rozhodně možné na objednávku dělat i herní místnosti, takže se tam může hrát DrD. Ostatní kanály jsou více specifické, nebo informativní. Můžete vidět jak a kdy probíhá oprava serveru, poskytovat feedback a hlásit chyby, případně řešit bugy, či problémy. Zároveň je tam možné i pokecat hlasově.</p>
 
-      <p>Jestliže název místnosti není odkaz, nemůžete do této místnosti vstoupit - buď jste HOST (nepřihlášený návštěvník), nebo je místnost zamknutá.</p>
+      <h3>Pobyt v kanálu</h3>
 
-      <h3>Pobyt v místnosti</h3>
+      <p>Při vstupu na discord je dobré pozdravit - napsat nějakou zprávu. Toho docílíte tak, že kliknete v dolní části do podlouhlého textového řádku, napíšete svou zprávu a stisnete ENTER (co je totéž, jako kdybyste klikli na tlačítko "Odeslat").</p>
 
-      <p>Okno s výpisem obsahu místnosti má dva RÁMY (To je počítačová terminologie.), a v nich dohromady celkem tři části.</p>
-
-      <p>Úplně nahoře je hlavička místnosti s některými ovládacími prvky a několika odkazy. V hlavní, prostřední části je výpis posledních několika (desítek) zpráv. Úplně dole pak je formulář pro odesílání vlastních zpráv.</p>
-
-      <p>Při vstupu do místnosti je dobré pozdravit - napsat nějakou zprávu. Toho docílíte tak, že kliknete v dolní části do podlouhlého textového řádku, napíšete svou zprávu a stisnete ENTER (co je totéž, jako kdybyste klikli na tlačítko "Odeslat").</p>
-
-      <p>Chcete-li zprávu někomu pošeptat (jste-li přihlášeni), vyberte přezdívku dotyčného příjemce z nabídky vpravo od textového řádku. Písmeno M nebo Ž v závorce vám napovídá, zda dotyčný uvádí své pohlaví jako "muž", nebo "žena". Zaškrtnete-li současně zaškrtávací políčko vedle nabídky, zůstane tento příjemce vybrán i po odeslání zprávy; jinak je opět nastaveno "Všem" (tzn. "bez šeptání"). Hostům nelze šeptat a hosté nemohou šeptat.</p>
-
-      <p>Stisknete-li v textovém řádku ENTER, aniž byste do něj něco napsali, považuje to systém za "bdělostní tlačítko" - dáváte tím najevo, že jste přítomni.</p>
+      <p>Chcete-li zprávu někomu pošeptat (čili odesílat SZ - Soukromou Zprávu), klikněte na obrázek dotyčného příjemce přímo v chatu. Případně na kliknutí názvu kanálu se vám zobrazí seznam jmen, ze kterých si můžete vybrat. Dotyčného tedy vyberete a na jeho profilu kliknete na tlačítko označující zprávu. Chcete-li dotyčného pouze v chatu zmínit použité "@" a začněte psát jméno, přezdívku, nebo roli. Nápověda vám pomůže si vybrat správnou osobu.</p>
 
       <p align="center"><a href="#top">Na začátek</a></p>
       <hr>
@@ -1096,15 +1088,15 @@
         <li>Až na výjimky můžeš každý svůj výrok vzít zpět tím, že jej smažeš. Proto si raději každý svůj příspěvek po sobě hned přečti a pokud se ti nepovedl, tak jej raději smaž dřív, než ti jeho obsah bude vytýkán.</li>
         <li>Má-li nějaký uživatel vedle své přezdívky ikonku, znamená to obvykle, že je výrazně zkušenější než ty už proto, že na ikonku mají nárok jen uživatelé, za kterými je už určitý "kus práce", případně kteří jsou "prověření časem". Proto si raději ber příklad z nich než z "obyčejných žluťásků" (uživatelů se žlutou hvězdičkou bez ikonky).</li>
         <li>Pokud se rozhodnete přispět do některé z rubrik (například vytvořením nějakého předmětu, nestvůrky, kouzla atd.), nikdy nepište text příspěvku přímo do formuláře! Celý příspěvek si nejprve sepište v klidu ve svém počítači, například v Poznámkovém bloku. Poté doporučujeme zveřejnit příspěvek v Dílně Moudré Sovy ("Moudrá Sova" - "Dílna"), kde vám jej ostatní uživatelé pomohou vypilovat... Teprve poté, co vám lidé řeknou, že je to "dobré", má smysl odeslat to redakci k posouzení.</li>
-        <li>Nic nezkazíte, když při vstupu na Chat slušně pozdravíte a před odchodem z Chatu se rozloučíte.</li>
+        <li>Nic nezkazíte, když při vstupu na Discord slušně přivítáte a před odchodem z Discordu se rozloučíte.</li>
         <li>Krást se nevyplácí. 95% pokusů o krádež cizího díla a jeho vydávání za vlastní bylo v minulosti odhaleno a pachatelé byli z našeho serveru vyhnáni, jejich pověst utrpěla a dočasná sláva zmizela.</li>
         <li>Spam, neboli nežádoucí (a obvykle komerční či značně obsáhlá) zpráva, která vám byla zaslána, je velkým problémem dnešního internetu. Na našem serveru se snažíme chránit naše uživatele před spamem, takže například výchozí nastavení po registraci je takové, že na tvou adresu nic neposíláme, dokonce ti ani nevnucujeme formulář, ve kterém by ses k odběru nějakých zpráv mohl(a) přihlásit. Prosím, važ si toho a nedělej druhým to, co by se tobě samotné(mu) nelíbilo. Znamená to tedy, například, že bys neměl(a) posílat hromadné e-maily na adresy, které získáš na našem serveru (a že jich tu je pěkných pár tisíc), též netapetuj (nepřidávej diskuse mimo téma či psát více příspěvků za sebou, když to jde napsat do jednoho), jelikož v některých diskusích (např. "fórum" či "diskuse u děl") jde přeposílat každý příspěvek na e-mail a určitě bys ani ty nechtěl, kdyby byl tvůj e-mail zahlcen takovýmito zprávami.</font></li></li>
-        <li>Máš-li otázku, postupuj některou z těchto cest: 
+        <li>Máš-li otázku, postupuj některou z těchto cest:
           <ol type="A">
-            <li>Zamiř na Chat, slušně pozdrav, podrobně popiš svou situaci ("Jsem tu nový/nová, dostal jsem poštou zprávu, že ..., ale netuším, jak ...") a slušně popros o radu. Vyhýbej se přitom nadměrnému používání otazníků, dej si záležet, aby na konci otázky byl otazník a na konci oznamovací věty tečka, a téměř určitě se ti pomoci dostane.</li>
+            <li>Zamiř na Discord, slušně pozdrav, podrobně popiš svou situaci ("Jsem tu nový/nová, dostal jsem poštou zprávu, že ..., ale netuším, jak ...") a slušně popros o radu. Vyhýbej se přitom nadměrnému používání otazníků, dej si záležet, aby na konci otázky byl otazník a na konci oznamovací věty tečka, a téměř určitě se ti pomoci dostane.</li>
             <li>Zamiř do FAQ a pozorně si přečti vše, co tento dokument nabízí k tvému problému. Pravděpodobně tam najdeš odpověď, pokud ne, zkus postup A</li>
           </ol>
-          Teprve v případě, že ani jedna z těchto cest nevedla k úspěchu, zkus dotaz co nejsrozumitelněji napsat ve Fóru - opět neuškodí, když zmíníš, že jsi tu nový/nová a když uvedeš, co už jsi zkoušel(a) a co nefungovalo - znamená to totiž, že nečekáš, až ti odpověď sama spadne do klína, nýbrž že ji aktivně hledáš.  
+          Teprve v případě, že ani jedna z těchto cest nevedla k úspěchu, zkus dotaz co nejsrozumitelněji napsat ve Fóru - opět neuškodí, když zmíníš, že jsi tu nový/nová a když uvedeš, co už jsi zkoušel(a) a co nefungovalo - znamená to totiž, že nečekáš, až ti odpověď sama spadne do klína, nýbrž že ji aktivně hledáš.
         </li>
         <li>Nerozumíš-li akci nějakého uživatele, která se tě týkala, nejprve jej zdvořile (ale nikoliv "podbízivě" či "vlezdoprdelnicky") kontaktuj poštou, opět to nepřeháněj s otazníky, vykřičníky ani chaosem. Teprve když to nezafunguje (nezapomeň dát dotyčnému dost času na reakci, optimálně sedm dní), obrať se s veškerými podrobnostmi na nějakou vyšší instanci podle služebního postupu, který je v těchto FAQ rovněž uveden.</li>
         <li>Žádné pirátství, žádná pornografie. Omlouvám se, že tuto naprosto zřejmou věc zmiňuji, jsem si jist, že by tě to v životě nenapadlo, ale poté, co jsem mazal už dvacátý inzerát "Koupím okopírovaná pravidla DrD" (spolu s jeho autorem), raději toto pravidlo, které by nikdo nikdy neporušil, explicitně zmiňuji. Chápu, že každý má doma nějakou tu "záložní kopii", ale jestli zneužiješ k získání něčeho takového jakoukoliv část tohoto serveru, končíš. Je mi líto.</li>
@@ -1113,8 +1105,8 @@
       </ol>
 
       <a name="double_al"></a>
-      <p>Doména DraciDoupe.cz patří <b>Almad</b>ovi. Je to nejvyšší autorita na tomto serveru. 
-      <b>Almad</b>ovým zástupcem je tribun.</b>; 
+      <p>Doména DraciDoupe.cz patří <b>Almad</b>ovi. Je to nejvyšší autorita na tomto serveru.
+      <b>Almad</b>ovým zástupcem je tribun.</b>;
       <b>Almad</b> se v současné době věnuje vývoji nového serveru, o kterém se občas mluví jako o "verzi 2", občas jako o "RPGplanet".</p>
 
       <p align="center"><a href="#top">Na začátek</a></p>
@@ -1126,7 +1118,7 @@
       <p><b>Slova, která se používají v jednotném i množném čísle, jsou zde uvedena v množném čísle.</b></p>
 
       <a href="#double_al">Almad</a>
-      <a href="#chat">Chat</a>
+      <a href="#discord">Discord</a>
       <a href="#works">Díla</a>
       <a href="#discussion">Diskuze</a>
       <a href="#logging">Hesla</a>
@@ -1147,7 +1139,7 @@
       <hr>
 
 
-      <p align="right"><b>-- sepsal Alcator v únoru až květnu 2005, upravil Skorpion koncem dubna 2006. Editace jmen v říjnu 2006 provedl Skorpion a Almad. Další úpravy, aktualizace a přepisy provedl v říjnu 2007 Nathaka Warrior společně se Skorpionem a Legarem. Korekturu aktuální verze má na svědomí Darian.</b></p>
+      <p align="right"><b>-- sepsal Alcator v únoru až květnu 2005, upravil Skorpion koncem dubna 2006. Editace jmen v říjnu 2006 provedl Skorpion a Almad. Další úpravy, aktualizace a přepisy provedl v říjnu 2007 Nathaka Warrior společně se Skorpionem a Legarem. Korekturu aktuální verze má na svědomí Darian. Poslední úpravu provedl Lord ViLyam (17.01.2025)</b></p>
 
 
 - model: ddcz.editorarticle
@@ -1170,10 +1162,10 @@
 
 
       <b>2.) Jaké <i>skiny</i> mám na výběr? Jak si je mohu zvolit? </b><br />
-      Máš na výběr celkem čtyři <i>skiny</i>. Každý je něčím výjimečný a záleží jen na tobě, který ti bude nejvíc vyhovovat. Zvolit si jej můžeš v <b>Nastavení &ndash; ovládání</b>, kde si stačí pouze vybrat ten, jenž se ti nejvíce zamlouvá, zadat jeho název (vlevo dole) a kliknout na &#8222;Nastavit!&#8220;.<br /><br />   
+      Máš na výběr celkem čtyři <i>skiny</i>. Každý je něčím výjimečný a záleží jen na tobě, který ti bude nejvíc vyhovovat. Zvolit si jej můžeš v <b>Nastavení &ndash; ovládání</b>, kde si stačí pouze vybrat ten, jenž se ti nejvíce zamlouvá, zadat jeho název (vlevo dole) a kliknout na &#8222;Nastavit!&#8220;.<br /><br />
 
       <b>3.) Co je to <i>Chat</i> [čet]?</b><br />
-      Jde o místo, kde si můžeš popovídat s ostatními uživateli, popřípadě s lidmi, kteří zde nejsou přihlášeni a jsou tedy na chatu jako hosti.<br /><br /> 
+      Jde o místo, kde si můžeš popovídat s ostatními uživateli, popřípadě s lidmi, kteří zde nejsou přihlášeni a jsou tedy na chatu jako hosti.<br /><br />
 
       <b>4.) Jaké jsou na Chatu místnosti?</b><br />
       Stálé jsou dvě místnosti. Místnost I., do které smí každý a Místnost II., do které mohou jen registrovaní a přihlášení uživatelé. Je tomu tak proto, že se někdy může stát, že v Místnosti I. bude nějaký host tapetovat, urážet ostatní atd. Pokud se tak stane, mohou se registrovaní uživatelé přemístit do druhé místnosti, kde je již nikdo rušit nebude. Poté si samozřejmě může jakýkoliv registrovaný uživatel založit svou místnost, která se ale zruší v okamžiku, kdy z ní odejde poslední uživatel...<br /><br />
@@ -1187,7 +1179,7 @@
       <b>7.) Mohu si na Chatu nějak měnit barvu/ velikost písma atd.? </b><br />
       Ano, všechny tyto možnosti najdeš v <b>Nastavení</b> na Chatu.<br /><br />
 
-      <b>8.) Některá slova na chatu se různě podtrhávají, píší tučně, objevují se různé hlášky či básničky atd. Co se to děje? </b><br />  
+      <b>8.) Některá slova na chatu se různě podtrhávají, píší tučně, objevují se různé hlášky či básničky atd. Co se to děje? </b><br />
       Neboj, chyba není ve tvém počítači, jedná se totiž o ducha našeho Chatu jménem Barvínek. Barvínek je speciální skript, který je občas spuštěn při odeslání příspěvku na Chatu (resp. stisku ENTER v okénku) a buď provede nějakou &#8222;legrácku&#8220; se zprávou, nebo vymyslí vlastní výrok či dadaistickou báseň, kterou po chvíli přidá. Je to zvláštnost našeho chatu, vzniklá z experimentálních důvodů. Zabránit Barvínkovi v měnění tvých zpráv můžeš v <b>Nastavení</b> pomocí "Ať mě ignoruje", zneviditelnit jeho výroky můžeš pomocí "Nechci ho vidět".<br /><br />
 
       <b>9.) Jak fungují filtry? </b><br />
@@ -1206,21 +1198,21 @@
       Je to způsobeno tím, že bylo smazáno hlasování uživatele, který dal třeba 0* (mohl to být <i>nulák</i> atd.) a průměr se podle toho již upravil (předtím byl třeba 4.48). Hvězdičky se ale přizpůsobí až při dalším hlasování.<br /><br />
 
       <b>14.) V čekárně ubylo jedno dílo, ale v rubrice se neobjevilo, kam zmizelo? </b><br />
-      Redaktor ho nepustil do rubriky. Pravděpodobně jeho kvalita byla velice nízká a nebo se redaktorovi zdálo, že se z daného tématu dá udělat skvělé dílo a tak ho s pár radami odeslal autorovi zpět. Upozornění, že se toto přihodilo tvému dílu najdeš ve svém e-mailu. Tam se ti také automaticky přeposílají informace o schválených dílech atd. viz níže.<br /><br /> 
+      Redaktor ho nepustil do rubriky. Pravděpodobně jeho kvalita byla velice nízká a nebo se redaktorovi zdálo, že se z daného tématu dá udělat skvělé dílo a tak ho s pár radami odeslal autorovi zpět. Upozornění, že se toto přihodilo tvému dílu najdeš ve svém e-mailu. Tam se ti také automaticky přeposílají informace o schválených dílech atd. viz níže.<br /><br />
 
       <b>15.) Co je to Putyka?</b><br />
-      Putyka je diskusní sekcí našeho serveru, to znamená, že se tam netlachá jako třeba na chatu, ale diskutuje. Příspěvky typu &#8222;Ahooooj, o čem tu kecáte&#8220; nejsou vhodné. Můžeš zde vést tématicky rozdělené diskuse s ostatními registrovanými uživateli. Je zde mnoho stolů a každý je zaměřen na jiné téma. O čem stůl je poznáš z názvu a hlavně z popisu stolu (název může být totiž mnohdy zavádějící).<br /><br /> 
+      Putyka je diskusní sekcí našeho serveru, to znamená, že se tam netlachá jako třeba na chatu, ale diskutuje. Příspěvky typu &#8222;Ahooooj, o čem tu kecáte&#8220; nejsou vhodné. Můžeš zde vést tématicky rozdělené diskuse s ostatními registrovanými uživateli. Je zde mnoho stolů a každý je zaměřen na jiné téma. O čem stůl je poznáš z názvu a hlavně z popisu stolu (název může být totiž mnohdy zavádějící).<br /><br />
 
       <b>16.) Jak se mám u stolu chovat? </b><br />
       Doporučuji ti při navštívení stolu, který tě zajímá, udělat těchto pár kroků:
       <ol type="1">
       <li>Poté, co jsi zjistil o čem stůl je (popis) by ses měl podívat na nástěnku (pokud ji stůl má), kde jsou případně uvedena nějaká pravidla stolu a nebo je zde obšírněji shrnuto o čem stůl je.
 
-      <li>Přečti si posledních 20-50 příspěvků, abys pochopil, o čem se momentálně vede diskuze. 
+      <li>Přečti si posledních 20-50 příspěvků, abys pochopil, o čem se momentálně vede diskuze.
 
-      <li>Snaž se držet tématu stolu. Je nevhodné, aby si u např. u stolu &#8222;Fantasy hudba&#8220; položil otázku &#8222;Myslíte si, že by trollové měli mít bonus do obrany kvůli jejich tlustší kůži?&#8220;. 
+      <li>Snaž se držet tématu stolu. Je nevhodné, aby si u např. u stolu &#8222;Fantasy hudba&#8220; položil otázku &#8222;Myslíte si, že by trollové měli mít bonus do obrany kvůli jejich tlustší kůži?&#8220;.
 
-      <li>Je dobré nechovat se jako primitiv, nepoužívat za otázkou padesát otazníků a nemluvit sprostě atp. Proste se snaž dodržovat jakési zásady slušného chování a určitě nic nepokazíš. 
+      <li>Je dobré nechovat se jako primitiv, nepoužívat za otázkou padesát otazníků a nemluvit sprostě atp. Proste se snaž dodržovat jakési zásady slušného chování a určitě nic nepokazíš.
       </ol>
 
       <b>17.) K čemu slouží nástěnka stolu? </b><br />
@@ -1236,7 +1228,7 @@
       Je to tím, že ke stolu máš od správce zakázaný přístup. Pravděpodobně je to tak proto, že u stolu má sídlo nějaká &#8222;tajná organizace&#8220; a mohou tam tudíž jen členové daného uskupení. Ale možných důvodů je samozřejmě víc. <br />
       Upřesnění: Přístup ke stolu můžeš "nemít" ze dvou důvodů: Buď vlastník explicitně určil, kdo tam smí, a ty mezi nimi nejsi, nebo naopak explicitně určil, kdo tam NESMÍ, a ty jsi v tomto seznamu.
       <br /><br />
-      
+
       <b>21.) K čemu mi je <i>booknutí</i> stolu? </b><br />
       U stolu máš možnost kliknout na BOOK a tím ho zařadit mezi své oblíbené. Při návštěvě Putyky pak stačí jen ve filtru (vpravo nahoře) zadat &#8222;vypsání oblíbených stolů&#8220; a zobrazí se ti jen ty stoly, které máš booknuté. Chceš-li stůl z oblíbených odstranit, pouze klikneš na UNBOOK.<br /><br />
 
@@ -1274,7 +1266,7 @@
       Většinou se to stane tak, že správce stolu zjistí, že už se o stůl starat nechce a nebo k němu nemá již co říct a tak opustí patronát nad tímto stolem a nechá šanci dalším. Do divoké privatizace se také může stůl dostat tehdy, pokud se o něj správce evidentně nestará (například tam půl roku nebyl) atd. <br /><br />
 
       <b>27.) Můžu stůl někomu předat jinak než přes divokou privatizaci?</b><br />
-      Samozřejmě, v nastavení stolu (kam má přístup jen správce) napíšeš do příslušné kolonky ID uživatele, kterému chceš stůl dát a tuto operaci potvrdíš stisknutím &#8222;Předat&#8220;.<br /><br /> 
+      Samozřejmě, v nastavení stolu (kam má přístup jen správce) napíšeš do příslušné kolonky ID uživatele, kterému chceš stůl dát a tuto operaci potvrdíš stisknutím &#8222;Předat&#8220;.<br /><br />
 
 
       <b>28.) Kde najdu své ID? K čemu mi je? </b><br />
@@ -1353,10 +1345,10 @@
 
 
       <b>1.) Co znamená ta hvězdička za mým nickem?</b><br />
-      Každý uživatel našeho serveru má jednu z pěti úrovní a právě ta hvězdička ukazuje, na jaké úrovni daný uživatel je. S vyšším levelem (úrovní) samozřejmě rostou &#8222;pravomoce&#8220; uživatele a má jisté výhody. Přehledně to ukazuje tato 
+      Každý uživatel našeho serveru má jednu z pěti úrovní a právě ta hvězdička ukazuje, na jaké úrovni daný uživatel je. S vyšším levelem (úrovní) samozřejmě rostou &#8222;pravomoce&#8220; uživatele a má jisté výhody. Přehledně to ukazuje tato
         <a href="#userlevel">tabulka</a>.<br /><br />
 
-      Pravděpodobně spoustě věcem z té tabulky nerozumíš (reputace, runy atd.) a tak se ti je pokusím na dalších řádcích objasnit.<br /><br /> 
+      Pravděpodobně spoustě věcem z té tabulky nerozumíš (reputace, runy atd.) a tak se ti je pokusím na dalších řádcích objasnit.<br /><br />
 
 
       <b>2.) Kde, kdy a jak si mohu nahrát ikonku? </b><br />
@@ -1374,23 +1366,23 @@
 
       Důležité ale je, aby ikonka splňovala jisté parametry a to takové: Ikonka musí být ve formátu GIF, PNG nebo JPG a musí mít velikost do 20 000 bytů (necelých 20 kb). Maximální rozměry jsou 40x50 pixelů.<br /><br />
 
-      Pokud toto tvůj obrázek nesplňuje, pokus se jej upravit. Pokud nevíš jak na to, nebo se ti to nepovede, zajdi do Putyky ke stolu Ikonky a tam sděl ostatním svůj problém a požádej o pomoc. Určitě se najde někdo, kdo ti ikonku upraví do přijatelných parametrů.<br /><br /> 
+      Pokud toto tvůj obrázek nesplňuje, pokus se jej upravit. Pokud nevíš jak na to, nebo se ti to nepovede, zajdi do Putyky ke stolu Ikonky a tam sděl ostatním svůj problém a požádej o pomoc. Určitě se najde někdo, kdo ti ikonku upraví do přijatelných parametrů.<br /><br />
 
-      Pamatuj také na to, že ikonka by měla být &#8222;slušná&#8220;. Pokud bude propagovat nacismus, bude na ní pornografie atp., neskončí to s ní dobře.<br /><br /> 
+      Pamatuj také na to, že ikonka by měla být &#8222;slušná&#8220;. Pokud bude propagovat nacismus, bude na ní pornografie atp., neskončí to s ní dobře.<br /><br />
 
 
       <b>3.) Co je to reputace? </b><br />
-      Za přínosné příspěvky k článkům v diskuzích, ale i v Putyce, mohou vlastníci fialového, červeného či zeleného levelu udělovat reputační body. Plusová reputace je většinou udělována za kvalitní příspěvek, který je něčím výjimečný, ojedinělý, který přináší do diskuze zajímavý pohled na věc nebo který je třeba vtipný atp. Existují však i záporné reputační body. Je to prevence, aby se předešlo vulgarizmům, zbytečným, nic neříkajícím příspěvkům (např. &#8222;To je super!&#8220; &ndash; jen aby se splnili podmínky na modrý level) a příspěvkům, které jsou naprosto od tématu v diskuzích či v Putyce. To znamená, že když napíšeš na chatu &#8222;Lidi, to je dneska teplo&#8220; tak to je v pořádku. Ale pokud to napíšeš třeba v diskuzi pod recenzi na novou fantasy knihu, pravděpodobně ti někdo udělí reputační záporný bod, to samé platí pro Putyku. Samozřejmě, že záporná reputace se dává i za nesmyslné osobní útoky, vážné prohřešky proti slušnému chování &ndash; je to vlastně obrana slušných uživatelů.<br /><br />   
+      Za přínosné příspěvky k článkům v diskuzích, ale i v Putyce, mohou vlastníci fialového, červeného či zeleného levelu udělovat reputační body. Plusová reputace je většinou udělována za kvalitní příspěvek, který je něčím výjimečný, ojedinělý, který přináší do diskuze zajímavý pohled na věc nebo který je třeba vtipný atp. Existují však i záporné reputační body. Je to prevence, aby se předešlo vulgarizmům, zbytečným, nic neříkajícím příspěvkům (např. &#8222;To je super!&#8220; &ndash; jen aby se splnili podmínky na modrý level) a příspěvkům, které jsou naprosto od tématu v diskuzích či v Putyce. To znamená, že když napíšeš na chatu &#8222;Lidi, to je dneska teplo&#8220; tak to je v pořádku. Ale pokud to napíšeš třeba v diskuzi pod recenzi na novou fantasy knihu, pravděpodobně ti někdo udělí reputační záporný bod, to samé platí pro Putyku. Samozřejmě, že záporná reputace se dává i za nesmyslné osobní útoky, vážné prohřešky proti slušnému chování &ndash; je to vlastně obrana slušných uživatelů.<br /><br />
 
 
       <b>4.) Může se mi něco stát, když budu mít zápornou reputaci?</b><br />
-      Pokud budeš mít třeba -5 bodů, tak se ještě nic neděje, ale jakmile tvá reputace dosáhne -20 bodů, tak budeš smazán. Ale je skoro nemožné, aby se ti něco takového přihodilo, když se budeš chovat jen trochu jako člověk.<br /><br /> 
+      Pokud budeš mít třeba -5 bodů, tak se ještě nic neděje, ale jakmile tvá reputace dosáhne -20 bodů, tak budeš smazán. Ale je skoro nemožné, aby se ti něco takového přihodilo, když se budeš chovat jen trochu jako člověk.<br /><br />
 
       <b>5.) Dostal jsem zápornou/kladnou reputaci, co to znamená? </b><br />
-      Nějaký tvůj příspěvek se (ne)líbil někomu natolik, že ti za něj udělil reputaci. Pokud ti neposlal poštou vysvětlení (to se dělá hlavně u záporné reputace) tak si můžeš ve svých podrobnostech zjisti kliknutím na udělenou reputaci za co jsi ji vlastně obdržel.<br /><br /> 
+      Nějaký tvůj příspěvek se (ne)líbil někomu natolik, že ti za něj udělil reputaci. Pokud ti neposlal poštou vysvětlení (to se dělá hlavně u záporné reputace) tak si můžeš ve svých podrobnostech zjisti kliknutím na udělenou reputaci za co jsi ji vlastně obdržel.<br /><br />
 
       <b>6.) Co znamená &#8222;hlasů&#8220; hned pod mým nickem když jsem přihlášený? </b><br />
-      Znamená to, kolik reputačních bodů můžeš dnes ještě udělit. Pro uživatele, kteří ještě nemohou reputaci udělovat (žlutí, modří a oranžoví) je tento ukazatel naprosto zbytečný a začne je zajímat až od vyššího levelu.<br /><br /> 
+      Znamená to, kolik reputačních bodů můžeš dnes ještě udělit. Pro uživatele, kteří ještě nemohou reputaci udělovat (žlutí, modří a oranžoví) je tento ukazatel naprosto zbytečný a začne je zajímat až od vyššího levelu.<br /><br />
 
 
       <b>7.) Co znamenají hvězdičky za díly v rubrikách? </b><br />
@@ -1420,16 +1412,16 @@
       Dostaneš +10 reputačních bodů, bude ti předán diplom (na Conu) a tvůj příspěvek získá šestou hvězdičku v podobě bílého dráčka (v některých skinech se zobrazuje bílá hvězdička).<br /><br />
 
       <b>14.) Co jsou to runy? </b><br />
-      Runy jsou <b>velmi vzácný</b> prostředek jak někomu vyjádřit vděk, přátelství či úctu. 
+      Runy jsou <b>velmi vzácný</b> prostředek jak někomu vyjádřit vděk, přátelství či úctu.
       Celé toto téma je trochu složitější na to, abych ho zde rozepisoval.
 
-      TODO: Zapsat manuál. 
+      TODO: Zapsat manuál.
 
       <h2>Ostatní otázky</h2>
 
 
       <b>1.) Mohu zde hrát DrD?</b><br />
-      Není to primární účel těchto stránek (tak tomu je například na www.abarin.cz , www.andor.cz a mnoho dalších), ale to neznamená, že by to zde nešlo &ndash; jen k tomu jsou poměrně horší podmínky. Nic ti ale nebrání, aby si založil třeba stůl v Putyce, kde budeš se svými přáteli (nebo jakýmikoliv jinými uživateli) DrD hrát. Další možnost skýtá třeba Chat, stačí si založit místnost, sehnat pár lidí a začít hrát.<br /><br /> 
+      Není to primární účel těchto stránek (tak tomu je například na www.abarin.cz , www.andor.cz a mnoho dalších), ale to neznamená, že by to zde nešlo &ndash; jen k tomu jsou poměrně horší podmínky. Nic ti ale nebrání, aby si založil třeba stůl v Putyce, kde budeš se svými přáteli (nebo jakýmikoliv jinými uživateli) DrD hrát. Další možnost skýtá třeba Chat, stačí si založit místnost, sehnat pár lidí a začít hrát.<br /><br />
 
 
       </body>
