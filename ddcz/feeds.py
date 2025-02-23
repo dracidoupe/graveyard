@@ -110,3 +110,17 @@ class CompleteNewsFeed(Feed):
             return item.published
         else:
             return None
+
+    def item_description(self, item):
+        if isinstance(item, (News, Dating, Phorum, CreationComment)):
+            return item.text
+        elif isinstance(item, Creation):
+            if hasattr(item, "text"):
+                text = item.text
+                if len(text) > 255:
+                    text = text[:255] + "... (pro plný text navštivte stránku)"
+                return text
+            else:
+                return str(item)
+        else:
+            return str(item)
