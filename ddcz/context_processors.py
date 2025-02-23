@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 
@@ -7,11 +8,13 @@ from .forms.authentication import LoginForm
 def common_variables(request):
     skin = request.session.get("skin", "light")
     skin_directory = skin if skin not in ["light", "dark"] else "light-dark"
+    copyright_end_year = "2025"  # fallback
     deploy_info_html = settings.DEPLOY_VERSION
     if settings.DEPLOY_HASH:
         deploy_info_html = f'{deploy_info_html} (<a href="https://github.com/dracidoupe/graveyard/commit/{settings.DEPLOY_HASH}">{settings.DEPLOY_HASH}</a>)'
     if settings.DEPLOY_DATE:
         deploy_info_html = f"{deploy_info_html} ze dne {settings.DEPLOY_DATE}"
+        copyright_end_year = datetime.strptime(settings.DEPLOY_DATE, "%d. %m. %Y").year
 
     if skin == "historic":
         logo_width = "475px"
@@ -39,4 +42,5 @@ def common_variables(request):
         "discord_invite_link": settings.DISCORD_INVITE_LINK,
         "bugfix_tavern_table_id": settings.BUGFIX_TAVERN_TABLE_ID,
         "deploy_info_html": deploy_info_html,
+        "copyright_end_year": copyright_end_year,
     }
