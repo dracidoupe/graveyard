@@ -210,6 +210,19 @@ CACHES = {
     }
 }
 
+# Newsfeed configuration (/novinky/)
+NEWSFEED_OLDEST_ARTICLE_INTERVAL_WEEKS = 26
+NEWSFEED_MAX_CREATIONS = 20
+NEWSFEED_MAX_COMMENTS = 10
+NEWSFEED_CACHE_INTERVAL = 10 * 60  # 10 minutes
+NEWSFEED_CACHE_KEY = "newsfeed:list"
+
+# RSS feed configuration
+RSS_NEWSFEED_CACHE_KEY = "rss:newsfeed"
+RSS_LATEST_ITEMS_COUNT = 50
+# 6 hours; if we start having multiple items happening a day, implement push case
+RSS_NEWSFEED_CACHE_INTERVAL = 60 * 60 * 6
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
+from django.conf import settings
 
 from ..creations import ApprovalChoices
 from ..models import News, CreativePage, CreationComment
@@ -14,12 +15,6 @@ from ..models import News, CreativePage, CreationComment
 logger = logging.getLogger(__name__)
 
 DEFAULT_LIST_SIZE = 10
-NEWSFEED_OLDEST_ARTICLE_INTERVAL = timedelta(weeks=26)
-NEWSFEED_MAX_CREATIONS = 20
-NEWSFEED_MAX_COMMENTS = 10
-
-NEWSFEED_CACHE_INTERVAL = 10 * 60  # 10 minutes
-NEWSFEED_CACHE_KEY = "newsfeed:list"
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -46,12 +41,14 @@ def list(request):
 @require_http_methods(["HEAD", "GET"])
 @vary_on_cookie
 def newsfeed(request):
-    cached = cache.get(NEWSFEED_CACHE_KEY)
+    cached = cache.get(settings.NEWSFEED_CACHE_KEY)
     if cached:
         articles = cached["articles"]
         comments = cached["comments"]
     else:
-        min_date = timezone.now() - NEWSFEED_OLDEST_ARTICLE_INTERVAL
+        min_date = timezone.now() - timedelta(
+            weeks=settings.NEWSFEED_OLDEST_ARTICLE_INTERVAL_WEEKS
+        )
         pages = CreativePage.get_all_models()
 
         # This could have been a simple list comprehension. But for a reason unknown to me,
@@ -66,14 +63,14 @@ def newsfeed(request):
             ).order_by("-published")
             if model.__name__ == "CommonArticle":
                 query = query.filter(creative_page_slug=page["page"].slug)
-            query = query[0:NEWSFEED_MAX_CREATIONS]
+            query = query[0 : settings.NEWSFEED_MAX_CREATIONS]
             for creation in query:
                 creation.creative_page = page["page"]
                 articles.append(creation)
         articles.sort(key=lambda article: article.published, reverse=True)
 
         comments = CreationComment.objects.all().order_by("-date")[
-            0:NEWSFEED_MAX_COMMENTS
+            0 : settings.NEWSFEED_MAX_COMMENTS
         ]
         # FIXME: This should be resolvable via GenericRelation once we migrate to it
         page_slug_map = {page["page"].slug: page for page in pages}
@@ -90,9 +87,9 @@ def newsfeed(request):
                 )
 
         cache.set(
-            NEWSFEED_CACHE_KEY,
+            settings.NEWSFEED_CACHE_KEY,
             {"articles": articles, "comments": comments},
-            timeout=NEWSFEED_CACHE_INTERVAL,
+            timeout=settings.NEWSFEED_CACHE_INTERVAL,
         )
 
     return render(
