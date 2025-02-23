@@ -63,6 +63,9 @@ class CreationComment(models.Model):
     class Meta:
         db_table = "diskuze"
 
+    def __str__(self):
+        return f"{self.nickname} v {self.foreign_table}"
+
     def get_absolute_url(self):
         model = CreativePage.get_model_from_slug(self.foreign_table)
         creation = model.objects.get(id=self.foreign_id)
