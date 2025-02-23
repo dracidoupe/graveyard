@@ -114,6 +114,9 @@ class Market(models.Model):
     def __str__(self):
         return f"{self.name} ({self.group}) z {self.published}"
 
+    def get_absolute_url(self):
+        return reverse("ddcz:market")
+
     @property
     def published(self):
         return self.created

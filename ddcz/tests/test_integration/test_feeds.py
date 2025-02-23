@@ -14,6 +14,7 @@ from ddcz.models import (
     Dating,
     CreationComment,
     CreativePage,
+    Market,
 )
 from ddcz.creations import ApprovalChoices
 from ddcz.tests.model_generator import get_valid_article_chain
@@ -62,6 +63,14 @@ class TestCompleteNewsFeed(FeedTestCase):
             published=self.now,
             text="Test dating post",
             area="Praha",
+        )
+
+        self.market = Market.objects.create(
+            name="Test Seller",
+            group="nabizim",
+            text="Test market post",
+            area="Praha",
+            created=self.now,
         )
 
         # Create article chain with author
@@ -149,6 +158,7 @@ class TestFeedContent(TestCompleteNewsFeed):
         self.assertItemInFeed(self.dating, items)
         self.assertItemInFeed(self.article, items)
         self.assertItemInFeed(self.comment, items)
+        self.assertItemInFeed(self.market, items)
 
     def test_item_title_formatting(self):
         """Test that item_title formats titles correctly for each content type"""
@@ -157,21 +167,26 @@ class TestFeedContent(TestCompleteNewsFeed):
         )
         self.assertEqual(
             self.feed.item_title(self.dating),
-            f"{self.dating.name} v sekci {self.dating.group}",
+            f"Seznamka: {self.dating.name} v sekci {self.dating.group}",
         )
         self.assertEqual(
-            self.feed.item_title(self.phorum), f"{self.phorum.nickname} ve fóru"
+            self.feed.item_title(self.phorum),
+            f"Komentář ve fóru od {self.phorum.nickname}",
         )
         self.assertEqual(
             self.feed.item_title(self.comment),
             f"Komentář k dílu od {self.comment.nickname}",
+        )
+        self.assertEqual(
+            self.feed.item_title(self.market),
+            f"Inzerát od {self.market.name} v sekci {self.market.group}",
         )
 
         # this is normally set by get_item; fix when we have backlinks implemented
         self.article.creative_page = CreativePage.objects.get(slug="clanky")
         self.assertEqual(
             self.feed.item_title(self.article),
-            f"{self.article.name} v rubrice {self.article.creative_page.name}",
+            f"Příspěvek {self.article.name} v rubrice {self.article.creative_page.name} od {self.article.author_nick}",
         )
 
     def test_item_dates(self):
@@ -184,6 +199,7 @@ class TestFeedContent(TestCompleteNewsFeed):
         # Test items using 'published' field
         self.assertEqual(self.feed.item_pubdate(self.dating), self.dating.published)
         self.assertEqual(self.feed.item_pubdate(self.article), self.article.published)
+        self.assertEqual(self.feed.item_pubdate(self.market), self.market.published)
 
     def test_dates_in_rendered_feed(self):
         """Test that dates are correctly included and properly formatted in the rendered feed"""
@@ -199,6 +215,7 @@ class TestFeedContent(TestCompleteNewsFeed):
             f"ddcz:dating:{self.dating.id}": self.dating.published,
             f"ddcz:commonarticle:{self.article.id}": self.article.published,
             f"ddcz:creationcomment:{self.comment.id}": self.comment.date,
+            f"ddcz:market:{self.market.id}": self.market.published,
         }
 
         # Verify each entry has correct publication date
@@ -251,6 +268,21 @@ class TestFeedLimits(TestCompleteNewsFeed):
         items = self.feed.items()
         comment_items = [item for item in items if isinstance(item, CreationComment)]
         self.assertLessEqual(len(comment_items), settings.RSS_COMMENT_ITEMS_COUNT)
+
+    def test_market_count_limit(self):
+        """Test that market count is limited according to settings"""
+        # Create more market entries than the limit
+        for i in range(settings.RSS_LATEST_ITEMS_COUNT + 5):
+            Market.objects.create(
+                name=f"Seller{i}",
+                text=f"Market {i}",
+                group="nabizim",
+                created=self.now,
+            )
+
+        items = self.feed.items()
+        market_items = [item for item in items if isinstance(item, Market)]
+        self.assertLessEqual(len(market_items), settings.RSS_LATEST_ITEMS_COUNT)
 
 
 class TestCreativePageFiltering(TestCompleteNewsFeed):

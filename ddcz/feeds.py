@@ -3,7 +3,15 @@ from django.urls import reverse
 
 from django.contrib.syndication.views import Feed
 
-from ddcz.models import Phorum, News, CreativePage, Dating, CreationComment, Creation
+from ddcz.models import (
+    Phorum,
+    News,
+    CreativePage,
+    Dating,
+    CreationComment,
+    Creation,
+    Market,
+)
 from ddcz.creations import ApprovalChoices
 
 
@@ -37,6 +45,7 @@ class CompleteNewsFeed(Feed):
         News,
         CreativePage,
         Dating,
+        Market,
         Phorum,
         # Getting URL of comment creation is expensive due to lack of generic relation,
         # it has (n+1) and hence is currently capped to lower number
@@ -57,6 +66,12 @@ class CompleteNewsFeed(Feed):
             elif model == Dating:
                 items.extend(
                     model.objects.order_by("-published")[
+                        : settings.RSS_LATEST_ITEMS_COUNT
+                    ]
+                )
+            elif model == Market:
+                items.extend(
+                    model.objects.order_by("-created")[
                         : settings.RSS_LATEST_ITEMS_COUNT
                     ]
                 )
@@ -89,14 +104,16 @@ class CompleteNewsFeed(Feed):
         if isinstance(item, News):
             return f"Aktualita od {item.author}"
         elif isinstance(item, Dating):
-            return f"{item.name} v sekci {item.group}"
+            return f"Seznamka: {item.name} v sekci {item.group}"
+        elif isinstance(item, Market):
+            return f"Inzerát od {item.name} v sekci {item.group}"
         elif isinstance(item, Phorum):
-            return f"{item.nickname} ve fóru"
+            return f"Komentář ve fóru od {item.nickname}"
         elif isinstance(item, CreationComment):
             # Retrieving the creation name is expensive, so only do upon request
             return f"Komentář k dílu od {item.nickname}"
         elif isinstance(item, Creation):
-            return f"{item.name} v rubrice {item.creative_page.name}"
+            return f"Příspěvek {item.name} v rubrice {item.creative_page.name} od {item.author_nick}"
         else:
             return item.name
 
@@ -106,7 +123,7 @@ class CompleteNewsFeed(Feed):
     def item_pubdate(self, item):
         if isinstance(item, (News, Phorum, CreationComment)):
             return item.date
-        elif isinstance(item, (Dating, Creation)):
+        elif isinstance(item, (Dating, Creation, Market)):
             return item.published
         else:
             return None
