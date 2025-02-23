@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.urls import path, re_path
 from django.views.generic.base import RedirectView, TemplateView
+from django.views.decorators.cache import cache_page
 
 from .feeds import PhorumFeed, CompleteNewsFeed
 from . import views
@@ -193,9 +194,17 @@ urlpatterns = [
         name="tavern-bookmark",
     ),
     ### RSS & Feeds
-    path("rss/forum/", PhorumFeed(), name="phorum-feed"),
+    path(
+        "rss/forum/",
+        cache_page(settings.RSS_CACHE_INTERVAL)(PhorumFeed()),
+        name="phorum-feed",
+    ),
     path("rss/forum.xml", RedirectView.as_view(url="/rss/forum/", permanent=True)),
-    path("rss/novinky/", CompleteNewsFeed(), name="creations-feed"),
+    path(
+        "rss/novinky/",
+        cache_page(settings.RSS_CACHE_INTERVAL)(CompleteNewsFeed()),
+        name="creations-feed",
+    ),
     path("rss/novinky.xml", RedirectView.as_view(url="/rss/novinky/", permanent=True)),
     ### Static Editorial Pages
     ### Would be easier to give them /static prefix, but it makes for ugly URL
