@@ -296,14 +296,7 @@ class Creation(models.Model):
         return "{} od {}".format(self.name, self.author_nick)
 
     def get_absolute_url(self):
-        return reverse(
-            "ddcz:creation-detail",
-            kwargs={
-                "creative_page_slug": self.creative_page.slug,
-                "creation_id": self.pk,
-                "creation_slug": self.get_slug(),
-            },
-        )
+        return self.get_canonical_url()
 
 
 ###
