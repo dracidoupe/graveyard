@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -9,12 +11,12 @@ from ddcz.models import (
     Phorum,
     Dating,
     CreationComment,
-    CommonArticle,
     CreativePage,
-    Author,
 )
 from ddcz.creations import ApprovalChoices
 from ddcz.tests.model_generator import get_valid_article_chain
+
+import feedparser
 
 
 class FeedTestCase(TestCase):
@@ -97,6 +99,23 @@ class TestFeedBasics(TestCompleteNewsFeed):
         """Test that feed URL is accessible"""
         response = self.client.get(reverse("ddcz:creations-feed"))
         self.assertEqual(response.status_code, 200)
+
+    def test_all_feed_items_have_urls(self):
+        """Test that all items in the rendered feed have valid URLs"""
+        response = self.client.get(reverse("ddcz:creations-feed"))
+        self.assertEqual(response.status_code, 200)
+
+        feed = feedparser.parse(response.content)
+
+        # Verify each entry has a link
+        for entry in feed.entries:
+            self.assertTrue(
+                hasattr(entry, "link"), f"Feed entry {entry.title} has no link"
+            )
+            self.assertTrue(entry.link, f"Feed entry {entry.title} has empty link")
+            # Verify the link is accessible
+            parsed = urlparse(entry.link)
+            self.assertTrue(parsed.path, f"Link {entry.link} has no path component")
 
 
 class TestFeedContent(TestCompleteNewsFeed):
