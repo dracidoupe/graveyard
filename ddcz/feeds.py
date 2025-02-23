@@ -24,6 +24,9 @@ class PhorumFeed(Feed):
     def item_link(self, item):
         return reverse("ddcz:phorum-item", args=[item.id])
 
+    def item_pubdate(self, item):
+        return item.date
+
 
 class CompleteNewsFeed(Feed):
     title = "Novinky na Dračím Doupěti"
@@ -99,3 +102,11 @@ class CompleteNewsFeed(Feed):
 
     def item_guid(self, item):
         return f"ddcz:{item.__class__.__name__.lower()}:{item.id}"
+
+    def item_pubdate(self, item):
+        if isinstance(item, (News, Phorum, CreationComment)):
+            return item.date
+        elif isinstance(item, (Dating, Creation)):
+            return item.published
+        else:
+            return None

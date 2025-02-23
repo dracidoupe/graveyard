@@ -1,3 +1,5 @@
+from time import mktime
+from datetime import datetime
 from urllib.parse import urlparse
 
 from django.test import TestCase
@@ -171,6 +173,56 @@ class TestFeedContent(TestCompleteNewsFeed):
             self.feed.item_title(self.article),
             f"{self.article.name} v rubrice {self.article.creative_page.name}",
         )
+
+    def test_item_dates(self):
+        """Test that item_pubdate returns correct dates for each content type"""
+        # Test items using 'date' field
+        self.assertEqual(self.feed.item_pubdate(self.news), self.news.date)
+        self.assertEqual(self.feed.item_pubdate(self.phorum), self.phorum.date)
+        self.assertEqual(self.feed.item_pubdate(self.comment), self.comment.date)
+
+        # Test items using 'published' field
+        self.assertEqual(self.feed.item_pubdate(self.dating), self.dating.published)
+        self.assertEqual(self.feed.item_pubdate(self.article), self.article.published)
+
+    def test_dates_in_rendered_feed(self):
+        """Test that dates are correctly included and properly formatted in the rendered feed"""
+        response = self.client.get(reverse("ddcz:creations-feed"))
+        self.assertEqual(response.status_code, 200)
+
+        feed = feedparser.parse(response.content)
+
+        # Create a mapping of expected dates for each type of content
+        expected_dates = {
+            f"ddcz:news:{self.news.id}": self.news.date,
+            f"ddcz:phorum:{self.phorum.id}": self.phorum.date,
+            f"ddcz:dating:{self.dating.id}": self.dating.published,
+            f"ddcz:commonarticle:{self.article.id}": self.article.published,
+            f"ddcz:creationcomment:{self.comment.id}": self.comment.date,
+        }
+
+        # Verify each entry has correct publication date
+        for entry in feed.entries:
+            self.assertTrue(
+                hasattr(entry, "published_parsed"),
+                f"Feed entry {entry.title} has no publication date",
+            )
+            self.assertIsNotNone(
+                entry.published_parsed,
+                f"Feed entry {entry.title} has invalid publication date",
+            )
+
+            # Get the expected date for this entry
+            if hasattr(entry, "id"):
+                expected_date = expected_dates.get(entry.id)
+                if expected_date:
+                    feed_date = datetime.fromtimestamp(mktime(entry.published_parsed))
+
+                    self.assertEqual(
+                        feed_date.date(),
+                        expected_date.date(),
+                        f"Feed entry {entry.title} has incorrect date",
+                    )
 
 
 class TestFeedLimits(TestCompleteNewsFeed):
