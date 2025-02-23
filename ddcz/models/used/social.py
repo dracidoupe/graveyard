@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 from ..magic import MisencodedCharField, MisencodedTextField
 from ..used.users import UserProfile
 
@@ -72,6 +72,9 @@ class Dating(models.Model):
 
     def __str__(self):
         return f"{self.name} ve skupině {self.group}"
+
+    def get_absolute_url(self):
+        return reverse("ddcz:dating")
 
 
 class Market(models.Model):

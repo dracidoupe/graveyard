@@ -65,6 +65,12 @@ class CreativePage(models.Model):
 
         return models
 
+    @classmethod
+    def get_model_from_slug(cls, slug):
+        page = cls.objects.get(slug=slug)
+        app, model_class_name = page.model_class.split(".")
+        return apps.get_model(app, model_class_name)
+
     def get_creation_canonical_url(self, creation):
         try:
             return reverse(
@@ -288,6 +294,16 @@ class Creation(models.Model):
 
     def __str__(self):
         return "{} od {}".format(self.name, self.author_nick)
+
+    def get_absolute_url(self):
+        return reverse(
+            "ddcz:creation-detail",
+            kwargs={
+                "creative_page_slug": self.creative_page.slug,
+                "creation_id": self.pk,
+                "creation_slug": self.get_slug(),
+            },
+        )
 
 
 ###

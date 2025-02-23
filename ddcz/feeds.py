@@ -35,6 +35,8 @@ class CompleteNewsFeed(Feed):
         CreativePage,
         Dating,
         Phorum,
+        # Getting URL of comment creation is expensive due to lack of generic relation,
+        # it has (n+1) and hence is currently capped to lower number
         CreationComment,
     ]
 
@@ -45,7 +47,7 @@ class CompleteNewsFeed(Feed):
 
         items = []
         for model in self.INCLUDED_MODELS:
-            if model in [Phorum, CreationComment, News]:
+            if model in [Phorum, News]:
                 items.extend(
                     model.objects.order_by("-date")[: settings.RSS_LATEST_ITEMS_COUNT]
                 )
@@ -54,6 +56,10 @@ class CompleteNewsFeed(Feed):
                     model.objects.order_by("-published")[
                         : settings.RSS_LATEST_ITEMS_COUNT
                     ]
+                )
+            elif model == CreationComment:
+                items.extend(
+                    model.objects.order_by("-date")[: settings.RSS_COMMENT_ITEMS_COUNT]
                 )
             elif model == CreativePage:
                 pages = CreativePage.get_all_models()
