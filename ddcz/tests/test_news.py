@@ -70,7 +70,7 @@ class TestNewsfeed(TestCase):
         )
         old_article.save()
 
-        recent_article = CommonArticle.objects.create(
+        CommonArticle.objects.create(
             name="Recent Article",
             is_published=ApprovalChoices.APPROVED.value,
             creative_page_slug=self.creative_page.slug,
