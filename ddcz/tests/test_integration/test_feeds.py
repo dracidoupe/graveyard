@@ -117,6 +117,25 @@ class TestFeedBasics(TestCompleteNewsFeed):
             parsed = urlparse(entry.link)
             self.assertTrue(parsed.path, f"Link {entry.link} has no path component")
 
+    def test_feed_guids_unique(self):
+        """Test that all items in the feed have unique GUIDs"""
+        response = self.client.get(reverse("ddcz:creations-feed"))
+        self.assertEqual(response.status_code, 200)
+
+        feed = feedparser.parse(response.content)
+
+        # Collect all GUIDs
+        guids = [entry.get("id") for entry in feed.entries if entry.get("id")]
+
+        # Check that we have GUIDs
+        self.assertTrue(len(guids) > 0, "No GUIDs found in feed entries")
+
+        # Check for uniqueness
+        unique_guids = set(guids)
+        self.assertEqual(
+            len(guids), len(unique_guids), "Duplicate GUIDs found in feed entries"
+        )
+
 
 class TestFeedContent(TestCompleteNewsFeed):
     def test_all_models_included(self):

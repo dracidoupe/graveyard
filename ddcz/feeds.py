@@ -96,3 +96,6 @@ class CompleteNewsFeed(Feed):
             return f"{item.name} v rubrice {item.creative_page.name}"
         else:
             return item.name
+
+    def item_guid(self, item):
+        return f"ddcz:{item.__class__.__name__.lower()}:{item.id}"
