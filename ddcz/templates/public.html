@@ -7,10 +7,9 @@
     <meta charset="utf-8">
     <meta name="description" content="{% block meta_description %}{% if meta_description %}{{ meta_description }}{% endif %}{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% comment %}
-        <link rel="alternate" href="http://www.dracidoupe.cz/rss/novinky.xml" type="application/rss+xml" title="Nové články ze všech rubrik" />
-    {% endcomment %}
     <link rel="stylesheet" href="{{skin_css_url}}">
+    <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-phorum' %}" title="Komentáře ve fóru">
+    <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-complete' %}" title="Všechny novinky">
     {% block styles %}{% endblock %}
     <link rel="shortcut icon" type="image/svg" href="{{ skin_favico_url }}">
     <link rel="apple-touch-icon" type="image/svg" href="{{ skin_favico_url }}">
