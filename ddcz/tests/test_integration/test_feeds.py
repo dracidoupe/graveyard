@@ -108,12 +108,12 @@ class TestFeedBasics(TestCompleteNewsFeed):
 
     def test_feed_url_accessible(self):
         """Test that feed URL is accessible"""
-        response = self.client.get(reverse("ddcz:creations-feed"))
+        response = self.client.get(reverse("ddcz:feed-creations"))
         self.assertEqual(response.status_code, 200)
 
     def test_all_feed_items_have_urls(self):
         """Test that all items in the rendered feed have valid URLs"""
-        response = self.client.get(reverse("ddcz:creations-feed"))
+        response = self.client.get(reverse("ddcz:feed-creations"))
         self.assertEqual(response.status_code, 200)
 
         feed = feedparser.parse(response.content)
@@ -130,7 +130,7 @@ class TestFeedBasics(TestCompleteNewsFeed):
 
     def test_feed_guids_unique(self):
         """Test that all items in the feed have unique GUIDs"""
-        response = self.client.get(reverse("ddcz:creations-feed"))
+        response = self.client.get(reverse("ddcz:feed-creations"))
         self.assertEqual(response.status_code, 200)
 
         feed = feedparser.parse(response.content)
@@ -203,7 +203,7 @@ class TestFeedContent(TestCompleteNewsFeed):
 
     def test_dates_in_rendered_feed(self):
         """Test that dates are correctly included and properly formatted in the rendered feed"""
-        response = self.client.get(reverse("ddcz:creations-feed"))
+        response = self.client.get(reverse("ddcz:feed-creations"))
         self.assertEqual(response.status_code, 200)
 
         feed = feedparser.parse(response.content)
