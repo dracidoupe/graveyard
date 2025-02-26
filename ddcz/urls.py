@@ -197,13 +197,13 @@ urlpatterns = [
     path(
         "rss/forum/",
         cache_page(settings.RSS_CACHE_INTERVAL)(PhorumFeed()),
-        name="phorum-feed",
+        name="feed-phorum",
     ),
     path("rss/forum.xml", RedirectView.as_view(url="/rss/forum/", permanent=True)),
     path(
         "rss/novinky/",
         cache_page(settings.RSS_CACHE_INTERVAL)(CompleteNewsFeed()),
-        name="creations-feed",
+        name="feed-complete",
     ),
     path("rss/novinky.xml", RedirectView.as_view(url="/rss/novinky/", permanent=True)),
     ### Static Editorial Pages
