@@ -1,0 +1,15 @@
+---
+description: frontend
+globs: *.html, *.css, *.js
+alwaysApply: false
+---
+
+# Frotend Rules
+
+- HTML files are Django templates
+- All internal links need to use {% url %} Django tag with name from [urls.py](mdc:ddcz/urls.py)
+- Always indent nested tags
+- Write semantic, modern HTML5 code
+- Do not use any framework, use modern browser features instead
+- Focus on performance and speed, use the most specific selectors possible
+- If you need to pass values to javascript, use data attributes
