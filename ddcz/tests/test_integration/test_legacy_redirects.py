@@ -2,11 +2,16 @@ from django.test import Client, TestCase
 
 from ddcz.models import (
     ApprovalChoices,
+    CommonArticle,
     RangerSpell,
     Skill,
     UserProfile,
     Quest,
+    Author,
+    CreativePage,
 )
+from ddcz.tests.model_generator import get_valid_article_chain
+from django.urls import resolve, reverse
 
 
 class RedirectTestCase(TestCase):
@@ -79,3 +84,100 @@ class TestUserProfileRedirect(TestCase):
         )
         self.assertEquals(response.status_code, 301)
         self.assertEquals(response.url, f"/uzivatel/{self.user.id}-test/")
+
+
+class TestCommonArticlePrintRedirect(TestCase):
+    fixtures = ["pages"]
+
+    def setUp(self):
+        super().setUp()
+        self.client = Client()
+
+        # Create base objects for articles
+        noverasy_chain = get_valid_article_chain()
+        noverasy_chain["user"].save()
+        noverasy_chain["author"].save()
+
+        hranicar_chain = get_valid_article_chain()
+        hranicar_chain["user"].nick = "Author2"
+        hranicar_chain["user"].email = "test2@example.com"
+        hranicar_chain["user"].save()
+        hranicar_chain["author"].id = 2
+        hranicar_chain["author"].save()
+
+        clanky_chain = get_valid_article_chain()
+        clanky_chain["user"].nick = "Author3"
+        clanky_chain["user"].email = "test3@example.com"
+        clanky_chain["user"].save()
+        clanky_chain["author"].id = 3
+        clanky_chain["author"].save()
+
+        # Create test articles for each category we want to test
+        self.noverasy_article = CommonArticle.objects.create(
+            id=774,
+            name="Test nové rasy",
+            author=noverasy_chain["author"],
+            author_nick=noverasy_chain["user"].nick,
+            author_mail=noverasy_chain["user"].email,
+            is_published=CommonArticle.CREATION_APPROVED,
+            creative_page_slug="noverasy",
+            section="noverasy",
+        )
+
+        self.hranicar_article = CommonArticle.objects.create(
+            id=408,
+            name="Test hraničář",
+            author=hranicar_chain["author"],
+            author_nick=hranicar_chain["user"].nick,
+            author_mail=hranicar_chain["user"].email,
+            is_published=CommonArticle.CREATION_APPROVED,
+            creative_page_slug="hranicar",
+            section="hranicar",
+        )
+
+        self.clanky_article = CommonArticle.objects.create(
+            id=2682,
+            name="Test článek",
+            author=clanky_chain["author"],
+            author_nick=clanky_chain["user"].nick,
+            author_mail=clanky_chain["user"].email,
+            is_published=CommonArticle.CREATION_APPROVED,
+            creative_page_slug="clanky",
+            section="clanky",
+        )
+
+    def test_noverasy_print_redirect(self):
+        """Test the redirect for noverasy print URLs"""
+        url = "/code/prispevky/prispevky_tisk.php"
+        response = self.client.get(f"{url}?id=774&co=noverasy&skin=dark")
+
+        # Now we expect the correct behavior
+        self.assertEquals(response.status_code, 301)
+        self.assertEquals(
+            response.url,
+            f"/rubriky/noverasy/{self.noverasy_article.id}-{self.noverasy_article.get_slug()}/",
+        )
+
+    def test_hranicar_print_redirect(self):
+        """Test the redirect for hranicar print URLs"""
+        url = "/code/prispevky/prispevky_tisk.php"
+        response = self.client.get(f"{url}?id=408&co=hranicar&skin=dark")
+
+        # Now we expect the correct behavior
+        self.assertEquals(response.status_code, 301)
+        self.assertEquals(
+            response.url,
+            f"/rubriky/hranicar/{self.hranicar_article.id}-{self.hranicar_article.get_slug()}/",
+        )
+
+    def test_clanky_print_redirect(self):
+        """Test the redirect for clanky print URLs"""
+        url = "/code/prispevky/prispevky_tisk.php"
+        response = self.client.get(f"{url}?id=2682&co=clanky&skin=dark")
+
+        # Now we expect the correct behavior
+        self.assertEquals(response.status_code, 301)
+        self.assertEquals(
+            response.url,
+            f"/rubriky/clanky/{self.clanky_article.id}-{self.clanky_article.get_slug()}/",
+        )
