@@ -1,6 +1,7 @@
 ---
 description: Python Code Rules
 globs: *.py
+alwaysApply: false
 ---
 # Multilingual Codebase
 - Observe basic language divison:
@@ -9,7 +10,7 @@ globs: *.py
     - Translation table is managed in [dictionary.rst](mdc:docs/dictionary.rst); observe it and update it only if necessary
 
 # Basic Python and Django Code Rules
-
+- Write only minimum amount of comments. If you decide to write comments, always make them explain why, not what
 - Write idiomatic Python code
 - Write pythonic code
 - When generating URLs, always use path names from [urls.py](mdc:ddcz/urls.py). Note that in the project, that is mounted with a "ddcz:" prefix that always have to be used
