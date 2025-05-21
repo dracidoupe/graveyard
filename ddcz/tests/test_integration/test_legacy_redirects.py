@@ -7,11 +7,8 @@ from ddcz.models import (
     Skill,
     UserProfile,
     Quest,
-    Author,
-    CreativePage,
 )
 from ddcz.tests.model_generator import get_valid_article_chain
-from django.urls import resolve, reverse
 
 
 class RedirectTestCase(TestCase):
