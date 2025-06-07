@@ -60,9 +60,11 @@ class TestValidSignupSubmission(SeleniumTestCase):
         sleep(0.1)
 
         self.el(SignUpPage.POST_SUBMIT).click()
-        
+
         WebDriverWait(self.selenium, 10).until(
-            expected_conditions.presence_of_element_located((By.CLASS_NAME, "page-heading"))
+            expected_conditions.presence_of_element_located(
+                (By.CLASS_NAME, "page-heading")
+            )
         )
 
         self.assertEquals(

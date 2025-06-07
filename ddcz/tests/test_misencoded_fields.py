@@ -1,6 +1,7 @@
 from django.test import SimpleTestCase
 from ddcz.models.magic import MisencodedCharField
 
+
 class MisencodedFieldsTest(SimpleTestCase):
     def setUp(self):
         self.field = MisencodedCharField(max_length=100)
@@ -9,10 +10,7 @@ class MisencodedFieldsTest(SimpleTestCase):
         """Test that normal Czech text is handled correctly"""
         value = "Příliš žluťoučký kůň úpěl ďábelské ódy"
         processed = self.field.get_db_prep_value(value, None)
-        self.assertEqual(
-            processed.encode("latin2").decode("cp1250"),
-            value
-        )
+        self.assertEqual(processed.encode("latin2").decode("cp1250"), value)
 
     def test_handles_emoji_gracefully(self):
         """Test that emoji are handled gracefully by being stripped"""
