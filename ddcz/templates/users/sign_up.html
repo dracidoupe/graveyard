@@ -27,7 +27,7 @@
         {% endif %}
 
 <section id="registration_page">
-    <form action="{% url 'ddcz:sign-up' %}" method="POST" id="registration_form">
+    <form method="post" action="{% url 'ddcz:sign-up' %}" id="registration_form">
         {% csrf_token %}
         <p class="first_paragraph">
             <span class="caps">D</span>rak ti proletěl nad hlavu a slunce právě zašlo na mrak, celý svět potemněl. Jak tvá noha šlápne na další větvičku, jelen nějakých patnáct sáhů od tebe zpozorní. Chladný vzduch se prohnal okolo a ty vyrážíš směrem k stezce vedoucí k Městu. Kdysi tam prý žili ti největší umělci a řemeslníci, které kdo znal, a jejich krásná díla zdobí Město dodnes.

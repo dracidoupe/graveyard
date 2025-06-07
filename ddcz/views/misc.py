@@ -1,18 +1,21 @@
 import logging
 
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods
 
 from ..models import (
-    MARKET_SECTION_CHOICES,
-    EditorArticle,
-    Dating,
-    Link,
     Market,
     UserProfile,
+    Dating,
+    Link,
+    EditorArticle,
+    MARKET_SECTION_CHOICES,
 )
+from ..forms.market import MarketForm
+from ..forms.dating import DatingForm
 
 DEFAULT_LIST_SIZE = 10
 
@@ -47,8 +50,7 @@ def dating(request):
 
 @require_http_methods(["HEAD", "GET"])
 def market(request):
-    # TODO: Migrate to `-datum`, see https://github.com/dracidoupe/graveyard/issues/195
-    item_list = Market.objects.order_by("-id")
+    item_list = Market.objects.order_by("-created")
 
     section = request.GET.get("sekce", None)
     if section:
@@ -124,3 +126,49 @@ def web_authors_and_editors(request):
             "famous_users": hall_of_fame,
         },
     )
+
+
+def market_create(request):
+    if request.method == "POST":
+        form = MarketForm(request.POST)
+        if form.is_valid():
+            market_item = form.save(commit=False)
+            market_item.user_profile = request.ddcz_profile
+            form.save()
+            return redirect("ddcz:market")
+    else:
+        form = MarketForm()
+
+    return render(request, "market/create.html", {"form": form})
+
+
+@login_required
+@require_http_methods(["POST"])
+def market_delete(request, id):
+    market_item = get_object_or_404(Market, id=id)
+    if market_item.user_profile == request.ddcz_profile:
+        market_item.delete()
+    return redirect("ddcz:market")
+
+
+def dating_create(request):
+    if request.method == "POST":
+        form = DatingForm(request.POST)
+        if form.is_valid():
+            dating_item = form.save(commit=False)
+            dating_item.user_profile = request.ddcz_profile
+            form.save()
+            return redirect("ddcz:dating")
+    else:
+        form = DatingForm()
+
+    return render(request, "dating/create.html", {"form": form})
+
+
+@login_required
+@require_http_methods(["POST"])
+def dating_delete(request, id):
+    dating_item = get_object_or_404(Dating, id=id)
+    if dating_item.user_profile == request.ddcz_profile:
+        dating_item.delete()
+    return redirect("ddcz:dating")

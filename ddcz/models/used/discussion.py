@@ -1,7 +1,9 @@
 from django.db import models
+from django.urls import reverse
 
 from ..magic import MisencodedCharField, MisencodedTextField
 from .users import UserProfile
+from .creations import CreativePage
 
 ADD_PHORUM_COMMENT = "a"
 DELETE_PHORUM_COMMENT = "d"
@@ -21,6 +23,9 @@ class Phorum(models.Model):
 
     class Meta:
         db_table = "forum"
+
+    def get_absolute_url(self):
+        return reverse("ddcz:phorum-item", kwargs={"comment_id": self.pk})
 
     @property
     def user_profile_url(self):
@@ -57,6 +62,21 @@ class CreationComment(models.Model):
 
     class Meta:
         db_table = "diskuze"
+
+    def __str__(self):
+        return f"{self.nickname} v {self.foreign_table}"
+
+    def get_absolute_url(self):
+        model = CreativePage.get_model_from_slug(self.foreign_table)
+        creation = model.objects.get(id=self.foreign_id)
+        return reverse(
+            "ddcz:creation-detail",
+            kwargs={
+                "creative_page_slug": self.foreign_table,
+                "creation_id": creation.id,
+                "creation_slug": creation.get_slug(),
+            },
+        )
 
 
 class Letter(models.Model):

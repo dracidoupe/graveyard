@@ -7,7 +7,7 @@
 
 <div id="page-market">
     <h1 class="page-heading">Inzerce</h1>
-    <p>Zde můžete nabídnout k prodeji, nebo zde naopak můžete koupit, vyměnit či darovat vše co se týká fantasy či Dračího doupěte. </p>
+    <p>Zde můžete nabídnout k prodeji, nebo zde naopak můžete koupit, vyměnit či darovat vše co se týká fantasy či Dračího doupěte. Pro přidání inzerátu <a href="{% url 'ddcz:market-create' %}">použijte tento formulář</a>.</p>
     <p>Prosíme vás, abyste inzeráty týkající se seznamování hráčů přidávali do <a href="{% url 'ddcz:dating' %}">Seznamky</a>. Takové inzeráty budou z této rubriky mazány. </p>
     {% pagination items %}
     <br>
@@ -24,7 +24,7 @@
                 <span class="label">Sekce: </span><span class="value"><a href="{% url 'ddcz:market' %}?sekce={{ i.group | urlencode }}">{{ i.get_group_display }}</a></span>
             </p>
             <p>
-                <span class="label">Okres: </span><span class="value">{{ i.area }}</span>
+                <span class="label">Kraj: </span><span class="value">{{ i.area }}</span>
             </p>
             {% if i.telefon %}
             <p>
@@ -43,6 +43,15 @@
                 <span class="label">Text: </span><span class="market_text value">{{ i.text|render_html|safe }}</span>
             </p>
         </article>
+
+        {% if user.is_authenticated and ddcz_profile.id == i.user_profile_id %}
+            <p>
+                <form method="POST" action="{% url 'ddcz:market_delete' i.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">Smazat inzerát</button>
+                </form>
+            </p>
+        {% endif %}
 
         <hr>
     {% endfor %}

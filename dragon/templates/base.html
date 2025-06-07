@@ -5,6 +5,8 @@
         <meta charset="utf-8">
         <meta name="robots" content="noindex,nofollow">
         <link rel="stylesheet" href="{% static 'dragon/main.css' %}">
+        <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-phorum' %}" title="Komentáře ve fóru">
+        <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-complete' %}" title="Všechny novinky">
     </head>
     <body lang="cs">
         <header>

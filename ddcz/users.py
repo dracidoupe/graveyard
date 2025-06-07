@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 SESSION_KEYS_TO_PRESERVE = ["skin"]
 
+ASSUMED_JOINED_DATE = datetime(2003, 1, 1)
+
 
 def migrate_user(profile, password=""):
     """
@@ -20,7 +22,7 @@ def migrate_user(profile, password=""):
         id=profile.id,
         username=profile.nick,
         password=password,
-        date_joined=profile.registration_approved_date,
+        date_joined=profile.registration_approved_date or ASSUMED_JOINED_DATE,
         last_login=profile.last_login,
     )
     profile.user = user

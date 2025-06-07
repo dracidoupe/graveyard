@@ -1,9 +1,7 @@
-from datetime import date
-from time import strptime
-
 from django.db import models
-
+from django.urls import reverse
 from ..magic import MisencodedCharField, MisencodedTextField
+from ..used.users import UserProfile
 
 MARKET_SECTION_CHOICES = (
     ("nabizim", "Nabízím"),
@@ -12,10 +10,21 @@ MARKET_SECTION_CHOICES = (
     ("daruji", "Daruji"),
 )
 
+DATING_SECTION_CHOICES = (
+    ("hledam_hrace", "Hledám hráče"),
+    ("hledam_druzinu", "Hledám družinu"),
+    ("hledam_pj", "Hledám PJ"),
+    ("nabizim_druzinu", "Nabízím družinu"),
+    ("nabizim_pj", "Nabízím se jako PJ"),
+)
+
 
 class Dating(models.Model):
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
+    )
     name = MisencodedCharField(
-        max_length=40, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
+        max_length=40, db_column="jmeno", verbose_name="Jméno", default="Anonym"
     )
     email = MisencodedCharField(max_length=40, blank=True, null=True)
     phone = MisencodedCharField(
@@ -32,7 +41,7 @@ class Dating(models.Model):
         blank=True, null=True, db_column="vek", verbose_name="Věk"
     )
     area = MisencodedCharField(
-        max_length=40, blank=True, null=True, db_column="okres", verbose_name="Okres"
+        max_length=40, blank=True, null=True, db_column="okres", verbose_name="Kraj"
     )
     experience = MisencodedCharField(
         max_length=20,
@@ -42,11 +51,18 @@ class Dating(models.Model):
         verbose_name="Doba hraní DrD",
     )
     published = models.DateTimeField(
-        blank=True, null=True, db_column="datum", verbose_name="Datum"
+        blank=True,
+        null=True,
+        db_column="datum",
+        verbose_name="Datum",
+        auto_now_add=True,
     )
-    text = MisencodedTextField(blank=True, null=True, db_column="text")
+    text = MisencodedTextField(db_column="text")
     group = MisencodedCharField(
-        max_length=20, blank=True, null=True, db_column="sekce", verbose_name="Sekce"
+        max_length=20,
+        choices=DATING_SECTION_CHOICES,
+        db_column="sekce",
+        verbose_name="Sekce",
     )
 
     class Meta:
@@ -57,8 +73,14 @@ class Dating(models.Model):
     def __str__(self):
         return f"{self.name} ve skupině {self.group}"
 
+    def get_absolute_url(self):
+        return reverse("ddcz:dating")
+
 
 class Market(models.Model):
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True
+    )
     group = MisencodedCharField(
         max_length=20,
         choices=MARKET_SECTION_CHOICES,
@@ -66,10 +88,10 @@ class Market(models.Model):
         verbose_name="Sekce",
     )
     name = MisencodedCharField(
-        max_length=30, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
+        max_length=100, blank=True, null=True, db_column="jmeno", verbose_name="Jméno"
     )
     mail = MisencodedCharField(
-        max_length=30, blank=True, null=True, db_column="mail", verbose_name="E-mail"
+        max_length=50, blank=True, null=True, db_column="mail", verbose_name="E-mail"
     )
     phone = MisencodedCharField(
         max_length=15,
@@ -81,24 +103,23 @@ class Market(models.Model):
     mobile = MisencodedCharField(
         max_length=15, blank=True, null=True, db_column="mobil", verbose_name="Mobil"
     )
+    # Originally okres, but those stopped being used meanwhile, and kraj makes more sense
+    # than underlying counties or whatever
     area = MisencodedCharField(
-        max_length=20, blank=True, null=True, db_column="okres", verbose_name="Okres"
+        max_length=20, blank=True, null=True, db_column="okres", verbose_name="Kraj"
     )
     text = MisencodedTextField()
-    # WARNING WARNING WARNING, not a Date, but a varchar instead!
-    # Old version stores in the Czech format: dd. mm. YYYY (where d/m is without leading 0)
-    # See https://github.com/dracidoupe/graveyard/issues/195
-    published_varchar = MisencodedCharField(
-        max_length=12, db_column="datum", verbose_name="Přidáno"
-    )
+    created = models.DateTimeField(verbose_name="Přidáno", auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.group}) z {self.published}"
+
+    def get_absolute_url(self):
+        return reverse("ddcz:market")
 
     @property
     def published(self):
-        # Windows workaround as `%-d` is platform-specific
-        try:
-            return date(*(strptime(self.published_varchar, "%-d. %-m. %Y")[0:3]))
-        except ValueError:
-            return date(*(strptime(self.published_varchar, "%d. %m. %Y")[0:3]))
+        return self.created
 
     class Meta:
         db_table = "inzerce"

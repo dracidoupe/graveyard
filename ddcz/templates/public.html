@@ -7,10 +7,9 @@
     <meta charset="utf-8">
     <meta name="description" content="{% block meta_description %}{% if meta_description %}{{ meta_description }}{% endif %}{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% comment %}
-        <link rel="alternate" href="http://www.dracidoupe.cz/rss/novinky.xml" type="application/rss+xml" title="Nové články ze všech rubrik" />
-    {% endcomment %}
     <link rel="stylesheet" href="{{skin_css_url}}">
+    <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-phorum' %}" title="Komentáře ve fóru">
+    <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-complete' %}" title="Všechny novinky">
     {% block styles %}{% endblock %}
     <link rel="shortcut icon" type="image/svg" href="{{ skin_favico_url }}">
     <link rel="apple-touch-icon" type="image/svg" href="{{ skin_favico_url }}">
@@ -51,7 +50,7 @@
         </main>
 
         <footer id="page_footer">
-            <p><a href="/">DraciDoupe.cz</a> verze {{ deploy_info_html | safe }} © 2018-2021 <a href="https://www.almad.net/" rel="author">Almad</a> <a
+            <p><a href="/">DraciDoupe.cz</a> verze {{ deploy_info_html | safe }} © 2018&ndash;{{ copyright_end_year }} <a href="https://www.almad.net/" rel="author">Almad</a> <a
                     href="https://github.com/dracidoupe/graveyard/graphs/contributors" rel="author">a ostatní přispěvatelé</a>. DrD,
                 Dračí doupě a Altar jsou ochranné známky společnosti ALTAR. Všechna práva vyhrazena. Žádná část těchto
                 stránek nesmí být reprodukována, publikována ani jinak využita bez svolení Redakce serveru DraciDoupe.cz

@@ -1,0 +1,32 @@
+{% extends 'public.html' %}
+{% load html %}
+
+{% block content %}
+<div id="page-market">
+    <h1 class="page-heading">Přidat inzerát</h1>
+    <p>Zadejte pouze údaje, které chcete zveřejnit. {% if not user.is_authenticated %}Pokud chcete mít možnost smazat inzerát po zveřejnění, přihlašte se. {% endif %}</p>
+    <p class="warning">Vzhledem k technickým omezením prosím nepoužívejte smajlíky—při uložení budou odstraněny</p>
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="field-error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+                {% if field.help_text %}
+                    <div class="field-help">
+                        {{ field.help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Přidat inzerát</button>
+    </form>
+</div>
+{% endblock %}

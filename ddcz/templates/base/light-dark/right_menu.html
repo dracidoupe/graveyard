@@ -25,15 +25,12 @@
     <ul class="nav_border">
         <li><span class="list_heading">Komunikace</span>
             <ul class="list_box">
-                <li>Chat</li>
-                <li><a href="http://www.dracidoupe.cz/moudrasova/">Moudrá Sova</a></li>
+                <li><a href="{{ discord_invite_link }}">Chat (Discord)</a></li>
                 <li><a href="{% url 'ddcz:phorum-list' %}" id="ddcz_nav_phorum">Fórum</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'ddcz:postal-service' %}">Pošta</a></li>
                     <li><a href="{% url 'ddcz:tavern-list' %}" id="ddcz_nav_tavern">Putyka</a></li>
                 {% endif %}
-
-                <li>Ankety</li>
             </ul>
         </li>
     </ul>
@@ -74,7 +71,6 @@
     <ul class="nav_border">
         <li><span class="list_heading">Doupě jinde</span>
             <ul class="list_box">
-                <li><a href="{{ discord_invite_link }}">Discord</a></li>
                 <li><a href="https://www.facebook.com/DraciDoupecz-47586881642/">Facebook</a></li>
             </ul>
         </li>

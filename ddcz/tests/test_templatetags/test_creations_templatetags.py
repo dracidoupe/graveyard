@@ -16,7 +16,7 @@ class TestAuthorLinkRender(TemplateTestCase):
 
     def test_user_link(self):
         render = self.render_template(
-            "{% load creations %}" "{% author_display article %}",
+            "{% load creations %}{% author_display article %}",
             context={"article": self.article},
         )
 

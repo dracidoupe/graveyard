@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import urljoin
 from zlib import crc32
 
 from django.apps import apps
@@ -236,6 +237,18 @@ def creation_detail_image(
     )
 
 
+# This allows unfiltered traversion of the static path; shouldn't be a problem in the s3 bucket,
+# but should be deleted if we're moving somewhere else
+@require_http_methods(["HEAD", "GET"])
+def creation_detail_image_legacy(
+    request,
+    image_path,
+):
+    return HttpResponsePermanentRedirect(
+        f"{settings.CREATION_PICTURES_MEDIA_ROOT_URL}{image_path}"
+    )
+
+
 @require_http_methods(["HEAD", "GET"])
 def creative_page_concept(request, creative_page_slug):
     creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
@@ -329,6 +342,13 @@ def quest_view_redirect(request, quest_id, quest_slug=None):
     quest.read += 1
     quest.save()
     return HttpResponseRedirect(quest.get_final_url())
+
+
+# For content like /dobrodruzstvi/13/img/kylmar.gif
+@require_http_methods(["HEAD", "GET"])
+def quest_view_redirect_rest(request, quest_id, quest_slug=None, leftover=None):
+    quest = get_object_or_404(Quest, pk=quest_id)
+    return HttpResponseRedirect(urljoin(quest.get_final_url(), leftover))
 
 
 @require_http_methods(["HEAD", "GET"])

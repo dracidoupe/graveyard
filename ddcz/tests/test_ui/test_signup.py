@@ -2,6 +2,9 @@ from enum import Enum
 from time import sleep
 
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
 
 from .cases import SeleniumTestCase, MainPage
 from ddcz.models import AwaitingRegistration
@@ -57,6 +60,12 @@ class TestValidSignupSubmission(SeleniumTestCase):
         sleep(0.1)
 
         self.el(SignUpPage.POST_SUBMIT).click()
+
+        WebDriverWait(self.selenium, 10).until(
+            expected_conditions.presence_of_element_located(
+                (By.CLASS_NAME, "page-heading")
+            )
+        )
 
         self.assertEquals(
             f"Vítej ve Městě, {self.nick}!", self.el(MainPage.MAIN_TITLE).text

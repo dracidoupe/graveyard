@@ -60,7 +60,7 @@ def dashboard(request):
                 )
                 user.save()
                 profile.user = user
-                user.save()
+                profile.save()
 
                 reg.delete()
 

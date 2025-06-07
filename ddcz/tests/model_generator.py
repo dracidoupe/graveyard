@@ -1,4 +1,3 @@
-from datetime import date
 from random import randint
 
 from django.contrib.auth.models import User
@@ -136,7 +135,7 @@ def create_market_entries(number=1):
 
     entries = [
         Market.objects.create(
-            name=f"Seller #{i+1}",
+            name=f"Seller #{i + 1}",
             mail=f"seller{i}@example.com",
             # Escaping happens on (old version) text input, not here; test once this changes
             # text=SCRIPT_ALERT_INPUT,
@@ -144,7 +143,6 @@ def create_market_entries(number=1):
             group=MARKET_SECTION_CHOICES[randint(0, len(MARKET_SECTION_CHOICES) - 1)][
                 0
             ],
-            published_varchar=date.today().strftime("%d. %m. %Y"),
         )
         for i in range(0, number)
     ]

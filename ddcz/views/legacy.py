@@ -77,6 +77,10 @@ ALLOWED_CREATION_PAGES = [
 
 @require_http_methods(["HEAD", "GET"])
 def legacy_router(request):
+    # just index.php, return to /
+    if not request.GET:
+        return HttpResponseRedirect(reverse("ddcz:news"))
+
     page_category = request.GET.get("rub", False)
     page_creation_type = request.GET.get("co", False)
     id = request.GET.get("id", False)
@@ -142,6 +146,21 @@ def legacy_router(request):
             page = get_object_or_404(CreativePage, slug=name)
             return get_creation_detail_redirect(page, id)
 
+    # Putyka table redirects (we have a referral from DrD2 official site, actually)
+    if page_category == "putyka_jeden":
+        return HttpResponsePermanentRedirect(
+            reverse(
+                "ddcz:tavern-posts",
+                kwargs={"tavern_table_id": id},
+            )
+        )
+
+    # Galerie is also somewhat often referenced
+    if page_category == "galerie_diskuze":
+        return get_creation_detail_redirect(
+            CreativePage.objects.get(slug="galerie"), id
+        )
+
     ###  Finally if no route is found, redirect to news and log
     logger.warning(
         f"There has been submitted URL address from the old website: index.php >> No redirect could be found for a legacy URL {request.get_full_path()}"
@@ -168,13 +187,44 @@ def get_creation_detail_redirect(page, article_id):
 @require_http_methods(["HEAD", "GET"])
 def print_legacy_router(request, page_category, page_category_second):
     id = request.GET.get("id", False)
+    co = request.GET.get("co", False)
+
+    if page_category == "prispevky" and page_category_second == "prispevky" and co:
+        try:
+            id = int(id)
+        except (ValueError, TypeError):
+            logger.error(f"Invalid ID: {id}")
+            return HttpResponseBadRequest("id musí být číslo")
+
+        if co in COMMON_ARTICLES_NAME_MAP:
+            logger.info(f"Found common article: {co} -> {COMMON_ARTICLES_NAME_MAP[co]}")
+            try:
+                page = CreativePage.objects.get(slug=COMMON_ARTICLES_NAME_MAP[co])
+                logger.info(
+                    f"Found CreativePage: {page.slug} (model: {page.model_class})"
+                )
+                return get_creation_detail_redirect(page, id)
+            except CreativePage.DoesNotExist:
+                logger.error(
+                    f"CreativePage with slug={COMMON_ARTICLES_NAME_MAP[co]} does not exist"
+                )
+
+        if co in ALLOWED_CREATION_PAGES:
+            logger.info(f"Found allowed creation page: {co}")
+            try:
+                page = CreativePage.objects.get(slug=co)
+                logger.info(
+                    f"Found CreativePage: {page.slug} (model: {page.model_class})"
+                )
+                return get_creation_detail_redirect(page, id)
+            except CreativePage.DoesNotExist:
+                logger.error(f"CreativePage with slug={co} does not exist")
 
     if page_category in ALLOWED_CREATION_PAGES:
         page = CreativePage.objects.get(slug=page_category)
         return get_creation_detail_redirect(page, id)
 
-    ###  Finally if no route is found, redirect to news and log
     logger.warning(
         f"Bad print redirect: No redirect could be found for a legacy URL {request.get_full_path()}"
     )
-    return HttpResponseRedirect(reverse("ddcz:news"))
+    return HttpResponsePermanentRedirect(reverse("ddcz:news"))

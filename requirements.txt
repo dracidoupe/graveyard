@@ -13,3 +13,4 @@ django-storages<1.10
 boto3
 django-bmemcached
 python-binary-memcached
+feedparser>=6.0.0 # test only

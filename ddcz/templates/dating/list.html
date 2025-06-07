@@ -8,7 +8,7 @@
 
 <div id="page-dating">
     <h1 class="page-heading">Seznamka</h1>
-    <p>Seznamka slouží k seznamování hráčů a PJů. Pokud chcete něco prodat, nebo něco sháníte vkládejte inzeráty do <a href="{% url 'ddcz:market' %}">inzerce</a>.</p>
+    <p>Seznamka slouží k seznamování hráčů a PJů. Pokud chcete něco prodat, nebo něco sháníte vkládejte inzeráty do <a href="{% url 'ddcz:market' %}">inzerce</a>. Pro přidání inzerátu do seznamky <a href="{% url 'ddcz:dating-create' %}">použijte tento formulář</a>.</p>
     {% pagination items %}
     {% for i in items %}
         <article class="dating">
@@ -20,10 +20,10 @@
                 {% endif %}
             </p>
             <p>
-                <span class="label">Sekce:</span><span class="value">{{ i.group | dating_group_map }}</span>
+                <span class="label">Sekce:</span><span class="value">{{ i.get_group_display }}</span>
             </p>
             <p>
-                <span class="label">Okres:</span><span class="value">{{ i.area }}</span>
+                <span class="label">Kraj:</span><span class="value">{{ i.area }}</span>
             </p>
             {% if i.age %}
             <p>

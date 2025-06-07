@@ -9,6 +9,7 @@ from .models import (
     EditorArticle,
     Item,
     Link,
+    Market,
     Monster,
     News,
     ScheduledNotification,
@@ -31,7 +32,16 @@ class DatingSearch(admin.ModelAdmin):
     search_fields = ("name", "email", "phone", "mobile")
 
 
+class MarketSearch(admin.ModelAdmin):
+    search_fields = ("name", "mail", "phone", "mobile")
+
+
+class UserProfileSearch(admin.ModelAdmin):
+    search_fields = ("nick",)
+
+
 admin.site.register(Dating, DatingSearch)
+admin.site.register(Market, MarketSearch)
 
 admin.site.register(AlchemistTool, SearchableName)
 admin.site.register(CommonArticle, SearchableName)
@@ -50,4 +60,4 @@ admin.site.register(AwaitingRegistration)
 admin.site.register(ScheduledNotification)
 admin.site.register(ScheduledEmail)
 
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserProfileSearch)

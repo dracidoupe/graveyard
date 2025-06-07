@@ -10,6 +10,11 @@ Production is running at http://nove.dracidoupe.cz/ . But be warned, we are head
 
 ## Contributions
 
+<a href="https://github.com/dracidoupe/graveyard/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dracidoupe/graveyard" />
+</a>
+
+
 Contributions are welcome provided you agree your work will be shared under the same license as Graveyard (MIT). Please use [ruff](https://docs.astral.sh/ruff/) for code formatting and verification ([VS Code integration here](https://github.com/astral-sh/ruff-vscode?tab=readme-ov-file#ruff-extension-for-visual-studio-code)).
 
 If you don't know where to start, take a look [at the roadmap](https://github.com/dracidoupe/graveyard/milestones) or ask Almad on [development Slack](https://dracidoupe.slack.com/messages/C7F0YCTFU) or [community Discord](https://discord.gg/SnFux2x3Vw) or in Pošta on [DraciDoupe.cz](https://www.dracidoupe.cz/).
@@ -182,3 +187,7 @@ MIDDLEWARE.insert(
 
 INTERNAL_IPS = ["127.0.0.1", "::1"]
 ```
+
+## Credits
+
+Contribution image made with [contrib.rocks](https://contrib.rocks).

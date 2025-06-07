@@ -86,7 +86,7 @@ def user_profile(request, user_profile_id, nick_slug):
 
     level_stars = {
         level: staticfiles_storage.url(
-            f"skins/{request.session.get('skin', 'light')}/img/star-level-{ level }.svg"
+            f"skins/{request.session.get('skin', 'light')}/img/star-level-{level}.svg"
         )
         for level in LEVEL_DESCRIPTIONS
     }

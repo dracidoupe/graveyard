@@ -5,6 +5,7 @@
 # ...aaaaand few other, let's call them, missteps?
 
 import logging
+import sentry_sdk
 
 from django.db import models
 
@@ -34,7 +35,12 @@ class MisencodedCharField(models.CharField):
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if isinstance(value, str) and not prepared:
-            return value.encode("cp1250").decode("latin2")
+            try:
+                return value.encode("cp1250").decode("latin2")
+            except UnicodeEncodeError as e:
+                sentry_sdk.capture_exception(e)
+                logger.warning(f"Failed to encode value {value} to cp1250: {e}")
+                return value.encode("cp1250", errors="ignore").decode("latin2")
         else:
             return value
 

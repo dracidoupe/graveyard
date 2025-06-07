@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.urls import path, re_path
 from django.views.generic.base import RedirectView, TemplateView
+from django.views.decorators.cache import cache_page
 
-from .feeds import PhorumFeed
+from .feeds import PhorumFeed, CompleteNewsFeed
 from . import views
 from .views import news, tavern, misc, email
 from .views.legacy import legacy_router, print_legacy_router
@@ -21,15 +22,26 @@ urlpatterns = [
     re_path(
         r"^ikonky/(?P<file>.+)$",
         RedirectView.as_view(url=f"{settings.USER_ICON_MEDIA_ROOT_URL}%(file)s"),
-        name="redirect_ikonky",
+        name="redirect-icons",
+    ),
+    re_path(
+        r"^fotogalerie/(?P<file>.+)$",
+        RedirectView.as_view(url=f"{settings.PHOTOGALLERY_MEDIA_ROOT_URL}%(file)s"),
+        name="redirect-photogallery",
+    ),
+    re_path(
+        r"^galerie/(?P<file>.+)$",
+        RedirectView.as_view(url=f"{settings.PHOTOGALLERY_MEDIA_ROOT_URL}%(file)s"),
+        name="redirect-gallery",
     ),
     # It's gone, Dave
-    re_path(r"^moudrasova/", RedirectView.as_view()),
+    re_path(r"^(moudrasova|img|static|skiny|chat)/", RedirectView.as_view()),
     ### Common pages for bots etc.
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
+    path("staticfiles/robots.txt", RedirectView.as_view(url="/robots.txt")),
     path(
         "ads.txt",
         TemplateView.as_view(template_name="ads.txt", content_type="text/plain"),
@@ -76,6 +88,11 @@ urlpatterns = [
         views.creation_detail_image,
         name="creation-detail-image",
     ),
+    re_path(
+        r"obr_pris/(?P<image_path>[\w\/]+\.[\w]+)",
+        views.creation_detail_image_legacy,
+        name="creation-legacy-detail-image",
+    ),
     # Standard list and detail are under creation pages above,
     # Those are for executing redirect to download/quest location
     path("download/<int:download_id>/", views.download_file, name="download-file"),
@@ -88,6 +105,11 @@ urlpatterns = [
         "dobrodruzstvi/(?P<quest_id>\d+)-(?P<quest_slug>[a-zA-Z0-9_-]+)/$",
         views.quest_view_redirect,
         name="quest-view",
+    ),
+    re_path(
+        "dobrodruzstvi/(?P<quest_id>\d+)(-)?(?P<quest_slug>[a-zA-Z0-9_-]+)?/(?P<leftover>.*)$",
+        views.quest_view_redirect_rest,
+        name="quest-view-rest",
     ),
     ### User handling
     path("uzivatele/", views.users_list, name="users-list"),
@@ -137,7 +159,10 @@ urlpatterns = [
     path("aktuality/", news.list, name="news"),
     path("novinky/", news.newsfeed, name="newsfeed"),
     path("seznamka/", views.dating, name="dating"),
+    path("seznamka/pridat/", views.misc.dating_create, name="dating-create"),
     path("inzerce/", views.market, name="market"),
+    path("inzerce/pridej/", views.market_create, name="market-create"),
+    path("inzerce/smaz/<int:id>/", views.market_delete, name="market-delete"),
     path("linky/", views.links, name="links-list"),
     ### Discussions & Tavern
     path("forum/", views.phorum, name="phorum-list"),
@@ -169,8 +194,18 @@ urlpatterns = [
         name="tavern-bookmark",
     ),
     ### RSS & Feeds
-    path("rss/forum/", PhorumFeed(), name="phorum-feed"),
+    path(
+        "rss/forum/",
+        cache_page(settings.RSS_CACHE_INTERVAL)(PhorumFeed()),
+        name="feed-phorum",
+    ),
     path("rss/forum.xml", RedirectView.as_view(url="/rss/forum/", permanent=True)),
+    path(
+        "rss/novinky/",
+        cache_page(settings.RSS_CACHE_INTERVAL)(CompleteNewsFeed()),
+        name="feed-complete",
+    ),
+    path("rss/novinky.xml", RedirectView.as_view(url="/rss/novinky/", permanent=True)),
     ### Static Editorial Pages
     ### Would be easier to give them /static prefix, but it makes for ugly URL
     path(
