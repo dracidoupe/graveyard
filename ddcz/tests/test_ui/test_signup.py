@@ -60,6 +60,8 @@ class TestValidSignupSubmission(SeleniumTestCase):
         sleep(0.1)
 
         self.el(SignUpPage.POST_SUBMIT).click()
+        # Wait for reload to start on computers that are too fast
+        sleep(0.1)
 
         WebDriverWait(self.selenium, 10).until(
             expected_conditions.presence_of_element_located(

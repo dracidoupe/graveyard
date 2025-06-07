@@ -83,7 +83,11 @@ def get_tavern_table_list(user_profile, list_style):
             output_field=IntegerField(),
         ),
         # Resolve privileges and annotate we have done so
-        access_privileges_annotated=Case(default=True, output_field=BooleanField()),
+        access_privileges_annotated=Case(
+            When(id__isnull=False, then=Value(True)),
+            default=Value(False),
+            output_field=BooleanField(),
+        ),
         # Resolve Assistant Admin privileges
         is_assistant_admin_no=Count(
             Subquery(
@@ -183,6 +187,11 @@ def create_tavern_table(
     else:
         section = TAVERN_SECTION_PRIVATE_ID
         public_db = "0"
+
+    if allow_reputation:
+        allow_reputation = "1"
+    else:
+        allow_reputation = "0"
 
     return TavernTable.objects.create(
         name=name,
