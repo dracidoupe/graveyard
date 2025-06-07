@@ -5,36 +5,51 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ddcz', '0002_auto_20240818_1740'),
+        ("ddcz", "0002_auto_20240818_1740"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='rangerspell',
-            options={'verbose_name': 'Hraníčářské kouzlo', 'verbose_name_plural': 'Hraníčářská kouzla'},
+            name="rangerspell",
+            options={
+                "verbose_name": "Hraníčářské kouzlo",
+                "verbose_name_plural": "Hraníčářská kouzla",
+            },
         ),
         migrations.AlterModelOptions(
-            name='scheduledemail',
-            options={'verbose_name': 'Plánovaný e-mail', 'verbose_name_plural': 'Plánované e-maily'},
+            name="scheduledemail",
+            options={
+                "verbose_name": "Plánovaný e-mail",
+                "verbose_name_plural": "Plánované e-maily",
+            },
         ),
         migrations.AlterModelOptions(
-            name='schedulednotification',
-            options={'verbose_name': 'Plánovaná notifikace', 'verbose_name_plural': 'Plánované notifikace'},
+            name="schedulednotification",
+            options={
+                "verbose_name": "Plánovaná notifikace",
+                "verbose_name_plural": "Plánované notifikace",
+            },
         ),
         migrations.AlterModelOptions(
-            name='userprofile',
-            options={'verbose_name': 'Uživatelský profil', 'verbose_name_plural': 'Uživatelské profily'},
+            name="userprofile",
+            options={
+                "verbose_name": "Uživatelský profil",
+                "verbose_name_plural": "Uživatelské profily",
+            },
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='chat_color',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, db_column='chat_barva', max_length=6, null=True),
+            model_name="userprofile",
+            name="chat_color",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True, db_column="chat_barva", max_length=6, null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='userprofile',
-            name='chat_font',
-            field=models.IntegerField(blank=True, db_column='chat_pismo', default=12, null=True),
+            model_name="userprofile",
+            name="chat_font",
+            field=models.IntegerField(
+                blank=True, db_column="chat_pismo", default=12, null=True
+            ),
         ),
     ]

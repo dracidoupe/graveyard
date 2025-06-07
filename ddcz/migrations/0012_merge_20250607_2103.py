@@ -4,11 +4,9 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ddcz', '0011_dating_autopublish_20250116_2222'),
-        ('ddcz', '0003_lesschat'),
+        ("ddcz", "0011_dating_autopublish_20250116_2222"),
+        ("ddcz", "0003_lesschat"),
     ]
 
-    operations = [
-    ]
+    operations = []
