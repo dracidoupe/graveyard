@@ -4220,9 +4220,9 @@ class Migration(migrations.Migration):
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE auth_user AUTO_INCREMENT=20000",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE auth_user AUTO_INCREMENT=20000",
+        # ),
         migrations.AlterModelOptions(
             name="dating",
             options={"verbose_name": "Seznamka", "verbose_name_plural": "Seznamky"},
@@ -5975,12 +5975,12 @@ class Migration(migrations.Migration):
             old_name="Diskuze",
             new_name="CreationComment",
         ),
-        migrations.RunSQL(
-            sql=[
-                '\n            DELETE FROM \n                `diskuze`\n            WHERE\n                datum < "2000-01-01 01:01"\n            '
-            ],
-            reverse_sql=[],
-        ),
+        # migrations.RunSQL(
+        #     sql=[
+        #         '\n            DELETE FROM \n                `diskuze`\n            WHERE\n                datum < "2000-01-01 01:01"\n            '
+        #     ],
+        #     reverse_sql=[],
+        # ),
         migrations.AddField(
             model_name="creationcomment",
             name="user",
@@ -6126,7 +6126,21 @@ class Migration(migrations.Migration):
             code=django.db.migrations.operations.special.RunPython.noop,
         ),
         migrations.RunSQL(
-            sql="ALTER TABLE `mentat_newbie` DROP PRIMARY KEY;",
+            sql="""
+                DO $$
+                DECLARE
+                    constraint_name text;
+                BEGIN
+                    SELECT tc.constraint_name INTO constraint_name
+                    FROM information_schema.table_constraints tc
+                    WHERE tc.table_name = 'mentat_newbie'
+                    AND tc.constraint_type = 'PRIMARY KEY';
+
+                    IF constraint_name IS NOT NULL THEN
+                        EXECUTE 'ALTER TABLE mentat_newbie DROP CONSTRAINT ' || quote_ident(constraint_name);
+                    END IF;
+                END $$;
+                """,
         ),
         # migrations.RunSQL(
         #     sql="ALTER TABLE mentat_newbie MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
@@ -6204,12 +6218,12 @@ class Migration(migrations.Migration):
                 to="ddcz.UserProfile",
             ),
         ),
-        migrations.RunSQL(
-            sql=[
-                '\n            DELETE FROM\n                `putyka_uzivatele`\n            WHERE\n                navstiveno < "2000-01-01 01:01"\n            '
-            ],
-            reverse_sql=[],
-        ),
+        # migrations.RunSQL(
+        #     sql=[
+        #         '\n            DELETE FROM\n                `putyka_uzivatele`\n            WHERE\n                navstiveno < "2000-01-01 01:01"\n            '
+        #     ],
+        #     reverse_sql=[],
+        # ),
         migrations.AlterModelOptions(
             name="putykabook",
             options={},
@@ -6408,7 +6422,21 @@ class Migration(migrations.Migration):
             code=django.db.migrations.operations.special.RunPython.noop,
         ),
         migrations.RunSQL(
-            sql="ALTER TABLE `putyka_book` DROP PRIMARY KEY;",
+            sql="""
+                DO $$
+                DECLARE
+                    constraint_name text;
+                BEGIN
+                    SELECT tc.constraint_name INTO constraint_name
+                    FROM information_schema.table_constraints tc
+                    WHERE tc.table_name = 'putyka_book'
+                    AND tc.constraint_type = 'PRIMARY KEY';
+
+                    IF constraint_name IS NOT NULL THEN
+                        EXECUTE 'ALTER TABLE putyka_book DROP CONSTRAINT ' || quote_ident(constraint_name);
+                    END IF;
+                END $$;
+                """,
         ),
         # migrations.RunSQL(
         #     sql="ALTER TABLE putyka_book MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
@@ -6466,7 +6494,21 @@ class Migration(migrations.Migration):
             code=django.db.migrations.operations.special.RunPython.noop,
         ),
         migrations.RunSQL(
-            sql="ALTER TABLE `putyka_pristup` DROP PRIMARY KEY;",
+            sql="""
+                DO $$
+                DECLARE
+                    constraint_name text;
+                BEGIN
+                    SELECT tc.constraint_name INTO constraint_name
+                    FROM information_schema.table_constraints tc
+                    WHERE tc.table_name = 'putyka_pristup'
+                    AND tc.constraint_type = 'PRIMARY KEY';
+
+                    IF constraint_name IS NOT NULL THEN
+                        EXECUTE 'ALTER TABLE putyka_pristup DROP CONSTRAINT ' || quote_ident(constraint_name);
+                    END IF;
+                END $$;
+                """,
         ),
         # migrations.RunSQL(
         #     sql="ALTER TABLE putyka_pristup MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
@@ -6499,18 +6541,18 @@ class Migration(migrations.Migration):
                 to="ddcz.TavernTable",
             ),
         ),
-        migrations.RunSQL(
-            sql=[
-                '\n                        DELETE FROM\n                            `putyka_prispevky`\n                        WHERE\n                            `datum` < "2000-01-01 01:01"\n                    '
-            ],
-            reverse_sql=[],
-        ),
-        migrations.RunSQL(
-            sql=[
-                "\n                        ALTER TABLE\n                            `putyka_prispevky`\n                        MODIFY\n                            `datum` DATETIME NOT NULL;\n                    "
-            ],
-            reverse_sql=[],
-        ),
+        # migrations.RunSQL(
+        #     sql=[
+        #         '\n                        DELETE FROM\n                            `putyka_prispevky`\n                        WHERE\n                            `datum` < "2000-01-01 01:01"\n                    '
+        #     ],
+        #     reverse_sql=[],
+        # ),
+        # migrations.RunSQL(
+        #     sql=[
+        #         "\n                        ALTER TABLE\n                            `putyka_prispevky`\n                        MODIFY\n                            `datum` DATETIME NOT NULL;\n                    "
+        #     ],
+        #     reverse_sql=[],
+        # ),
         migrations.AlterField(
             model_name="taverncomment",
             name="id_stolu",
@@ -6529,7 +6571,21 @@ class Migration(migrations.Migration):
             code=django.db.migrations.operations.special.RunPython.noop,
         ),
         migrations.RunSQL(
-            sql="ALTER TABLE `putyka_uzivatele` DROP PRIMARY KEY;",
+            sql="""
+                DO $$
+                DECLARE
+                    constraint_name text;
+                BEGIN
+                    SELECT tc.constraint_name INTO constraint_name
+                    FROM information_schema.table_constraints tc
+                    WHERE tc.table_name = 'putyka_uzivatele'
+                    AND tc.constraint_type = 'PRIMARY KEY';
+
+                    IF constraint_name IS NOT NULL THEN
+                        EXECUTE 'ALTER TABLE putyka_uzivatele DROP CONSTRAINT ' || quote_ident(constraint_name);
+                    END IF;
+                END $$;
+                """,
         ),
         # migrations.RunSQL(
         #     sql="ALTER TABLE putyka_uzivatele MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
@@ -10877,12 +10933,12 @@ class Migration(migrations.Migration):
             old_name="datum",
             new_name="date",
         ),
-        migrations.RunSQL(
-            sql=[
-                "\n            DELETE FROM\n                `putyka_prispevky`\n            WHERE\n                id_stolu = 0\n            "
-            ],
-            reverse_sql=[],
-        ),
+        # migrations.RunSQL(
+        #     sql=[
+        #         "\n            DELETE FROM\n                `putyka_prispevky`\n            WHERE\n                id_stolu = 0\n            "
+        #     ],
+        #     reverse_sql=[],
+        # ),
         migrations.RenameField(
             model_name="tavernpost",
             old_name="author",
@@ -10898,12 +10954,12 @@ class Migration(migrations.Migration):
                 to="ddcz.UserProfile",
             ),
         ),
-        migrations.RunSQL(
-            sql=[
-                "\n            ALTER TABLE\n                `putyka_nastenky`\n            ALTER COLUMN\n                `posledni_zmena`\n            SET DEFAULT NULL\n            "
-            ],
-            reverse_sql=[],
-        ),
+        # migrations.RunSQL(
+        #     sql=[
+        #         "\n            ALTER TABLE\n                `putyka_nastenky`\n            ALTER COLUMN\n                `posledni_zmena`\n            SET DEFAULT NULL\n            "
+        #     ],
+        #     reverse_sql=[],
+        # ),
         migrations.AlterField(
             model_name="taverntablenoticeboard",
             name="tavern_table_id",
@@ -10992,12 +11048,12 @@ class Migration(migrations.Migration):
                 "verbose_name_plural": "Kouzelnická kouzla",
             },
         ),
-        migrations.RunSQL(
-            sql=[
-                "\n            ALTER TABLE\n                `putyka_stoly`\n            ALTER COLUMN\n                `zalozen`\n            DROP DEFAULT;\n            "
-            ],
-            reverse_sql=[],
-        ),
+        # migrations.RunSQL(
+        #     sql=[
+        #         "\n            ALTER TABLE\n                `putyka_stoly`\n            ALTER COLUMN\n                `zalozen`\n            DROP DEFAULT;\n            "
+        #     ],
+        #     reverse_sql=[],
+        # ),
         migrations.AlterField(
             model_name="taverntable",
             name="posts_no",
@@ -11330,7 +11386,21 @@ class Migration(migrations.Migration):
             code=django.db.migrations.operations.special.RunPython.noop,
         ),
         migrations.RunSQL(
-            sql="ALTER TABLE `uzivatele_maillist` DROP PRIMARY KEY;",
+            sql="""
+                DO $$
+                DECLARE
+                    constraint_name text;
+                BEGIN
+                    SELECT tc.constraint_name INTO constraint_name
+                    FROM information_schema.table_constraints tc
+                    WHERE tc.table_name = 'uzivatele_maillist'
+                    AND tc.constraint_type = 'PRIMARY KEY';
+
+                    IF constraint_name IS NOT NULL THEN
+                        EXECUTE 'ALTER TABLE uzivatele_maillist DROP CONSTRAINT ' || quote_ident(constraint_name);
+                    END IF;
+                END $$;
+                """,
         ),
         # migrations.RunSQL(
         #     sql="ALTER TABLE uzivatele_maillist MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
@@ -11404,7 +11474,21 @@ class Migration(migrations.Migration):
             code=django.db.migrations.operations.special.RunPython.noop,
         ),
         migrations.RunSQL(
-            sql="ALTER TABLE `hlasovani_prispevky` DROP PRIMARY KEY;",
+            sql="""
+                DO $$
+                DECLARE
+                    constraint_name text;
+                BEGIN
+                    SELECT tc.constraint_name INTO constraint_name
+                    FROM information_schema.table_constraints tc
+                    WHERE tc.table_name = 'hlasovani_prispevky'
+                    AND tc.constraint_type = 'PRIMARY KEY';
+
+                    IF constraint_name IS NOT NULL THEN
+                        EXECUTE 'ALTER TABLE hlasovani_prispevky DROP CONSTRAINT ' || quote_ident(constraint_name);
+                    END IF;
+                END $$;
+                """,
         ),
         # migrations.RunSQL(
         #     sql="ALTER TABLE hlasovani_prispevky MODIFY django_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY;",
@@ -11504,16 +11588,16 @@ class Migration(migrations.Migration):
                 max_length=40, verbose_name="Jméno"
             ),
         ),
-        migrations.RunSQL(
-            sql="ALTER TABLE ddcz_editorarticle CONVERT TO CHARACTER SET latin2 COLLATE latin2_czech_cs;",
-        ),
-        migrations.RunSQL(
-            sql="ALTER TABLE ddcz_editorarticle MODIFY title VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;",
-        ),
-        migrations.RunSQL(
-            sql="ALTER TABLE ddcz_editorarticle MODIFY slug VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;",
-        ),
-        migrations.RunSQL(
-            sql="ALTER TABLE ddcz_editorarticle MODIFY text LONGTEXT CHARACTER SET latin2 COLLATE latin2_czech_cs;",
-        ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE ddcz_editorarticle CONVERT TO CHARACTER SET latin2 COLLATE latin2_czech_cs;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE ddcz_editorarticle MODIFY title VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE ddcz_editorarticle MODIFY slug VARCHAR(40) CHARACTER SET latin2 COLLATE latin2_czech_cs;",
+        # ),
+        # migrations.RunSQL(
+        #     sql="ALTER TABLE ddcz_editorarticle MODIFY text LONGTEXT CHARACTER SET latin2 COLLATE latin2_czech_cs;",
+        # ),
     ]

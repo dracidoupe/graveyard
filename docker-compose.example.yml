@@ -19,10 +19,10 @@ services:
       context: .docker/database
       dockerfile: Dockerfile
     volumes:
-      - .docker/database/.db-data:/var/lib/mysql
+      - .docker/database/.db-data:/var/lib/postgresql/data
     environment:
-      - MARIADB_ROOT_PASSWORD=docker
-      - MARIADB_DATABASE=dracidoupe_cz
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=dracidoupe_cz
 
   adminer:
     image: adminer
