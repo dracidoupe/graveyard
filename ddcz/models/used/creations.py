@@ -416,7 +416,7 @@ class Monster(Creation):
         verbose_name="Bojovnost",
     )
     mental_strength = MisencodedCharField(
-        db_column="SM", max_length=50, blank=True, null=True, verbose_name="Síla mysli"
+        db_column="sm", max_length=50, blank=True, null=True, verbose_name="Síla mysli"
     )
 
     legacy_html_attributes = ["description"]
@@ -702,10 +702,10 @@ class WizardSpell(Creation):
 
 class Item(Creation):
     attack_number = MisencodedTextField(
-        db_column="UC", blank=True, null=True, verbose_name="Síla zbraně"
+        db_column="uc", blank=True, null=True, verbose_name="Síla zbraně"
     )
     armour_quality = MisencodedCharField(
-        db_column="KZ",
+        db_column="kz",
         max_length=3,
         blank=True,
         null=True,

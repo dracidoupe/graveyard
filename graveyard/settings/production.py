@@ -20,21 +20,34 @@ DEBUG = False
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 DATABASE_IS_SEEDED = True
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "HOST": os.environ["DB_HOST"],
-        "NAME": os.environ["DB_NAME"],  # original: dracidoupe_cz
-        "USER": os.environ["DB_USERNAME"],
-        "PASSWORD": os.environ["DB_PASSWORD"],
-        "PORT": os.environ["DB_PORT"],
-        "CONN_MAX_AGE": 60,
-        "OPTIONS": {
-            "init_command": "SET NAMES 'latin2';SET sql_mode='STRICT_TRANS_TABLES';",
-            "charset": "latin2",
-        },
+
+if os.environ["FORCE_MYSQL"] == "1":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "HOST": os.environ["DB_HOST"],
+            "NAME": os.environ["DB_NAME"],  # original: dracidoupe_cz
+            "USER": os.environ["DB_USERNAME"],
+            "PASSWORD": os.environ["DB_PASSWORD"],
+            "PORT": os.environ["DB_PORT"],
+            "CONN_MAX_AGE": 60,
+            "OPTIONS": {
+                "init_command": "SET NAMES 'latin2';SET sql_mode='STRICT_TRANS_TABLES';",
+                "charset": "latin2",
+            },
+        }
     }
-}
+else:
+    import dj_database_url
+    DATABASES = {
+        "default": dj_database_url.config(
+            env="DATABASE_URL",
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
+    }
+
 
 if "MEMCACHEDCLOUD_SERVERS" in os.environ:
     logger.info("Using Memcached Cloud servers")

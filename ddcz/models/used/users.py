@@ -74,17 +74,17 @@ class UserProfile(models.Model):
     chat_color = MisencodedCharField(
         max_length=6, db_column="chat_barva", blank=True, null=True
     )
-    chat_font = models.IntegerField(
-        default=12, db_column="chat_pismo", blank=True, null=True
-    )
+    # chat_font = models.IntegerField(
+    #     default=12, db_column="chat_pismo", blank=True, null=True
+    # )
     chat_reload = models.IntegerField(default=15, db_column="chat_reload")
     chat_message_no = models.IntegerField(default=20, db_column="chat_zprav")
     chat_filter = MisencodedCharField(
         max_length=255, blank=True, null=True, db_column="chat_filtr"
     )
-    chat_filter_display = models.IntegerField(
-        default=0, db_column="chat_filtr_zobrazit"
-    )
+    # chat_filter_display = models.BooleanField(
+    #     default=0, db_column="chat_filtr_zobrazit"
+    # )
     last_login = models.DateTimeField(auto_now_add=True, db_column="pospristup")
     level = MisencodedCharField(max_length=1, db_column="level")
     icq = models.IntegerField(default=0, db_column="icq_uzivatele")
