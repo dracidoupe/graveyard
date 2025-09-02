@@ -21,7 +21,7 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 DATABASE_IS_SEEDED = True
 
-if os.environ["FORCE_MYSQL"] == "1":
+if os.environ.get("FORCE_MYSQL", None) == "1":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
