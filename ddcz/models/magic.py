@@ -56,13 +56,11 @@ class MisencodedBooleanField(models.CharField):
             return value
 
     def get_db_prep_value(self, value, connection, prepared=False):
-        if isinstance(value, str) and not prepared:
-            if value:
-                return "1"
-            else:
-                return "0"
-        else:
+        if prepared:
             return value
+        if value is True or value == "1":
+            return "1"
+        return "0"
 
 
 class MisencodedIntegerField(models.CharField):
@@ -81,6 +79,8 @@ class MisencodedIntegerField(models.CharField):
     """
 
     def from_db_value(self, value, expression, connection):
+        if value == "":
+            return 0
         try:
             return int(value)
         except ValueError:

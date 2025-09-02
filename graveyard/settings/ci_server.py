@@ -4,15 +4,14 @@ DEBUG = False
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "circle_test",
-        "USER": "root",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "ddcz",
+        "USER": "postgres",
         "HOST": "db",
         "PASSWORD": "docker",
-        "OPTIONS": {"charset": "latin2"},
+        "PORT": "5432",
         "TEST": {
-            "NAME": "circle_test",
-            "CHARSET": "latin2",
+            "NAME": "test_ddcz",
         },
     }
 }
