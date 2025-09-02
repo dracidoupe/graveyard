@@ -5,33 +5,46 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ddcz', '0012_merge_20250607_2103'),
+        ("ddcz", "0012_merge_20250607_2103"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='userprofile',
-            name='chat_filter_display',
+            model_name="userprofile",
+            name="chat_filter_display",
         ),
         migrations.RemoveField(
-            model_name='userprofile',
-            name='chat_font',
+            model_name="userprofile",
+            name="chat_font",
         ),
         migrations.AlterField(
-            model_name='item',
-            name='armour_quality',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, db_column='kz', max_length=3, null=True, verbose_name='Kvalita zbroje'),
+            model_name="item",
+            name="armour_quality",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True,
+                db_column="kz",
+                max_length=3,
+                null=True,
+                verbose_name="Kvalita zbroje",
+            ),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='attack_number',
-            field=ddcz.models.magic.MisencodedTextField(blank=True, db_column='uc', null=True, verbose_name='Síla zbraně'),
+            model_name="item",
+            name="attack_number",
+            field=ddcz.models.magic.MisencodedTextField(
+                blank=True, db_column="uc", null=True, verbose_name="Síla zbraně"
+            ),
         ),
         migrations.AlterField(
-            model_name='monster',
-            name='mental_strength',
-            field=ddcz.models.magic.MisencodedCharField(blank=True, db_column='sm', max_length=50, null=True, verbose_name='Síla mysli'),
+            model_name="monster",
+            name="mental_strength",
+            field=ddcz.models.magic.MisencodedCharField(
+                blank=True,
+                db_column="sm",
+                max_length=50,
+                null=True,
+                verbose_name="Síla mysli",
+            ),
         ),
     ]
