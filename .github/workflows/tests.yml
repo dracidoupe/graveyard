@@ -21,10 +21,10 @@ jobs:
         with:
           python-version: '3.9'
           cache: 'pip'
+          cache-dependency-path: '**/requirements*.txt'
       - name: Install ruff
         run: pip install ruff
       - name: Ruff Check Linhting
         run: ruff check --output-format=github .
       - name: Ruff Format Check
         run: ruff format --check
-        
