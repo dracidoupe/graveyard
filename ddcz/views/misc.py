@@ -113,7 +113,7 @@ def web_authors_and_editors(request):
             "role": "tribun",
         },
         {
-            "user_profile": UserProfile.objects.get(nick="kamerask"),
+            "user_profile": UserProfile.objects.get(nick="Kamerask"),
             "role": "tribun",
         },
     ]
