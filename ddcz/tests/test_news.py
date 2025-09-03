@@ -81,15 +81,6 @@ class TestNewsfeed(TestCase):
         articles = response.context["articles"]
 
         # Only recent article should be present
-        print(articles)
-        print(
-            CommonArticle.objects.filter(
-                is_published=ApprovalChoices.APPROVED.value,
-                published__gte=timezone.now()
-                - timedelta(weeks=settings.NEWSFEED_OLDEST_ARTICLE_INTERVAL_WEEKS),
-            )
-        )
-        print([a.published for a in articles])
         self.assertEqual(
             len(articles), 1, "Expected only one article (recent), but got more"
         )
