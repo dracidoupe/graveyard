@@ -2,6 +2,7 @@ import logging
 
 from django import template
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.utils import timezone
 
 from ..creations import RATING_DESCRIPTIONS
 from ..models import CreationVote
@@ -61,14 +62,14 @@ def creation_canonical_url(page, creation):
 @register.filter
 def articleTime(datetime):
     try:
-        return datetime.strftime("%-d. %-m. %Y v %-H:%M")
+        return timezone.localtime(datetime).strftime("%-d. %-m. %Y v %-H:%M")
     except ValueError:
-        return datetime.strftime("%d. %m. %Y v %H:%M")
+        return timezone.localtime(datetime).strftime("%d. %m. %Y v %H:%M")
 
 
 @register.filter
 def czech_date(datetime):
     try:
-        return datetime.strftime("%-d. %-m. %Y")
+        return timezone.localtime(datetime).strftime("%-d. %-m. %Y")
     except ValueError:
-        return datetime.strftime("%d. %m. %Y")
+        return timezone.localtime(datetime).strftime("%d. %m. %Y")
