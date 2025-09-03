@@ -59,12 +59,6 @@ def forwards(apps, schema_editor):
     cursor = connection.cursor()
     qn = connection.ops.quote_name
 
-    # Determine schema prefix if any (e.g., dracidoupe_cz.)
-    # PostgreSQL current_schema() returns the first schema in search_path; however, migrations
-    # usually operate without schema qualification. We'll let the DB resolve, but allow overriding
-    # via DJANGO_DB_SCHEMA env (not required). Simpler: no explicit schema, matches installed tables.
-    schema = ""
-
     tz_name = getattr(settings, "TIME_ZONE", "Europe/Prague")
     cutoff_local_str = "2025-09-03 04:00:00"  # local wall time in settings.TIME_ZONE
 
