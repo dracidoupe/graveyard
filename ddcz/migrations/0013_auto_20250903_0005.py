@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
             model_name="userprofile",
             name="chat_font",
         ),
+        # Those migrations need to be skipped on prod as fields were lowercased automatically during migration
         migrations.AlterField(
             model_name="item",
             name="armour_quality",
