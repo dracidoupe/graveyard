@@ -91,7 +91,7 @@ For all commands in the manual that ask for `python manage.py command`, run `doc
 Graveyard is currently written in [Django](https://www.djangoproject.com/). Requirements to develop it:
 
 * You have working Python 3 installation on your machine
-* You have working MySQL installation on your machine
+* You have working PostgreSQL installation on your machine
 
 To use the project, clone this repository, enter its directory with `cd graveyard` and:
 
@@ -100,8 +100,7 @@ To use the project, clone this repository, enter its directory with `cd graveyar
 * Enter it (on Mac OS X or Linux): `source gvenv/bin/activate`
 * Install dependencies within the `pip install -r requirements.txt`
 * Copy settings template: `cp graveyard/settings/local.example.py graveyard/settings/local.py`
-* Edit the settings above, especially enter credentials to your local MySQL ([see Stack Overflow](https://stackoverflow.com/questions/1720244/create-new-user-in-mysql-and-give-it-full-access-to-one-database) on how to do that)
-  * When creating database, for compatibility, use latin2 as default charset: `CREATE DATABASE dracidoupe_cz DEFAULT CHARACTER SET latin2;`
+* Edit the settings above, especially enter credentials to your local PostgreSQL
 * Verify you have correct installation and run tests with `python manage.py test`. You should see output like this:
 
 ```
@@ -122,14 +121,6 @@ Destroying test database for alias 'default'...
 * Run the thing! `python manage.py runserver`
 * Observe if you have contact at `http://localhost:8000`
 
-### Installing on Windows
-
-Follow the list above, except:
-
-* It is strongly recommended to use Python 3.7 and MySQL 8, otherwise you'll have to compile mysqlclient manually
-* Activate virtualenv using `gvenv\Scripts\activate` instaed of `source gvenv/bin/activate`
-
-
 ## After Installation
 
 * Load initial version of editorial articles: `python manage.py loaddata editorarticles`
@@ -138,22 +129,6 @@ Follow the list above, except:
 
 
 #### Installation issues
-
-*  Installation failes with "mysql_config not found"
-
-If you get something like this:
-
-```
-    File "/tmp/pip-install-wfhe9zue/mysqlclient/setup_posix.py", line 29, in mysql_config
-        raise EnvironmentError("%s not found" % (_mysql_config_path,))
-    OSError: mysql_config not found
-```
-
-you may be using MariaDB fork of MySQL that the Python client is not equipped to talk to, installation-wise. You need to manually symlink the appropriate command:
-
-`ln -s /usr/bin/mariadb_config /usr/bin/mysql_config`
-
-If even `mysql_config` is not there, you have to install development headers for the database. That's `apt-get install libmariadbclient-dev` on Debian.
 
 * `error: invalid command 'bdist_wheel'`
 
