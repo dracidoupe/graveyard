@@ -15,3 +15,5 @@ python-binary-memcached
 feedparser>=6.0.0 # test only
 psycopg2
 dj-database-url
+mysqlclient>=1.4.0,<2.0
+
