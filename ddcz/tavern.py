@@ -89,15 +89,16 @@ def get_tavern_table_list(user_profile, list_style):
             output_field=BooleanField(),
         ),
         # Resolve Assistant Admin privileges
-        is_assistant_admin_no=Count(
-            Subquery(
-                TavernAccess.objects.filter(
-                    tavern_table_id=OuterRef("id"),
-                    user_nick_or_id=user_profile.pk,
-                    access_type=TavernAccessRights.ASSISTANT_ADMIN.value,
-                ).values("django_id")[:1],
-                output_field=IntegerField(),
+        is_assistant_admin_no=Subquery(
+            TavernAccess.objects.filter(
+                tavern_table_id=OuterRef("id"),
+                user_nick_or_id=user_profile.pk,
+                access_type=TavernAccessRights.ASSISTANT_ADMIN.value,
             )
+            .values("tavern_table_id")
+            .annotate(cnt=Count("django_id"))
+            .values("cnt")[:1],
+            output_field=IntegerField(),
         ),
         is_assistant_admin=Case(
             When(is_assistant_admin_no__gte=1, then=Value(True)),
@@ -105,15 +106,16 @@ def get_tavern_table_list(user_profile, list_style):
             output_field=BooleanField(),
         ),
         # Resolve Banned privileges
-        is_banned_no=Count(
-            Subquery(
-                TavernAccess.objects.filter(
-                    tavern_table_id=OuterRef("id"),
-                    user_nick_or_id=misencode(user_profile.nick),
-                    access_type=TavernAccessRights.ACCESS_BANNED.value,
-                ).values("django_id")[:1],
-                output_field=IntegerField(),
+        is_banned_no=Subquery(
+            TavernAccess.objects.filter(
+                tavern_table_id=OuterRef("id"),
+                user_nick_or_id=misencode(user_profile.nick),
+                access_type=TavernAccessRights.ACCESS_BANNED.value,
             )
+            .values("tavern_table_id")
+            .annotate(cnt=Count("django_id"))
+            .values("cnt")[:1],
+            output_field=IntegerField(),
         ),
         is_banned=Case(
             When(is_banned_no__gte=1, then=Value(True)),
@@ -121,15 +123,16 @@ def get_tavern_table_list(user_profile, list_style):
             output_field=BooleanField(),
         ),
         # Resolve Allow List privileges
-        is_allowed_no=Count(
-            Subquery(
-                TavernAccess.objects.filter(
-                    tavern_table_id=OuterRef("id"),
-                    user_nick_or_id=misencode(user_profile.nick),
-                    access_type=TavernAccessRights.ACCESS_ALLOWED.value,
-                ).values("django_id")[:1],
-                output_field=IntegerField(),
+        is_allowed_no=Subquery(
+            TavernAccess.objects.filter(
+                tavern_table_id=OuterRef("id"),
+                user_nick_or_id=misencode(user_profile.nick),
+                access_type=TavernAccessRights.ACCESS_ALLOWED.value,
             )
+            .values("tavern_table_id")
+            .annotate(cnt=Count("django_id"))
+            .values("cnt")[:1],
+            output_field=IntegerField(),
         ),
         is_allowed=Case(
             When(is_allowed_no__gte=1, then=Value(True)),
@@ -137,7 +140,7 @@ def get_tavern_table_list(user_profile, list_style):
             output_field=BooleanField(),
         ),
         # Do not resolve allow write privileges as those are not displayed on the list page
-    ).order_by("name")
+    ).order_by("name", "id")
 
     if list_style in [LIST_ALL_NEW_COMMENTS, LIST_FAVORITE_NEW_COMMENTS]:
         query = query.filter(new_comments_no__gt=0)
