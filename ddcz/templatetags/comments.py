@@ -1,5 +1,6 @@
-from django.core.paginator import Paginator
 from django import template
+from django.core.paginator import Paginator
+from django.utils import timezone
 
 from ddcz.models import CreationComment, TavernPost
 
@@ -9,11 +10,11 @@ COMMENT_DEFAULT_LIMIT = 10
 
 
 @register.filter
-def commentTime(datetime):
+def commentTime(commentDatetime):
     try:
-        return datetime.strftime("%-d. %-m. %Y v %-H:%M:%S")
+        return timezone.localtime(commentDatetime).strftime("%-d. %-m. %Y v %-H:%M:%S")
     except ValueError:
-        return datetime.strftime("%d. %m. %Y v %H:%M:%S")
+        return timezone.localtime(commentDatetime).strftime("%d. %m. %Y v %H:%M:%S")
 
 
 @register.inclusion_tag("discussions/creation-comments.html", takes_context=True)
