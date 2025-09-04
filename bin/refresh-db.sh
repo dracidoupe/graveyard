@@ -72,21 +72,82 @@ echo "🔄 Restoring backup to local database..."
 pg_restore --verbose --no-acl --no-owner -h localhost -d $LOCAL_DB_NAME $BACKUP_FILE
 
 # Step 6: Grant permissions to local user
-echo "🔐 Granting permissions to user '$LOCAL_DB_USER'..."
-psql -U $POSTGRES_USER -d $LOCAL_DB_NAME -c "
--- Grant usage permission on the schema
-GRANT USAGE ON SCHEMA $LOCAL_DB_NAME TO $LOCAL_DB_USER;
+# Determine schema name: prefer 'dracidoupe_cz' if present in dump, otherwise fallback to 'public'.
+# Allow override via SCHEMA_NAME env var.
+if [[ -z "${SCHEMA_NAME}" ]]; then
+  # Detect schema by checking if 'dracidoupe_cz' exists after restore
+  if psql -U $POSTGRES_USER -d $LOCAL_DB_NAME -tAc "SELECT 1 FROM pg_namespace WHERE nspname='dracidoupe_cz'" | grep -q 1; then
+    SCHEMA_NAME=dracidoupe_cz
+  else
+    SCHEMA_NAME=public
+  fi
+fi
+
+echo "🔐 Granting permissions on schema '$SCHEMA_NAME' to user '$LOCAL_DB_USER'..."
+psql -U $POSTGRES_USER -d $LOCAL_DB_NAME -v ON_ERROR_STOP=1 -c "
+-- Grant usage and create on the schema for application user
+GRANT USAGE, CREATE ON SCHEMA \"$SCHEMA_NAME\" TO \"$LOCAL_DB_USER\";
 
 -- Grant permissions on all existing tables in the schema
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA $LOCAL_DB_NAME TO $LOCAL_DB_USER;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA \"$SCHEMA_NAME\" TO \"$LOCAL_DB_USER\";
 
 -- Grant permissions on all sequences (for auto-increment fields)
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA $LOCAL_DB_NAME TO $LOCAL_DB_USER;
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA \"$SCHEMA_NAME\" TO \"$LOCAL_DB_USER\";
 
 -- Grant permissions on future tables and sequences
-ALTER DEFAULT PRIVILEGES IN SCHEMA $LOCAL_DB_NAME GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO $LOCAL_DB_USER;
-ALTER DEFAULT PRIVILEGES IN SCHEMA $LOCAL_DB_NAME GRANT USAGE, SELECT ON SEQUENCES TO $LOCAL_DB_USER;
+ALTER DEFAULT PRIVILEGES IN SCHEMA \"$SCHEMA_NAME\" GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO \"$LOCAL_DB_USER\";
+ALTER DEFAULT PRIVILEGES IN SCHEMA \"$SCHEMA_NAME\" GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO \"$LOCAL_DB_USER\";
 "
+
+# Ensure the role executing migrations also has necessary privileges
+echo "🔑 Adding additional permissions for CURRENT_USER on schema '$SCHEMA_NAME'..."
+psql -U $POSTGRES_USER -d $LOCAL_DB_NAME -v ON_ERROR_STOP=1 -c "
+-- Grant schema permissions to current role
+GRANT USAGE, CREATE ON SCHEMA \"$SCHEMA_NAME\" TO CURRENT_USER;
+
+-- Grant privileges on all existing sequences in the schema to current role
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA \"$SCHEMA_NAME\" TO CURRENT_USER;
+
+-- Grant permissions for future sequences
+ALTER DEFAULT PRIVILEGES IN SCHEMA \"$SCHEMA_NAME\" GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO CURRENT_USER;
+"
+
+# Optional: Change ownership of objects in the schema to LOCAL_DB_USER so migrations can ALTER OWNERSHIP/OWNED BY
+# This avoids errors like 'must be able to SET ROLE "<owner>"'
+echo "🧰 Reassigning ownership of objects in schema '$SCHEMA_NAME' to '$LOCAL_DB_USER' (best-effort)..."
+psql -U $POSTGRES_USER -d $LOCAL_DB_NAME -v ON_ERROR_STOP=0 <<'SQL'
+DO $$
+DECLARE
+    obj RECORD;
+BEGIN
+    -- Tables
+    FOR obj IN
+        SELECT c.relname AS name
+        FROM pg_class c
+        JOIN pg_namespace n ON n.oid = c.relnamespace
+        WHERE n.nspname = current_schema() AND c.relkind = 'r'
+    LOOP
+        EXECUTE format('ALTER TABLE IF EXISTS %I.%I OWNER TO %I', '$SCHEMA_NAME', obj.name, '$LOCAL_DB_USER');
+    END LOOP;
+
+    -- Sequences
+    FOR obj IN
+        SELECT c.relname AS name
+        FROM pg_class c
+        JOIN pg_namespace n ON n.oid = c.relnamespace
+        WHERE n.nspname = current_schema() AND c.relkind = 'S'
+    LOOP
+        EXECUTE format('ALTER SEQUENCE IF EXISTS %I.%I OWNER TO %I', '$SCHEMA_NAME', obj.name, '$LOCAL_DB_USER');
+    END LOOP;
+END$$;
+SQL
+
+# Set search_path for role and database so Django sees the restored schema first
+if [[ "$SCHEMA_NAME" != "public" ]]; then
+  echo "🧭 Setting search_path to '$SCHEMA_NAME,public' for role '$LOCAL_DB_USER' and database '$LOCAL_DB_NAME'..."
+  psql -U $POSTGRES_USER -d $LOCAL_DB_NAME -v ON_ERROR_STOP=1 -c "ALTER ROLE \"$LOCAL_DB_USER\" IN DATABASE \"$LOCAL_DB_NAME\" SET search_path TO '$SCHEMA_NAME,public';" || true
+  psql -U $POSTGRES_USER -d $LOCAL_DB_NAME -v ON_ERROR_STOP=1 -c "ALTER DATABASE \"$LOCAL_DB_NAME\" SET search_path TO '$SCHEMA_NAME,public';" || true
+fi
 
 # Step 7: Conditional cleanup of backup file
 if [[ "$KEEP_FILE" == "true" ]]; then
