@@ -10,4 +10,5 @@ RUN pip install --upgrade pip
 ADD requirements.txt .
 RUN apt update \
     && apt install -y postgresql-client libpq-dev \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt \
+    && python -m playwright install --with-deps chromium

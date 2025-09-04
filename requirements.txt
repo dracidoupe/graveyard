@@ -7,6 +7,7 @@ pytz
 pyyaml
 sentry-sdk>=0.14.1
 selenium
+playwright>=1.45.0
 whitenoise
 django-storages<1.10
 boto3

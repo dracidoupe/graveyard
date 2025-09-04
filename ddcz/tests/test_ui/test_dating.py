@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
 
 from .cases import SeleniumTestCase, MainPage
 from ..model_generator import get_alphabetic_user_profiles
@@ -71,10 +70,7 @@ class TestDating(SeleniumTestCase):
         )
 
         if group:
-            select = Select(
-                self.selenium.find_element(By.ID, DatingCreatePage.GROUP_SELECT.value)
-            )
-            select.select_by_visible_text(group)
+            self.select_by_visible_text(DatingCreatePage.GROUP_SELECT.value, group)
         if age:
             self.selenium.find_element(
                 By.ID, DatingCreatePage.AGE_INPUT.value

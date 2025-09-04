@@ -1,11 +1,6 @@
 from enum import Enum
 from time import sleep
 
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.common.by import By
-
 from .cases import SeleniumTestCase, MainPage
 from ddcz.models import AwaitingRegistration
 
@@ -39,9 +34,9 @@ class TestValidSignupSubmission(SeleniumTestCase):
         self.el(SignUpPage.AGE).send_keys(50)
         self.el(SignUpPage.EMAIL).send_keys("test@example.com")
 
-        Select(self.el(SignUpPage.SEX)).select_by_value("F")
+        self.select_by_value(SignUpPage.SEX.value, "F")
 
-        Select(self.el(SignUpPage.GDPR)).select_by_value("T")
+        self.select_by_value(SignUpPage.GDPR.value, "T")
 
     def assert_registration_saved(self):
         self.assertEquals(
@@ -63,12 +58,7 @@ class TestValidSignupSubmission(SeleniumTestCase):
         # Wait for reload to start on computers that are too fast
         sleep(0.1)
 
-        WebDriverWait(self.selenium, 10).until(
-            expected_conditions.presence_of_element_located(
-                (By.CLASS_NAME, "page-heading")
-            )
-        )
-
+        # Playwright auto-waits for navigation/render; directly assert the title
         self.assertEquals(
             f"Vítej ve Městě, {self.nick}!", self.el(MainPage.MAIN_TITLE).text
         )
