@@ -23,5 +23,8 @@ docker-compose.yml
 /.idea
 /.vscode
 
+# Original closed-source code
+/legacy-version
+
 # IaaS / Terraform state
 /terraform/.terraform*
