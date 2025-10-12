@@ -1,5 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
+from django.db.models import F
 from django.http import (
     HttpResponseRedirect,
     HttpResponseBadRequest,
@@ -54,7 +55,9 @@ def users_list(request):
                 nick__icontains=misencode(searched_nick)
             ).order_by("nick")
     else:
-        users = UserProfile.objects.all().order_by("-last_login")
+        users = UserProfile.objects.all().order_by(
+            F("last_login").desc(nulls_last=True)
+        )
 
     paginator = Paginator(users, DEFAULT_USER_LIST_SIZE)
     page = request.GET.get("z_s", 1)
