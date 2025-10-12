@@ -180,3 +180,39 @@ def emailtest(request):
         )
 
     return render(request, "emailtest.html")
+
+
+@decorators.staff_member_required()
+def user_ban(request, user_id):
+    # Minimalistic admin action to ban a user
+    try:
+        profile = UserProfile.objects.get(pk=user_id)
+    except UserProfile.DoesNotExist:
+        messages.error(request, "Uživatel nenalezen.")
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+    profile.status = "1"
+    if not profile.description_raw:
+        profile.description_raw = ""
+    if "vyhnanství" not in profile.description_raw:
+        profile.description_raw = "Pro porušování řádu města odsouzen do vyhnanství!"
+    profile.save()
+
+    messages.success(request, f"Uživatel {profile.nick} byl zablokován.")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+
+@decorators.staff_member_required()
+def user_unban(request, user_id):
+    try:
+        profile = UserProfile.objects.get(pk=user_id)
+    except UserProfile.DoesNotExist:
+        messages.error(request, "Uživatel nenalezen.")
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+    # Restore normal status (4 is used on approve)
+    profile.status = "4"
+    profile.save()
+
+    messages.success(request, f"Uživatel {profile.nick} byl odblokován.")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
