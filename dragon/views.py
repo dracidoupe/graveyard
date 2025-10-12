@@ -216,3 +216,25 @@ def user_unban(request, user_id):
 
     messages.success(request, f"Uživatel {profile.nick} byl odblokován.")
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+
+@decorators.staff_member_required()
+def users(request):
+    searched_user = None
+    search_query = request.GET.get("nick", "").strip()
+
+    if search_query:
+        try:
+            searched_user = UserProfile.objects.get(nick=search_query)
+        except UserProfile.DoesNotExist:
+            messages.error(request, f"Uživatel '{search_query}' nenalezen.")
+        except UserProfile.MultipleObjectsReturned:
+            messages.error(
+                request, f"Nalezeno více uživatelů se jménem '{search_query}'."
+            )
+
+    return render(
+        request,
+        "users.html",
+        {"searched_user": searched_user, "search_query": search_query},
+    )

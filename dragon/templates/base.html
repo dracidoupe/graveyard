@@ -28,6 +28,7 @@
                 <ul>
                     <li><a href="{% url 'dragon:dashboard' %}">Úvod</a></li>
                     <li><a href="{% url 'dragon:news' %}">Aktuality</a></li>
+                    <li><a href="{% url 'dragon:users' %}">Uživatelé</a></li>
 
                     {% if user.is_superuser %}
                         <li><a href="{% url 'dragon:levelsystem' %}">Levelsystém</a></li>

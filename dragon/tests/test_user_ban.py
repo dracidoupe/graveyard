@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
 
 from ddcz.models import UserProfile
 from ddcz.tests.model_generator import create_profiled_user
@@ -9,14 +8,9 @@ from ddcz.tests.model_generator import create_profiled_user
 class TestDragonUserBan(TestCase):
     def setUp(self):
         # Create staff user and log in
-        self.staff = User.objects.create_user(username="staff", password="staffpw")
+        self.staff = create_profiled_user("staff", "staffpw")
         self.staff.is_staff = True
         self.staff.save()
-        # Staff user needs profile for middleware
-        staff_profile = UserProfile(
-            nick="staff", email="staff@example.com", user=self.staff
-        )
-        staff_profile.save()
         self.client.login(username="staff", password="staffpw")
 
         # Create a normal user to ban/unban
@@ -48,10 +42,12 @@ class TestDragonUserBan(TestCase):
         # Log out staff
         self.client.logout()
         # Create non-staff user
-        User.objects.create_user(username="norm", password="pw")
+        create_profiled_user("norm", "pw")
         self.client.login(username="norm", password="pw")
 
-        self.client.post(self.ban_url, follow=True)
+        response = self.client.post(self.ban_url, follow=True)
         # staff_member_required redirects to login; ensure status unchanged
         self.profile.refresh_from_db()
         self.assertEqual(self.profile.status, "4")
+        # Should redirect to login page
+        self.assertEqual(response.status_code, 200)
