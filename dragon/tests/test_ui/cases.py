@@ -39,6 +39,8 @@ class DragonSeleniumTestCase(SeleniumTestCase):
 
         self.assertTrue(self.is_logged_in())
 
+        self.selenium.get(f"{self.live_server_url}/sprava/")
+
     def el(self, enum):
         return self.selenium.find_element(By.XPATH, enum.value)
 

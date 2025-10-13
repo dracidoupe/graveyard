@@ -26,6 +26,8 @@ Use it when asked explicitly about converting part of the old site.
 # Testing
 
 - Always use Django testing framework, and always run it using `python manage.py test`; assume you are in the project root directory and never `cd` into it
+  - CORRECT: python manage.py test dragon.tests.test_user_ban
+  - WRONG: cd /path && python manage.py test ... 2>&1 | tail -50
 - For all changes, always capture their intent in unittests
 - After every step of your task, always run the relevant tests. Before ending a session, always run the test suite and iterate on fixing all failures, unless explicitly instructed otherwise
 

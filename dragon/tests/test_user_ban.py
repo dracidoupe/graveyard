@@ -19,8 +19,10 @@ class TestDragonUserBan(TestCase):
         self.profile.status = "4"
         self.profile.save()
 
-        self.ban_url = reverse("dragon:user-ban", kwargs={"user_id": self.user.id})
-        self.unban_url = reverse("dragon:user-unban", kwargs={"user_id": self.user.id})
+        self.ban_url = reverse("dragon:user-ban", kwargs={"user_id": self.profile.id})
+        self.unban_url = reverse(
+            "dragon:user-unban", kwargs={"user_id": self.profile.id}
+        )
 
     def test_ban_user(self):
         response = self.client.post(self.ban_url, follow=True)

@@ -36,6 +36,10 @@ class TestUsersManagement(DragonSeleniumTestCase):
         search_input.send_keys("normaluser")
         self.el(self.dragon_page.USER_SEARCH_SUBMIT).click()
 
+        import time
+
+        time.sleep(1)
+
         self.assertIn("Nalezený uživatel", self.selenium.page_source)
         self.assertIn("normaluser", self.selenium.page_source)
         self.assertIsNotNone(self.el(self.dragon_page.USER_INFO_TABLE))
@@ -52,6 +56,10 @@ class TestUsersManagement(DragonSeleniumTestCase):
         # Handle the confirmation dialog
         self.selenium.execute_script("window.confirm = function(){return true;}")
         self.el(self.dragon_page.BAN_BUTTON).click()
+
+        import time
+
+        time.sleep(1)
 
         # Check success message
         success_msg = self.el(self.dragon_page.MESSAGE_SUCCESS)
@@ -75,6 +83,10 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.assertIsNotNone(self.el(self.dragon_page.UNBAN_BUTTON))
         self.el(self.dragon_page.UNBAN_BUTTON).click()
 
+        import time
+
+        time.sleep(1)
+
         # Check success message
         success_msg = self.el(self.dragon_page.MESSAGE_SUCCESS)
         self.assertIn("odblokován", success_msg.text)
@@ -93,6 +105,10 @@ class TestUsersManagement(DragonSeleniumTestCase):
         search_input = self.el(self.dragon_page.USER_SEARCH_INPUT)
         search_input.send_keys("nonexistentuser")
         self.el(self.dragon_page.USER_SEARCH_SUBMIT).click()
+
+        import time
+
+        time.sleep(1)
 
         error_msg = self.el(self.dragon_page.MESSAGE_ERROR)
         self.assertIn("nenalezen", error_msg.text)
