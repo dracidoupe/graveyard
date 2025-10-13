@@ -46,8 +46,8 @@ class TestDragonUserBan(TestCase):
         self.client.login(username="norm", password="pw")
 
         response = self.client.post(self.ban_url, follow=True)
-        # staff_member_required redirects to login; ensure status unchanged
+        # Non-staff users get 403 Forbidden; ensure status unchanged
         self.profile.refresh_from_db()
         self.assertEqual(self.profile.status, "4")
-        # Should redirect to login page
-        self.assertEqual(response.status_code, 200)
+        # Should return 403 Forbidden
+        self.assertEqual(response.status_code, 403)

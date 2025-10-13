@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views import decorators
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.utils import timezone
 
@@ -15,8 +15,11 @@ from .forms.users import RegistrationRequestApproval
 from .forms.news import News as NewsForm
 
 
-@decorators.staff_member_required()
+@login_required
 def dashboard(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     if request.method == "POST" and request.POST.get("form_type"):
         form_type = FormTypes(request.POST["form_type"])
         if form_type == FormTypes.REGISTRATIONS:
@@ -127,16 +130,22 @@ def dashboard(request):
     )
 
 
-@decorators.staff_member_required()
+@login_required
 def levelsystem(request):
     """Allows users to configure how level system works"""
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     params = LevelSystemParams.objects.all()
 
     return render(request, "levelsystem/view.html", {"level_params": params})
 
 
-@decorators.staff_member_required()
+@login_required
 def news(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     if request.method == "POST":
         form = NewsForm(request.POST)
         if form.is_valid():
@@ -163,8 +172,11 @@ def news(request):
     return render(request, "news.html", {"form": form})
 
 
-@decorators.staff_member_required()
+@login_required
 def emailtest(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     if request.method == "POST":
         profile = UserProfile.objects.get(user_id=request.user.id)
         send_mail(
@@ -182,9 +194,14 @@ def emailtest(request):
     return render(request, "emailtest.html")
 
 
-@decorators.staff_member_required()
+@login_required
 def user_ban(request, user_id):
-    # Minimalistic admin action to ban a user
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    if request.method != "POST":
+        return HttpResponseForbidden("Tato akce vyžaduje POST požadavek.")
+
     try:
         profile = UserProfile.objects.get(pk=user_id)
     except UserProfile.DoesNotExist:
@@ -202,8 +219,14 @@ def user_ban(request, user_id):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
 
 
-@decorators.staff_member_required()
+@login_required
 def user_unban(request, user_id):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    if request.method != "POST":
+        return HttpResponseForbidden("Tato akce vyžaduje POST požadavek.")
+
     try:
         profile = UserProfile.objects.get(pk=user_id)
     except UserProfile.DoesNotExist:
@@ -218,8 +241,11 @@ def user_unban(request, user_id):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
 
 
-@decorators.staff_member_required()
+@login_required
 def users(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     searched_user = None
     search_query = request.GET.get("nick", "").strip()
 

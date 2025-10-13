@@ -16,7 +16,9 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.normal_profile.save()
 
     def test_staff_can_access_users_page(self):
-        self.dragon_login_as_staff(UserProfile.objects.get(user=self.staff))
+        self.dragon_login_as_staff(
+            UserProfile.objects.get(user=self.staff), "staffpass"
+        )
 
         self.el(self.dragon_page.NAV_USERS).click()
 
@@ -24,7 +26,9 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.assertIsNotNone(self.el(self.dragon_page.USER_SEARCH_INPUT))
 
     def test_staff_can_search_for_user(self):
-        self.dragon_login_as_staff(UserProfile.objects.get(user=self.staff))
+        self.dragon_login_as_staff(
+            UserProfile.objects.get(user=self.staff), "staffpass"
+        )
 
         self.selenium.get(f"{self.live_server_url}/sprava/uzivatele/")
 
@@ -37,7 +41,9 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.assertIsNotNone(self.el(self.dragon_page.USER_INFO_TABLE))
 
     def test_staff_can_ban_user(self):
-        self.dragon_login_as_staff(UserProfile.objects.get(user=self.staff))
+        self.dragon_login_as_staff(
+            UserProfile.objects.get(user=self.staff), "staffpass"
+        )
 
         self.selenium.get(f"{self.live_server_url}/sprava/uzivatele/?nick=normaluser")
 
@@ -60,7 +66,9 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.normal_profile.status = "1"
         self.normal_profile.save()
 
-        self.dragon_login_as_staff(UserProfile.objects.get(user=self.staff))
+        self.dragon_login_as_staff(
+            UserProfile.objects.get(user=self.staff), "staffpass"
+        )
 
         self.selenium.get(f"{self.live_server_url}/sprava/uzivatele/?nick=normaluser")
 
@@ -76,7 +84,9 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.assertEqual(self.normal_profile.status, "4")
 
     def test_search_for_nonexistent_user_shows_error(self):
-        self.dragon_login_as_staff(UserProfile.objects.get(user=self.staff))
+        self.dragon_login_as_staff(
+            UserProfile.objects.get(user=self.staff), "staffpass"
+        )
 
         self.selenium.get(f"{self.live_server_url}/sprava/uzivatele/")
 

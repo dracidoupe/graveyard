@@ -22,15 +22,22 @@ class DragonSeleniumTestCase(SeleniumTestCase):
         super().__init__(*args, **kwargs)
         self.dragon_page = DragonPage
 
-    def dragon_login_as_staff(self, staff_profile):
-        self.selenium.get(f"{self.live_server_url}/sprava/")
+    def dragon_login_as_staff(self, staff_profile, password):
+        self.selenium.get(f"{self.live_server_url}/")
+
+        import time
+
+        time.sleep(1)
+
         self.el(self.main_page_nav.LOGIN_USERNAME_INPUT).send_keys(
             staff_profile.user.username
         )
-        self.el(self.main_page_nav.LOGIN_PASSWORD_INPUT).send_keys(
-            staff_profile.user.email
-        )
-        self.el(self.main_page_nav.LOGIN_SUBMIT).submit()
+        self.el(self.main_page_nav.LOGIN_PASSWORD_INPUT).send_keys(password)
+        self.el(self.main_page_nav.LOGIN_SUBMIT).click()
+
+        time.sleep(2)
+
+        self.assertTrue(self.is_logged_in())
 
     def el(self, enum):
         return self.selenium.find_element(By.XPATH, enum.value)

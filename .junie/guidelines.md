@@ -27,7 +27,7 @@ Use it when asked explicitly about converting part of the old site.
 
 - Always use Django testing framework, and always run it using `python manage.py test`; assume you are in the project root directory and never `cd` into it
 - For all changes, always capture their intent in unittests
-- After every step of your task, alwyas run the relevant tests and verify. Before ending a session, always run the test suite and iterate on fixing all failures, unless explicitly instructed otherwise
+- After every step of your task, always run the relevant tests. Before ending a session, always run the test suite and iterate on fixing all failures, unless explicitly instructed otherwise
 
 # Frotend Rules
 
