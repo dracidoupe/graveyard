@@ -1,6 +1,8 @@
 from enum import Enum
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from ddcz.tests.test_ui.cases import SeleniumTestCase
 
@@ -25,9 +27,11 @@ class DragonSeleniumTestCase(SeleniumTestCase):
     def dragon_login_as_staff(self, staff_profile, password):
         self.selenium.get(f"{self.live_server_url}/")
 
-        import time
-
-        time.sleep(1)
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located(
+                (By.XPATH, self.main_page_nav.LOGIN_USERNAME_INPUT.value)
+            )
+        )
 
         self.el(self.main_page_nav.LOGIN_USERNAME_INPUT).send_keys(
             staff_profile.user.username
@@ -35,7 +39,12 @@ class DragonSeleniumTestCase(SeleniumTestCase):
         self.el(self.main_page_nav.LOGIN_PASSWORD_INPUT).send_keys(password)
         self.el(self.main_page_nav.LOGIN_SUBMIT).click()
 
-        time.sleep(2)
+        WebDriverWait(self.selenium, 10).until(
+            lambda driver: driver.find_element(
+                By.XPATH, self.main_page_nav.BODY.value
+            ).get_attribute("data-logged-in")
+            == "1"
+        )
 
         self.assertTrue(self.is_logged_in())
 

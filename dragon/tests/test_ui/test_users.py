@@ -1,3 +1,7 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from ddcz.models import UserProfile
 from ddcz.tests.model_generator import create_profiled_user
 
@@ -36,9 +40,11 @@ class TestUsersManagement(DragonSeleniumTestCase):
         search_input.send_keys("normaluser")
         self.el(self.dragon_page.USER_SEARCH_SUBMIT).click()
 
-        import time
-
-        time.sleep(1)
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located(
+                (By.XPATH, self.dragon_page.USER_INFO_TABLE.value)
+            )
+        )
 
         self.assertIn("Nalezený uživatel", self.selenium.page_source)
         self.assertIn("normaluser", self.selenium.page_source)
@@ -57,9 +63,11 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.selenium.execute_script("window.confirm = function(){return true;}")
         self.el(self.dragon_page.BAN_BUTTON).click()
 
-        import time
-
-        time.sleep(1)
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located(
+                (By.XPATH, self.dragon_page.MESSAGE_SUCCESS.value)
+            )
+        )
 
         # Check success message
         success_msg = self.el(self.dragon_page.MESSAGE_SUCCESS)
@@ -83,9 +91,11 @@ class TestUsersManagement(DragonSeleniumTestCase):
         self.assertIsNotNone(self.el(self.dragon_page.UNBAN_BUTTON))
         self.el(self.dragon_page.UNBAN_BUTTON).click()
 
-        import time
-
-        time.sleep(1)
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located(
+                (By.XPATH, self.dragon_page.MESSAGE_SUCCESS.value)
+            )
+        )
 
         # Check success message
         success_msg = self.el(self.dragon_page.MESSAGE_SUCCESS)
@@ -106,9 +116,11 @@ class TestUsersManagement(DragonSeleniumTestCase):
         search_input.send_keys("nonexistentuser")
         self.el(self.dragon_page.USER_SEARCH_SUBMIT).click()
 
-        import time
-
-        time.sleep(1)
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located(
+                (By.XPATH, self.dragon_page.MESSAGE_ERROR.value)
+            )
+        )
 
         error_msg = self.el(self.dragon_page.MESSAGE_ERROR)
         self.assertIn("nenalezen", error_msg.text)
