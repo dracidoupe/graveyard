@@ -39,12 +39,14 @@ class DragonSeleniumTestCase(SeleniumTestCase):
         self.el(self.main_page_nav.LOGIN_PASSWORD_INPUT).send_keys(password)
         self.el(self.main_page_nav.LOGIN_SUBMIT).click()
 
-        WebDriverWait(self.selenium, 10).until(
-            lambda driver: driver.find_element(
-                By.XPATH, self.main_page_nav.BODY.value
-            ).get_attribute("data-logged-in")
-            == "1"
-        )
+        def check_logged_in(driver):
+            try:
+                body = driver.find_element(By.XPATH, self.main_page_nav.BODY.value)
+                return body.get_attribute("data-logged-in") == "1"
+            except Exception:
+                return False
+
+        WebDriverWait(self.selenium, 10).until(check_logged_in)
 
         self.assertTrue(self.is_logged_in())
 
