@@ -1,7 +1,7 @@
 import logging
 
 import os
-from .base import BASE_DIR, MIDDLEWARE
+from .base import BASE_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -39,12 +39,13 @@ if os.environ.get("FORCE_MYSQL", None) == "1":
     }
 else:
     # Apparently, those override database url if they exist...
-    os.environ.pop('DB_HOST', None)
-    os.environ.pop('DB_NAME', None)
-    os.environ.pop('DB_USERNAME', None)
-    os.environ.pop('DB_PASSWORD', None)
-    os.environ.pop('DB_PORT', None)
+    os.environ.pop("DB_HOST", None)
+    os.environ.pop("DB_NAME", None)
+    os.environ.pop("DB_USERNAME", None)
+    os.environ.pop("DB_PASSWORD", None)
+    os.environ.pop("DB_PORT", None)
     import dj_database_url
+
     DATABASES = {
         "default": dj_database_url.config(
             env="DATABASE_URL",
@@ -80,7 +81,10 @@ CACHES = {
 
 WSGI_APPLICATION = "graveyard.wsgi.application"
 
-ALLOWED_HOSTS = ["www.dracidoupe.cz"]
+ALLOWED_HOSTS = [
+    "www.dracidoupe.cz",
+    "dracidoupe.cz",
+]
 PREPEND_WWW = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
