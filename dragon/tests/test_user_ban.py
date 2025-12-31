@@ -1,3 +1,4 @@
+from django.core import mail
 from django.test import TestCase
 from django.urls import reverse
 
@@ -53,3 +54,23 @@ class TestDragonUserBan(TestCase):
         self.assertEqual(self.profile.status, "4")
         # Should return 403 Forbidden
         self.assertEqual(response.status_code, 403)
+
+    def test_ban_sends_email(self):
+        self.client.post(self.ban_url, follow=True)
+        self.assertEqual(len(mail.outbox), 1)
+        email = mail.outbox[0]
+        self.assertEqual(email.subject, "Zablokování účtu na DraciDoupe.cz")
+        self.assertIn(self.profile.email, email.to)
+        self.assertIn("zablokován", email.body)
+        self.assertIn(self.staff.username, email.body)
+
+    def test_unban_sends_email(self):
+        self.client.post(self.ban_url)
+        mail.outbox.clear()
+        self.client.post(self.unban_url, follow=True)
+        self.assertEqual(len(mail.outbox), 1)
+        email = mail.outbox[0]
+        self.assertEqual(email.subject, "Odblokování účtu na DraciDoupe.cz")
+        self.assertIn(self.profile.email, email.to)
+        self.assertIn("odblokován", email.body)
+        self.assertIn(self.staff.username, email.body)

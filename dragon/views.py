@@ -215,6 +215,20 @@ def user_ban(request, user_id):
         profile.description_raw = "Pro porušování řádu města odsouzen do vyhnanství!"
     profile.save()
 
+    send_mail(
+        "Zablokování účtu na DraciDoupe.cz",
+        f"""Jménem Zákona,
+
+z vůle {request.user.username} jste byl odeslán do vyhnanství.
+
+Pokud si myslíte, že se tak stalo neprávem, můžte požádat o slyšení u tribuna na emailu {settings.TRIBUNE_EMAIL}
+
+— Redakce DraciDoupe.cz
+        """,
+        settings.DDCZ_TRANSACTION_EMAIL_FROM,
+        [profile.email],
+    )
+
     messages.success(request, f"Uživatel {profile.nick} byl zablokován.")
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
 
@@ -236,6 +250,32 @@ def user_unban(request, user_id):
     # Restore normal status (4 is used on approve)
     profile.status = "4"
     profile.save()
+
+    if profile.is_female:
+        salutation = "Velevážená"
+    else:
+        salutation = "Velevážený"
+
+    if request.user.profile.is_female:
+        decided = "usoudila"
+    else:
+        decided = "usoudil"
+
+    send_mail(
+        "Odblokování účtu na DraciDoupe.cz",
+        f"""{salutation},
+
+po zvážení všech okolností {request.user.username} {decided}, že důvody pro Vaše vyhnanství již pominuly a brány Města jsou vám znovu otevřeny.
+
+Můžete nyní obnovit své heslo.
+
+Brzy na shledanou,
+
+— Redakce DraciDoupe.cz
+        """,
+        settings.DDCZ_TRANSACTION_EMAIL_FROM,
+        [profile.email],
+    )
 
     messages.success(request, f"Uživatel {profile.nick} byl odblokován.")
     return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))

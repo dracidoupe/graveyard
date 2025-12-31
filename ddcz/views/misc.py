@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -80,9 +81,6 @@ def editor_article(request, slug):
 
 @require_http_methods(["HEAD", "GET"])
 def web_authors_and_editors(request):
-    # FIXME: Have this in db/config file
-    TRIBUNE_ID = 2244
-
     hall_of_fame = [
         {
             "user_profile": UserProfile.objects.get(nick="James Timqui"),
@@ -122,7 +120,7 @@ def web_authors_and_editors(request):
         request,
         "info/web-authors-and-editors.html",
         {
-            "tribune": UserProfile.objects.get(pk=TRIBUNE_ID),
+            "tribune": UserProfile.objects.get(pk=settings.TRIBUNE_ID),
             "famous_users": hall_of_fame,
         },
     )
