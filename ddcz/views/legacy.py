@@ -87,7 +87,7 @@ def legacy_router(request):
 
     try:
         id = int(id)
-    except ValueError:
+    except (ValueError, TypeError):
         return HttpResponseBadRequest("id musí být číslo")
 
     # The LEGACY_PLAIN_ROUTER is redirecting basic pages.
@@ -189,13 +189,14 @@ def print_legacy_router(request, page_category, page_category_second):
     id = request.GET.get("id", False)
     co = request.GET.get("co", False)
 
-    if page_category == "prispevky" and page_category_second == "prispevky" and co:
+    if id:
         try:
             id = int(id)
         except (ValueError, TypeError):
             logger.error(f"Invalid ID: {id}")
             return HttpResponseBadRequest("id musí být číslo")
 
+    if page_category == "prispevky" and page_category_second == "prispevky" and co:
         if co in COMMON_ARTICLES_NAME_MAP:
             logger.info(f"Found common article: {co} -> {COMMON_ARTICLES_NAME_MAP[co]}")
             try:

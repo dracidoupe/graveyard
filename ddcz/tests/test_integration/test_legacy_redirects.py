@@ -178,3 +178,23 @@ class TestCommonArticlePrintRedirect(TestCase):
             response.url,
             f"/rubriky/clanky/{self.clanky_article.id}-{self.clanky_article.get_slug()}/",
         )
+
+
+class TestLegacyRedirectErrors(TestCase):
+    fixtures = ["pages"]
+
+    def setUp(self):
+        super().setUp()
+        self.client = Client()
+
+    def test_print_legacy_router_invalid_id(self):
+        # This matches the error from Sentry: /code/alchpredmety/alchpredmety_tisk.php?id=535'
+        url = "/code/alchpredmety/alchpredmety_tisk.php"
+        response = self.client.get(f"{url}?id=535'")
+        self.assertEqual(response.status_code, 400)
+
+    def test_legacy_router_invalid_id(self):
+        # Also testing the main legacy_router (index.php)
+        url = "/index.php"
+        response = self.client.get(f"{url}?rub=alchpredmety_jeden&id=535'")
+        self.assertEqual(response.status_code, 400)
