@@ -7,6 +7,9 @@ The code is written in Python and Django with minimal dependencies. The site is 
 application. The source code is available in ./legacy-version/ directory, most code is under ./legacy-version/code/.
 Use it when asked explicitly about converting part of the old site.
 
+# Running Commands
+- Never use `cd` to enter a project directory, always assume you're already there
+
 # Multilingual Codebase
 - Observe basic language split:
     - All user-facing output is in Czech (messages etc.)
