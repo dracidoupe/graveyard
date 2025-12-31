@@ -22,6 +22,7 @@ Use it when asked explicitly about converting part of the old site.
 - Code uses older Python and Django; always verify suggestions are compatible with versions specified in [runtime.txt](mdc:runtime.txt) and [requirements.txt](mdc:requirements.txt)
 - Always try to minimize the amount of dependencies
 - Before submitting any work, always run `ruff format` and always inspect `ruff check`
+- Write minimum amount of comments. Never comment what is happening in the code, only why was that code added
 
 # Testing
 
