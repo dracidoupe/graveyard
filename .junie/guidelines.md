@@ -24,7 +24,7 @@ Use it when asked explicitly about converting part of the old site.
 - All models usable in the application is available in [__init__.py](mdc:ddcz/models/used/__init__.py), but is always imported in [__init__.py](mdc:ddcz/models/__init__.py); always import them directly from ddcz.models
 - Code uses older Python and Django; always verify suggestions are compatible with versions specified in [runtime.txt](mdc:runtime.txt) and [requirements.txt](mdc:requirements.txt)
 - Always try to minimize the amount of dependencies
-- Before submitting any work, always run `ruff format` and always inspect `ruff check`
+- Before submitting any work, always run `ruff format` and always inspect `ruff check`; always run them as simple commands on the entire codebase, not specific files
 - Write minimum amount of comments. Never comment what is happening in the code, only why was that code added
 
 # Testing

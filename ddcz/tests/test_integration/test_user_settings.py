@@ -41,7 +41,7 @@ class UserSettingsFormTestCase(TestCase):
         self.profile.email = "jan@example.com"
         self.profile.gender = "Muž"
         self.profile.shire = "Praha"
-        self.profile.description_raw = "Test popis"
+        self.profile.description_raw = "Příliš žluťoučký kůň úpěl ďábelské ódy."
         self.profile.pii_display_permissions = "1,1,0,0,1,0,1,0"
         self.profile.save()
 
@@ -52,8 +52,8 @@ class UserSettingsFormTestCase(TestCase):
 
         self.assertContains(response, 'value="Jan"')
         self.assertContains(response, 'value="Novák"')
-        self.assertContains(response, 'value="jan@example.com"')
-        self.assertContains(response, "Test popis")
+        self.assertContains(response, "jan@example.com")
+        self.assertContains(response, "Příliš žluťoučký kůň úpěl ďábelské ódy.")
 
     def test_form_saves_changes(self):
         response = self.client.post(
@@ -61,7 +61,6 @@ class UserSettingsFormTestCase(TestCase):
             {
                 "name_given": "Petr",
                 "name_family": "Svoboda",
-                "email": "petr@example.com",
                 "gender": "M",
                 "shire": "Brněnský kraj",
                 "description": "Nový popis",
@@ -80,7 +79,7 @@ class UserSettingsFormTestCase(TestCase):
         self.profile.refresh_from_db()
         self.assertEqual("Petr", self.profile.name_given)
         self.assertEqual("Svoboda", self.profile.name_family)
-        self.assertEqual("petr@example.com", self.profile.email)
+        self.assertEqual("jan@example.com", self.profile.email)
         self.assertEqual("Muž", self.profile.gender)
         self.assertEqual("Brněnský kraj", self.profile.shire)
         self.assertEqual("Nový popis", self.profile.description_raw)
@@ -99,7 +98,6 @@ class UserSettingsFormTestCase(TestCase):
             {
                 "name_given": "",
                 "name_family": "",
-                "email": "",
                 "gender": "M",
                 "shire": "",
                 "description": "",
@@ -109,41 +107,6 @@ class UserSettingsFormTestCase(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertContains(response, "Jméno")
         self.assertContains(response, "Příjmení")
-        self.assertContains(response, "E-mail")
 
         self.profile.refresh_from_db()
         self.assertEqual("Jan", self.profile.name_given)
-
-    def test_form_validates_email_format(self):
-        response = self.client.post(
-            reverse("ddcz:user-settings"),
-            {
-                "name_given": "Jan",
-                "name_family": "Novák",
-                "email": "invalid-email",
-                "gender": "M",
-                "shire": "",
-                "description": "",
-            },
-        )
-
-        self.assertEqual(200, response.status_code)
-
-        self.profile.refresh_from_db()
-        self.assertEqual("jan@example.com", self.profile.email)
-
-    def test_user_email_synced_with_profile(self):
-        self.client.post(
-            reverse("ddcz:user-settings"),
-            {
-                "name_given": "Jan",
-                "name_family": "Novák",
-                "email": "novy@example.com",
-                "gender": "M",
-                "shire": "",
-                "description": "",
-            },
-        )
-
-        self.user.refresh_from_db()
-        self.assertEqual("novy@example.com", self.user.email)

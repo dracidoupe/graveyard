@@ -147,5 +147,6 @@ def user_settings(request):
         {
             "form": form,
             "saved": saved,
+            "user_email": user_profile.email,
         },
     )

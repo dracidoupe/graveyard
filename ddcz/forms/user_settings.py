@@ -50,13 +50,6 @@ class PersonalSettingsForm(forms.Form):
         widget=forms.TextInput(attrs={"class": "form-input"}),
     )
 
-    email = forms.EmailField(
-        label="E-mail",
-        max_length=50,
-        required=True,
-        widget=forms.EmailInput(attrs={"class": "form-input"}),
-    )
-
     gender = forms.ChoiceField(
         label="Pohlaví",
         choices=[(tag.name, tag.value) for tag in GenderChoices],
@@ -134,7 +127,6 @@ class PersonalSettingsForm(forms.Form):
             initial={
                 "name_given": user_profile.name_given,
                 "name_family": user_profile.name_family,
-                "email": user_profile.email,
                 "gender": gender_value,
                 "shire": user_profile.shire or "",
                 "description": user_profile.description_raw or "",
@@ -150,7 +142,6 @@ class PersonalSettingsForm(forms.Form):
     def save_to_user_profile(self, user_profile):
         user_profile.name_given = self.cleaned_data["name_given"]
         user_profile.name_family = self.cleaned_data["name_family"]
-        user_profile.email = self.cleaned_data["email"]
 
         gender_map = {"M": "Muž", "F": "Žena"}
         user_profile.gender = gender_map.get(self.cleaned_data["gender"], "")
@@ -172,7 +163,3 @@ class PersonalSettingsForm(forms.Form):
         user_profile.pii_display_permissions = ",".join(new_permissions)
 
         user_profile.save()
-
-        if user_profile.user:
-            user_profile.user.email = self.cleaned_data["email"]
-            user_profile.user.save()
