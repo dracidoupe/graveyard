@@ -74,8 +74,7 @@ def login(request):
             )
             return HttpResponseRedirect(referer)
         login_auth(request, user)
-        user.profile.last_login = timezone.now()
-        user.profile.save()
+        UserProfile.objects.filter(pk=user.profile.pk).update(last_login=timezone.now())
         return HttpResponseRedirect(referer)
     else:
         m = md5()
@@ -118,6 +117,9 @@ def login(request):
                 )
 
             login_auth(request, user)
+            UserProfile.objects.filter(pk=user.profile.pk).update(
+                last_login=timezone.now()
+            )
 
             # TODO: For first-time login, bunch of stuff happens. Inspect legacy login and reimplement
 

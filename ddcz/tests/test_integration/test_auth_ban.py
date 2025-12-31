@@ -1,5 +1,8 @@
+from datetime import timedelta
+
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from ddcz.models import UserProfile
 from ddcz.tests.model_generator import create_profiled_user
@@ -53,3 +56,20 @@ class TestAuthBanning(TestCase):
             list(response.context["messages"]) if "messages" in response.context else []
         )
         self.assertFalse(any("zablokován" in str(m) for m in messages))
+
+    def test_login_updates_last_login(self):
+        user = create_profiled_user("testuser", "secret")
+        profile = UserProfile.objects.get(pk=user.id)
+        profile.status = "4"
+        old_last_login = timezone.now() - timedelta(days=1)
+        profile.last_login = old_last_login
+        profile.save()
+
+        self.client.post(
+            self.login_url,
+            {"nick": "testuser", "password": "secret"},
+            follow=True,
+            HTTP_REFERER=self.news_url,
+        )
+        profile.refresh_from_db()
+        self.assertGreater(profile.last_login, old_last_login)
