@@ -68,19 +68,11 @@ def login(request):
 
     if user is not None:
         # Deny login to banned users (legacy: status == '1')
-        try:
-            if hasattr(user, "profile") and user.profile.status == "1":
-                messages.error(
-                    request, "Váš účet je zablokován. Kontaktujte prosím redakci."
-                )
-                return HttpResponseRedirect(referer)
-        except Exception:
-            # If anything goes wrong with profile lookup, be conservative and deny
+        if hasattr(user, "profile") and user.profile.status == "1":
             messages.error(
                 request, "Váš účet je zablokován. Kontaktujte prosím redakci."
             )
             return HttpResponseRedirect(referer)
-
         login_auth(request, user)
         user.profile.last_login = timezone.now()
         user.profile.save()
