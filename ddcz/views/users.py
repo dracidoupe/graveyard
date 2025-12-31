@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
 from django.db.models import F
@@ -9,6 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import resolve, Resolver404
 from django.views.decorators.http import require_http_methods
 
+from ..forms.user_settings import PersonalSettingsForm
 from ..text import misencode
 from ..models import (
     Author,
@@ -122,3 +124,29 @@ def change_skin(request):
         redirect_url = "/"
 
     return HttpResponseRedirect(redirect_url)
+
+
+@login_required
+@require_http_methods(["HEAD", "GET", "POST"])
+def user_settings(request):
+    user_profile = request.user.profile
+    saved = False
+
+    if request.method == "POST":
+        form = PersonalSettingsForm(request.POST)
+        if form.is_valid():
+            form.save_to_user_profile(user_profile)
+            saved = True
+            form = PersonalSettingsForm.from_user_profile(user_profile)
+    else:
+        form = PersonalSettingsForm.from_user_profile(user_profile)
+
+    return render(
+        request,
+        "users/settings.html",
+        {
+            "form": form,
+            "saved": saved,
+            "user_email": user_profile.email,
+        },
+    )

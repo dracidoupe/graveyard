@@ -144,6 +144,7 @@ urlpatterns = [
     path("autor/<int:author_id>-<slug>/", views.author_detail, name="author-detail"),
     ### User settings
     path("nastaveni/zmena-skinu/", views.change_skin, name="change-skin"),
+    path("nastaveni/", views.user_settings, name="user-settings"),
     ### Emails
     path(
         "e-mail/antispam/potvrzeni/",
