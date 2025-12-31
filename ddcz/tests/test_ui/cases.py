@@ -248,7 +248,13 @@ def download_and_extract_chromedriver(url, download_path):
             .lower()
             == "y"
         ):
-            os.rename(extracted_chromedriver_path, chromedriver_path)
+            try:
+                os.rename(extracted_chromedriver_path, chromedriver_path)
+            except PermissionError:
+                print(
+                    "Insufficient permissions to move chromedriver from {extracted_chromedriver_path} {chromedriver_path}; provide password to move with sudo."
+                )
+                os.system(f"sudo mv {extracted_chromedriver_path} {chromedriver_path}")
             os.chmod(chromedriver_path, 755)
         else:
             print(
