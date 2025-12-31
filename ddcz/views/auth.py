@@ -67,6 +67,12 @@ def login(request):
     )
 
     if user is not None:
+        # Deny login to banned users (legacy: status == '1')
+        if hasattr(user, "profile") and user.profile.status == "1":
+            messages.error(
+                request, "Váš účet je zablokován. Kontaktujte prosím redakci."
+            )
+            return HttpResponseRedirect(referer)
         login_auth(request, user)
         user.profile.last_login = timezone.now()
         user.profile.save()
@@ -83,6 +89,13 @@ def login(request):
             profile = UserProfile.objects.get(nick=form.cleaned_data["nick"])
         except UserProfile.DoesNotExist:
             messages.error(request, "Špatný nick a nebo heslo")
+            return HttpResponseRedirect(referer)
+
+        # Deny login to banned users even if they match legacy password
+        if profile.status == "1":
+            messages.error(
+                request, "Váš účet je zablokován. Kontaktujte prosím redakci."
+            )
             return HttpResponseRedirect(referer)
 
         if profile.password_v1 != old_insecure_hashed_password:

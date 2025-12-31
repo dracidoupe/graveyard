@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Správa uživatelů</h1>
+
+    <form method="get" action="">
+        <label for="nick">Vyhledat uživatele podle nicku:</label>
+        <input type="text" name="nick" id="nick" value="{{ search_query }}" size="25" />
+        <input type="submit" value="Vyhledat" />
+    </form>
+
+    {% if searched_user %}
+        <h2>Nalezený uživatel</h2>
+        <table>
+            <tr>
+                <th>Nick</th>
+                <td>{{ searched_user.nick }}</td>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <td>{{ searched_user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ searched_user.email }}</td>
+            </tr>
+            <tr>
+                <th>Jméno</th>
+                <td>{{ searched_user.name_given }} {{ searched_user.name_family }}</td>
+            </tr>
+            <tr>
+                <th>Pohlaví</th>
+                <td>{{ searched_user.gender }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>
+                    {% if searched_user.status == "1" %}
+                        <strong style="color: red;">Zablokován</strong>
+                    {% else %}
+                        Aktivní ({{ searched_user.status }})
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Popis</th>
+                <td>{{ searched_user.description_raw }}</td>
+            </tr>
+            <tr>
+                <th>Reputace</th>
+                <td>{{ searched_user.reputation }} (k dispozici: {{ searched_user.reputation_available }})</td>
+            </tr>
+            <tr>
+                <th>Level</th>
+                <td>{{ searched_user.level }}</td>
+            </tr>
+        </table>
+
+        <h3>Akce</h3>
+        {% if searched_user.status == "1" %}
+            <form method="post" action="{% url 'dragon:user-unban' searched_user.id %}" style="display: inline;">
+                {% csrf_token %}
+                <input type="submit" value="Odblokovat uživatele" />
+            </form>
+        {% else %}
+            <form method="post" action="{% url 'dragon:user-ban' searched_user.id %}" style="display: inline;">
+                {% csrf_token %}
+                <input type="submit" value="Zablokovat uživatele" onclick="return confirm('Opravdu chcete zablokovat uživatele {{ searched_user.nick }}?');" />
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}

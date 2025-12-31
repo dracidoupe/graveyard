@@ -8,7 +8,7 @@
         <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-phorum' %}" title="Komentáře ve fóru">
         <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-complete' %}" title="Všechny novinky">
     </head>
-    <body lang="cs">
+    <body lang="cs" data-logged-in="{% if user.is_authenticated %}1{% else %}0{% endif %}">
         <header>
             <h1 class="logo"><a href="{% url 'dragon:dashboard' %}" rel="home"><img src="{% static 'dragon/img/logo.gif' %}" alt="Redakční Systém DraciDoupe.cz"></a></h1>
         </header>
@@ -28,6 +28,7 @@
                 <ul>
                     <li><a href="{% url 'dragon:dashboard' %}">Úvod</a></li>
                     <li><a href="{% url 'dragon:news' %}">Aktuality</a></li>
+                    <li><a href="{% url 'dragon:users' %}">Uživatelé</a></li>
 
                     {% if user.is_superuser %}
                         <li><a href="{% url 'dragon:levelsystem' %}">Levelsystém</a></li>

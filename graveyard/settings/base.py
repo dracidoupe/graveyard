@@ -40,6 +40,8 @@ DATABASE_IS_SEEDED = False
 ### Environment variables for DDCZ "design" config
 DISCORD_INVITE_LINK = "https://discord.gg/SnFux2x3Vw"
 BUGFIX_TAVERN_TABLE_ID = 1
+TRIBUNE_ID = 2244
+TRIBUNE_EMAIL = os.environ.get("TRIBUNE_EMAIL", "changeme@example.com")
 
 
 # Application definition

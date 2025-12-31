@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views import decorators
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.utils import timezone
 
@@ -15,8 +15,11 @@ from .forms.users import RegistrationRequestApproval
 from .forms.news import News as NewsForm
 
 
-@decorators.staff_member_required()
+@login_required
 def dashboard(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     if request.method == "POST" and request.POST.get("form_type"):
         form_type = FormTypes(request.POST["form_type"])
         if form_type == FormTypes.REGISTRATIONS:
@@ -127,16 +130,22 @@ def dashboard(request):
     )
 
 
-@decorators.staff_member_required()
+@login_required
 def levelsystem(request):
     """Allows users to configure how level system works"""
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     params = LevelSystemParams.objects.all()
 
     return render(request, "levelsystem/view.html", {"level_params": params})
 
 
-@decorators.staff_member_required()
+@login_required
 def news(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     if request.method == "POST":
         form = NewsForm(request.POST)
         if form.is_valid():
@@ -163,8 +172,11 @@ def news(request):
     return render(request, "news.html", {"form": form})
 
 
-@decorators.staff_member_required()
+@login_required
 def emailtest(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
     if request.method == "POST":
         profile = UserProfile.objects.get(user_id=request.user.id)
         send_mail(
@@ -180,3 +192,115 @@ def emailtest(request):
         )
 
     return render(request, "emailtest.html")
+
+
+@login_required
+def user_ban(request, user_id):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    if request.method != "POST":
+        return HttpResponseForbidden("Tato akce vyžaduje POST požadavek.")
+
+    try:
+        profile = UserProfile.objects.get(pk=user_id)
+    except UserProfile.DoesNotExist:
+        messages.error(request, "Uživatel nenalezen.")
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+    profile.status = "1"
+    if not profile.description_raw:
+        profile.description_raw = ""
+    if "vyhnanství" not in profile.description_raw:
+        profile.description_raw = "Pro porušování řádu města odsouzen do vyhnanství!"
+    profile.save()
+
+    send_mail(
+        "Zablokování účtu na DraciDoupe.cz",
+        f"""Jménem Zákona,
+
+z vůle {request.user.username} jste byl odeslán do vyhnanství.
+
+Pokud si myslíte, že se tak stalo neprávem, můžte požádat o slyšení u tribuna na emailu {settings.TRIBUNE_EMAIL}
+
+— Redakce DraciDoupe.cz
+        """,
+        settings.DDCZ_TRANSACTION_EMAIL_FROM,
+        [profile.email],
+    )
+
+    messages.success(request, f"Uživatel {profile.nick} byl zablokován.")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+
+@login_required
+def user_unban(request, user_id):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    if request.method != "POST":
+        return HttpResponseForbidden("Tato akce vyžaduje POST požadavek.")
+
+    try:
+        profile = UserProfile.objects.get(pk=user_id)
+    except UserProfile.DoesNotExist:
+        messages.error(request, "Uživatel nenalezen.")
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+    # Restore normal status (4 is used on approve)
+    profile.status = "4"
+    profile.save()
+
+    if profile.is_female:
+        salutation = "Velevážená"
+    else:
+        salutation = "Velevážený"
+
+    if request.user.profile.is_female:
+        decided = "usoudila"
+    else:
+        decided = "usoudil"
+
+    send_mail(
+        "Odblokování účtu na DraciDoupe.cz",
+        f"""{salutation},
+
+po zvážení všech okolností {request.user.username} {decided}, že důvody pro Vaše vyhnanství již pominuly a brány Města jsou vám znovu otevřeny.
+
+Můžete nyní obnovit své heslo.
+
+Brzy na shledanou,
+
+— Redakce DraciDoupe.cz
+        """,
+        settings.DDCZ_TRANSACTION_EMAIL_FROM,
+        [profile.email],
+    )
+
+    messages.success(request, f"Uživatel {profile.nick} byl odblokován.")
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/sprava/"))
+
+
+@login_required
+def users(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    searched_user = None
+    search_query = request.GET.get("nick", "").strip()
+
+    if search_query:
+        try:
+            searched_user = UserProfile.objects.get(nick=search_query)
+        except UserProfile.DoesNotExist:
+            messages.error(request, f"Uživatel '{search_query}' nenalezen.")
+        except UserProfile.MultipleObjectsReturned:
+            messages.error(
+                request, f"Nalezeno více uživatelů se jménem '{search_query}'."
+            )
+
+    return render(
+        request,
+        "users.html",
+        {"searched_user": searched_user, "search_query": search_query},
+    )
