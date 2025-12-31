@@ -61,7 +61,7 @@ class TestDragonUserBan(TestCase):
         email = mail.outbox[0]
         self.assertEqual(email.subject, "Zablokování účtu na DraciDoupe.cz")
         self.assertIn(self.profile.email, email.to)
-        self.assertIn("zablokován", email.body)
+        self.assertIn("odeslán do vyhnanství", email.body)
         self.assertIn(self.staff.username, email.body)
 
     def test_unban_sends_email(self):
@@ -72,5 +72,5 @@ class TestDragonUserBan(TestCase):
         email = mail.outbox[0]
         self.assertEqual(email.subject, "Odblokování účtu na DraciDoupe.cz")
         self.assertIn(self.profile.email, email.to)
-        self.assertIn("odblokován", email.body)
+        self.assertIn("brány Města jsou vám znovu otevřeny", email.body)
         self.assertIn(self.staff.username, email.body)
