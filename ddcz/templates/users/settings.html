@@ -1,0 +1,88 @@
+{% extends "public.html" %}
+
+{% block content %}
+<h1 class="page-heading">Nastavení</h1>
+
+<nav class="settings-nav">
+    <strong><a href="{% url 'ddcz:user-settings' %}">Osobní údaje</a></strong>
+</nav>
+
+<section class="settings-section">
+    <h2>Osobní údaje</h2>
+
+    {% if saved %}
+        <div class="message success">
+            <strong>Uloženo!</strong>
+        </div>
+    {% endif %}
+
+    {% if form.errors %}
+        <div class="message error">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p><strong>{{ field.label }}:</strong> {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <p><strong>{{ error }}</strong></p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'ddcz:user-settings' %}">
+        {% csrf_token %}
+
+        <table class="settings-form">
+            <tbody>
+                <tr>
+                    <th colspan="3">Základní údaje</th>
+                </tr>
+                <tr>
+                    <td><label for="id_name_given">{{ form.name_given.label }}:</label></td>
+                    <td>{{ form.name_given }}</td>
+                    <td>{{ form.show_name_given }} Zobrazit ve výpisu</td>
+                </tr>
+                <tr>
+                    <td><label for="id_name_family">{{ form.name_family.label }}:</label></td>
+                    <td>{{ form.name_family }}</td>
+                    <td>{{ form.show_name_family }} Zobrazit ve výpisu</td>
+                </tr>
+                <tr>
+                    <td><label for="id_email">{{ form.email.label }}:</label></td>
+                    <td>{{ form.email }}</td>
+                    <td>{{ form.show_email }} Zobrazit ve výpisu</td>
+                </tr>
+                <tr>
+                    <td><label for="id_gender">{{ form.gender.label }}:</label></td>
+                    <td>{{ form.gender }}</td>
+                    <td>{{ form.show_gender }} Zobrazit ve výpisu</td>
+                </tr>
+                <tr>
+                    <td><label for="id_shire">{{ form.shire.label }}:</label></td>
+                    <td>{{ form.shire }}</td>
+                    <td>{{ form.show_shire }} Zobrazit ve výpisu</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ form.show_age }} Zobrazit věk ve výpisu</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Popis</th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        {{ form.description }}
+                        <p class="help-text">{{ form.description.help_text }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            <input type="submit" value="Uložit změny">
+        </p>
+    </form>
+</section>
+
+{% endblock %}
