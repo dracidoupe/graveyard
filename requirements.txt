@@ -9,11 +9,11 @@ sentry-sdk>=0.14.1
 selenium
 whitenoise
 django-storages<1.10
-boto3
+boto3==1.42.34
+botocore==1.42.34
 django-bmemcached
 python-binary-memcached
 feedparser>=6.0.0 # test only
 psycopg2
 dj-database-url
-mysqlclient>=1.4.0,<2.0
 
