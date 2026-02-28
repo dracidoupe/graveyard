@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 from enum import Enum
 import json
@@ -14,6 +15,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.utils.functional import classproperty
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chromium.options import ChromiumOptions
 from selenium.webdriver.common.by import By
 
@@ -51,7 +53,8 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         self.main_page_nav = MainPage
 
     def check_chromedriver(self):
-        chrome_version = get_local_chrome_version()
+        chrome_path, chrome_version = find_local_chrome()
+        self.__class__._chrome_binary_path = chrome_path
         if not chrome_version:
             raise ValueError(
                 "Could not determine local Chrome version. If you want to check with another browser, please fix this method"
@@ -90,7 +93,11 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         super().setUpClass()
 
         if not settings.SELENIUM_HUB_HOST:
-            cls.selenium = webdriver.Chrome()
+            options = ChromeOptions()
+            chrome_path = getattr(cls, "_chrome_binary_path", None)
+            if chrome_path:
+                options.binary_location = chrome_path
+            cls.selenium = webdriver.Chrome(options=options)
         else:
             cls.selenium = webdriver.Remote(
                 # desired_capabilities=webdriver.DesiredCapabilities.CHROME,
@@ -150,25 +157,35 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         return self.el(MainPage.BODY).get_attribute("data-logged-in") == "1"
 
 
-def get_local_chrome_version():
+def find_local_chrome():
+    """Find a working Chrome/Chromium binary and return (path, version) tuple."""
     if sys.platform == "darwin":
-        chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        candidates = ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"]
     elif sys.platform == "win32":
-        chrome_path = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+        candidates = ["C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"]
     else:
-        chrome_path = "google-chrome"
+        candidates = ["google-chrome-stable", "google-chrome", "chromium", "chromium-browser"]
 
-    try:
-        result = subprocess.run(
-            [chrome_path, "--version"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        version = result.stdout.decode("utf-8").strip().split()[-1]
-        return version
-    except Exception as e:
-        print(f"Error getting local Chrome version: {e}")
-        return None
+    for chrome_path in candidates:
+        try:
+            result = subprocess.run(
+                [chrome_path, "--version"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            output = result.stdout.decode("utf-8").strip()
+            if "Chrome" in output or "Chromium" in output:
+                return (shutil.which(chrome_path) or chrome_path, output.split()[-1])
+        except FileNotFoundError:
+            continue
+
+    print("Could not find a Chrome/Chromium binary")
+    return (None, None)
+
+
+def get_local_chrome_version():
+    """Backwards-compatible wrapper."""
+    return find_local_chrome()[1]
 
 
 def get_local_chromedriver_version():
