@@ -81,6 +81,46 @@ def handle_postal_service_post_request(request):
             )
             return HttpResponseRedirect(request.get_full_path())
 
+    elif fid == FORM_REPLY:
+        if "id" not in request.POST:
+            return HttpResponseBadRequest("Pro odpověď je nutné uvést, na který dopis!")
+        if not request.POST.get("text"):
+            return HttpResponseBadRequest("Drak nemůže doručit prázdný dopis!")
+
+        letter_id = request.POST.get("id")
+        try:
+            letter = Letter.objects.get(pk=letter_id)
+        except Letter.DoesNotExist:
+            logger.info(
+                f"Reply attempt to non-existing letter {letter_id} by user {request.ddcz_profile.nick}"
+            )
+            messages.error(
+                request,
+                "Dopis, na který chcete odpovědět, nebyl nalezen.",
+            )
+            return HttpResponseRedirect(request.get_full_path())
+
+        nick = request.ddcz_profile.nick
+        if letter.sender != nick and letter.receiver != nick:
+            logger.warning(
+                f"User {nick} attempted to reply to message {letter_id} that doesn't belong to them!"
+            )
+            return HttpResponseBadRequest("Pokud tento dopis existuje, tak ti nepatří.")
+
+        if letter.sender == nick:
+            reply_to = letter.receiver
+        else:
+            reply_to = letter.sender
+
+        Letter.objects.create(
+            sender=nick,
+            receiver=reply_to,
+            text=request.POST.get("text"),
+            date=timezone.now(),
+            visibility="3",
+        )
+        return HttpResponseRedirect(reverse("ddcz:postal-service"))
+
     elif fid == FORM_DELETE:
         if "id" not in request.POST:
             return HttpResponseBadRequest("Pro smazání dopisu je nutné říct jakého!")

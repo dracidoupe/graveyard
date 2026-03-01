@@ -4,12 +4,12 @@
 <h1 class="page-heading">Dračí pošta</h1>
 <p>
     Protože kdo by dnes používal holuby... Naši cvičení draci doručí poštu kamkoliv a spolehlivě.
-    Pro obyvatele Města je dračí pošta zdarma. Navíc od doby, co byli lovci draků postaveni mimo 
+    Pro obyvatele Města je dračí pošta zdarma. Navíc od doby, co byli lovci draků postaveni mimo
     zákon, je pošta ještě spolehlivější.
 </p>
 <p>
     <b>
-        POZOR!!! Drak Helimardu je znaven! Než načerpá síly, nedokáže rozlišovat jednotlivé 
+        POZOR!!! Drak Helimardu je znaven! Než načerpá síly, nedokáže rozlišovat jednotlivé
         dopisy od sebe. Smazáním zprávy tak dáte pokyn drakovi spálit zprávu vaší, ale i vašeho
         korespondenčního partnera. Proto se v nejbližší budoucnosti pokuste zprávy nemazat.
         Helimardu děkuje za pochopení.
@@ -19,4 +19,19 @@
 {% include 'postal_service/components/new_letter.html' %}
 {% include 'postal_service/components/list.html' %}
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.querySelectorAll(".postal_reply_button").forEach(function(button) {
+        button.addEventListener("click", function() {
+            var recipient = this.getAttribute("data-recipient");
+            var whomInput = document.getElementById("postal-whom");
+            var textArea = document.getElementById("postal-text");
+            whomInput.value = recipient;
+            textArea.focus();
+            document.getElementById("postal-send-form").scrollIntoView({behavior: "smooth"});
+        });
+    });
+</script>
 {% endblock %}

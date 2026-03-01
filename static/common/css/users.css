@@ -266,4 +266,27 @@ table#creation_table td.stars img{
     width: calc(100% - 100px);
 }
 
+.postal_actions{
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+.postal_delete_form{
+    display: inline;
+}
+
+.postal_button{
+    padding: 0.15rem 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border: 1px solid var(--user_border);
+    background: var(--input-bg-color);
+    color: var(--page_txt_color);
+}
+
+.postal_button:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
 

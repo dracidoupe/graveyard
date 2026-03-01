@@ -1,11 +1,11 @@
-<section class="postal_service_send">
+<section class="postal_service_send" id="postal-send-form">
     <form method="post">
     {% csrf_token %}
     <input type="hidden" name="fid" value="{{ send_id }}">
-    
+
     <label for="whom">Drakovi stačí znát příjemce:</label>
-    <input type="text" name="whom" placeholder="Komu má drak dopis zanést?">    
-    <textarea name="text" required></textarea>
+    <input type="text" name="whom" id="postal-whom" placeholder="Komu má drak dopis zanést?">
+    <textarea name="text" id="postal-text" required></textarea>
     <input type="submit" value="Pošli draka se zprávou">
 </form>
 </section>

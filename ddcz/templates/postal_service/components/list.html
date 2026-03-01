@@ -44,12 +44,15 @@
         <section>
 
         </section>
-        <section>
-            <form method="post">
+        <section class="postal_actions">
+            <button type="button" class="postal_button postal_reply_button"
+                data-recipient="{% if letter.sender == user.userprofile.nick %}{{ letter.receiver }}{% else %}{{ letter.sender }}{% endif %}"
+            >Odpovědět</button>
+            <form method="post" class="postal_delete_form">
                 {% csrf_token %}
                 <input type="hidden" name="fid" value="{{ delete_id }}">
                 <input type="hidden" name="id" value="{{ letter.pk }}">
-                <input type="submit" value="Smazat zprávu">
+                <button type="submit" class="postal_button postal_delete_button">Smazat</button>
             </form>
         </section>
         <section>
