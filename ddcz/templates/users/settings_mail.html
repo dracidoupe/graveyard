@@ -1,0 +1,56 @@
+{% extends "public.html" %}
+
+{% block content %}
+<h1 class="page-heading">Nastavení</h1>
+
+<nav class="settings-nav">
+    <a href="{% url 'ddcz:user-settings' %}">Osobní údaje</a>
+    <strong><a href="{% url 'ddcz:user-settings-mail' %}">Maillist</a></strong>
+</nav>
+
+<section class="settings-section">
+    <h2>Maillist</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <p>
+        E-mailové notifikace budou zasílány na adresu <strong>{{ user_email }}</strong>.
+    </p>
+
+    <form method="post" action="{% url 'ddcz:user-settings-mail' %}">
+        {% csrf_token %}
+
+        <table class="settings-form">
+            <tbody>
+                <tr>
+                    <th colspan="2">Odběr novinek</th>
+                </tr>
+                {% for section in sections %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="subscribe_{{ section.slug }}"
+                            id="id_subscribe_{{ section.slug }}"
+                            class="form-checkbox"
+                            {% if section.subscribed %}checked{% endif %}>
+                    </td>
+                    <td>
+                        <label for="id_subscribe_{{ section.slug }}">{{ section.label }}</label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p>
+            <input type="submit" value="Uložit změny">
+        </p>
+    </form>
+</section>
+
+{% endblock %}

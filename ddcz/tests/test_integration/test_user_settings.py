@@ -1,6 +1,7 @@
 from django.test import Client, TestCase
 from django.urls import reverse
 
+from ddcz.models import CreationEmailSubscription
 
 from ..model_generator import create_profiled_user
 
@@ -110,3 +111,105 @@ class UserSettingsFormTestCase(TestCase):
 
         self.profile.refresh_from_db()
         self.assertEqual("Jan", self.profile.name_given)
+
+
+class MailingListSettingsAccessTestCase(TestCase):
+    fixtures = ["pages"]
+
+    def setUp(self):
+        super().setUp()
+        self.client = Client()
+        self.password = "testpassword123"
+        self.user = create_profiled_user("testuser", self.password)
+        self.profile = self.user.profile
+        self.profile.email = "test@example.com"
+        self.profile.save()
+
+    def test_anonymous_user_redirected(self):
+        response = self.client.get(reverse("ddcz:user-settings-mail"))
+        self.assertEqual(302, response.status_code)
+
+    def test_authenticated_user_can_access(self):
+        self.client.login(username="testuser", password=self.password)
+        response = self.client.get(reverse("ddcz:user-settings-mail"))
+        self.assertEqual(200, response.status_code)
+        self.assertContains(response, "Maillist")
+
+    def test_settings_nav_links_present(self):
+        """Both settings pages have navigation links to each other."""
+        self.client.login(username="testuser", password=self.password)
+
+        response = self.client.get(reverse("ddcz:user-settings"))
+        self.assertContains(response, reverse("ddcz:user-settings-mail"))
+
+        response = self.client.get(reverse("ddcz:user-settings-mail"))
+        self.assertContains(response, reverse("ddcz:user-settings"))
+
+
+class MailingListSubscriptionTestCase(TestCase):
+    fixtures = ["pages"]
+
+    def setUp(self):
+        super().setUp()
+        self.client = Client()
+        self.password = "testpassword123"
+        self.user = create_profiled_user("testuser", self.password)
+        self.profile = self.user.profile
+        self.profile.email = "test@example.com"
+        self.profile.save()
+        self.client.login(username="testuser", password=self.password)
+
+    def test_no_subscriptions_by_default(self):
+        response = self.client.get(reverse("ddcz:user-settings-mail"))
+        self.assertEqual(200, response.status_code)
+        self.assertFalse(
+            CreationEmailSubscription.objects.filter(
+                user_profile_id=self.profile.id
+            ).exists()
+        )
+
+    def test_subscribe_to_news(self):
+        response = self.client.post(
+            reverse("ddcz:user-settings-mail"),
+            {"subscribe_aktuality": "on"},
+            follow=True,
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertContains(response, "Uloženo!")
+        self.assertTrue(
+            CreationEmailSubscription.objects.filter(
+                user_profile_id=self.profile.id,
+                creative_page_slug="aktuality",
+            ).exists()
+        )
+
+    def test_unsubscribe_from_news(self):
+        CreationEmailSubscription.objects.create(
+            user_profile_id=self.profile.id,
+            creative_page_slug="aktuality",
+            user_email=self.profile.email,
+            mime="p",
+        )
+        response = self.client.post(
+            reverse("ddcz:user-settings-mail"),
+            {},
+            follow=True,
+        )
+        self.assertEqual(200, response.status_code)
+        self.assertContains(response, "Uloženo!")
+        self.assertFalse(
+            CreationEmailSubscription.objects.filter(
+                user_profile_id=self.profile.id,
+                creative_page_slug="aktuality",
+            ).exists()
+        )
+
+    def test_existing_subscription_shown_as_checked(self):
+        CreationEmailSubscription.objects.create(
+            user_profile_id=self.profile.id,
+            creative_page_slug="aktuality",
+            user_email=self.profile.email,
+            mime="p",
+        )
+        response = self.client.get(reverse("ddcz:user-settings-mail"))
+        self.assertContains(response, "checked")

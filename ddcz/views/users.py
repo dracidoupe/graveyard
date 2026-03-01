@@ -10,14 +10,18 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import resolve, Resolver404
 from django.views.decorators.http import require_http_methods
 
+from django.contrib import messages
+
 from ..forms.user_settings import PersonalSettingsForm
 from ..text import misencode
 from ..models import (
     Author,
+    CreationEmailSubscription,
     UserProfile,
     Rune,
     LEVEL_DESCRIPTIONS,
 )
+from ..notifications import MailingSectionSlug
 
 DEFAULT_USER_LIST_SIZE = 50
 VALID_SKINS = ["light", "dark", "historic"]
@@ -147,6 +151,69 @@ def user_settings(request):
         {
             "form": form,
             "saved": saved,
+            "user_email": user_profile.email,
+        },
+    )
+
+
+MAILING_SECTIONS = [
+    (MailingSectionSlug.NEWS.value, "Aktuality"),
+]
+
+
+@login_required
+@require_http_methods(["HEAD", "GET", "POST"])
+def user_settings_mail(request):
+    user_profile = request.ddcz_profile
+
+    if request.method == "POST":
+        current_subscriptions = set(
+            CreationEmailSubscription.objects.filter(
+                user_profile_id=user_profile.id,
+            ).values_list("creative_page_slug", flat=True)
+        )
+
+        desired_subscriptions = set()
+        for slug, _label in MAILING_SECTIONS:
+            if request.POST.get(f"subscribe_{slug}"):
+                desired_subscriptions.add(slug)
+
+        to_add = desired_subscriptions - current_subscriptions
+        to_remove = current_subscriptions - desired_subscriptions
+
+        for slug in to_add:
+            CreationEmailSubscription.objects.create(
+                user_profile_id=user_profile.id,
+                creative_page_slug=slug,
+                user_email=user_profile.email,
+                mime="p",
+            )
+
+        if to_remove:
+            CreationEmailSubscription.objects.filter(
+                user_profile_id=user_profile.id,
+                creative_page_slug__in=to_remove,
+            ).delete()
+
+        messages.success(request, "Uloženo!")
+        return HttpResponseRedirect(request.get_full_path())
+
+    subscribed_slugs = set(
+        CreationEmailSubscription.objects.filter(
+            user_profile_id=user_profile.id,
+        ).values_list("creative_page_slug", flat=True)
+    )
+
+    sections = [
+        {"slug": slug, "label": label, "subscribed": slug in subscribed_slugs}
+        for slug, label in MAILING_SECTIONS
+    ]
+
+    return render(
+        request,
+        "users/settings_mail.html",
+        {
+            "sections": sections,
             "user_email": user_profile.email,
         },
     )
