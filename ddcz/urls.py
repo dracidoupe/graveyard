@@ -61,6 +61,11 @@ urlpatterns = [
     ),
     ### Creations and Creative Pages
     path(
+        "rubriky/<creative_page_slug>/pridat/",
+        views.creation_submit,
+        name="creation-submit",
+    ),
+    path(
         "rubriky/<creative_page_slug>/", views.creative_page_list, name="creation-list"
     ),
     path(

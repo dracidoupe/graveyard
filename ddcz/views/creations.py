@@ -4,6 +4,8 @@ from zlib import crc32
 
 from django.apps import apps
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import (
@@ -19,9 +21,11 @@ from django.views.decorators.vary import vary_on_cookie
 
 from ..creations import ApprovalChoices
 from ..forms.comments import CreationCommentForm, CommentAction
+from ..forms.creations import CREATION_SUBMIT_FORMS, FILE_UPLOAD_MODELS
 from ..html import check_creation_html, HtmlTagMismatchException
 from ..models import (
     Author,
+    Creation,
     CreativePage,
     CreativePageConcept,
     CreationComment,
@@ -372,5 +376,81 @@ def author_detail(request, author_id, slug):
         {
             "author": author,
             "pages_with_creations": author.get_all_creations(),
+        },
+    )
+
+
+def get_or_create_author(user_profile):
+    try:
+        return Author.objects.get(user=user_profile)
+    except Author.DoesNotExist:
+        return Author.objects.create(
+            user=user_profile,
+            author_type=Author.USER_TYPE,
+            user_nick=user_profile.nick,
+        )
+
+
+@login_required
+@require_http_methods(["HEAD", "GET", "POST"])
+def creation_submit(request, creative_page_slug):
+    creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
+    app, model_class_name = creative_page.model_class.split(".")
+    model_class_name_lower = model_class_name.lower()
+
+    if model_class_name_lower in FILE_UPLOAD_MODELS:
+        return render(
+            request,
+            "creative-pages/creation-submit-unavailable.html",
+            {
+                "heading": creative_page.name,
+                "creative_page_slug": creative_page_slug,
+            },
+        )
+
+    form_class = CREATION_SUBMIT_FORMS.get(model_class_name_lower)
+    if not form_class:
+        raise Http404()
+
+    if request.method == "POST":
+        form = form_class(request.POST)
+        if form.is_valid():
+            creation = form.save(commit=False)
+            user_profile = request.ddcz_profile
+            author = get_or_create_author(user_profile)
+
+            creation.author = author
+            creation.author_nick = user_profile.nick
+            creation.author_mail = user_profile.email
+            creation.is_published = Creation.CREATION_NOT_APPROVED_YET
+            creation.rater_no = 0
+            creation.rating_sum = 0
+            creation.rating = 0
+
+            if hasattr(creation, "creative_page_slug"):
+                creation.creative_page_slug = creative_page_slug
+
+            creation.save()
+
+            messages.success(
+                request,
+                "Vaše dílo bylo odesláno ke schválení. Děkujeme!",
+            )
+            return HttpResponseRedirect(
+                reverse(
+                    "ddcz:creation-list",
+                    kwargs={"creative_page_slug": creative_page_slug},
+                )
+            )
+    else:
+        form = form_class()
+
+    return render(
+        request,
+        "creative-pages/creation-submit.html",
+        {
+            "heading": creative_page.name,
+            "creative_page_slug": creative_page_slug,
+            "form": form,
         },
     )

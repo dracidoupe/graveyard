@@ -1,11 +1,18 @@
 from datetime import timedelta
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.utils import timezone
 from django.core.cache import cache
 from django.conf import settings
 
 from ..models import CreativePage, CreationComment, CommonArticle
 from ..creations import ApprovalChoices
+
+LOCMEM_CACHE = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "test-newsfeed",
+    }
+}
 
 
 class TestNewsfeed(TestCase):
@@ -24,6 +31,7 @@ class TestNewsfeed(TestCase):
         self.assertEqual(len(response.context["articles"]), 0)
         self.assertEqual(len(response.context["comments"]), 0)
 
+    @override_settings(CACHES=LOCMEM_CACHE)
     def test_newsfeed_caching(self):
         """Test that newsfeed results are cached"""
         # Create some test data

@@ -1,0 +1,50 @@
+{% extends 'public.html' %}
+
+{% block content %}
+<h1 class="page-heading">{{ heading }} — nové dílo</h1>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if form.errors %}
+    <div class="message error">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p><strong>{{ field.label }}:</strong> {{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <p><strong>{{ error }}</strong></p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<form method="post" action="{% url 'ddcz:creation-submit' creative_page_slug %}">
+    {% csrf_token %}
+
+    <table class="settings-form">
+        <tbody>
+            {% for field in form %}
+            <tr>
+                <td><label for="{{ field.id_for_label }}">{{ field.label }}:</label></td>
+                <td>{{ field }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <input type="submit" value="Odeslat ke schválení">
+    </p>
+</form>
+
+<p>
+    <a href="{% url 'ddcz:creation-list' creative_page_slug %}">&laquo; Zpět na {{ heading }}</a>
+</p>
+
+{% endblock %}

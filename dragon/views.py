@@ -5,9 +5,20 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils import timezone
 
-from ddcz.models import LevelSystemParams, UserProfile, AwaitingRegistration, News
+from django.apps import apps
+from django.shortcuts import get_object_or_404
+
+from ddcz.creations import ApprovalChoices
+from ddcz.models import (
+    CreativePage,
+    LevelSystemParams,
+    UserProfile,
+    AwaitingRegistration,
+    News,
+)
 from ddcz.notifications import NotificationEvent, schedule_notification, Audience
 
 from .forms.dashboard import FormTypes
@@ -304,3 +315,58 @@ def users(request):
         "users.html",
         {"searched_user": searched_user, "search_query": search_query},
     )
+
+
+@login_required
+def creations(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    unapproved = []
+    for page in CreativePage.objects.all():
+        app, model_class_name = page.model_class.split(".")
+        model_class = apps.get_model(app, model_class_name)
+
+        filters = {"is_published": ApprovalChoices.WAITING.value}
+        if getattr(model_class, "SHARED_BETWEEN_CREATIVE_PAGES", False):
+            filters["creative_page_slug"] = page.slug
+
+        pending = model_class.objects.filter(**filters).order_by("-published")
+        for creation in pending:
+            unapproved.append(
+                {
+                    "creation": creation,
+                    "page": page,
+                }
+            )
+
+    return render(request, "creations.html", {"unapproved": unapproved})
+
+
+@login_required
+def creation_approve(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    if request.method != "POST":
+        return HttpResponseRedirect(reverse("dragon:creations"))
+
+    creation_id = request.POST.get("creation_id")
+    creative_page_slug = request.POST.get("creative_page_slug")
+    action = request.POST.get("action")
+
+    page = get_object_or_404(CreativePage, slug=creative_page_slug)
+    app, model_class_name = page.model_class.split(".")
+    model_class = apps.get_model(app, model_class_name)
+    creation = get_object_or_404(model_class, pk=creation_id)
+
+    if action == "approve":
+        creation.is_published = ApprovalChoices.APPROVED.value
+        creation.save()
+        messages.success(request, f'Dílo "{creation.name}" bylo schváleno.')
+    elif action == "reject":
+        name = creation.name
+        creation.delete()
+        messages.success(request, f'Dílo "{name}" bylo zamítnuto.')
+
+    return HttpResponseRedirect(reverse("dragon:creations"))

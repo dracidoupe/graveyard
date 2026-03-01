@@ -1,0 +1,14 @@
+{% extends 'public.html' %}
+
+{% block content %}
+<h1 class="page-heading">{{ heading }} — nové dílo</h1>
+
+<p>
+    Přidávání děl do této rubriky zatím není k dispozici v nové verzi stránek.
+</p>
+
+<p>
+    <a href="{% url 'ddcz:creation-list' creative_page_slug %}">&laquo; Zpět na {{ heading }}</a>
+</p>
+
+{% endblock %}

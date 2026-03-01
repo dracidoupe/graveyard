@@ -1,6 +1,8 @@
 from enum import Enum
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from .cases import SeleniumTestCase
 from ..attack_strings import SCRIPT_ALERT_INPUT
@@ -34,6 +36,9 @@ class TestPhorum(SeleniumTestCase):
     def post_comment(self):
         self.el(PhorumPage.POST_TEXTAREA).send_keys(SCRIPT_ALERT_INPUT)
         self.el(PhorumPage.POST_SUBMIT).click()
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//p[@class="comment_text"]'))
+        )
 
     def test_page_heading_present(self):
         text = self.selenium.find_element(By.XPATH, '//h1[@class="page-heading"]').text

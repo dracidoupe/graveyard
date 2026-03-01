@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load creations %}
+
+{% block content %}
+    <h1>Díla ke schválení</h1>
+
+    {% for item in unapproved %}
+        {% if forloop.first %}
+            <table>
+            <tr>
+                <th>Rubrika</th>
+                <th>Název</th>
+                <th>Autor</th>
+                <th>Datum</th>
+                <th>Akce</th>
+            </tr>
+        {% endif %}
+            <tr>
+                <td>{{ item.page.name }}</td>
+                <td>{{ item.creation.name }}</td>
+                <td>{{ item.creation.author_nick }}</td>
+                <td>{{ item.creation.published | articleTime }}</td>
+                <td>
+                    <form method="post" action="{% url 'dragon:creation-approve' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="creation_id" value="{{ item.creation.pk }}">
+                        <input type="hidden" name="creative_page_slug" value="{{ item.page.slug }}">
+                        <input type="submit" name="action" value="approve">
+                        <input type="submit" name="action" value="reject">
+                    </form>
+                </td>
+            </tr>
+        {% if forloop.last %}
+            </table>
+        {% endif %}
+    {% empty %}
+        <p>Žádná díla nečekají na schválení.</p>
+    {% endfor %}
+{% endblock %}
