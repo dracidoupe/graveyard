@@ -11,7 +11,6 @@ from django.core.paginator import Paginator
 from django.http import (
     HttpResponseRedirect,
     HttpResponsePermanentRedirect,
-    HttpResponseNotAllowed,
     Http404,
 )
 from django.shortcuts import render, get_object_or_404
@@ -22,7 +21,6 @@ from django.views.decorators.vary import vary_on_cookie
 from ..creations import ApprovalChoices
 from ..forms.comments import CreationCommentForm, CommentAction
 from ..forms.creations import CREATION_SUBMIT_FORMS, FILE_UPLOAD_MODELS
-from ..html import check_creation_html, HtmlTagMismatchException
 from ..models import (
     Author,
     Creation,
@@ -270,58 +268,6 @@ def creative_page_concept(request, creative_page_slug):
             "concept": concept,
         },
     )
-
-
-@require_http_methods(["HEAD", "GET", "POST"])
-def creative_page_html_check(request, creative_page_slug):
-    creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
-
-    if request.method == "GET":
-        return render(
-            request,
-            "creative-pages/html-check-form.html",
-            {
-                "heading": creative_page.name,
-            },
-        )
-
-    if request.method == "POST":
-        app, model_class_name = creative_page.model_class.split(".")
-        model_class = apps.get_model(app, model_class_name)
-
-        # For Common Articles, Creative Page is stored in attribute 'creative_page_slug' as slug
-        # For everything else, Creative Page is determined by its model class
-        if model_class_name == "commonarticle":
-            creations_list = model_class.objects.filter(
-                is_published=ApprovalChoices.APPROVED.value,
-                creative_page_slug=creative_page_slug,
-            ).order_by("-published")
-        else:
-            creations_list = model_class.objects.filter(
-                is_published=ApprovalChoices.APPROVED.value
-            ).order_by("-published")
-
-        bad_creations = []
-
-        for creation in creations_list:
-            for attr in model_class.legacy_html_attributes:
-                try:
-                    check_creation_html(getattr(creation, attr))
-                except HtmlTagMismatchException as err:
-                    message = f"V položce {attr} je tato chyba: {str(err)}"
-                    bad_creations.append({"creation": creation, "message": message})
-
-        return render(
-            request,
-            "creative-pages/html-check-list.html",
-            {
-                "heading": creative_page.name,
-                "creative_page_slug": creative_page_slug,
-                "bad_creations": bad_creations,
-            },
-        )
-
-    return HttpResponseNotAllowed(["GET", "POST"])
 
 
 @require_http_methods(["HEAD", "GET"])
