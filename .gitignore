@@ -22,6 +22,7 @@ docker-compose.yml
 ## Local IDEs dirs
 /.idea
 /.vscode
+/CLAUDE.md
 
 # Original closed-source code
 /legacy-version
