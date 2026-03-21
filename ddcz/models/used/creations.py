@@ -745,7 +745,7 @@ class Item(Creation):
 class DownloadItem(Creation):
     path = models.TextField(blank=True, null=True, db_column="cesta")
     format = models.TextField(db_column="format")
-    description = models.TextField(db_column="popis")
+    description = MisencodedTextField(db_column="popis")
     size = models.IntegerField(db_column="velikost")
     group = models.TextField(db_column="skupina")
     item = models.FileField(upload_to="soub", null=True, db_column="item")
