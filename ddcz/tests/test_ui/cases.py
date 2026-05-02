@@ -162,9 +162,16 @@ def find_local_chrome():
     if sys.platform == "darwin":
         candidates = ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"]
     elif sys.platform == "win32":
-        candidates = ["C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"]
+        candidates = [
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+        ]
     else:
-        candidates = ["google-chrome-stable", "google-chrome", "chromium", "chromium-browser"]
+        candidates = [
+            "google-chrome-stable",
+            "google-chrome",
+            "chromium",
+            "chromium-browser",
+        ]
 
     for chrome_path in candidates:
         try:
