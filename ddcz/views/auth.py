@@ -18,6 +18,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
+from ..email import notify_admins_about_registration
 from ..forms.authentication import LoginForm, PasswordResetForm
 from ..forms.signup import SignUpForm
 from ..users import migrate_user, logout_user_without_losing_session
@@ -153,7 +154,13 @@ def sign_up(request):
     if request.method == "POST" and request.POST.get("submit"):
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            reg = form.save()
+            try:
+                notify_admins_about_registration(reg)
+            except Exception:
+                logger.exception(
+                    "Failed to notify admins about new registration %s", reg.id
+                )
             return render(
                 request,
                 "users/sign_up_after.html",

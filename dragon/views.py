@@ -2,11 +2,17 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core import signing
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.utils import timezone
 
+from ddcz.email import (
+    REGISTRATION_REVIEW_SALT,
+    REGISTRATION_REVIEW_TOKEN_MAX_AGE,
+    build_registration_review_url,
+)
 from ddcz.models import LevelSystemParams, UserProfile, AwaitingRegistration, News
 from ddcz.notifications import NotificationEvent, schedule_notification, Audience
 
@@ -303,4 +309,45 @@ def users(request):
         request,
         "users.html",
         {"searched_user": searched_user, "search_query": search_query},
+    )
+
+
+@login_required
+def registration_review(request, token):
+    """Confirmation page reached from the admin notification email.
+
+    Decodes the signed token from the email link, shows the pending registration,
+    and presents a pre-filled POST form that submits to the existing dashboard
+    handler. GET only — the action itself is handled by dashboard's POST path.
+    """
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    try:
+        data = signing.loads(
+            token,
+            salt=REGISTRATION_REVIEW_SALT,
+            max_age=REGISTRATION_REVIEW_TOKEN_MAX_AGE,
+        )
+    except signing.SignatureExpired:
+        return render(request, "registration_review.html", {"error": "expired"})
+    except signing.BadSignature:
+        return render(request, "registration_review.html", {"error": "invalid"})
+
+    try:
+        registration = AwaitingRegistration.objects.get(id=data["id"])
+    except AwaitingRegistration.DoesNotExist:
+        return render(request, "registration_review.html", {"error": "already_handled"})
+
+    return render(
+        request,
+        "registration_review.html",
+        {
+            "registration": registration,
+            "action": data["action"],
+            "approve_url": build_registration_review_url(registration.id, "approve"),
+            "reject_url": build_registration_review_url(registration.id, "reject"),
+            "FormTypes": FormTypes,
+            "RegistrationRequestApproval": RegistrationRequestApproval,
+        },
     )

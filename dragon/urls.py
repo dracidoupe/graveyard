@@ -12,4 +12,7 @@ urlpatterns = [
     path("uzivatele/", views.users, name="users"),
     path("uzivatele/<int:user_id>/zablokovat/", views.user_ban, name="user-ban"),
     path("uzivatele/<int:user_id>/odblokovat/", views.user_unban, name="user-unban"),
+    path(
+        "registrace/<str:token>/", views.registration_review, name="registration-review"
+    ),
 ]

@@ -4,6 +4,7 @@ import hmac
 import logging
 
 from django.conf import settings
+from django.core import signing
 from django.core.mail import send_mail
 from django.db.models import F
 
@@ -20,6 +21,65 @@ from django.urls import reverse
 logger = logging.getLogger(__name__)
 
 EMAIL_UNSUB_HMAC_ALGORITHM = "sha3_512"
+
+# Salt for signed tokens embedded in admin notification emails.
+# Each token encodes the registration id and the intended action ("approve"/"reject").
+REGISTRATION_REVIEW_SALT = "dragon.registration-review"
+# Tokens are valid for this many seconds (30 days).
+REGISTRATION_REVIEW_TOKEN_MAX_AGE = 30 * 24 * 60 * 60
+
+
+def build_registration_review_url(reg_id, action):
+    """Return an absolute URL for the admin registration-review confirmation page.
+
+    action must be "approve" or "reject".
+    """
+    token = signing.dumps(
+        {"id": reg_id, "action": action}, salt=REGISTRATION_REVIEW_SALT
+    )
+    return settings.EMAIL_LINKS_BASE_URI + reverse(
+        "dragon:registration-review", kwargs={"token": token}
+    )
+
+
+def notify_admins_about_registration(reg):
+    """Send a notification email to all staff users about a new registration request.
+
+    Each admin receives an individual email (so their addresses aren't exposed to
+    each other) containing signed Approve/Deny links for the review confirmation page.
+    """
+    recipients = list(
+        UserProfile.objects.filter(user__is_staff=True)
+        .exclude(email="")
+        .values_list("email", flat=True)
+    )
+    if not recipients:
+        logger.warning(
+            "New registration %s created but no staff users with an email found to notify",
+            reg.id,
+        )
+        return
+
+    approve_url = build_registration_review_url(reg.id, "approve")
+    reject_url = build_registration_review_url(reg.id, "reject")
+    subject = "Nová žádost o registraci na DraciDoupe.cz"
+    body = (
+        f"Ahoj,\n\n"
+        f"je potřeba schválit novou registraci!\n\n"
+        f"Přezdívka: {reg.nick}\n"
+        f"E-mail: {reg.email}\n"
+        f"Jméno: {reg.name_given} {reg.name_family}\n"
+        f"Pohlaví: {reg.gender}    Věk: {reg.age}\n\n"
+        f"Důvod / popis:\n{reg.description}\n\n"
+        f"Schválit registraci: {approve_url}\n"
+        f"Zamítnout registraci: {reject_url}\n\n"
+        f"(Pro potvrzení akce je třeba přihlášení do správy.)\n\n"
+        f"— DraciDoupe.cz"
+    )
+    # temporary hardcode
+    recipients = ["almad@dracidoupe.cz"]
+    for email in recipients:
+        send_mail(subject, body, settings.DDCZ_TRANSACTION_EMAIL_FROM, [email])
 
 
 def hash_email(email):

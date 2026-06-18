@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if error == "expired" %}
+    <h1>Odkaz vypršel</h1>
+    <p>Tento odkaz pro posouzení registrace již vypršel (platnost je 30 dní). Žádost lze stále schválit nebo zamítnout v <a href="{% url 'dragon:dashboard' %}">přehledu žádostí</a>.</p>
+
+{% elif error == "invalid" %}
+    <h1>Neplatný odkaz</h1>
+    <p>Tento odkaz pro posouzení registrace je neplatný. Žádost lze stále schválit nebo zamítnout v <a href="{% url 'dragon:dashboard' %}">přehledu žádostí</a>.</p>
+
+{% elif error == "already_handled" %}
+    <h1>Registrace již byla vyřízena</h1>
+    <p>Tato žádost o registraci již byla schválena nebo zamítnuta (pravděpodobně jiným správcem). <a href="{% url 'dragon:dashboard' %}">Zpět na přehled.</a></p>
+
+{% else %}
+    <h1>Posouzení žádosti o registraci</h1>
+
+    <table>
+        <tr><th>Přezdívka</th><td>{{ registration.nick }} ({{ registration.salutation }})</td></tr>
+        <tr><th>E-mail</th><td>{{ registration.email }}</td></tr>
+        <tr><th>Jméno</th><td>{{ registration.name_given }} {{ registration.name_family }}</td></tr>
+        <tr><th>Pohlaví</th><td>{{ registration.gender }}</td></tr>
+        <tr><th>Věk</th><td>{{ registration.age }}</td></tr>
+        <tr><th>Přihlášen dne</th><td>{{ registration.registration_date }}</td></tr>
+    </table>
+
+    <h2>Důvod / popis</h2>
+    <pre>{{ registration.description }}</pre>
+
+    <h2>
+        {% if action == "approve" %}Schválit registraci{% else %}Zamítnout registraci{% endif %}
+    </h2>
+
+    <form method="post" action="{% url 'dragon:dashboard' %}">
+        {% csrf_token %}
+        <input type="hidden" name="awaiting_registration_id" value="{{ registration.id }}">
+        <input type="hidden" name="form_type" value="{{ FormTypes.REGISTRATIONS.value }}">
+        <input type="hidden" name="submission_type" value="{% if action == 'approve' %}{{ RegistrationRequestApproval.APPROVE.value }}{% else %}{{ RegistrationRequestApproval.REJECT.value }}{% endif %}">
+        <label for="message">Dodatečná zpráva pro uživatele (volitelné):</label><br>
+        <textarea id="message" name="message" rows="4" cols="60" placeholder="Volitelný vzkaz uživateli"></textarea><br><br>
+        <button type="submit">
+            {% if action == "approve" %}Potvrdit schválení{% else %}Potvrdit zamítnutí{% endif %}
+        </button>
+    </form>
+
+    <p>
+        Chcete místo toho
+        {% if action == "approve" %}
+            <a href="{{ reject_url }}">žádost zamítnout</a>?
+        {% else %}
+            <a href="{{ approve_url }}">žádost schválit</a>?
+        {% endif %}
+    </p>
+{% endif %}
+
+{% endblock %}
