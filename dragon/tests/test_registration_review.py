@@ -1,4 +1,5 @@
 import time
+from unittest import mock
 
 from django.core import mail, signing
 from django.test import TestCase
@@ -6,6 +7,7 @@ from django.urls import reverse
 
 from ddcz.email import (
     REGISTRATION_REVIEW_SALT,
+    REGISTRATION_REVIEW_TOKEN_MAX_AGE,
 )
 from ddcz.models import AwaitingRegistration, UserProfile
 from ddcz.tests.model_generator import create_profiled_user
@@ -82,15 +84,17 @@ class TestRegistrationReviewTokenValidation(TestCase):
         self.assertContains(response, "Neplatný odkaz")
 
     def test_expired_token_shows_error(self):
-        # Since we can't easily back-date without patching time, verify that
-        # SignatureExpired is raised for a zero-second max_age (signing.TimestampSigner).
-        from django.core.signing import TimestampSigner
+        # Back-date time while signing so the token's embedded timestamp is older than
+        # the 30-day max age; the view then decodes it with real time and sees it expired.
+        past = time.time() - (REGISTRATION_REVIEW_TOKEN_MAX_AGE + 60)
+        with mock.patch("django.core.signing.time.time", return_value=past):
+            token = make_token(self.reg.id, "approve")
 
-        signer = TimestampSigner(salt=REGISTRATION_REVIEW_SALT)
-        with self.assertRaises(signing.SignatureExpired):
-            signer.unsign(signer.sign("x"), max_age=0)
-        # Confirm the view handles it gracefully via a unit-level check (above).
-        # Full expiry integration test would require time-mocking.
+        url = reverse("dragon:registration-review", kwargs={"token": token})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Odkaz vypršel")
 
     def test_already_handled_registration_shows_error(self):
         self.reg.delete()
