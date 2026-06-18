@@ -181,7 +181,7 @@ class Author(models.Model):
             raise AttributeError("Unknown type '%s'" % self.author_type)
 
         if not display_name:
-            logger.error("MIGRATION_ERROR no display_name for author ID %s" % self.pk)
+            logger.warning("MIGRATION_ERROR no display_name for author ID %s" % self.pk)
             display_name = "Neznámý"
 
         return display_name

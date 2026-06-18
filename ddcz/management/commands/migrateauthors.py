@@ -24,7 +24,7 @@ class Command(BaseCommand):
         else:
             if author_type is Author.WEBSITE_TYPE:
                 author = Author.objects.create(
-                    website=creation.original_web,
+                    website=creation.original_web or "Neznámý",
                     website_email=creation.original_web_mail,
                     author_type=author_type,
                 )
@@ -83,7 +83,8 @@ class Command(BaseCommand):
 
                     author = Author.objects.create(
                         author_type=author_type,
-                        anonymous_user_nick=author_encoded.decode("latin2"),
+                        anonymous_user_nick=author_encoded.decode("latin2")
+                        or "Neznámý",
                     )
 
             self.authors[(author_type, author_name)] = author
