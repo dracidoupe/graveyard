@@ -25,6 +25,19 @@ DEFAULT_LIST_SIZE = 10
 logger = logging.getLogger(__name__)
 
 
+def page_not_found(request, exception):
+    return render(
+        request,
+        "404.html",
+        {
+            "page_title": "Stránka nenalezena",
+            "meta_description": "Dráček hledal, ale tahle stránka se v doupěti nenašla.",
+            "request_path": request.path,
+        },
+        status=404,
+    )
+
+
 @require_http_methods(["HEAD", "GET"])
 def links(request):
     item_list = Link.objects.filter(is_approved="a").order_by("-published")
