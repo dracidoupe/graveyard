@@ -112,6 +112,29 @@ footer#page_footer {
     background-color: var(--debug_bg_color);
 }
 
+@media (max-width: 720px) {
+    #container {
+        grid-template-areas:
+            'header'
+            'main'
+            'left_menu'
+            'right_menu'
+            'footer';
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+        width: calc(100% - 1rem);
+    }
+
+    header#page_header h1 img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    footer#page_footer {
+        width: 100%;
+    }
+}
+
 
 /* =========== HEADER ============ */
 header#page_header h1 {

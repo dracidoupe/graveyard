@@ -1,0 +1,24 @@
+{% extends 'public.html' %}
+{% load static %}
+
+{% block content %}
+<article id="page-not-found" aria-labelledby="not-found-title">
+    <p class="not-found__eyebrow">404</p>
+    <h1 id="not-found-title" class="page-heading">Stránka se zatoulala</h1>
+
+    <img
+        class="not-found__dragon"
+        src="{% static 'common/img/not-found-dragon.png' %}"
+        alt="Smutný dráček drží prázdnou mapu."
+    >
+
+    <p class="not-found__message">Dráček prošel celé doupě, nahlédl pod každý kámen a stejně tuhle stránku nenašel.</p>
+    <p class="not-found__path">Ztracená stopa: <code>{{ request_path }}</code></p>
+
+    <nav class="not-found__actions" aria-label="Kam dál">
+        <a href="{% url 'ddcz:news' %}">Aktuality</a>
+        <a href="{% url 'ddcz:newsfeed' %}">Novinky</a>
+        <a href="{% url 'ddcz:phorum-list' %}">Fórum</a>
+    </nav>
+</article>
+{% endblock %}

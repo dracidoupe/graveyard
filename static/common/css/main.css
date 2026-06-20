@@ -41,6 +41,71 @@ table.list_default td{
     text-align: left;
 }
 
+/* Error pages */
+
+#page-not-found {
+    max-width: 46rem;
+    margin: 0rem auto 3rem;
+    text-align: center;
+}
+
+.not-found__eyebrow,
+.not-found__message,
+.not-found__path {
+    text-indent: 0rem;
+}
+
+.not-found__eyebrow {
+    margin: 0rem 0rem 0.5rem;
+    color: var(--link-color);
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.not-found__dragon {
+    display: block;
+    width: min(100%, 23rem);
+    height: auto;
+    margin: 1.25rem auto 1rem;
+}
+
+.not-found__message {
+    margin: 0rem auto;
+    max-width: 34rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.not-found__path {
+    margin: 0.75rem auto 0rem;
+    max-width: 34rem;
+}
+
+.not-found__path code {
+    overflow-wrap: anywhere;
+}
+
+.not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.not-found__actions a {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.not-found__actions a::before {
+    content: "[";
+}
+
+.not-found__actions a::after {
+    content: "]";
+}
+
 /* Creative Pages details */
 
 article header .label {
