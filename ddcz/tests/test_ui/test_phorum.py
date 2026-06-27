@@ -1,6 +1,8 @@
 from enum import Enum
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from .cases import SeleniumTestCase
 from ..attack_strings import SCRIPT_ALERT_INPUT
@@ -33,7 +35,10 @@ class TestPhorum(SeleniumTestCase):
 
     def post_comment(self):
         self.el(PhorumPage.POST_TEXTAREA).send_keys(SCRIPT_ALERT_INPUT)
-        self.el(PhorumPage.POST_SUBMIT).click()
+        submit = self.el(PhorumPage.POST_SUBMIT)
+        submit.click()
+        # There needs to be an explicit wait for redirect, otherwise assertions may evaluate the page before the redirect happns
+        WebDriverWait(self.selenium, 10).until(EC.staleness_of(submit))
 
     def test_page_heading_present(self):
         text = self.selenium.find_element(By.XPATH, '//h1[@class="page-heading"]').text

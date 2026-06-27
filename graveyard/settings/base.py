@@ -133,6 +133,10 @@ USE_TZ = True
 
 APPEND_SLASH = True
 
+# Preserve Django 3.1 implicit default; prevents W042 warnings and avoids
+# spurious BigAutoField migration generation on legacy DB tables.
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
