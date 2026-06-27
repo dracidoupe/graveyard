@@ -16,7 +16,7 @@ class TestAuthBanning(TestCase):
     def test_banned_user_cannot_login(self):
         # Arrange: create user and ban them
         user = create_profiled_user("banned", "secret")
-        profile = UserProfile.objects.get(pk=user.id)
+        profile = UserProfile.objects.get(user=user)
         profile.status = "1"  # legacy: 1 = banned
         profile.save()
 
@@ -38,7 +38,7 @@ class TestAuthBanning(TestCase):
     def test_unbanned_user_can_login(self):
         # Arrange: create user and ensure unbanned status
         user = create_profiled_user("okuser", "secret")
-        profile = UserProfile.objects.get(pk=user.id)
+        profile = UserProfile.objects.get(user=user)
         profile.status = "4"  # normal working user
         profile.save()
 
@@ -59,7 +59,7 @@ class TestAuthBanning(TestCase):
 
     def test_login_updates_last_login(self):
         user = create_profiled_user("testuser", "secret")
-        profile = UserProfile.objects.get(pk=user.id)
+        profile = UserProfile.objects.get(user=user)
         profile.status = "4"
         old_last_login = timezone.now() - timedelta(days=1)
         profile.last_login = old_last_login

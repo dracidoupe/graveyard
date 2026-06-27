@@ -1,4 +1,4 @@
-Django>=3.2.9,<3.3
+Django>=4.0,<4.1
 gunicorn
 sqlparse
 argon2-cffi
@@ -8,7 +8,7 @@ pyyaml
 sentry-sdk>=0.14.1
 selenium
 whitenoise
-django-storages<1.10
+django-storages>=1.13,<1.14
 boto3==1.42.34
 botocore==1.42.34
 django-bmemcached
