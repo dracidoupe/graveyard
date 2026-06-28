@@ -56,15 +56,11 @@ else:
         ),
     }
 
-
 if "MEMCACHEDCLOUD_SERVERS" in os.environ:
     logger.info("Using Memcached Cloud servers")
 
-# Use custom and short prefix for cache
-KEY_PREFIX = "gy-"
-# VERSION variable used for cache versioning is written as part of the release
-# see manage.py writerelease command
-# VERSION = 1
+_release = os.environ.get("HEROKU_RELEASE_VERSION", "")
+CACHE_VERSION = int(_release[1:]) if _release[1:].isdigit() else 1
 
 # See https://devcenter.heroku.com/articles/memcachedcloud#using-memcached-from-python
 CACHES = {
@@ -75,9 +71,10 @@ CACHES = {
             "username": os.environ.get("MEMCACHEDCLOUD_USERNAME"),
             "password": os.environ.get("MEMCACHEDCLOUD_PASSWORD"),
         },
+        "KEY_PREFIX": "gy-",
+        "VERSION": CACHE_VERSION,
     }
 }
-
 
 WSGI_APPLICATION = "graveyard.wsgi.application"
 
@@ -105,7 +102,6 @@ GALLERY_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/galerie/"
 PHOTOGALLERY_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/fotogalerie/"
 USER_ICON_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/ikonky/"
 QUEST_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/dobrodruzstvi/"
-
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -140,7 +136,6 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 3  # 3 hours
-
 
 LOGGING = {
     "version": 1,
