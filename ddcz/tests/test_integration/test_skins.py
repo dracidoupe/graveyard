@@ -2,6 +2,8 @@ from django.test import Client, TestCase
 
 from django.urls import reverse
 
+from ..model_generator import create_profiled_user
+
 
 class SkinRedirectTestCase(TestCase):
     fixtures = ["pages"]
@@ -24,3 +26,9 @@ class SkinRedirectTestCase(TestCase):
         )
 
         self.assertEquals("/", res.url)
+
+    def test_skin_links_preserve_current_page_query_parameters(self):
+        self.client.force_login(create_profiled_user("test-user", "password"))
+        res = self.client.get(reverse("ddcz:news"), {"z_s": 3, "order": "author"})
+
+        self.assertContains(res, "redirect=/aktuality/%3Fz_s%3D3%26order%3Dauthor")
