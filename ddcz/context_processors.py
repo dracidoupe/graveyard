@@ -32,8 +32,14 @@ def common_variables(request):
         "skin_css_url": staticfiles_storage.url(
             "skins/%(skin)s/css/main.css" % {"skin": skin}
         ),
-        "skin_favico_url": staticfiles_storage.url(
+        "skin_favicon_ico_url": staticfiles_storage.url(
             "skins/%(skin)s/img/drak.ico" % {"skin": skin}
+        ),
+        "skin_favicon_svg_url": staticfiles_storage.url(
+            "skins/%(skin)s/img/drak.svg" % {"skin": skin}
+        ),
+        "skin_apple_touch_icon_url": staticfiles_storage.url(
+            "skins/%(skin)s/img/drak.png" % {"skin": skin}
         ),
         "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.svg" % skin),
         "logo_width": logo_width,

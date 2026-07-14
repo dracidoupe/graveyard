@@ -13,6 +13,11 @@ app_name = "ddcz"
 
 urlpatterns = [
     path("", RedirectView.as_view(url="aktuality/", permanent=False)),
+    re_path(
+        r"^apple-touch-icon(?:-precomposed)?\.png$",
+        views.apple_touch_icon,
+        name="apple-touch-icon",
+    ),
     ### Legacy redirects from stare.dracidoupe.cz
     path("index.php", legacy_router, name="legacy-router"),
     re_path(

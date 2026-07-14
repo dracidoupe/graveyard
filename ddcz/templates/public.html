@@ -11,8 +11,9 @@
     <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-phorum' %}" title="Komentáře ve fóru">
     <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-complete' %}" title="Všechny novinky">
     {% block styles %}{% endblock %}
-    <link rel="shortcut icon" type="image/svg" href="{{ skin_favico_url }}">
-    <link rel="apple-touch-icon" type="image/svg" href="{{ skin_favico_url }}">
+    <link rel="icon" type="image/x-icon" href="{{ skin_favicon_ico_url }}">
+    <link rel="icon" type="image/svg+xml" href="{{ skin_favicon_svg_url }}">
+    <link rel="apple-touch-icon" href="{{ skin_apple_touch_icon_url }}">
     <script defer data-domain="dracidoupe.cz" src="https://plausible.io/js/script.js"></script>
 </head>
 

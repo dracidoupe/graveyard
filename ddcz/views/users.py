@@ -126,6 +126,15 @@ def change_skin(request):
     return HttpResponseRedirect(redirect_url)
 
 
+@require_http_methods(["HEAD", "GET"])
+def apple_touch_icon(request):
+    skin = request.session.get("skin", "light")
+    if skin not in VALID_SKINS:
+        skin = "light"
+    icon_url = staticfiles_storage.url(f"skins/{skin}/img/drak.png")
+    return HttpResponseRedirect(icon_url)
+
+
 @login_required
 @require_http_methods(["HEAD", "GET", "POST"])
 def user_settings(request):
