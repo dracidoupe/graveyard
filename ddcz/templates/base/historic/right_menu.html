@@ -29,7 +29,7 @@
     </ul>
     <form method="post" action="{% url 'ddcz:login-action' %}">
         {% csrf_token %}
-        {{ login_form }}
+        {{ login_form.as_table }}
         <input type="submit" value="Přihlásit">
     </form>
     <p><a href="{% url 'ddcz:password-reset' %}">Zapomněl jsem heslo</a></p>

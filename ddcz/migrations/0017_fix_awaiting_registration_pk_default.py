@@ -27,6 +27,16 @@ class Migration(migrations.Migration):
                     RAISE EXCEPTION 'Table uzivatele_cekajici not found';
                 END IF;
 
+                -- On databases created under Django 4.1+, id_zaznamu is an identity
+                -- column: it already auto-increments and SET DEFAULT would fail.
+                -- The sequence fix is only needed for the legacy pgloader import.
+                IF EXISTS (
+                    SELECT 1 FROM pg_attribute
+                    WHERE attrelid = tbl_oid AND attname = 'id_zaznamu' AND attidentity <> ''
+                ) THEN
+                    RETURN;
+                END IF;
+
                 fq_seq := quote_ident(tbl_schema) || '.' || quote_ident(seq_name);
                 fq_tbl := quote_ident(tbl_schema) || '.uzivatele_cekajici';
 
@@ -63,6 +73,14 @@ class Migration(migrations.Migration):
 
                 IF tbl_oid IS NULL THEN
                     -- Table not found; nothing to do
+                    RETURN;
+                END IF;
+
+                -- Identity columns (Django 4.1+ fresh databases) have no default to drop
+                IF EXISTS (
+                    SELECT 1 FROM pg_attribute
+                    WHERE attrelid = tbl_oid AND attname = 'id_zaznamu' AND attidentity <> ''
+                ) THEN
                     RETURN;
                 END IF;
 

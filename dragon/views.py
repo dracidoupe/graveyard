@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 
 from ddcz.email import (
     REGISTRATION_REVIEW_SALT,
@@ -42,7 +43,9 @@ def dashboard(request):
 
             if submission == RegistrationRequestApproval.APPROVE:
                 # TODO: Move this to core app domain logic
-                password = User.objects.make_random_password()
+                password = get_random_string(
+                    12, "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+                )
                 profile = UserProfile(
                     nick=reg.nick,
                     email=reg.email,

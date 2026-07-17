@@ -64,7 +64,7 @@ class PhorumCommentTestCase(TestCase):
             {"text": message, "post_type": "a", "submit": "Přidej"},
             follow=True,
         )
-        self.assertEquals(200, res.status_code)
+        self.assertEqual(200, res.status_code)
         self.assertInHTML(message, res.content.decode("utf-8"))
 
     def test_delete_comment(self):

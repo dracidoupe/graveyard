@@ -1,5 +1,5 @@
 from datetime import datetime
-import pytz
+from zoneinfo import ZoneInfo
 
 from django.test import TestCase
 
@@ -15,14 +15,14 @@ class AnimalTestCase(TestCase):
         p = UserProfile(nick=self.problematic_diacritic_string)
         p.save()
 
-        self.assertEquals(self.problematic_diacritic_string, p.nick)
+        self.assertEqual(self.problematic_diacritic_string, p.nick)
 
     def test_set_save_doesnt_destroy_database(self):
         p = UserProfile.objects.create(nick=self.problematic_diacritic_string)
 
         d = UserProfile.objects.get(id=p.id).nick
 
-        self.assertEquals(self.problematic_diacritic_string, d)
+        self.assertEqual(self.problematic_diacritic_string, d)
 
 
 class NewsTestCase(TestCase):
@@ -32,11 +32,11 @@ class NewsTestCase(TestCase):
 
     def test_save_and_read(self):
         p = News(
-            date=datetime.now(pytz.timezone("Europe/Prague")),
+            date=datetime.now(ZoneInfo("Europe/Prague")),
             author="xoxo",
             author_mail="xoxo@example.com",
             text=self.problematic_diacritic_string,
         )
         p.save()
 
-        self.assertEquals(self.problematic_diacritic_string, p.text)
+        self.assertEqual(self.problematic_diacritic_string, p.text)

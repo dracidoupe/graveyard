@@ -42,19 +42,19 @@ class TestPhorum(SeleniumTestCase):
 
     def test_page_heading_present(self):
         text = self.selenium.find_element(By.XPATH, '//h1[@class="page-heading"]').text
-        self.assertEquals("Fórum", text)
+        self.assertEqual("Fórum", text)
 
     def test_author_rendered(self):
         text = self.selenium.find_element(
             By.XPATH, '//div[@id="page-phorum"]//span[@class="nick"]'
         ).text.strip()
-        self.assertEquals(self.user_profile.nick, text)
+        self.assertEqual(self.user_profile.nick, text)
 
     def test_comment_text_rendered(self):
         text = self.selenium.find_element(
             By.XPATH, '//div[@id="page-phorum"]//p[@class="comment_text"]'
         ).text
-        self.assertEquals(SCRIPT_ALERT_INPUT, text)
+        self.assertEqual(SCRIPT_ALERT_INPUT, text)
 
     def test_author_link_rendered(self):
         url = self.selenium.find_element(

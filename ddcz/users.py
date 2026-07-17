@@ -1,11 +1,13 @@
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 SESSION_KEYS_TO_PRESERVE = ["skin"]
 
-ASSUMED_JOINED_DATE = datetime(2003, 1, 1)
+ASSUMED_JOINED_DATE = datetime(2003, 1, 1, tzinfo=ZoneInfo("Europe/Prague"))
 
 
 def migrate_user(profile, password=""):
@@ -16,7 +18,7 @@ def migrate_user(profile, password=""):
     it's set to unusable password and password reset is required before logging in.
     """
     if not profile.last_login:
-        profile.last_login = datetime.now()
+        profile.last_login = timezone.now()
 
     user = User.objects.create_user(
         id=profile.id,

@@ -21,8 +21,8 @@ class RedirectTestCase(TestCase):
 
     def assert_redirect(self, from_url, to_url_prefix):
         response = self.client.get(from_url)
-        self.assertEquals(response.status_code, 301)
-        self.assertEquals(
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
             response.url,
             f"{to_url_prefix}/{self.creation.id}-{self.creation.get_slug()}/",
         )
@@ -79,8 +79,8 @@ class TestUserProfileRedirect(TestCase):
         response = self.client.get(
             f"/index.php?rub=uzivatele_podrobnosti&skin=light&id={self.user.id}"
         )
-        self.assertEquals(response.status_code, 301)
-        self.assertEquals(response.url, f"/uzivatel/{self.user.id}-test/")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url, f"/uzivatel/{self.user.id}-test/")
 
 
 class TestCommonArticlePrintRedirect(TestCase):
@@ -149,8 +149,8 @@ class TestCommonArticlePrintRedirect(TestCase):
         response = self.client.get(f"{url}?id=774&co=noverasy&skin=dark")
 
         # Now we expect the correct behavior
-        self.assertEquals(response.status_code, 301)
-        self.assertEquals(
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
             response.url,
             f"/rubriky/noverasy/{self.noverasy_article.id}-{self.noverasy_article.get_slug()}/",
         )
@@ -161,8 +161,8 @@ class TestCommonArticlePrintRedirect(TestCase):
         response = self.client.get(f"{url}?id=408&co=hranicar&skin=dark")
 
         # Now we expect the correct behavior
-        self.assertEquals(response.status_code, 301)
-        self.assertEquals(
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
             response.url,
             f"/rubriky/hranicar/{self.hranicar_article.id}-{self.hranicar_article.get_slug()}/",
         )
@@ -173,8 +173,8 @@ class TestCommonArticlePrintRedirect(TestCase):
         response = self.client.get(f"{url}?id=2682&co=clanky&skin=dark")
 
         # Now we expect the correct behavior
-        self.assertEquals(response.status_code, 301)
-        self.assertEquals(
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(
             response.url,
             f"/rubriky/clanky/{self.clanky_article.id}-{self.clanky_article.get_slug()}/",
         )
