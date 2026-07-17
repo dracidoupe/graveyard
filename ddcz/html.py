@@ -110,7 +110,7 @@ def unsafe_encode_valid_creation_html(entity_string):
 
         else:
             entity_string = re.sub(
-                LEFT_ENTITY + tag_start_regexp_string + "(\ )?(/)?" + RIGHT_ENTITY,
+                LEFT_ENTITY + tag_start_regexp_string + r"(\ )?(/)?" + RIGHT_ENTITY,
                 "<" + tag + ">",
                 entity_string,
                 flags=re.I,

@@ -1,4 +1,4 @@
-Django>=5.2,<5.3
+Django>=5.2.8,<5.3
 gunicorn
 sqlparse
 argon2-cffi
@@ -12,7 +12,7 @@ boto3==1.42.34
 botocore==1.42.34
 django-bmemcached
 python-binary-memcached
-feedparser>=6.0.0 # test only
-psycopg2
+feedparser>=6.0.11 # test only
+psycopg2>=2.9.11
 dj-database-url
 

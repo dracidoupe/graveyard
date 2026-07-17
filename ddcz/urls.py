@@ -85,12 +85,12 @@ urlpatterns = [
     #     name="creation-detail",
     # ),
     re_path(
-        "^rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>[a-zA-Z0-9_-]+)/$",
+        r"^rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>[a-zA-Z0-9_-]+)/$",
         views.creation_detail,
         name="creation-detail",
     ),
     re_path(
-        "rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>[a-zA-Z0-9_-]+)/obr_pris/(?P<image_path>.+)",  # /(?P<image_path_name>\w+)",
+        r"rubriky/(?P<creative_page_slug>\w+)/(?P<creation_id>\d+)-(?P<creation_slug>[a-zA-Z0-9_-]+)/obr_pris/(?P<image_path>.+)",
         views.creation_detail_image,
         name="creation-detail-image",
     ),
@@ -108,12 +108,12 @@ urlpatterns = [
         name="quest-view-legacy-redirect",
     ),
     re_path(
-        "dobrodruzstvi/(?P<quest_id>\d+)-(?P<quest_slug>[a-zA-Z0-9_-]+)/$",
+        r"dobrodruzstvi/(?P<quest_id>\d+)-(?P<quest_slug>[a-zA-Z0-9_-]+)/$",
         views.quest_view_redirect,
         name="quest-view",
     ),
     re_path(
-        "dobrodruzstvi/(?P<quest_id>\d+)(-)?(?P<quest_slug>[a-zA-Z0-9_-]+)?/(?P<leftover>.*)$",
+        r"dobrodruzstvi/(?P<quest_id>\d+)(-)?(?P<quest_slug>[a-zA-Z0-9_-]+)?/(?P<leftover>.*)$",
         views.quest_view_redirect_rest,
         name="quest-view-rest",
     ),
