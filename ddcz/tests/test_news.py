@@ -4,8 +4,50 @@ from django.utils import timezone
 from django.core.cache import cache
 from django.conf import settings
 
-from ..models import CreativePage, CreationComment, CommonArticle
+from ..models import CommonArticle, CreationComment, CreativePage, News, UserProfile
 from ..creations import ApprovalChoices
+
+
+class TestNewsList(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    def tearDown(self):
+        cache.clear()
+
+    def test_author_links_to_existing_user_profile(self):
+        author = UserProfile.objects.create(nick="Kronikář")
+        News.objects.create(
+            date=timezone.now(),
+            author=author.nick,
+            author_mail="kronikar@example.com",
+            text="Nová zpráva",
+        )
+
+        response = self.client.get("/aktuality/")
+
+        self.assertContains(
+            response,
+            f'<a href="{author.profile_url}" class="author" rel="author">Kronikář</a>',
+            html=True,
+        )
+
+    def test_unknown_author_is_plain_text_instead_of_void_link(self):
+        News.objects.create(
+            date=timezone.now(),
+            author="Archivář",
+            author_mail="archivar@example.com",
+            text="Stará zpráva",
+        )
+
+        response = self.client.get("/aktuality/")
+
+        self.assertContains(
+            response,
+            '<span class="author">Archivář</span>',
+            html=True,
+        )
+        self.assertNotContains(response, 'href="#"')
 
 
 class TestNewsfeed(TestCase):

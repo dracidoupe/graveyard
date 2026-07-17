@@ -2,6 +2,7 @@
 {% load html %}
 {% load pages %}
 {% load creations %}
+{% load users %}
 
 {% block meta_description %}Domov všech hráčů Dračího Doupěte. Přes dvacet let doplňků, povolání, nestvůr do bestíáře, dobrodružství a debat o nich. Prostor pro seznámení hráčů a hráček a tvorbu družin.{% endblock %}
 
@@ -20,7 +21,13 @@
                 {{ n.text|render_html|safe }}
             </div>
             <footer>
-                <a href="#" class="author" rel="author">{{ n.author }}</a>
+                {% with author_url=n.author|nick_url %}
+                    {% if author_url == "#" %}
+                        <span class="author">{{ n.author }}</span>
+                    {% else %}
+                        <a href="{{ author_url }}" class="author" rel="author">{{ n.author }}</a>
+                    {% endif %}
+                {% endwith %}
             </footer>
         </article>
     {% endfor %}
