@@ -68,4 +68,4 @@ class TestTavernPosts(SeleniumTestCase):
             By.XPATH, TavernTablePostPage.FIRST_COMMENT.value
         ).text
 
-        self.assertEquals(IMG_TAB_SRC_INPUT, text)
+        self.assertEqual(IMG_TAB_SRC_INPUT, text)

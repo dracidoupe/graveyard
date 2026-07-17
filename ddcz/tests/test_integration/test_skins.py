@@ -15,7 +15,7 @@ class SkinRedirectTestCase(TestCase):
             reverse("ddcz:change-skin"), {"skin": "dark", "redirect": "/forum/"}
         )
 
-        self.assertEquals("/forum/", res.url)
+        self.assertEqual("/forum/", res.url)
 
     def test_redirect_out_of_site_redirects_to_root(self):
         res = self.client.get(
@@ -23,4 +23,4 @@ class SkinRedirectTestCase(TestCase):
             {"skin": "dark", "redirect": "https://google.com"},
         )
 
-        self.assertEquals("/", res.url)
+        self.assertEqual("/", res.url)

@@ -38,7 +38,7 @@ class PasswordResetTestCase(TestCase):
         )
 
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEquals(302, res.status_code)
+        self.assertEqual(302, res.status_code)
 
 
 class UserListTestCase(TestCase):

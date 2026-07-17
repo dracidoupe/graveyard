@@ -62,7 +62,7 @@
                 <p><a href="{% url 'ddcz:sign-up' %}">Registrace</a></p>
                 <form method="post" action="{% url 'ddcz:login-action' %}">
                     {% csrf_token %}
-                    {{ login_form }}
+                    {{ login_form.as_table }}
                     <input type="submit" value="Přihlásit" id="login_submit">
                 </form>
                 <p><a href="{% url 'ddcz:password-reset' %}">Zapomněl jsem heslo</a></p>

@@ -12,13 +12,13 @@ class TestNews(SeleniumTestCase):
 
     def test_server_available(self):
         req = urlopen(self.live_server_url)
-        self.assertEquals(200, req.code)
+        self.assertEqual(200, req.code)
 
     def test_window_title_present(self):
-        self.assertEquals("DraciDoupe.cz", self.selenium.title)
+        self.assertEqual("DraciDoupe.cz", self.selenium.title)
 
     def test_page_heading_present(self):
         text = self.selenium.find_element(
             By.XPATH, '//h1[contains(@class,"page-heading")]'
         ).text
-        self.assertEquals("Aktuality", text)
+        self.assertEqual("Aktuality", text)

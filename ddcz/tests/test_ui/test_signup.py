@@ -44,15 +44,13 @@ class TestValidSignupSubmission(SeleniumTestCase):
         Select(self.el(SignUpPage.GDPR)).select_by_value("T")
 
     def assert_registration_saved(self):
-        self.assertEquals(
-            1, AwaitingRegistration.objects.filter(nick=self.nick).count()
-        )
+        self.assertEqual(1, AwaitingRegistration.objects.filter(nick=self.nick).count())
         awaiting_registration = AwaitingRegistration.objects.get(nick=self.nick)
-        self.assertEquals(self.nick, awaiting_registration.nick)
-        self.assertEquals(self.nick, awaiting_registration.name_given)
-        self.assertEquals(self.nick, awaiting_registration.name_family)
-        self.assertEquals(self.nick, awaiting_registration.salutation)
-        self.assertEquals(50, awaiting_registration.age)
+        self.assertEqual(self.nick, awaiting_registration.nick)
+        self.assertEqual(self.nick, awaiting_registration.name_given)
+        self.assertEqual(self.nick, awaiting_registration.name_family)
+        self.assertEqual(self.nick, awaiting_registration.salutation)
+        self.assertEqual(50, awaiting_registration.age)
 
     def test_submission(self):
         self.fill_signup_form()
@@ -69,7 +67,7 @@ class TestValidSignupSubmission(SeleniumTestCase):
             )
         )
 
-        self.assertEquals(
+        self.assertEqual(
             f"Vítej ve Městě, {self.nick}!", self.el(MainPage.MAIN_TITLE).text
         )
 

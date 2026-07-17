@@ -24,17 +24,17 @@ class TestMarket(SeleniumTestCase):
 
     def navigate_to_market(self):
         self.el(MainPage.NAVIGATION_MARKET).click()
-        self.assertEquals(
+        self.assertEqual(
             "Inzerce",
             self.el(MainPage.MAIN_TITLE).text,
         )
 
     def test_page_heading_present(self):
         text = self.selenium.find_element(By.XPATH, '//h1[@class="page-heading"]').text
-        self.assertEquals("Inzerce", text)
+        self.assertEqual("Inzerce", text)
 
     def test_entry_text_rendered(self):
         text = self.selenium.find_element(
             By.XPATH, '//div[@id="page-market"]//span[contains(@class, "market_text")]'
         ).text
-        self.assertEquals("Seller Text #0", text)
+        self.assertEqual("Seller Text #0", text)

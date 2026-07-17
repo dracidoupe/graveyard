@@ -132,13 +132,13 @@ class SeleniumTestCase(StaticLiveServerTestCase):
             self.el(MainPage.LOGIN_PASSWORD_INPUT).send_keys(user_profile.user.email)
             self.el(MainPage.LOGIN_SUBMIT).submit()
 
-        self.assertEquals(
+        self.assertEqual(
             user_profile.nick,
             self.el(MainPage.CONTROL_NICK).text,
         )
 
         self.el(navigation_element).click()
-        self.assertEquals(
+        self.assertEqual(
             expected_title,
             self.el(MainPage.MAIN_TITLE).text,
         )

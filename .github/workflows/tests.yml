@@ -15,7 +15,7 @@ jobs:
       - name: Wait for PostgreSQL to be ready
         run: sleep 10
       - name: run tests
-        run: docker compose -f docker-compose.server_ci.yml run --rm web python3 manage.py test
+        run: docker compose -f docker-compose.server_ci.yml run --rm web python3 -Wa manage.py test
   lint:
     runs-on: ubuntu-latest
     steps:

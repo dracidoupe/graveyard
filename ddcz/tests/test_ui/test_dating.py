@@ -100,9 +100,9 @@ class TestDating(SeleniumTestCase):
         """Test that anonymous user can view dating list"""
         self.navigate_to_dating()
         text = self.selenium.find_element(By.XPATH, '//h1[@class="page-heading"]').text
-        self.assertEquals("Seznamka", text)
+        self.assertEqual("Seznamka", text)
 
         text = self.selenium.find_element(
             By.XPATH, DatingListPage.FIRST_TEXT.value
         ).text
-        self.assertEquals(self.existing_dating_entry.text, text)
+        self.assertEqual(self.existing_dating_entry.text, text)

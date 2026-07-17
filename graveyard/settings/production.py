@@ -50,8 +50,7 @@ else:
         "default": dj_database_url.config(
             env="DATABASE_URL",
             conn_max_age=600,
-            # Use after upgrade...
-            # conn_health_checks=True,
+            conn_health_checks=True,
             ssl_require=True,
         ),
     }
@@ -88,14 +87,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_HOST = STATIC_URL = "https://static.dracidoupe.cz/"
 WHITENOISE_STATIC_PREFIX = "/staticfiles/"
 
-# On Django 4.2+:
-# STORAGES = {
-#     # ...
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#     },
-# }
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STORAGES = {
+    "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
+}
 
 ## User-uploaded content that is hosted on S3/cloudfront
 GALLERY_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/galerie/"
@@ -132,7 +129,6 @@ X_FRAME_OPTIONS = "DENY"
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = ["https://www.dracidoupe.cz"]
 SESSION_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 3  # 3 hours
