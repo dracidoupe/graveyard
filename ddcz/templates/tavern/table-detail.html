@@ -14,11 +14,14 @@
             <ul>
                 <li><a href="{% url "ddcz:tavern-posts" tavern_table_id=table.id %}">Stůl</a></li>
                 <li>
-                    {% if table.is_bookmarked %}
-                        <a href="{% url "ddcz:tavern-bookmark" tavern_table_id=table.id %}?akce=neoblibit">Zrušit oblíbenost</a>
-                    {% else %}
-                        <a href="{% url "ddcz:tavern-bookmark" tavern_table_id=table.id %}?akce=oblibit">Oblíbit</a>
-                    {% endif %}
+                    <form method="post" action="{% url "ddcz:tavern-bookmark" tavern_table_id=table.id %}">
+                        {% csrf_token %}
+                        {% if table.is_bookmarked %}
+                            <button type="submit" name="action" value="neoblibit">Zrušit oblíbenost</button>
+                        {% else %}
+                            <button type="submit" name="action" value="oblibit">Oblíbit</button>
+                        {% endif %}
+                    </form>
                 </li>
                 {% if table.user_can_admin %}
                     <li><a href="{% url "ddcz:tavern-table-admin" tavern_table_id=table.id %}">Admin</a></li>

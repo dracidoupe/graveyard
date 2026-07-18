@@ -229,26 +229,19 @@ def notice_board(request, tavern_table_id):
 
 
 @login_required
-@require_http_methods(["HEAD", "GET"])
+@require_http_methods(["POST"])
 @handle_table_visit
 def table_bookmark(request, tavern_table_id):
     table = request.tavern_table
 
-    # TODO: The "Book" button should be a form and it should sent a POST request
-    if "akce" not in request.GET:
-        return HttpResponseBadRequest(
-            "`akce` request parameter is mandatory for this endpoint"
-        )
     try:
-        action = BookmarkActions(request.GET["akce"])
-    except ValueError:
-        return HttpResponseBadRequest(
-            f"Invalid parameter for `akce`: {request.GET['akce']}"
-        )
+        action = BookmarkActions(request.POST.get("action"))
+    except (TypeError, ValueError):
+        return HttpResponseBadRequest("Invalid bookmark action")
 
-    if action == BookmarkActions.BOOK:
+    if action == BookmarkActions.BOOK and not table.is_bookmarked:
         bookmark_table(user_profile=request.ddcz_profile, tavern_table=table)
-    elif action == BookmarkActions.UNBOOK:
+    elif action == BookmarkActions.UNBOOK and table.is_bookmarked:
         unbook_table(user_profile=request.ddcz_profile, tavern_table=table)
 
     return HttpResponseRedirect(

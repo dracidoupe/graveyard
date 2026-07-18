@@ -319,11 +319,32 @@ article.link span.actuallink {
     text-transform: uppercase;
 }
 
-#tavern_table_menu li a::before {
+#tavern_table_menu li form {
+    display: inline;
+}
+
+#tavern_table_menu li button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--link-color);
+    cursor: pointer;
+    font: inherit;
+    text-transform: inherit;
+}
+
+#tavern_table_menu li button:hover,
+#tavern_table_menu li button:focus-visible {
+    color: var(--link-color-hover);
+}
+
+#tavern_table_menu li a::before,
+#tavern_table_menu li button::before {
     content: "[";
 }
 
-#tavern_table_menu li a::after {
+#tavern_table_menu li a::after,
+#tavern_table_menu li button::after {
     content: "]";
 }
 
