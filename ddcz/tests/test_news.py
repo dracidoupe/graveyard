@@ -13,7 +13,7 @@ class TestNewsfeed(TestCase):
         self.client = Client()
         cache.clear()
         self.creative_page = CreativePage.objects.create(
-            name="Test Page", slug="test-page", model_class="ddcz.CommonArticle"
+            name="Test Page", slug="testpage", model_class="ddcz.commonarticle"
         )
 
     def test_newsfeed_empty_response(self):
@@ -124,6 +124,75 @@ class TestNewsfeed(TestCase):
         self.assertLessEqual(
             len(response.context["comments"]), settings.NEWSFEED_MAX_COMMENTS
         )
+
+    def test_newsfeed_comment_links_to_the_comment(self):
+        article = CommonArticle.objects.create(
+            name="Test Article",
+            is_published=ApprovalChoices.APPROVED.value,
+            creative_page_slug=self.creative_page.slug,
+            text="Test content",
+        )
+        comment = CreationComment.objects.create(
+            nickname="Tester",
+            email="tester@example.com",
+            text="A useful comment",
+            foreign_table=self.creative_page.slug,
+            foreign_id=article.pk,
+        )
+
+        response = self.client.get("/novinky/")
+
+        self.assertContains(
+            response,
+            f'href="/rubriky/testpage/{article.pk}-test-article/#comment-{comment.pk}"',
+        )
+
+    def test_comment_url_points_to_its_page(self):
+        article = CommonArticle.objects.create(
+            name="Test Article",
+            is_published=ApprovalChoices.APPROVED.value,
+            creative_page_slug=self.creative_page.slug,
+            text="Test content",
+        )
+        older_comment = CreationComment.objects.create(
+            nickname="Tester",
+            email="tester@example.com",
+            text="An older comment",
+            foreign_table=self.creative_page.slug,
+            foreign_id=article.pk,
+        )
+        for index in range(10):
+            CreationComment.objects.create(
+                nickname="Tester",
+                email="tester@example.com",
+                text=f"Newer comment {index}",
+                foreign_table=self.creative_page.slug,
+                foreign_id=article.pk,
+            )
+
+        self.assertEqual(
+            older_comment.get_absolute_url(),
+            f"/rubriky/testpage/{article.pk}-test-article/?z_s=2#comment-{older_comment.pk}",
+        )
+
+    def test_creation_detail_gives_comments_stable_anchors(self):
+        article = CommonArticle.objects.create(
+            name="Test Article",
+            is_published=ApprovalChoices.APPROVED.value,
+            creative_page_slug=self.creative_page.slug,
+            text="Test content",
+        )
+        comment = CreationComment.objects.create(
+            nickname="Tester",
+            email="tester@example.com",
+            text="A useful comment",
+            foreign_table=self.creative_page.slug,
+            foreign_id=article.pk,
+        )
+
+        response = self.client.get(f"/rubriky/testpage/{article.pk}-test-article/")
+
+        self.assertContains(response, f'id="comment-{comment.pk}"')
 
     def test_unpublished_articles_filtered(self):
         """Test that unpublished articles are not shown"""

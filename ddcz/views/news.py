@@ -10,7 +10,7 @@ from django.views.decorators.vary import vary_on_cookie
 from django.conf import settings
 
 from ..creations import ApprovalChoices
-from ..models import News, CreativePage, CreationComment
+from ..models import CREATION_COMMENT_PAGE_SIZE, News, CreativePage, CreationComment
 
 logger = logging.getLogger(__name__)
 
@@ -81,6 +81,10 @@ def newsfeed(request):
                 comment.creation.creative_page = page_slug_map[comment.foreign_table][
                     "page"
                 ]
+                if settings.NEWSFEED_MAX_COMMENTS <= CREATION_COMMENT_PAGE_SIZE:
+                    comment.comment_url = comment.get_url_for_page(1)
+                else:
+                    comment.comment_url = comment.get_absolute_url()
             except comment_model.DoesNotExist:
                 logger.exception(
                     f"Can't look up creation for comment {comment.pk} for model {comment_model}"

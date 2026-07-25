@@ -24,7 +24,7 @@
     {% pagination comments %}
 
     {% for comment in comments %}
-        <article class="comment">
+        <article class="comment" id="comment-{{ comment.pk }}">
             <picture class="user_icon">
                 {% if comment.by_registered_user %}
                     {% if comment.user.icon_url %}

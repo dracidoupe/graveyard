@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 
 from ..magic import MisencodedCharField, MisencodedTextField
@@ -7,6 +8,7 @@ from .creations import CreativePage
 
 ADD_PHORUM_COMMENT = "a"
 DELETE_PHORUM_COMMENT = "d"
+CREATION_COMMENT_PAGE_SIZE = 10
 
 
 class Phorum(models.Model):
@@ -66,10 +68,12 @@ class CreationComment(models.Model):
     def __str__(self):
         return f"{self.nickname} v {self.foreign_table}"
 
-    def get_absolute_url(self):
+    def get_url_for_page(self, page):
         model = CreativePage.get_model_from_slug(self.foreign_table)
-        creation = model.objects.get(id=self.foreign_id)
-        return reverse(
+        creation = getattr(self, "creation", None) or model.objects.get(
+            id=self.foreign_id
+        )
+        url = reverse(
             "ddcz:creation-detail",
             kwargs={
                 "creative_page_slug": self.foreign_table,
@@ -77,6 +81,17 @@ class CreationComment(models.Model):
                 "creation_slug": creation.get_slug(),
             },
         )
+        page_query = f"?z_s={page}" if page > 1 else ""
+        return f"{url}{page_query}#comment-{self.pk}"
+
+    def get_absolute_url(self):
+        newer_comments = CreationComment.objects.filter(
+            Q(date__gt=self.date) | Q(date=self.date, pk__gt=self.pk),
+            foreign_table=self.foreign_table,
+            foreign_id=self.foreign_id,
+        ).count()
+        page = newer_comments // CREATION_COMMENT_PAGE_SIZE + 1
+        return self.get_url_for_page(page)
 
 
 class Letter(models.Model):

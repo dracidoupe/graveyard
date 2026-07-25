@@ -2,11 +2,11 @@ from django import template
 from django.core.paginator import Paginator
 from django.utils import timezone
 
-from ddcz.models import CreationComment, TavernPost
+from ddcz.models import CREATION_COMMENT_PAGE_SIZE, CreationComment, TavernPost
 
 register = template.Library()
 
-COMMENT_DEFAULT_LIMIT = 10
+COMMENT_DEFAULT_LIMIT = CREATION_COMMENT_PAGE_SIZE
 
 
 @register.filter
@@ -21,7 +21,7 @@ def commentTime(commentDatetime):
 def creation_comments(context, creative_page_slug, creation_pk):
     comments = CreationComment.objects.filter(
         foreign_table=creative_page_slug, foreign_id=creation_pk
-    ).order_by("-date")
+    ).order_by("-date", "-pk")
 
     paginator = Paginator(comments, COMMENT_DEFAULT_LIMIT)
     comments = paginator.get_page(context["comment_page"])
