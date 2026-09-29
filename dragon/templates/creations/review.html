@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load html %}
+{% block content %}
+    <h1>{{ article.name }}</h1>
+    <p>
+        Rubrika: {{ creative_page_name }}<br>
+        Autor: {{ article.author_nick }} ({{ article.author_mail }})<br>
+        Odesláno: {{ article.published|date:"j. n. Y H:i" }}
+    </p>
+
+    {% if html_problem %}
+        <p class="error">Text obsahuje chybu v HTML: {{ html_problem }}</p>
+    {% endif %}
+
+    <h2>Náhled</h2>
+    <div>{{ article.text|render_html|safe }}</div>
+
+    <h2>Schválit</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="{{ ReviewAction.APPROVE.value }}">
+        {{ review_form.as_p }}
+        <input type="submit" value="Schválit">
+    </form>
+
+    <h2>Zamítnout</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="{{ ReviewAction.REJECT.value }}">
+        {{ rejection_form.as_p }}
+        <input type="submit" value="Zamítnout">
+    </form>
+{% endblock %}

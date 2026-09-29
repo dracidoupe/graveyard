@@ -1,0 +1,38 @@
+{% extends 'public.html' %}
+
+{% block content %}
+<div id="page-my-submissions">
+    <h1 class="page-heading">Moje příspěvky</h1>
+    {% if submissions %}
+    <table class="list_default">
+        <tr>
+            <th>Rubrika</th>
+            <th>Název</th>
+            <th>Skupina</th>
+            <th>Odesláno</th>
+            <th>Stav</th>
+            <th></th>
+        </tr>
+        {% for submission in submissions %}
+        <tr>
+            <td>{% for slug, page in pages.items %}{% if slug == submission.creative_page_slug %}{{ page.name }}{% endif %}{% endfor %}</td>
+            <td>{{ submission.name }}</td>
+            <td>{{ submission.section }}</td>
+            <td>{{ submission.published|date:"j. n. Y" }}</td>
+            <td>{{ submission.get_is_published_display }}</td>
+            <td>
+                {% if submission.is_published in pending_states %}
+                <form method="POST" action="{% url 'ddcz:my-submission-withdraw' submission.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Stáhnout</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>Nemáte žádné příspěvky čekající na schválení.</p>
+    {% endif %}
+</div>
+{% endblock %}

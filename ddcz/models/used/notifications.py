@@ -10,6 +10,7 @@ from django.db import models
 
 class NotificationEvent(Enum):
     NEWS_ADDED = "Nová aktualita"
+    CREATION_APPROVED = "Schválené dílo"
 
 
 class ScheduledNotification(models.Model):

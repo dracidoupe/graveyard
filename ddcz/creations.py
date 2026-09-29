@@ -14,3 +14,9 @@ RATING_DESCRIPTIONS = {
 class ApprovalChoices(Enum):
     APPROVED = "a"
     WAITING = "n"
+    WITHDRAWN = "q"
+    REJECTED = "z"
+
+
+# Legacy editors also parked works in "r"/"p"/"h" states; those are still awaiting a decision
+PENDING_STATES = ("n", "r", "p", "h")

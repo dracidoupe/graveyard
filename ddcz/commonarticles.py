@@ -39,7 +39,7 @@ COMMON_ARTICLES_CREATIVE_PAGES = {
     },
     "noverasy": {
         "name": "Nové Rasy",
-        "sections": ["Kříženec", "Nová rasa", "Odrůda", "Ostatní,"],
+        "sections": ["Kříženec", "Nová rasa", "Odrůda", "Ostatní"],
     },
     # Not a common article, in fact
     # 'predmety': {

@@ -75,6 +75,11 @@ urlpatterns = [
         name="creative-page-concept",
     ),
     path(
+        "rubriky/<creative_page_slug>/pridat/",
+        views.creation_submit,
+        name="creation-submit",
+    ),
+    path(
         "rubriky/<creative_page_slug>/kontrola-html/",
         views.creative_page_html_check,
         name="creative_page_html_check",
@@ -161,6 +166,12 @@ urlpatterns = [
         "e-mail/antispam/<email_base64>-<unsub_token>/",
         email.antispam,
         name="email-antispam",
+    ),
+    path("moje-prispevky/", views.my_submissions, name="my-submissions"),
+    path(
+        "moje-prispevky/<int:article_id>/stahnout/",
+        views.my_submission_withdraw,
+        name="my-submission-withdraw",
     ),
     ### Info sites
     path("aktuality/", news.list, name="news"),

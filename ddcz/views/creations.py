@@ -4,6 +4,8 @@ from zlib import crc32
 
 from django.apps import apps
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import (
@@ -12,22 +14,26 @@ from django.http import (
     HttpResponseNotAllowed,
     Http404,
 )
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
 
-from ..creations import ApprovalChoices
+from ..commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
+from ..creations import ApprovalChoices, PENDING_STATES
 from ..forms.comments import CreationCommentForm, CommentAction
+from ..forms.creations import CommonArticleSubmissionForm
 from ..html import check_creation_html, HtmlTagMismatchException
 from ..models import (
     Author,
+    CommonArticle,
     CreativePage,
     CreativePageConcept,
     CreationComment,
     DownloadItem,
     Quest,
 )
+from ..submissions import submit_common_article, withdraw_common_article
 from ..text import escape_user_input
 
 # Get an instance of a logger
@@ -103,6 +109,7 @@ def creative_page_list(request, creative_page_slug):
             "articles": articles,
             "creative_page_slug": creative_page.slug,
             "concept": concept,
+            "can_submit": creative_page_slug in COMMON_ARTICLES_CREATIVE_PAGES,
         },
     )
 
@@ -374,3 +381,74 @@ def author_detail(request, author_id, slug):
             "pages_with_creations": author.get_all_creations(),
         },
     )
+
+
+@login_required
+@require_http_methods(["HEAD", "GET", "POST"])
+def creation_submit(request, creative_page_slug):
+    if creative_page_slug not in COMMON_ARTICLES_CREATIVE_PAGES:
+        raise Http404()
+
+    creative_page = get_object_or_404(CreativePage, slug=creative_page_slug)
+
+    if request.method == "POST":
+        form = CommonArticleSubmissionForm(
+            request.POST, creative_page_slug=creative_page_slug
+        )
+        if form.is_valid():
+            submit_common_article(
+                user_profile=request.ddcz_profile,
+                creative_page_slug=creative_page_slug,
+                name=form.cleaned_data["name"],
+                abstract=form.cleaned_data["abstract"],
+                section=form.cleaned_data["section"],
+                text=form.cleaned_data["text"],
+            )
+            messages.success(request, "Váš příspěvek byl úspěšně odeslán ke schválení.")
+            return redirect("ddcz:my-submissions")
+    else:
+        form = CommonArticleSubmissionForm(creative_page_slug=creative_page_slug)
+
+    return render(
+        request,
+        "creations/submit.html",
+        {
+            "form": form,
+            "heading": creative_page.name,
+            "creative_page_slug": creative_page_slug,
+            "has_concept": CreativePageConcept.objects.filter(
+                page=creative_page
+            ).exists(),
+        },
+    )
+
+
+@login_required
+@require_http_methods(["HEAD", "GET"])
+def my_submissions(request):
+    submissions = (
+        CommonArticle.objects.filter(author__user=request.ddcz_profile)
+        .exclude(is_published=ApprovalChoices.APPROVED.value)
+        .order_by("-published")
+    )
+
+    return render(
+        request,
+        "creations/my_submissions.html",
+        {
+            "submissions": submissions,
+            "pending_states": PENDING_STATES,
+            "pages": COMMON_ARTICLES_CREATIVE_PAGES,
+        },
+    )
+
+
+@login_required
+@require_http_methods(["POST"])
+def my_submission_withdraw(request, article_id):
+    article = get_object_or_404(CommonArticle, pk=article_id)
+    if withdraw_common_article(article, request.ddcz_profile):
+        messages.success(request, "Příspěvek byl stažen.")
+    else:
+        messages.error(request, "Tento příspěvek nelze stáhnout.")
+    return redirect("ddcz:my-submissions")
