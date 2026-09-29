@@ -67,6 +67,15 @@ COMMON_ARTICLES_CREATIVE_PAGES = {
             "Teorie RPG",
         ],
     },
+    "hrbitov": {
+        "name": "Hřbitov",
+        "sections": [
+            "Běžný obyvatel",
+            "Cizí postava",
+            "Ostatní",
+            "Postava",
+        ],
+    },
     "alchymistazvl": {
         "name": "Alchymista",
         "sections": [
@@ -129,6 +138,7 @@ SLUG_NAME_TRANSLATION_FROM_CZ = {
     "kouzelnikzvl": "wizard",
     "valecnik": "warrior",
     "zlodej": "rogue",
+    "hrbitov": "graveyard",
 }
 
 SLUG_NAME_TRANSLATION_TO_CZ = {v: k for k, v in SLUG_NAME_TRANSLATION_FROM_CZ.items()}

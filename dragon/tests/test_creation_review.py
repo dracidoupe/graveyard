@@ -31,6 +31,7 @@ class TestDragonCreationReview(TestCase):
         self.article = submit_common_article(
             self.author_profile, "clanky", "Dílo", "Anotace", "Povídky", "Text"
         )
+        mail.outbox.clear()
         self.review_url = reverse("dragon:creation-review", args=[self.article.pk])
         self.pending_url = reverse("dragon:creations-pending")
         self.approve_data = {

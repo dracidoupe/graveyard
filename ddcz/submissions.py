@@ -1,3 +1,5 @@
+from html import unescape
+
 from django.conf import settings
 from django.core.cache import cache
 from django.core.mail import send_mail
@@ -14,6 +16,7 @@ from .models import (
     CreationVote,
     NotificationEvent,
 )
+from .email import notify_staff_about_submission
 from .notifications import schedule_notification
 from .text import escape_user_input
 
@@ -52,7 +55,7 @@ def submit_common_article(
         defaults={"user_nick": user_profile.nick},
     )
 
-    return CommonArticle.objects.create(
+    article = CommonArticle.objects.create(
         name=name,
         abstract=abstract,
         section=section,
@@ -66,6 +69,8 @@ def submit_common_article(
         rater_no=0,
         rating_sum=0,
     )
+    notify_staff_about_submission(article)
+    return article
 
 
 def withdraw_common_article(article, user_profile):
@@ -122,7 +127,7 @@ def approve_common_article(article, editor_profile, rating, comment=""):
         "Schválení příspěvku na DraciDoupe.cz",
         f"""Zdravíme,
 
-Váš příspěvek "{article.name}" byl schválen a je zveřejněn na {get_article_url(article)} .
+Váš příspěvek "{unescape(article.name)}" byl schválen a je zveřejněn na {get_article_url(article)} .
 
 — Redakce DraciDoupe.cz
 """,
@@ -156,7 +161,7 @@ def reject_common_article(article, editor_profile, reason):
         "Zamítnutí příspěvku na DraciDoupe.cz",
         f"""Zdravíme,
 
-redaktor {editor_profile.nick} zamítl Váš příspěvek "{article.name}" s následujícím odůvodněním:
+redaktor {editor_profile.nick} zamítl Váš příspěvek "{unescape(article.name)}" s následujícím odůvodněním:
 
 {reason}
 

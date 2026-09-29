@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.core import mail
 from django.test import TestCase
 from django.urls import reverse
 
@@ -76,6 +78,76 @@ class CreationSubmissionTestCase(TestCase):
         self.assertNotContains(res, "Tajne")
         res = self.client.get(f"/rubriky/clanky/{article.pk}-tajne/")
         self.assertEqual(404, res.status_code)
+
+
+class SubmissionNotificationTestCase(TestCase):
+    fixtures = ["pages"]
+
+    def setUp(self):
+        self.user = create_profiled_user("submitter", "secret")
+        self.profile = UserProfile.objects.get(user=self.user)
+        for nick, is_staff, is_active in [
+            ("staff1", True, True),
+            ("staff2", True, True),
+            ("inactive", True, False),
+            ("regular", False, True),
+        ]:
+            user = create_profiled_user(nick, "secret")
+            user.is_staff = is_staff
+            user.is_active = is_active
+            user.save()
+
+    def test_all_active_staff_notified(self):
+        article = submit_common_article(
+            self.profile, "clanky", "Nový &lt;příběh&gt;", "", "Povídky", "text"
+        )
+
+        self.assertEqual(
+            {("staff1@example.com",), ("staff2@example.com",)},
+            {tuple(m.to) for m in mail.outbox},
+        )
+        self.assertEqual(2, len(mail.outbox))
+        body = mail.outbox[0].body
+        self.assertIn(f"/sprava/prispevky/{article.pk}/", body)
+        self.assertIn("Nový <příběh>", body)
+
+    def test_no_staff_does_not_fail(self):
+        User.objects.filter(is_staff=True).update(is_staff=False)
+        submit_common_article(self.profile, "clanky", "Dílo", "", "Povídky", "text")
+        self.assertEqual(0, len(mail.outbox))
+
+
+class GraveyardSubmissionTestCase(TestCase):
+    fixtures = ["pages"]
+
+    def test_hrbitov_submission(self):
+        create_profiled_user("submitter", "secret")
+        self.client.login(username="submitter", password="secret")
+        url = reverse("ddcz:creation-submit", kwargs={"creative_page_slug": "hrbitov"})
+        self.assertEqual(200, self.client.get(url).status_code)
+
+        self.client.post(
+            url,
+            {"name": "Hrdina", "abstract": "", "section": "Postava", "text": "Text"},
+        )
+        article = CommonArticle.objects.get()
+        self.assertEqual("hrbitov", article.creative_page_slug)
+        self.assertEqual("Postava", article.section)
+
+
+class SectionColumnTestCase(TestCase):
+    fixtures = ["pages"]
+
+    def test_section_shown_in_list(self):
+        CommonArticle.objects.create(
+            name="Dílo",
+            creative_page_slug="clanky",
+            section="Povídky",
+            is_published=ApprovalChoices.APPROVED.value,
+            rating=0,
+        )
+        res = self.client.get("/rubriky/clanky/")
+        self.assertContains(res, "<td>Povídky</td>", html=True)
 
 
 class MySubmissionsTestCase(TestCase):

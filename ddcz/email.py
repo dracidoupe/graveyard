@@ -1,5 +1,6 @@
 from base64 import urlsafe_b64encode, urlsafe_b64decode
 import hashlib
+from html import unescape
 import hmac
 import logging
 
@@ -78,6 +79,45 @@ def notify_admins_about_registration(reg):
     )
     # temporary hardcode
     recipients = ["almad@dracidoupe.cz"]
+    for email in recipients:
+        send_mail(subject, body, settings.DDCZ_TRANSACTION_EMAIL_FROM, [email])
+
+
+def build_creation_review_url(article_id):
+    return settings.EMAIL_LINKS_BASE_URI + reverse(
+        "dragon:creation-review", kwargs={"article_id": article_id}
+    )
+
+
+def notify_staff_about_submission(article):
+    """Send an individual email to every active staff member about a work awaiting review."""
+    recipients = list(
+        UserProfile.objects.filter(user__is_staff=True, user__is_active=True)
+        .exclude(email="")
+        .exclude(email__isnull=True)
+        .values_list("email", flat=True)
+        .distinct()
+    )
+    if not recipients:
+        logger.warning(
+            "New submission %s created but no staff users with an email found to notify",
+            article.id,
+        )
+        return
+
+    subject = f"Nový příspěvek ke schválení: {unescape(article.name)}"
+    body = (
+        f"Ahoj,\n\n"
+        f"je potřeba posoudit nový příspěvek!\n\n"
+        f"Rubrika: {article.creative_page_slug}\n"
+        f"Skupina: {article.section}\n"
+        f"Název: {unescape(article.name)}\n"
+        f"Autor: {article.author_nick}\n\n"
+        f"Anotace:\n{unescape(article.abstract or '')}\n\n"
+        f"Posoudit příspěvek: {build_creation_review_url(article.id)}\n\n"
+        f"(Pro potvrzení akce je třeba přihlášení do správy.)\n\n"
+        f"— DraciDoupe.cz"
+    )
     for email in recipients:
         send_mail(subject, body, settings.DDCZ_TRANSACTION_EMAIL_FROM, [email])
 
