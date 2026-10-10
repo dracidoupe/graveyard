@@ -202,8 +202,10 @@ def send_email_batch():
                     settings.DDCZ_TRANSACTION_EMAIL_FROM,
                     [scheduled_email.recipient_email],
                 )
-            except Exception as e:
-                logger.warning(f"Sending email {scheduled_email.pk} failed: {e}")
+            except Exception:
+                logger.warning(
+                    f"Sending email {scheduled_email.pk} failed", exc_info=True
+                )
                 failures.append(scheduled_email.id)
             else:
                 sent_ids.append(scheduled_email.id)

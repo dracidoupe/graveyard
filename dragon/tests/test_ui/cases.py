@@ -1,5 +1,6 @@
 from enum import Enum
 
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -43,7 +44,7 @@ class DragonSeleniumTestCase(SeleniumTestCase):
             try:
                 body = driver.find_element(By.XPATH, self.main_page_nav.BODY.value)
                 return body.get_attribute("data-logged-in") == "1"
-            except Exception:
+            except WebDriverException:
                 return False
 
         WebDriverWait(self.selenium, 10).until(check_logged_in)

@@ -1,6 +1,6 @@
 [lint]
 # Django has mutable defualt by design, let's just go with it
-ignore = ["RUF012", "BLE001"]
+ignore = ["RUF012"]
 
 [lint.per-file-ignores]
 "ddcz/models/__init__.py" = ["F403"]

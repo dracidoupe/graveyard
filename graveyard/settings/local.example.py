@@ -45,7 +45,7 @@ maildir = os.path.join(gettempdir(), "ddcz-devserver-emails")
 if not os.path.exists(maildir):
     try:
         os.mkdir(maildir)
-    except BaseException:
+    except OSError:
         maildir = None
 elif not os.access(maildir, os.W_OK):
     maildir = None

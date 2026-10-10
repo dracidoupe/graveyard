@@ -203,7 +203,7 @@ def get_local_chromedriver_version():
         )
         version = result.stdout.decode("utf-8").strip().split(" ")[1]
         return version
-    except Exception as e:
+    except (OSError, IndexError) as e:
         print(f"Error getting local ChromeDriver version: {e}")
         return None
 

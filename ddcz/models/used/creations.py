@@ -81,7 +81,7 @@ class CreativePage(models.Model):
                 },
             )
         except Exception:
-            logger.error("Can't create slug, returning #")
+            logger.exception("Can't create slug, returning #")
             return "#"
 
 
