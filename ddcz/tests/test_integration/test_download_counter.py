@@ -1,4 +1,4 @@
-from unittest.mock import patch, PropertyMock
+from unittest.mock import PropertyMock, patch
 
 from django.db.models.fields.files import FieldFile
 from django.test import Client, TestCase

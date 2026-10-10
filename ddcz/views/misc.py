@@ -4,19 +4,19 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
+from ..forms.dating import DatingForm
+from ..forms.market import MarketForm
 from ..models import (
+    MARKET_SECTION_CHOICES,
+    Dating,
+    EditorArticle,
+    Link,
     Market,
     UserProfile,
-    Dating,
-    Link,
-    EditorArticle,
-    MARKET_SECTION_CHOICES,
 )
-from ..forms.market import MarketForm
-from ..forms.dating import DatingForm
 
 DEFAULT_LIST_SIZE = 10
 

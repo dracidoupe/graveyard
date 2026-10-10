@@ -1,19 +1,18 @@
-import os
-import shutil
-import subprocess
-from enum import Enum
 import json
+import os
 import platform
+import shutil
 import socket
+import subprocess
 import sys
 import tempfile
 import urllib.request
 import zipfile
+from enum import Enum
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.utils.functional import classproperty
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chromium.options import ChromiumOptions
@@ -42,7 +41,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     def __init__(self, *args, **kwargs):
         # Only check for chrome/driver locally, we do trust CI pipeline to set this up correctly
-        if not os.environ.get("SERVER_CI", False) == "true":
+        if os.environ.get("SERVER_CI") != "true":
             self.check_chromedriver()
 
         super().__init__(*args, **kwargs)
@@ -83,7 +82,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
 
     @classproperty
     def live_server_url(cls):
-        return "http://%s:%s" % (
+        return "http://{}:{}".format(
             getattr(settings, "TEST_LIVE_SERVER_HOST", None) or socket.gethostname(),
             cls.server_thread.port,
         )
@@ -101,7 +100,7 @@ class SeleniumTestCase(StaticLiveServerTestCase):
         else:
             cls.selenium = webdriver.Remote(
                 # desired_capabilities=webdriver.DesiredCapabilities.CHROME,
-                command_executor="http://%s:4444/wd/hub" % settings.SELENIUM_HUB_HOST,
+                command_executor=f"http://{settings.SELENIUM_HUB_HOST}:4444/wd/hub",
                 options=ChromiumOptions(),
             )
 
@@ -177,8 +176,8 @@ def find_local_chrome():
         try:
             result = subprocess.run(
                 [chrome_path, "--version"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                capture_output=True,
+                check=False,
             )
             output = result.stdout.decode("utf-8").strip()
             if "Chrome" in output or "Chromium" in output:
@@ -199,8 +198,8 @@ def get_local_chromedriver_version():
     try:
         result = subprocess.run(
             ["chromedriver", "--version"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
+            check=False,
         )
         version = result.stdout.decode("utf-8").strip().split(" ")[1]
         return version

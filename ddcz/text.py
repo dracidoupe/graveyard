@@ -1,6 +1,6 @@
 import logging
 import re
-from unicodedata import normalize, combining
+from unicodedata import combining, normalize
 
 from django.utils.html import escape
 

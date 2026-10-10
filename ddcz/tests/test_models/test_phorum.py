@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from ..model_generator import get_valid_article_chain
-
 from ddcz.models import Phorum
+
+from ..model_generator import get_valid_article_chain
 
 
 class TestAuthorLinkRender(TestCase):

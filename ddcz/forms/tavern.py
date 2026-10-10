@@ -1,8 +1,8 @@
 from django import forms
 
-from .comments import CommentAction
-from ..text import misencode
 from ..models import UserProfile
+from ..text import misencode
+from .comments import CommentAction
 
 
 class TavernPostForm(forms.Form):
@@ -39,8 +39,8 @@ class TavernTableAdminForm(forms.Form):
         if not nicknames:
             return []
 
-        invalid_nicknames = set([])
-        verified_profile_ids = set([])
+        invalid_nicknames = set()
+        verified_profile_ids = set()
 
         for nick in nicknames.split(","):
             nick = nick.strip()

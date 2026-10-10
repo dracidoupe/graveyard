@@ -1,17 +1,17 @@
 from random import randint
 
 from django.contrib.auth.models import User
+
 from ddcz.models import (
+    MARKET_SECTION_CHOICES,
     Author,
     CommonArticle,
-    UserProfile,
     Market,
-    MARKET_SECTION_CHOICES,
+    UserProfile,
 )
-
 from ddcz.tavern import (
-    create_tavern_table,
     bookmark_table,
+    create_tavern_table,
 )
 
 
@@ -80,7 +80,7 @@ def create_profiled_user(username, password, email=False):
 
 
 def create_test_tavern_table(all_users, bookmark, public):
-    owner, allowed_user, banned_user, visiting_user = all_users
+    owner, allowed_user, banned_user, _visiting_user = all_users
 
     public_desc = "Public" if public else "Private"
     bookmark_desc = "Bookmarked" if bookmark else "Unbookmarked"
@@ -144,7 +144,7 @@ def create_market_entries(number=1):
                 0
             ],
         )
-        for i in range(0, number)
+        for i in range(number)
     ]
 
     return entries

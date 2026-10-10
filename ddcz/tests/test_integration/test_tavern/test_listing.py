@@ -1,15 +1,15 @@
-from django.urls import reverse
 from django.test import Client, TestCase
-
-from ...model_generator import get_alphabetic_user_profiles, create_profiled_user
+from django.urls import reverse
 
 from ddcz.tavern import (
     LIST_ALL,
     LIST_FAVORITE,
+    bookmark_table,
     create_tavern_table,
     get_tavern_table_list,
-    bookmark_table,
 )
+
+from ...model_generator import create_profiled_user, get_alphabetic_user_profiles
 
 
 class TavernListingTestCase(TestCase):
@@ -39,7 +39,7 @@ class TestListingDoesNotHaveRunawayQueries(TavernListingTestCase):
             username="banned", password="bobrice-evropska"
         )
 
-        for i in range(0, 15):
+        for i in range(15):
             table = create_tavern_table(
                 owner=self.owner,
                 public=True,

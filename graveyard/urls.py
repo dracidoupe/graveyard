@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from graveyard.settings.base import INSTALLED_APPS
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+
+from graveyard.settings.base import INSTALLED_APPS
 
 urlpatterns = [
     path("", include("ddcz.urls", namespace="ddcz")),

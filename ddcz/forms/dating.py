@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.html import escape
-from ..models import Dating
+
 from ..geo import CZECHOSLOVAK_REGIONS
+from ..models import Dating
 
 
 class DatingForm(forms.ModelForm):

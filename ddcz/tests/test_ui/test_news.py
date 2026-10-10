@@ -8,7 +8,7 @@ from .cases import SeleniumTestCase
 class TestNews(SeleniumTestCase):
     def setUp(self):
         super().setUp()
-        self.selenium.get("%s%s" % (self.live_server_url, "/aktuality/"))
+        self.selenium.get("{}{}".format(self.live_server_url, "/aktuality/"))
 
     def test_server_available(self):
         req = urlopen(self.live_server_url)

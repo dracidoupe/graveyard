@@ -26,7 +26,7 @@ jobs:
           cache: 'pip'
           cache-dependency-path: '**/requirements*.txt'
       - name: Install ruff
-        run: pip install ruff
+        run: pip install ruff==0.17.0
       - name: Ruff Check Linhting
         run: ruff check --output-format=github .
       - name: Ruff Format Check

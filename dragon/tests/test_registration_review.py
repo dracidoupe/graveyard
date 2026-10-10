@@ -11,24 +11,23 @@ from ddcz.email import (
 )
 from ddcz.models import AwaitingRegistration, UserProfile
 from ddcz.tests.model_generator import create_profiled_user
-
 from dragon.forms.dashboard import FormTypes
 from dragon.forms.users import RegistrationRequestApproval
 
 
 def make_pending_registration(**kwargs):
-    defaults = dict(
-        nick="Pending",
-        email="pending@example.com",
-        name_given="Petr",
-        name_family="Čekající",
-        gender="Muž",
-        age=25,
-        date=int(time.time()),
-        patron=0,
-        supporters=0,
-        description="1. Chci hrát\n2. Od kamaráda\n3. \n4. \n5. \n",
-    )
+    defaults = {
+        "nick": "Pending",
+        "email": "pending@example.com",
+        "name_given": "Petr",
+        "name_family": "Čekající",
+        "gender": "Muž",
+        "age": 25,
+        "date": int(time.time()),
+        "patron": 0,
+        "supporters": 0,
+        "description": "1. Chci hrát\n2. Od kamaráda\n3. \n4. \n5. \n",
+    }
     defaults.update(kwargs)
     return AwaitingRegistration.objects.create(**defaults)
 

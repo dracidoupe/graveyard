@@ -4,9 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from .cases import SeleniumTestCase
 from ..attack_strings import SCRIPT_ALERT_INPUT
 from ..model_generator import get_alphabetic_user_profiles
+from .cases import SeleniumTestCase
 
 
 class PhorumPage(Enum):
@@ -22,7 +22,7 @@ class TestPhorum(SeleniumTestCase):
             saved=True, with_corresponding_user=True
         )[0]
 
-        self.selenium.get("%s%s" % (self.live_server_url, "/"))
+        self.selenium.get("{}{}".format(self.live_server_url, "/"))
         self.navigate_to_phorum()
         self.post_comment()
 

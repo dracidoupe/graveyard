@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-
 from django.db import models
 from django.urls import reverse
 
-from ..magic import MisencodedTextField, MisencodedCharField
+from ..magic import MisencodedCharField, MisencodedTextField
 
 
 class EditorArticle(models.Model):

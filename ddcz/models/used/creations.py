@@ -5,7 +5,6 @@
 # "rooms for improvement" that can be done once the original application
 # is strangled out of its existence
 
-from ddcz.creations import ApprovalChoices
 import logging
 from urllib.parse import urljoin
 
@@ -14,9 +13,11 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
-from .users import UserProfile
-from ..magic import MisencodedCharField, MisencodedTextField, MisencodedIntegerField
+from ddcz.creations import ApprovalChoices
+
 from ...text import create_slug
+from ..magic import MisencodedCharField, MisencodedIntegerField, MisencodedTextField
+from .users import UserProfile
 
 logger = logging.getLogger(__name__)
 
@@ -48,9 +49,7 @@ class CreativePage(models.Model):
         verbose_name_plural = "Rubriky"
 
     def __str__(self):
-        return "Rubrika {}".format(
-            self.name,
-        )
+        return f"Rubrika {self.name}"
 
     @classmethod
     def get_all_models(cls):
@@ -103,9 +102,7 @@ class CreativePageConcept(models.Model):
         verbose_name_plural = "Koncepty rubriky"
 
     def __str__(self):
-        return "Koncept rubriky {}".format(
-            self.page.name,
-        )
+        return f"Koncept rubriky {self.page.name}"
 
 
 class Author(models.Model):
@@ -178,10 +175,10 @@ class Author(models.Model):
         elif self.author_type == self.ANONYMOUS_USER_TYPE:
             display_name = self.anonymous_user_nick
         else:
-            raise AttributeError("Unknown type '%s'" % self.author_type)
+            raise AttributeError(f"Unknown type '{self.author_type}'")
 
         if not display_name:
-            logger.warning("MIGRATION_ERROR no display_name for author ID %s" % self.pk)
+            logger.warning(f"MIGRATION_ERROR no display_name for author ID {self.pk}")
             display_name = "Neznámý"
 
         return display_name
@@ -293,7 +290,7 @@ class Creation(models.Model):
         return self.creative_page.get_creation_canonical_url(self)
 
     def __str__(self):
-        return "{} od {}".format(self.name, self.author_nick)
+        return f"{self.name} od {self.author_nick}"
 
     def get_absolute_url(self):
         return self.get_canonical_url()
@@ -366,12 +363,7 @@ class CommonArticle(Creation):
         verbose_name_plural = "Běžné příspěvky"
 
     def __str__(self):
-        return "{}: {} od {}".format(
-            # COMMON_ARTICLES_CREATIVE_PAGES[self.rubrika]['name'],
-            self.creative_page_slug,
-            self.name,
-            self.author_nick,
-        )
+        return f"{self.creative_page_slug}: {self.name} od {self.author_nick}"
 
 
 class Monster(Creation):
@@ -427,10 +419,7 @@ class Monster(Creation):
         verbose_name_plural = "Bestiář"
 
     def __str__(self):
-        return "{} od {}".format(
-            self.name,
-            self.author_nick,
-        )
+        return f"{self.name} od {self.author_nick}"
 
 
 ###
@@ -585,10 +574,7 @@ class AlchemistTool(Creation):
         verbose_name_plural = "Alchimistické předměty"
 
     def __str__(self):
-        return "{} od {}".format(
-            self.name,
-            self.author_nick,
-        )
+        return f"{self.name} od {self.author_nick}"
 
 
 class Link(models.Model):
@@ -613,7 +599,7 @@ class Link(models.Model):
         verbose_name_plural = "Odkazy"
 
     def __str__(self):
-        return "{} {}".format(self.name, self.url)
+        return f"{self.name} {self.url}"
 
 
 class RangerSpell(Creation):
@@ -657,7 +643,7 @@ class RangerSpell(Creation):
         verbose_name_plural = "Hraníčářská kouzla"
 
     def __str__(self):
-        return "{} od {}".format(self.name, self.author_nick)
+        return f"{self.name} od {self.author_nick}"
 
 
 class WizardSpell(Creation):

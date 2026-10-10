@@ -20,7 +20,7 @@ def migrate_item_path(apps, schema_editor):
 
     for item in DownloadItem.objects.all():
         # 'soub/' hardcoded because that's a constant from the original site
-        item.item = FakeFile(name="soub/{0}.zip".format(item.pk), size=item.velikost)
+        item.item = FakeFile(name=f"soub/{item.pk}.zip", size=item.velikost)
         item.save(update_fields=["item"])
 
 

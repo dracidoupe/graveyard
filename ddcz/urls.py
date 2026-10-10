@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.urls import path, re_path
-from django.views.generic.base import RedirectView, TemplateView
 from django.views.decorators.cache import cache_page
+from django.views.generic.base import RedirectView, TemplateView
 
-from .feeds import PhorumFeed, CompleteNewsFeed
 from . import views
-from .views import news, tavern, misc, email
+from .feeds import CompleteNewsFeed, PhorumFeed
+from .views import email, misc, news, tavern
 from .views import sitemap as sitemap_views
 from .views.legacy import legacy_router, print_legacy_router
 

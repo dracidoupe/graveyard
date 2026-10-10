@@ -7,24 +7,24 @@ from django.conf import settings
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import (
-    HttpResponseRedirect,
-    HttpResponsePermanentRedirect,
-    HttpResponseNotAllowed,
     Http404,
+    HttpResponseNotAllowed,
+    HttpResponsePermanentRedirect,
+    HttpResponseRedirect,
 )
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
 
 from ..creations import ApprovalChoices
-from ..forms.comments import CreationCommentForm, CommentAction
-from ..html import check_creation_html, HtmlTagMismatchException
+from ..forms.comments import CommentAction, CreationCommentForm
+from ..html import HtmlTagMismatchException, check_creation_html
 from ..models import (
     Author,
+    CreationComment,
     CreativePage,
     CreativePageConcept,
-    CreationComment,
     DownloadItem,
     Quest,
 )
@@ -304,7 +304,7 @@ def creative_page_html_check(request, creative_page_slug):
                 try:
                     check_creation_html(getattr(creation, attr))
                 except HtmlTagMismatchException as err:
-                    message = f"V položce {attr} je tato chyba: {str(err)}"
+                    message = f"V položce {attr} je tato chyba: {err!s}"
                     bad_creations.append({"creation": creation, "message": message})
 
         return render(

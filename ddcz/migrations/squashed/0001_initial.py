@@ -1,7 +1,7 @@
-import ddcz.models.magic
-
 from django.conf import settings
 from django.db import migrations, models
+
+import ddcz.models.magic
 
 
 class Migration(migrations.Migration):

@@ -2,7 +2,6 @@ import os
 import os.path
 from tempfile import gettempdir, mkdtemp
 
-
 DEBUG = True
 OVERRIDE_SELENIUM_DEBUG = True
 

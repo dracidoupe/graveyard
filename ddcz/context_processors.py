@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 
@@ -29,13 +30,9 @@ def common_variables(request):
         "skin": skin,
         "skin_for_include": skin_directory,
         "current_page_url": request.get_full_path(),
-        "skin_css_url": staticfiles_storage.url(
-            "skins/%(skin)s/css/main.css" % {"skin": skin}
-        ),
-        "skin_favico_url": staticfiles_storage.url(
-            "skins/%(skin)s/img/drak.ico" % {"skin": skin}
-        ),
-        "skin_logo_url": staticfiles_storage.url("skins/%s/img/logo.svg" % skin),
+        "skin_css_url": staticfiles_storage.url(f"skins/{skin}/css/main.css"),
+        "skin_favico_url": staticfiles_storage.url(f"skins/{skin}/img/drak.ico"),
+        "skin_logo_url": staticfiles_storage.url(f"skins/{skin}/img/logo.svg"),
         "logo_width": logo_width,
         "logo_height": logo_height,
         "login_form": LoginForm(),

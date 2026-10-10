@@ -2,16 +2,15 @@ import logging
 
 from django.apps import apps
 from django.http import (
-    HttpResponseRedirect,
-    HttpResponsePermanentRedirect,
     HttpResponseBadRequest,
+    HttpResponsePermanentRedirect,
+    HttpResponseRedirect,
 )
 from django.shortcuts import get_object_or_404
 from django.urls.base import reverse
 from django.views.decorators.http import require_http_methods
 
 from ddcz.models import CreativePage, UserProfile
-
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +91,7 @@ def legacy_router(request):
 
     # The LEGACY_PLAIN_ROUTER is redirecting basic pages.
     # Typically no creative pages are present here.
-    if page_category in PAGE_TO_VIEW_MAP.keys():
+    if page_category in PAGE_TO_VIEW_MAP:
         return HttpResponseRedirect(reverse(PAGE_TO_VIEW_MAP[page_category]))
 
     # Some of the creation have legacy url
@@ -100,7 +99,7 @@ def legacy_router(request):
     # Here are lists of such creative pages.
     if (
         page_category in CREATION_LIST
-        and page_creation_type in COMMON_ARTICLES_NAME_MAP.keys()
+        and page_creation_type in COMMON_ARTICLES_NAME_MAP
     ):
         return HttpResponseRedirect(
             reverse(

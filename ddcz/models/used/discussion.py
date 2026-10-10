@@ -2,8 +2,8 @@ from django.db import models
 from django.urls import reverse
 
 from ..magic import MisencodedCharField, MisencodedTextField
-from .users import UserProfile
 from .creations import CreativePage
+from .users import UserProfile
 
 ADD_PHORUM_COMMENT = "a"
 DELETE_PHORUM_COMMENT = "d"

@@ -1,11 +1,12 @@
 from datetime import timedelta
-from django.test import TestCase, Client
-from django.utils import timezone
-from django.core.cache import cache
-from django.conf import settings
 
-from ..models import CreativePage, CreationComment, CommonArticle
+from django.conf import settings
+from django.core.cache import cache
+from django.test import Client, TestCase
+from django.utils import timezone
+
 from ..creations import ApprovalChoices
+from ..models import CommonArticle, CreationComment, CreativePage
 
 
 class TestNewsfeed(TestCase):

@@ -1,22 +1,22 @@
-from base64 import urlsafe_b64encode, urlsafe_b64decode
 import hashlib
 import hmac
 import logging
+from base64 import urlsafe_b64decode, urlsafe_b64encode
 
 from django.conf import settings
 from django.core import signing
 from django.core.mail import send_mail
 from django.db.models import F
+from django.urls import reverse
 
 from ddcz.models import (
-    ScheduledEmail,
     BlacklistedEmail,
-    EmailSubscriptionAuth,
-    UserProfile,
     CreationEmailSubscription,
+    EmailSubscriptionAuth,
+    ScheduledEmail,
+    UserProfile,
 )
 from ddcz.notifications import MAX_EMAIL_BATCH
-from django.urls import reverse
 
 logger = logging.getLogger(__name__)
 
@@ -203,7 +203,7 @@ def send_email_batch():
                     [scheduled_email.recipient_email],
                 )
             except Exception as e:
-                logger.warning(f"Sending email {scheduled_email.pk} failed: ", e)
+                logger.warning(f"Sending email {scheduled_email.pk} failed: {e}")
                 failures.append(scheduled_email.id)
             else:
                 sent_ids.append(scheduled_email.id)
