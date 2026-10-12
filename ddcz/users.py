@@ -41,6 +41,6 @@ def migrate_user(profile, password=""):
 def logout_user_without_losing_session(request):
     cache = {k: request.session.get(k) for k in SESSION_KEYS_TO_PRESERVE}
     logout(request)
-    for key in cache:
-        if cache[key]:
-            request.session[key] = cache[key]
+    for key, value in cache.items():
+        if value:
+            request.session[key] = value

@@ -4,8 +4,8 @@ from django.template import Context, Template
 
 from ddcz.html import (
     encode_valid_html,
-    unsafe_encode_valid_creation_html,
     unsafe_encode_any_creation_html,
+    unsafe_encode_valid_creation_html,
 )
 
 

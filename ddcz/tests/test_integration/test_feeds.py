@@ -1,25 +1,24 @@
-from time import mktime
 from datetime import datetime
+from time import mktime
 from urllib.parse import urlparse
 
+import feedparser
+from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
-from django.conf import settings
 
+from ddcz.creations import ApprovalChoices
 from ddcz.feeds import CompleteNewsFeed
 from ddcz.models import (
-    News,
-    Phorum,
-    Dating,
     CreationComment,
     CreativePage,
+    Dating,
     Market,
+    News,
+    Phorum,
 )
-from ddcz.creations import ApprovalChoices
 from ddcz.tests.model_generator import get_valid_article_chain
-
-import feedparser
 
 
 class FeedTestCase(TestCase):

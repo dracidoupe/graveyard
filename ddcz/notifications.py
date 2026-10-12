@@ -1,17 +1,17 @@
+import json
+import logging
 from datetime import timedelta
 from enum import Enum
-import logging
-import json
 
 from django.core import serializers
 from django.utils import timezone
 
 from ddcz.models import (
-    NotificationEvent,
-    ScheduledNotification,
-    ScheduledEmail,
-    UserProfile,
     CreationEmailSubscription,
+    NotificationEvent,
+    ScheduledEmail,
+    ScheduledNotification,
+    UserProfile,
 )
 
 logger = logging.getLogger(__name__)
@@ -60,9 +60,9 @@ def notify_scheduled():
     for notification in ScheduledNotification.objects.all()[0:MAX_NOTIFICATION_BATCH]:
         try:
             EVENT_DISPATCH_MAP[NotificationEvent(notification.event)](
-                affected_object=list(
-                    serializers.deserialize("json", notification.serialized_model)
-                )[0].object,
+                affected_object=next(
+                    iter(serializers.deserialize("json", notification.serialized_model))
+                ).object,
                 extra_data=json.loads(notification.extra_data),
             )
         except Exception as e:

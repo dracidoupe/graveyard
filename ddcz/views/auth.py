@@ -1,11 +1,15 @@
-from hashlib import md5
 import logging
+from hashlib import md5
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import (
     authenticate,
+)
+from django.contrib.auth import (
     login as login_auth,
+)
+from django.contrib.auth import (
     views as authviews,
 )
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -21,7 +25,7 @@ from django.views.decorators.http import require_http_methods
 from ..email import notify_admins_about_registration
 from ..forms.authentication import LoginForm, PasswordResetForm
 from ..forms.signup import SignUpForm
-from ..users import migrate_user, logout_user_without_losing_session
+from ..users import logout_user_without_losing_session, migrate_user
 
 logger = logging.getLogger(__name__)
 

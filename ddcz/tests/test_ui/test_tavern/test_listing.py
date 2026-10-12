@@ -1,8 +1,9 @@
 from selenium.webdriver.common.by import By
 
 from ddcz.tavern import LIST_ALL
-from ..cases import SeleniumTestCase, MainPage
+
 from ...model_generator import get_alphabetic_user_profiles, get_tavern_tables
+from ..cases import MainPage, SeleniumTestCase
 from .pages_tavern import TavernTableListPage
 
 

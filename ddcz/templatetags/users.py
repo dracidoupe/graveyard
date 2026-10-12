@@ -1,7 +1,7 @@
 import logging
 
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django import template
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 from ddcz.models.used.users import UserProfile
 from ddcz.text import misencode
@@ -20,7 +20,7 @@ def level_star(user_profile, skin):
     level = user_profile.level or "0"
     return {
         "star_image_url": staticfiles_storage.url(
-            "skins/%s/img/star-level-%s.svg" % (skin, level)
+            f"skins/{skin}/img/star-level-{level}.svg"
         ),
         "level": level,
     }

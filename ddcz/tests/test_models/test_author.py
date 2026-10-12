@@ -1,8 +1,8 @@
 from django.test import SimpleTestCase, TestCase
 
-from ..model_generator import get_valid_article_chain
-
 from ddcz.models import Author, Quest
+
+from ..model_generator import get_valid_article_chain
 
 
 class TestAuthorLinkRender(SimpleTestCase):

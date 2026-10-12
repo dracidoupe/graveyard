@@ -2,11 +2,11 @@
 Django settings for DDCZ project.
 """
 
-from datetime import datetime
 import logging
 import os
 import os.path
 import sys
+from datetime import datetime
 from tempfile import gettempdir
 
 logger = logging.getLogger(__name__)

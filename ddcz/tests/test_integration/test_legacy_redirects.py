@@ -3,10 +3,10 @@ from django.test import Client, TestCase
 from ddcz.models import (
     ApprovalChoices,
     CommonArticle,
+    Quest,
     RangerSpell,
     Skill,
     UserProfile,
-    Quest,
 )
 from ddcz.tests.model_generator import get_valid_article_chain
 

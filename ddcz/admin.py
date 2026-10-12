@@ -12,11 +12,11 @@ from .models import (
     Market,
     Monster,
     News,
-    ScheduledNotification,
+    RangerSpell,
     ScheduledEmail,
+    ScheduledNotification,
     Skill,
     UserProfile,
-    RangerSpell,
     WizardSpell,
 )
 

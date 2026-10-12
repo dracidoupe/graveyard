@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import signing
 from django.core.mail import send_mail
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.crypto import get_random_string
@@ -14,12 +14,12 @@ from ddcz.email import (
     REGISTRATION_REVIEW_TOKEN_MAX_AGE,
     build_registration_review_url,
 )
-from ddcz.models import LevelSystemParams, UserProfile, AwaitingRegistration, News
-from ddcz.notifications import NotificationEvent, schedule_notification, Audience
+from ddcz.models import AwaitingRegistration, LevelSystemParams, News, UserProfile
+from ddcz.notifications import Audience, NotificationEvent, schedule_notification
 
 from .forms.dashboard import FormTypes
-from .forms.users import RegistrationRequestApproval
 from .forms.news import News as NewsForm
+from .forms.users import RegistrationRequestApproval
 
 
 @login_required

@@ -2,16 +2,14 @@ from datetime import datetime
 from urllib.parse import urljoin
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import make_aware
 
-from django.contrib.auth.models import User
-
 from ...text import create_slug
 from ..magic import MisencodedCharField, MisencodedTextField
-
 
 LEVEL_DESCRIPTIONS = {
     "0": """
@@ -285,9 +283,7 @@ class Rune(models.Model):
 
     @property
     def image_url(self):
-        return staticfiles_storage.url(
-            "common/runes/runa%(rune)s.gif" % {"rune": self.graphics}
-        )
+        return staticfiles_storage.url(f"common/runes/runa{self.graphics}.gif")
 
     class Meta:
         db_table = "runy"
@@ -331,7 +327,4 @@ class AwaitingRegistration(models.Model):
         verbose_name_plural = "Uživatelé ke schválení"
 
     def __str__(self):
-        return "{} ze dne {}".format(
-            self.nick,
-            make_aware(datetime.fromtimestamp(self.date)),
-        )
+        return f"{self.nick} ze dne {make_aware(datetime.fromtimestamp(self.date))}"

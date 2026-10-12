@@ -1,18 +1,17 @@
 from django.conf import settings
+from django.contrib.syndication.views import Feed
 from django.urls import reverse
 
-from django.contrib.syndication.views import Feed
-
+from ddcz.creations import ApprovalChoices
 from ddcz.models import (
-    Phorum,
-    News,
+    Creation,
+    CreationComment,
     CreativePage,
     Dating,
-    CreationComment,
-    Creation,
     Market,
+    News,
+    Phorum,
 )
-from ddcz.creations import ApprovalChoices
 
 
 class PhorumFeed(Feed):

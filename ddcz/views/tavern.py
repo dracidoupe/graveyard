@@ -3,32 +3,32 @@ from functools import wraps
 
 from django.contrib.auth.decorators import login_required
 from django.http import (
-    HttpResponseRedirect,
-    HttpResponseForbidden,
     HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseRedirect,
 )
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
 from ..forms.comments import CommentAction
-from ..forms.tavern import TavernPostForm, NoticeBoardForm, TavernTableAdminForm
+from ..forms.tavern import NoticeBoardForm, TavernPostForm, TavernTableAdminForm
 from ..models import (
+    TavernAccessRights,
+    TavernBookmark,
     TavernTable,
     TavernTableNoticeBoard,
     TavernTableVisitor,
-    TavernBookmark,
-    TavernAccessRights,
 )
 from ..tavern import (
     LIST_ALL,
     LIST_FAVORITE,
     SUPPORTED_LIST_STYLES_DISPLAY_NAME,
-    get_tavern_table_list,
     bookmark_table,
-    unbook_table,
+    get_tavern_table_list,
     post_table_post,
+    unbook_table,
 )
 from ..text import escape_user_input
 

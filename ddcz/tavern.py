@@ -2,28 +2,27 @@ import logging
 import sys
 
 from django.db.models import (
-    Count,
-    OuterRef,
-    Subquery,
-    IntegerField,
     BooleanField,
     Case,
+    Count,
+    F,
+    IntegerField,
+    OuterRef,
+    Subquery,
     Value,
     When,
-    F,
 )
-
 from django.utils import timezone
 
 from .models import (
+    TAVERN_SECTION_NEW_ID,
+    TAVERN_SECTION_PRIVATE_ID,
     TavernAccess,
     TavernAccessRights,
+    TavernPost,
     TavernTable,
     TavernTableVisitor,
-    TavernPost,
     UserProfile,
-    TAVERN_SECTION_PRIVATE_ID,
-    TAVERN_SECTION_NEW_ID,
 )
 from .models.used.tavern import TavernBookmark
 from .text import misencode
@@ -216,8 +215,6 @@ def migrate_tavern_access(
 ):
     """Migrate access privileges from putyka v0 (the DDCZ 2001 version) to putyka v1 (DDCZ 2004 version)"""
 
-    i = 0
-
     if not table_visitor_model:
         table_visitor_model = TavernTableVisitor
 
@@ -229,7 +226,7 @@ def migrate_tavern_access(
 
     # Completely accidentally, the `-typ_pristupu` gives us correct enough
     # ordering of access priorities
-    for tavern_access in (
+    for i, tavern_access in enumerate(
         tavern_access_model.objects.all()
         .select_related("tavern_table")
         .order_by("-access_type")
@@ -251,7 +248,7 @@ def migrate_tavern_access(
                     nick=misencode(tavern_access.user_nick_or_id)
                 )
         except (ValueError, user_profile_model.DoesNotExist):
-            logging.warning(
+            logger.warning(
                 f"Can't fetch user record for nick {tavern_access.user_nick_or_id}. Maybe we should purge the record?"
             )
         else:
@@ -278,8 +275,6 @@ def migrate_tavern_access(
                 )
 
             table_visitor.save()
-
-        i += 1
 
 
 def bookmark_table(user_profile, tavern_table):

@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 
-from ..cases import SeleniumTestCase, MainPage
 from ...attack_strings import IMG_TAB_SRC_INPUT
 from ...model_generator import get_alphabetic_user_profiles, get_tavern_tables
+from ..cases import MainPage, SeleniumTestCase
 from .pages_tavern import TavernTableListPage, TavernTablePostPage
 
 

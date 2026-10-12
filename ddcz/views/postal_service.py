@@ -4,13 +4,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
-from ..models import UserProfile, Letter
+from ..models import Letter, UserProfile
 from ..text import misencode
 
 FORM_DELETE = 1

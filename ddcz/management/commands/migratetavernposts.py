@@ -21,15 +21,13 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        i = 0
         total_no = TavernPost.objects.filter(user__isnull=True).count()
         logger.info(f"Found {total_no} posts for migration")
         query = TavernPost.objects.filter(user__isnull=True)
         logger.info(f"Migrating Tavern Posts, batch size {options['batch_size']}")
-        if "batch_size" in options and options["batch_size"]:
+        if options.get("batch_size"):
             query = query[0 : int(options["batch_size"])]
-        for comment in query:
-            i += 1
+        for i, comment in enumerate(query, start=1):
             if i % 10 == 0:
                 sys.stdout.write(".")
                 sys.stdout.flush()
@@ -38,4 +36,4 @@ class Command(BaseCommand):
                 comment.save()
 
             except UserProfile.DoesNotExist:
-                logger.info("Can't find author for nickname %s" % comment.nickname)
+                logger.info(f"Can't find author for nickname {comment.nickname}")
