@@ -1,9 +1,9 @@
-from django.urls import reverse
 from django.test import Client, TestCase
+from django.urls import reverse
+
+from ddcz.tavern import TavernAccessRights, create_tavern_table
 
 from ...model_generator import get_alphabetic_user_profiles
-
-from ddcz.tavern import create_tavern_table, TavernAccessRights
 
 
 class TestTableAdminAccess(TestCase):

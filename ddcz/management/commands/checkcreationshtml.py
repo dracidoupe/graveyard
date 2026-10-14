@@ -2,8 +2,8 @@ import sys
 
 from django.core.management.base import BaseCommand, CommandError
 
+from ddcz.html import HtmlTagMismatchException, check_creation_html
 from ddcz.models import CreativePage
-from ddcz.html import check_creation_html, HtmlTagMismatchException
 
 
 class Command(BaseCommand):
@@ -28,7 +28,7 @@ class Command(BaseCommand):
                         except HtmlTagMismatchException as err:
                             errors_no += 1
                             # TODO: Get canonical URL
-                            message = f"HTML errors for creation model {str(model)} ID {creation.pk}: {str(err)} \n"
+                            message = f"HTML errors for creation model {model!s} ID {creation.pk}: {err!s} \n"
                             sys.stderr.write(message)
 
         if errors_no == 0:

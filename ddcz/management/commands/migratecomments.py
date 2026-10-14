@@ -13,9 +13,9 @@ class Command(BaseCommand):
     help = "Fills in reference to User object into CreationComments"
 
     def handle(self, *args, **options):
-        i = 0
-        for comment in CreationComment.objects.filter(user__isnull=True):
-            i += 1
+        for i, comment in enumerate(
+            CreationComment.objects.filter(user__isnull=True), start=1
+        ):
             if i % 100 == 0:
                 sys.stdout.write(".")
                 sys.stdout.flush()
@@ -24,4 +24,4 @@ class Command(BaseCommand):
                 comment.save()
 
             except UserProfile.DoesNotExist:
-                logger.info("Can't find author for nickname %s" % comment.nickname)
+                logger.info(f"Can't find author for nickname {comment.nickname}")

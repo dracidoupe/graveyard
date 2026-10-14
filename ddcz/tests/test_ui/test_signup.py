@@ -1,13 +1,13 @@
 from enum import Enum
 from time import sleep
 
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import Select, WebDriverWait
 
-from .cases import SeleniumTestCase, MainPage
 from ddcz.models import AwaitingRegistration
+
+from .cases import MainPage, SeleniumTestCase
 
 
 class SignUpPage(Enum):
@@ -27,7 +27,7 @@ class SignUpPage(Enum):
 class TestValidSignupSubmission(SeleniumTestCase):
     def setUp(self):
         super().setUp()
-        self.selenium.get("%s%s" % (self.live_server_url, "/registrace/"))
+        self.selenium.get("{}{}".format(self.live_server_url, "/registrace/"))
 
     def fill_signup_form(self):
         self.nick = "přílišžluťoučkýkůňúělďábelskéó"

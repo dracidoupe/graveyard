@@ -2,8 +2,8 @@ from enum import Enum
 
 from selenium.webdriver.common.by import By
 
-from .cases import SeleniumTestCase, MainPage
 from ..model_generator import create_market_entries
+from .cases import MainPage, SeleniumTestCase
 
 
 class MarketPage(Enum):
@@ -19,7 +19,7 @@ class TestMarket(SeleniumTestCase):
         self.entries = create_market_entries()
         self.first_entry = self.entries[0]
 
-        self.selenium.get("%s%s" % (self.live_server_url, "/"))
+        self.selenium.get("{}{}".format(self.live_server_url, "/"))
         self.navigate_to_market()
 
     def navigate_to_market(self):

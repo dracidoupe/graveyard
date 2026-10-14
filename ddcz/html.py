@@ -9,8 +9,8 @@ For code archeologists, this roughly satisfies requirements of `funkceHTML.php`.
 
 """
 
-from html.parser import HTMLParser
 import re
+from html.parser import HTMLParser
 
 # Attributes refer to whitelisted attributes
 # Pair refers to whether tag requires corresponding and well-nested closing tag
@@ -85,27 +85,27 @@ def unsafe_encode_valid_creation_html(entity_string):
     Use only for CreationPages text that went through admin review
     """
 
-    for tag in WHITELISTED_TAGS:
-        if WHITELISTED_TAGS[tag].get("attributes", False):
+    for tag, tag_config in WHITELISTED_TAGS.items():
+        if tag_config.get("attributes", False):
             tag_start_regexp_string = tag
-            for attr in WHITELISTED_TAGS[tag]["attributes"]:
+            for attr in tag_config["attributes"]:
                 tag_start_regexp_string += r"(\ " + attr + r"=\&quot;\S\&quot;)?"
         else:
             tag_start_regexp_string = tag
 
-        if WHITELISTED_TAGS[tag].get("pair", True):
+        if tag_config.get("pair", True):
             entity_string = re.sub(
                 LEFT_ENTITY + tag_start_regexp_string + RIGHT_ENTITY,
                 "<" + tag + ">",
                 entity_string,
-                flags=re.I,
+                flags=re.IGNORECASE,
             )
 
             entity_string = re.sub(
                 LEFT_ENTITY + "/" + tag + RIGHT_ENTITY,
                 "</" + tag + ">",
                 entity_string,
-                flags=re.I,
+                flags=re.IGNORECASE,
             )
 
         else:
@@ -113,7 +113,7 @@ def unsafe_encode_valid_creation_html(entity_string):
                 LEFT_ENTITY + tag_start_regexp_string + r"(\ )?(/)?" + RIGHT_ENTITY,
                 "<" + tag + ">",
                 entity_string,
-                flags=re.I,
+                flags=re.IGNORECASE,
             )
 
     return entity_string
@@ -202,7 +202,7 @@ def encode_valid_html(entity_string):
                         ):
                             # yup, our tag -- remove, render and move on
                             tag = tag_stack.pop()
-                            encoded_safe_string += "</%s>" % tag
+                            encoded_safe_string += f"</{tag}>"
                             current_character_index += 5  # &lt;/
                             current_character_index += len(tag)
                             current_character_index += 4  # &gt;
@@ -235,7 +235,7 @@ def encode_valid_html(entity_string):
 
                             # Afterwards, proceed with the correct envelope version
                             tag = tag_stack.pop()
-                            encoded_safe_string += "</%s>" % tag
+                            encoded_safe_string += f"</{tag}>"
                             current_character_index += 5  # &lt;/
                             current_character_index += len(tag)
                             current_character_index += 4  # &gt;
@@ -280,7 +280,7 @@ def encode_valid_html(entity_string):
 
                     if tag_candidate_string in WHITELISTED_TAGS_LIST:
                         # Tag detected: render it and move after the tag
-                        encoded_safe_string += "<%s>" % tag_candidate_string
+                        encoded_safe_string += f"<{tag_candidate_string}>"
 
                         current_character_index += 4  # &lt;
                         current_character_index += len(tag_candidate_string)

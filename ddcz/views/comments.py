@@ -5,9 +5,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from ..forms.comments import PhorumCommentForm, DeletePhorumCommentForm
+from ..forms.comments import DeletePhorumCommentForm, PhorumCommentForm
+from ..models import ADD_PHORUM_COMMENT, DELETE_PHORUM_COMMENT, Phorum
 from ..text import escape_user_input
-from ..models import Phorum, ADD_PHORUM_COMMENT, DELETE_PHORUM_COMMENT
 
 
 @require_http_methods(["HEAD", "GET", "POST"])

@@ -4,9 +4,9 @@ from itertools import chain
 
 from django.db import models
 
-from .users import UserProfile
-from ..magic import MisencodedCharField, MisencodedTextField, MisencodedBooleanField
 from ...text import misencode
+from ..magic import MisencodedBooleanField, MisencodedCharField, MisencodedTextField
+from .users import UserProfile
 
 TAVERN_SECTION_PRIVATE_ID = 19
 TAVERN_SECTION_NEW_ID = 3
@@ -75,12 +75,7 @@ class TavernTable(models.Model):
                 return True
             if self.is_banned:
                 return False
-            elif self.is_public:
-                return True
-            elif self.is_allowed:
-                return True
-            else:
-                return False
+            return bool(self.is_public or self.is_allowed)
 
         # Note: Can't do "if not acls" since that would re-fetch for every empty set
         if acls is None:
@@ -90,12 +85,7 @@ class TavernTable(models.Model):
             return True
         if TavernAccessRights.ACCESS_BANNED in acls:
             return False
-        elif self.is_public:
-            return True
-        elif TavernAccessRights.ACCESS_ALLOWED in acls:
-            return True
-        else:
-            return False
+        return bool(self.is_public or TavernAccessRights.ACCESS_ALLOWED in acls)
 
     def is_notice_board_update_allowed(self, user_profile, acls=None):
         # For ACL explanations, see TavernAccess
@@ -106,10 +96,7 @@ class TavernTable(models.Model):
         if acls is None:
             acls = self.get_user_acls(user_profile)
 
-        if TavernAccessRights.ASSISTANT_ADMIN in acls:
-            return True
-
-        return False
+        return TavernAccessRights.ASSISTANT_ADMIN in acls
 
     def is_admin(self, user_profile, acls=None):
         return user_profile.nick == self.owner
@@ -121,9 +108,12 @@ class TavernTable(models.Model):
         if getattr(self, "write_allowed_user_no", None):
             return self.write_allowed_user_no > 0
         else:
-            self.tavernaccess_set.filter(
-                access_type=TavernAccessRights.WRITE_ALLOWED
-            ).count() > 0
+            return (
+                self.tavernaccess_set.filter(
+                    access_type=TavernAccessRights.WRITE_ALLOWED.value
+                ).count()
+                > 0
+            )
 
     def get_user_acls(self, user_profile):
         # This is fucked up thanks to <https://github.com/dracidoupe/graveyard/issues/306>
@@ -211,10 +201,10 @@ class TavernTable(models.Model):
 
         privileges = TavernAccess.objects.filter(tavern_table=self)
         privileges_map = {
-            TavernAccessRights.ACCESS_ALLOWED: set([]),
-            TavernAccessRights.WRITE_ALLOWED: set([]),
-            TavernAccessRights.ACCESS_BANNED: set([]),
-            TavernAccessRights.ASSISTANT_ADMIN: set([]),
+            TavernAccessRights.ACCESS_ALLOWED: set(),
+            TavernAccessRights.WRITE_ALLOWED: set(),
+            TavernAccessRights.ACCESS_BANNED: set(),
+            TavernAccessRights.ASSISTANT_ADMIN: set(),
         }
 
         for privilege in privileges:

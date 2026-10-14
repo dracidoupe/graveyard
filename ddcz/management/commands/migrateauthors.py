@@ -48,8 +48,7 @@ class Command(BaseCommand):
                                 "latin2", "ignore"
                             )
                             print(
-                                "Author's name replaced from %s to %s"
-                                % (
+                                "Author's name replaced from {} to {}".format(
                                     creation.author_nick,
                                     author_encoded.decode("latin2"),
                                 )
@@ -71,14 +70,14 @@ class Command(BaseCommand):
                             "Can't do standalone encoding for anonymous user, attempting skipping bad characters"
                         )
                         print(
-                            "This is for creation %s from model %s"
-                            % (creation, creation_model)
+                            f"This is for creation {creation} from model {creation_model}"
                         )
 
                         author_encoded = creation.author_nick.encode("latin2", "ignore")
                         print(
-                            "Author's name replaced from %s to %s"
-                            % (creation.author_nick, author_encoded.decode("latin2"))
+                            "Author's name replaced from {} to {}".format(
+                                creation.author_nick, author_encoded.decode("latin2")
+                            )
                         )
 
                     author = Author.objects.create(

@@ -1,5 +1,5 @@
-from time import time
 from enum import Enum
+from time import time
 
 from django import forms
 from django.forms import ModelForm
@@ -157,7 +157,7 @@ class SignUpForm(ModelForm):
         ]
 
     def clean(self):
-        cdata = super(SignUpForm, self).clean()
+        cdata = super().clean()
 
         popis = "1. " + cdata["motive"] + "\n"
         popis += "2. " + cdata["source"] + "\n"

@@ -2,7 +2,7 @@ import os
 
 from .base import *
 
-if os.environ.get("SERVER_CI", False) == "true":
+if os.environ.get("SERVER_CI") == "true":
     print("Server CI environment detected, importing circle settings...")
     from .ci_server import *
 

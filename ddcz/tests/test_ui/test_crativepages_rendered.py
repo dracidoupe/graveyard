@@ -1,7 +1,8 @@
-from .cases import SeleniumTestCase
 from selenium.webdriver.common.by import By
 
 from ddcz.models import CreativePage
+
+from .cases import SeleniumTestCase
 
 
 class TestCreativePageRendered(SeleniumTestCase):
@@ -14,7 +15,7 @@ class TestCreativePageRendered(SeleniumTestCase):
 
         for page in pages:
             self.selenium.get(
-                "%s%s" % (self.live_server_url, "/rubriky/%s/" % page.slug)
+                "{}{}".format(self.live_server_url, f"/rubriky/{page.slug}/")
             )
 
             text = self.selenium.find_element(

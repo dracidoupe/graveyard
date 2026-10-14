@@ -1,8 +1,9 @@
 from django import forms
 from django.core.validators import EmailValidator
 from django.utils.html import escape
-from ddcz.models import Market
+
 from ddcz.geo import CZECHOSLOVAK_REGIONS
+from ddcz.models import Market
 
 
 class MarketForm(forms.ModelForm):

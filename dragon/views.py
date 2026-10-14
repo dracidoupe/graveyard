@@ -4,18 +4,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import signing
 from django.core.mail import send_mail
-from django.http import Http404, HttpResponseRedirect, HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 
+from ddcz.commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
+from ddcz.creations import PENDING_STATES
 from ddcz.email import (
     REGISTRATION_REVIEW_SALT,
     REGISTRATION_REVIEW_TOKEN_MAX_AGE,
     build_registration_review_url,
 )
-from ddcz.commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
-from ddcz.creations import PENDING_STATES
 from ddcz.html import (
     HtmlChecker,
     HtmlTagMismatchException,
@@ -28,13 +28,13 @@ from ddcz.models import (
     News,
     UserProfile,
 )
-from ddcz.notifications import NotificationEvent, schedule_notification, Audience
+from ddcz.notifications import Audience, NotificationEvent, schedule_notification
 from ddcz.submissions import approve_common_article, reject_common_article
 
 from .forms.creations import CommonArticleRejection, CommonArticleReview, ReviewAction
 from .forms.dashboard import FormTypes
-from .forms.users import RegistrationRequestApproval
 from .forms.news import News as NewsForm
+from .forms.users import RegistrationRequestApproval
 
 
 @login_required

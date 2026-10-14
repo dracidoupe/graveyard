@@ -9,27 +9,27 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import (
-    HttpResponseRedirect,
-    HttpResponsePermanentRedirect,
-    HttpResponseNotAllowed,
     Http404,
+    HttpResponseNotAllowed,
+    HttpResponsePermanentRedirect,
+    HttpResponseRedirect,
 )
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.vary import vary_on_cookie
 
 from ..commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
-from ..creations import ApprovalChoices, PENDING_STATES
-from ..forms.comments import CreationCommentForm, CommentAction
+from ..creations import PENDING_STATES, ApprovalChoices
+from ..forms.comments import CommentAction, CreationCommentForm
 from ..forms.creations import CommonArticleSubmissionForm
-from ..html import check_creation_html, HtmlTagMismatchException
+from ..html import HtmlTagMismatchException, check_creation_html
 from ..models import (
     Author,
     CommonArticle,
+    CreationComment,
     CreativePage,
     CreativePageConcept,
-    CreationComment,
     DownloadItem,
     Quest,
 )
@@ -311,7 +311,7 @@ def creative_page_html_check(request, creative_page_slug):
                 try:
                     check_creation_html(getattr(creation, attr))
                 except HtmlTagMismatchException as err:
-                    message = f"V položce {attr} je tato chyba: {str(err)}"
+                    message = f"V položce {attr} je tato chyba: {err!s}"
                     bad_creations.append({"creation": creation, "message": message})
 
         return render(

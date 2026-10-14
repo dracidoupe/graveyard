@@ -1,4 +1,5 @@
 from django.test import SimpleTestCase
+
 from ddcz.models.magic import MisencodedCharField
 from ddcz.text import misencode
 

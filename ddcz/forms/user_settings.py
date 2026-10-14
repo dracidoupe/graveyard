@@ -2,7 +2,6 @@ from enum import Enum
 
 from django import forms
 
-
 SHIRE_CHOICES = [
     ("", "-- Vyberte kraj --"),
     ("Praha", "Praha"),

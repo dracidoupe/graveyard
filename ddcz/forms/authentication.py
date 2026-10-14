@@ -42,13 +42,14 @@ class PasswordResetForm(authforms.PasswordResetForm):
                 user.email = up.email
                 users.append(user)
             else:
-                logger.warn(
+                logger.warning(
                     f"NOT selecting user {up.nick} as a password reset candidate since user is not active or migration failed"
                 )
 
         logger.info(
-            "Selected users for password reset: %s"
-            % ", ".join([str(u.pk) for u in users])
+            "Selected users for password reset: {}".format(
+                ", ".join([str(u.pk) for u in users])
+            )
         )
 
         return tuple(users)

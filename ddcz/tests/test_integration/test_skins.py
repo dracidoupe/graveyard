@@ -1,5 +1,4 @@
 from django.test import Client, TestCase
-
 from django.urls import reverse
 
 from ddcz.tests.model_generator import create_profiled_user

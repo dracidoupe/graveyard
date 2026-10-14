@@ -1,11 +1,12 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
-from .cases import SeleniumTestCase, MainPage
-from ..model_generator import get_alphabetic_user_profiles
-from .pages_dating import DatingListPage, DatingCreatePage
-from ddcz.models import Dating
 from ddcz.geo import CZECHOSLOVAK_REGIONS
+from ddcz.models import Dating
+
+from ..model_generator import get_alphabetic_user_profiles
+from .cases import MainPage, SeleniumTestCase
+from .pages_dating import DatingCreatePage, DatingListPage
 
 
 class TestDating(SeleniumTestCase):

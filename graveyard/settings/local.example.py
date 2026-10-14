@@ -2,7 +2,6 @@ import os
 import os.path
 from tempfile import gettempdir, mkdtemp
 
-
 DEBUG = True
 OVERRIDE_SELENIUM_DEBUG = True
 
@@ -46,7 +45,7 @@ maildir = os.path.join(gettempdir(), "ddcz-devserver-emails")
 if not os.path.exists(maildir):
     try:
         os.mkdir(maildir)
-    except BaseException:
+    except OSError:
         maildir = None
 elif not os.access(maildir, os.W_OK):
     maildir = None

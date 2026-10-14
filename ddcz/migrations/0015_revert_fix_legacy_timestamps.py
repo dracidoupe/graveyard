@@ -76,9 +76,9 @@ def forwards(apps, schema_editor):
             col = field.db_column or field.column
             table = Model._meta.db_table
             table_columns.append((table, col))
-        except Exception as e:
-            logger.error(
-                f"Error getting model {app_label}.{model_name} field {field_name}: {e}"
+        except Exception:
+            logger.exception(
+                f"Error getting model {app_label}.{model_name} field {field_name}"
             )
 
     for table, col in table_columns:
@@ -97,18 +97,16 @@ def forwards(apps, schema_editor):
             )
             if cursor.fetchone() is None:
                 continue
-        except Exception as e:
-            logger.error(f"Error getting table {table} column {col}: {e}")
+        except Exception:
+            logger.exception(f"Error getting table {table} column {col}")
             continue
 
         sql = SQL_TEMPLATE_REVERT.format(table=qn(table), col=qn(col))
         try:
             with transaction.atomic(using=connection.alias):
                 cursor.execute(sql, [tz_name, cutoff_local_str, tz_name])
-        except Exception as e:
-            logger.error(
-                f"Reverting legacy timestamp fix failed for {table}.{col}: {e}"
-            )
+        except Exception:
+            logger.exception(f"Reverting legacy timestamp fix failed for {table}.{col}")
 
 
 def backwards(apps, schema_editor):

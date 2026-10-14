@@ -1,5 +1,5 @@
-from .case import TemplateTestCase
 from ..model_generator import get_valid_article_chain
+from .case import TemplateTestCase
 
 
 class TestAuthorLinkRender(TemplateTestCase):

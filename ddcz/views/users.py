@@ -3,21 +3,21 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.paginator import Paginator
 from django.db.models import F
 from django.http import (
-    HttpResponseRedirect,
     HttpResponseBadRequest,
+    HttpResponseRedirect,
 )
-from django.shortcuts import render, get_object_or_404
-from django.urls import resolve, Resolver404
+from django.shortcuts import get_object_or_404, render
+from django.urls import Resolver404, resolve
 from django.views.decorators.http import require_http_methods
 
 from ..forms.user_settings import PersonalSettingsForm
-from ..text import misencode
 from ..models import (
-    Author,
-    UserProfile,
-    Rune,
     LEVEL_DESCRIPTIONS,
+    Author,
+    Rune,
+    UserProfile,
 )
+from ..text import misencode
 
 DEFAULT_USER_LIST_SIZE = 50
 VALID_SKINS = ["light", "dark", "historic"]

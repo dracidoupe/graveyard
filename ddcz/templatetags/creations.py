@@ -16,14 +16,14 @@ register = template.Library()
 def creation_rating(rating, skin):
     rating = int(rating or 0)
     return {
-        "rating_description": "Hodnocení: %s" % RATING_DESCRIPTIONS[round(rating)],
+        "rating_description": f"Hodnocení: {RATING_DESCRIPTIONS[round(rating)]}",
         "rating": range(rating),
         "skin": skin,
         "skin_rating_star_url": staticfiles_storage.url(
-            "skins/%s/img/rating-star.svg" % skin
+            f"skins/{skin}/img/rating-star.svg"
         ),
         "dragon_url": staticfiles_storage.url(
-            "skins/%s/img/rating-star-dragon.svg" % skin
+            f"skins/{skin}/img/rating-star-dragon.svg"
         ),
     }
 
@@ -45,7 +45,7 @@ def author_display(creation_subclass):
         author_url = "#"
         author_name = "Neznámý"
         logger.error(
-            "Author not found, data migration error for creation %s" % creation_subclass
+            f"Author not found, data migration error for creation {creation_subclass}"
         )
     else:
         author_url = author.profile_url

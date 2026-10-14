@@ -1,14 +1,14 @@
 import logging
 
 from django.http import (
-    HttpResponseRedirect,
     HttpResponseBadRequest,
+    HttpResponseRedirect,
 )
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from ..email import validate_unsubscribe_token, blacklist_email
+from ..email import blacklist_email, validate_unsubscribe_token
 from ..models import EmailSubscriptionAuth
 
 logger = logging.getLogger(__name__)

@@ -8,7 +8,8 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
-from .creations import ApprovalChoices, PENDING_STATES
+from .creations import PENDING_STATES, ApprovalChoices
+from .email import notify_staff_about_submission
 from .models import (
     Author,
     CommonArticle,
@@ -16,7 +17,6 @@ from .models import (
     CreationVote,
     NotificationEvent,
 )
-from .email import notify_staff_about_submission
 from .notifications import schedule_notification
 from .text import escape_user_input
 
