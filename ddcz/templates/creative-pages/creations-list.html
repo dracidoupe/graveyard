@@ -11,6 +11,10 @@
         <p><a href="{% url 'ddcz:creative-page-concept' creative_page_slug %}">{{ concept }}</a></p>
     {% endif %}
 
+    {% if user.is_authenticated and can_submit %}
+        <p><a href="{% url 'ddcz:creation-submit' creative_page_slug %}">Přidat příspěvek</a></p>
+    {% endif %}
+
     {% if user.is_authenticated %}
         <p>Patříte-li mezi starostlivé skřítky, <a href="{% url 'ddcz:creative_page_html_check' creative_page_slug %}">podívejte se na příspěvky, které potřebují opravit text</a>.</p>
     {% endif %}
@@ -31,7 +35,7 @@
             <td>{% creation_rating article.rating skin %}</td>
             <td>{{ article.rater_no }}</td>
             <td>{% author_display article %}</td>
-            <td>{{ article.group }}</td>
+            <td>{% firstof article.section article.group %}</td>
             <td>{{ article.published | articleTime }}</td>        
         </tr>
         {% endfor %}

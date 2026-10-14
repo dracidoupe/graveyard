@@ -25,6 +25,8 @@ logger = logging.getLogger(__name__)
 APPROVAL_CHOICES = (
     (ApprovalChoices.APPROVED.value, "Schváleno"),
     (ApprovalChoices.WAITING.value, "Neschváleno"),
+    (ApprovalChoices.WITHDRAWN.value, "Staženo autorem"),
+    (ApprovalChoices.REJECTED.value, "Zamítnuto"),
 )
 
 

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Příspěvky čekající na schválení</h1>
+
+    {% for group in groups %}
+        <h2>{{ group.name }} ({{ group.articles|length }})</h2>
+        <table>
+            <tr>
+                <th>Název</th>
+                <th>Autor</th>
+                <th>Skupina</th>
+                <th>Čeká dní</th>
+                <th></th>
+            </tr>
+            {% for article in group.articles %}
+            <tr>
+                <td>{{ article.name }}</td>
+                <td>{{ article.author_nick }}</td>
+                <td>{{ article.section }}</td>
+                <td>{{ article.days_waiting }}</td>
+                <td><a href="{% url 'dragon:creation-review' article.pk %}">Posoudit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% empty %}
+        <p>Žádné příspěvky nečekají na schválení.</p>
+    {% endfor %}
+{% endblock %}

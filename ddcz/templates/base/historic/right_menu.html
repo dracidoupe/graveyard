@@ -13,9 +13,13 @@
 
         <li><a class="text-red" href="{% url 'ddcz:tavern-list' %}">Putyka</a></li>
 
-        {% comment %}
-        <li><a class="text-red" href="">Nastavení</a></li>
-        {% endcomment %}
+        <li><a class="text-red" href="{% url 'ddcz:user-settings' %}">Nastavení</a></li>
+
+        <li><a class="text-red" href="{% url 'ddcz:my-submissions' %}">Moje příspěvky</a></li>
+
+        {% if user.is_staff %}
+        <li><a class="text-red" href="{% url 'dragon:dashboard' %}">Správa</a></li>
+        {% endif %}
 
     </ul>
 

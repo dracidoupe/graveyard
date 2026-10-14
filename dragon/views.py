@@ -4,19 +4,34 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core import signing
 from django.core.mail import send_mail
-from django.http import HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import render
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 
+from ddcz.commonarticles import COMMON_ARTICLES_CREATIVE_PAGES
+from ddcz.creations import PENDING_STATES
 from ddcz.email import (
     REGISTRATION_REVIEW_SALT,
     REGISTRATION_REVIEW_TOKEN_MAX_AGE,
     build_registration_review_url,
 )
-from ddcz.models import AwaitingRegistration, LevelSystemParams, News, UserProfile
+from ddcz.html import (
+    HtmlChecker,
+    HtmlTagMismatchException,
+    unsafe_encode_any_creation_html,
+)
+from ddcz.models import (
+    AwaitingRegistration,
+    CommonArticle,
+    LevelSystemParams,
+    News,
+    UserProfile,
+)
 from ddcz.notifications import Audience, NotificationEvent, schedule_notification
+from ddcz.submissions import approve_common_article, reject_common_article
 
+from .forms.creations import CommonArticleRejection, CommonArticleReview, ReviewAction
 from .forms.dashboard import FormTypes
 from .forms.news import News as NewsForm
 from .forms.users import RegistrationRequestApproval
@@ -133,6 +148,9 @@ def dashboard(request):
         "dashboard.html",
         {
             "registrations": registrations,
+            "pending_creations_count": CommonArticle.objects.filter(
+                is_published__in=PENDING_STATES
+            ).count(),
             "RegistrationRequestApproval": RegistrationRequestApproval,
             "FormTypes": FormTypes,
         },
@@ -352,5 +370,103 @@ def registration_review(request, token):
             "reject_url": build_registration_review_url(registration.id, "reject"),
             "FormTypes": FormTypes,
             "RegistrationRequestApproval": RegistrationRequestApproval,
+        },
+    )
+
+
+def get_html_problem(text):
+    try:
+        parser = HtmlChecker()
+        parser.feed(unsafe_encode_any_creation_html(text))
+    except HtmlTagMismatchException as err:
+        return str(err)
+    return None
+
+
+@login_required
+def creations_pending(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    pending = CommonArticle.objects.filter(is_published__in=PENDING_STATES).order_by(
+        "published"
+    )
+
+    now = timezone.now()
+    groups = {}
+    for article in pending:
+        article.days_waiting = (now - article.published).days
+        groups.setdefault(article.creative_page_slug, []).append(article)
+
+    return render(
+        request,
+        "creations/pending.html",
+        {
+            "groups": [
+                {
+                    "name": COMMON_ARTICLES_CREATIVE_PAGES.get(slug, {}).get(
+                        "name", slug
+                    ),
+                    "articles": articles,
+                }
+                for slug, articles in groups.items()
+            ]
+        },
+    )
+
+
+@login_required
+def creation_review(request, article_id):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("Nemáte oprávnění pro přístup k této stránce.")
+
+    article = get_object_or_404(
+        CommonArticle, pk=article_id, is_published__in=PENDING_STATES
+    )
+    if article.creative_page_slug not in COMMON_ARTICLES_CREATIVE_PAGES:
+        raise Http404()
+
+    review_form = CommonArticleReview.from_article(article)
+    rejection_form = CommonArticleRejection()
+
+    if request.method == "POST":
+        action = request.POST.get("form_type")
+        if action == ReviewAction.APPROVE.value:
+            review_form = CommonArticleReview(
+                request.POST, creative_page_slug=article.creative_page_slug
+            )
+            if review_form.is_valid():
+                review_form.save_to_article(article)
+                approve_common_article(
+                    article,
+                    request.ddcz_profile,
+                    review_form.cleaned_data["rating"],
+                    review_form.cleaned_data["comment"],
+                )
+                messages.success(request, f"Příspěvek {article.name} byl schválen.")
+                return redirect("dragon:creations-pending")
+        elif action == ReviewAction.REJECT.value:
+            rejection_form = CommonArticleRejection(request.POST)
+            if rejection_form.is_valid():
+                reject_common_article(
+                    article,
+                    request.ddcz_profile,
+                    rejection_form.cleaned_data["reason"],
+                )
+                messages.success(request, f"Příspěvek {article.name} byl zamítnut.")
+                return redirect("dragon:creations-pending")
+
+    return render(
+        request,
+        "creations/review.html",
+        {
+            "article": article,
+            "creative_page_name": COMMON_ARTICLES_CREATIVE_PAGES[
+                article.creative_page_slug
+            ]["name"],
+            "html_problem": get_html_problem(article.text),
+            "review_form": review_form,
+            "rejection_form": rejection_form,
+            "ReviewAction": ReviewAction,
         },
     )

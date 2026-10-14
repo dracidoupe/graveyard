@@ -3,7 +3,7 @@
 {% load creations %}
 {% load comments %}
 
-{% block meta_description %}{{ article.anotace }}{% endblock %}
+{% block meta_description %}{{ article.abstract }}{% endblock %}
 
 {% block content %}
 <div id="page-article-detail">
@@ -28,7 +28,7 @@
                     <td>{{ article.rater_no }}</td>
                 </tr>
             </table>
-            <p class="synopsis">{{ article.anotace }}</p>
+            <p class="synopsis">{{ article.abstract }}</p>
         </header>
 
         <section class="content">

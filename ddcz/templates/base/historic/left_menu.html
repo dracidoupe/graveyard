@@ -1,7 +1,9 @@
 <nav id="left_menu">
     <ul class="nav_links">
-        <li><a class="text-gold" href="">Chat</a></li>
+        <li><a class="text-gold" href="{{ discord_invite_link }}">Chat</a></li>
+        {% comment %}
         <li><a class="text-gold" href="">Moudrá sova</a></li>
+        {% endcomment %}
 
         <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='dobrodruzstvi' %}">Dobrodružství</a></li>
         <li><a class="text-gold" href="{% url 'ddcz:creation-list' creative_page_slug='hrbitov' %}">Hřbitov</a></li>

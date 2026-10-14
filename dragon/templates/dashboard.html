@@ -4,6 +4,10 @@
 {{% block content %}
     <h1>Přehled {{ approval }}</h1>
 
+    {% if pending_creations_count %}
+        <p><a href="{% url 'dragon:creations-pending' %}">Příspěvky čekající na schválení: {{ pending_creations_count }}</a></p>
+    {% endif %}
+
     {% for user in registrations %}
         {% if forloop.first %}
             <h2>Uživatelé čekající na schválení</h2>

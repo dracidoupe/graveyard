@@ -2,6 +2,7 @@ import json
 import logging
 from datetime import timedelta
 from enum import Enum
+from html import unescape
 
 from django.core import serializers
 from django.utils import timezone
@@ -120,4 +121,35 @@ def notify_news(affected_object, extra_data):
         )
 
 
-EVENT_DISPATCH_MAP = {NotificationEvent.NEWS_ADDED: notify_news}
+def notify_creation_approved(affected_object, extra_data):
+    # Imported lazily as ddcz.submissions imports this module
+    from ddcz.submissions import get_article_url
+
+    subscribers = CreationEmailSubscription.objects.filter(
+        creative_page_slug=extra_data["creative_page_slug"]
+    ).values("user_email", "user_profile_id")
+
+    name = unescape(affected_object.name)
+    email_subject = f"Nový příspěvek na DraciDoupe.cz: {name}"
+    email_text = f"""{name}
+{unescape(affected_object.abstract or "")}
+
+Skupina: {affected_object.section or ""}
+Autor: {affected_object.author_nick}
+
+{get_article_url(affected_object)}
+"""
+
+    for subscriber in subscribers:
+        ScheduledEmail.objects.create(
+            recipient_email=subscriber["user_email"],
+            user_profile_id=subscriber["user_profile_id"],
+            email_subject=email_subject,
+            email_text=email_text,
+        )
+
+
+EVENT_DISPATCH_MAP = {
+    NotificationEvent.NEWS_ADDED: notify_news,
+    NotificationEvent.CREATION_APPROVED: notify_creation_approved,
+}

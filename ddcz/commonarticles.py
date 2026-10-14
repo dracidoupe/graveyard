@@ -39,7 +39,7 @@ COMMON_ARTICLES_CREATIVE_PAGES = {
     },
     "noverasy": {
         "name": "Nové Rasy",
-        "sections": ["Kříženec", "Nová rasa", "Odrůda", "Ostatní,"],
+        "sections": ["Kříženec", "Nová rasa", "Odrůda", "Ostatní"],
     },
     # Not a common article, in fact
     # 'predmety': {
@@ -65,6 +65,15 @@ COMMON_ARTICLES_CREATIVE_PAGES = {
             "Politika a diplomacie",
             "Světy a prostředí",
             "Teorie RPG",
+        ],
+    },
+    "hrbitov": {
+        "name": "Hřbitov",
+        "sections": [
+            "Běžný obyvatel",
+            "Cizí postava",
+            "Ostatní",
+            "Postava",
         ],
     },
     "alchymistazvl": {
@@ -129,6 +138,7 @@ SLUG_NAME_TRANSLATION_FROM_CZ = {
     "kouzelnikzvl": "wizard",
     "valecnik": "warrior",
     "zlodej": "rogue",
+    "hrbitov": "graveyard",
 }
 
 SLUG_NAME_TRANSLATION_TO_CZ = {v: k for k, v in SLUG_NAME_TRANSLATION_FROM_CZ.items()}
