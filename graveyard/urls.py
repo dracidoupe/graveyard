@@ -26,6 +26,8 @@ urlpatterns = [
     path("sprava/", include("dragon.urls", namespace="dragon")),
 ]
 
+handler404 = "ddcz.views.misc.page_not_found"
+
 if settings.DEBUG and "debug_toolbar" in INSTALLED_APPS:
     import debug_toolbar
 
