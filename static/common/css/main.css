@@ -369,3 +369,14 @@ article.link span.actuallink {
 .tavern_table_admin_form input[type="submit"] {
     margin-top: 1rem;
 }
+
+.page-heading a,
+.page-heading a:link,
+.page-heading a:visited {
+    color: inherit;
+}
+
+h1.creation-heading {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+}

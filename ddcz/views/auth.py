@@ -137,19 +137,23 @@ class PasswordResetView(authviews.PasswordResetView):
     from_email = settings.DDCZ_TRANSACTION_EMAIL_FROM
     email_template_name = "users/password-reset-email.html"
     form_class = PasswordResetForm
+    extra_context = {"page_title": "Reset hesla"}
 
 
 class PasswordResetDoneView(authviews.PasswordResetDoneView):
     template_name = "users/password-reset-done.html"
+    extra_context = {"page_title": "Reset hesla"}
 
 
 class PasswordResetConfirmView(authviews.PasswordResetConfirmView):
     template_name = "users/password-change.html"
     success_url = reverse_lazy("ddcz:password-change-done")
+    extra_context = {"page_title": "Změna hesla"}
 
 
 class PasswordResetCompleteView(authviews.PasswordResetCompleteView):
     template_name = "users/password-change-done.html"
+    extra_context = {"page_title": "Heslo změněno"}
 
 
 def sign_up(request):
@@ -168,7 +172,10 @@ def sign_up(request):
             return render(
                 request,
                 "users/sign_up_after.html",
-                {"addressing": form.cleaned_data["salutation"]},
+                {
+                    "addressing": form.cleaned_data["salutation"],
+                    "page_title": "Vítej ve Městě",
+                },
             )
 
     return render(
@@ -176,6 +183,7 @@ def sign_up(request):
         "users/sign_up.html",
         {
             "sign_up_form": form,
+            "page_title": "Vstup do Města",
             "reg_script": staticfiles_storage.url("common/js/main.js"),
             "reg_style": staticfiles_storage.url("common/css/registration.css"),
             "seal_image": staticfiles_storage.url(

@@ -56,6 +56,7 @@ def postal_service(request):
             "letters": letters,
             "per_page": per_page if per_page != DEFAULT_LIMIT else False,
             "box_occupancy": box_occupancy,
+            "page_title": "Dračí pošta",
         },
     )
 

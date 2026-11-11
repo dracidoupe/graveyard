@@ -36,5 +36,5 @@ def antispam(request, email_base64, unsub_token):
             return render(
                 request,
                 "emails/antispam.html",
-                {},
+                {"page_title": "Odstranění e-mailu"},
             )

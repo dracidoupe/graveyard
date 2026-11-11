@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 from .forms.authentication import LoginForm
+from .seo import absolute_url
 
 
 def common_variables(request):
@@ -25,6 +26,10 @@ def common_variables(request):
         logo_height = "87.2px"
 
     return {
+        "canonical_url": absolute_url(request.path),
+        "og_image_url": absolute_url(
+            staticfiles_storage.url("skins/light/img/logo.gif")
+        ),
         "user": request.user,
         "ddcz_profile": request.ddcz_profile,
         "skin": skin,

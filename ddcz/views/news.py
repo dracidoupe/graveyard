@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_LIST_SIZE = 10
 
+NEWS_META_DESCRIPTION = "Domov všech hráčů Dračího Doupěte. Přes dvacet let doplňků, povolání, nestvůr do bestiáře, dobrodružství a debat o nich. Prostor pro seznámení hráčů a hráček a tvorbu družin."
+
 
 @require_http_methods(["HEAD", "GET"])
 @vary_on_cookie
@@ -35,7 +37,15 @@ def list(request):
         if page == 1:
             cache.set(cache_key, news)
 
-    return render(request, "news/list.html", {"news": news})
+    return render(
+        request,
+        "news/list.html",
+        {
+            "news": news,
+            "page_title": "Aktuality",
+            "meta_description": NEWS_META_DESCRIPTION,
+        },
+    )
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -93,5 +103,7 @@ def newsfeed(request):
         )
 
     return render(
-        request, "news/newsfeed.html", {"articles": articles, "comments": comments}
+        request,
+        "news/newsfeed.html",
+        {"articles": articles, "comments": comments, "page_title": "Novinky"},
     )

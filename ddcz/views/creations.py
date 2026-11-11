@@ -28,6 +28,12 @@ from ..models import (
     DownloadItem,
     Quest,
 )
+from ..seo import (
+    absolute_url,
+    creation_description,
+    creation_json_ld,
+    meta_description,
+)
 from ..text import escape_user_input
 
 # Get an instance of a logger
@@ -95,6 +101,14 @@ def creative_page_list(request, creative_page_slug):
     except KeyError:
         template = MAP_CREATION_TEMPLATE["default"]
 
+    page_title = creative_page.name
+    canonical_url = absolute_url(request.path)
+    if articles.number > 1:
+        page_title = f"{page_title}, strana {articles.number}"
+        canonical_url = f"{canonical_url}?z_s={articles.number}"
+
+    description = f"{creative_page.name} – příspěvky pro Dračí doupě na DraciDoupe.cz"
+
     return render(
         request,
         "creative-pages/" + template,
@@ -103,6 +117,9 @@ def creative_page_list(request, creative_page_slug):
             "articles": articles,
             "creative_page_slug": creative_page.slug,
             "concept": concept,
+            "page_title": page_title,
+            "meta_description": description,
+            "canonical_url": canonical_url,
         },
     )
 
@@ -205,16 +222,35 @@ def creation_detail(request, creative_page_slug, creation_id, creation_slug):
     else:
         creation_comment_form = CreationCommentForm()
 
+    article = creation_info["article"]
+    creative_page = creation_info["creative_page"]
+    description = creation_description(article, creative_page)
+    canonical_url = absolute_url(creative_page.get_creation_canonical_url(article))
+    image_url = (
+        article.get_picture_url() if hasattr(article, "get_picture_url") else None
+    )
+
+    context = {
+        "heading": creative_page.name,
+        "article": article,
+        "creative_page_slug": creative_page_slug,
+        "comment_page": request.GET.get("z_s", 1),
+        "creation_comment_form": CreationCommentForm(),
+        "page_title": f"{article.name} – {creative_page.name}",
+        "meta_description": description,
+        "canonical_url": canonical_url,
+        "og_type": "article",
+        "json_ld": creation_json_ld(
+            article, creative_page, canonical_url, description, image_url
+        ),
+    }
+    if image_url:
+        context["og_image_url"] = image_url
+
     return render(
         request,
         f"creative-pages/{creation_info['model_class_name']}-detail.html",
-        {
-            "heading": creation_info["creative_page"].name,
-            "article": creation_info["article"],
-            "creative_page_slug": creative_page_slug,
-            "comment_page": request.GET.get("z_s", 1),
-            "creation_comment_form": CreationCommentForm(),
-        },
+        context,
     )
 
 
@@ -264,6 +300,8 @@ def creative_page_concept(request, creative_page_slug):
             "heading": creative_page.name,
             "creative_page_slug": creative_page_slug,
             "concept": concept,
+            "page_title": f"Koncepce – {creative_page.name}",
+            "meta_description": meta_description(concept.text),
         },
     )
 
@@ -278,6 +316,7 @@ def creative_page_html_check(request, creative_page_slug):
             "creative-pages/html-check-form.html",
             {
                 "heading": creative_page.name,
+                "page_title": f"Kontrola HTML – {creative_page.name}",
             },
         )
 
@@ -314,6 +353,7 @@ def creative_page_html_check(request, creative_page_slug):
                 "heading": creative_page.name,
                 "creative_page_slug": creative_page_slug,
                 "bad_creations": bad_creations,
+                "page_title": f"Kontrola HTML – {creative_page.name}",
             },
         )
 
@@ -372,5 +412,7 @@ def author_detail(request, author_id, slug):
         {
             "author": author,
             "pages_with_creations": author.get_all_creations(),
+            "page_title": f"Autor {author.name}",
+            "meta_description": f"Příspěvky autora {author.name} na DraciDoupe.cz",
         },
     )

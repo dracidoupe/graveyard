@@ -114,11 +114,14 @@ footer#page_footer {
 
 
 /* =========== HEADER ============ */
-header#page_header h1 {
+header#page_header .site-logo {
     text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.67em 0;
 }
 
-header#page_header h1 img {
+header#page_header .site-logo img {
     width: 600px;
 }
 
@@ -197,7 +200,8 @@ nav ul li a::first-letter {
 
 
 /* =========== MAIN CONTENT ============ */
-h1.page-heading {
+.page-heading {
+    margin: 0.67em 0;
     width: 100%;
     font-weight: bold;
     border-top: 0px;

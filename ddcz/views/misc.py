@@ -34,7 +34,7 @@ def links(request):
 
     items = paginator.get_page(page)
 
-    return render(request, "links/list.html", {"items": items})
+    return render(request, "links/list.html", {"items": items, "page_title": "Linky"})
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -46,7 +46,9 @@ def dating(request):
 
     items = paginator.get_page(page)
 
-    return render(request, "dating/list.html", {"items": items})
+    return render(
+        request, "dating/list.html", {"items": items, "page_title": "Seznamka"}
+    )
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -65,7 +67,9 @@ def market(request):
 
     items = paginator.get_page(page)
 
-    return render(request, "market/list.html", {"items": items})
+    return render(
+        request, "market/list.html", {"items": items, "page_title": "Inzerce"}
+    )
 
 
 @require_http_methods(["HEAD", "GET"])
@@ -75,7 +79,7 @@ def editor_article(request, slug):
     return render(
         request,
         "info/editor-article.html",
-        {"article": article},
+        {"article": article, "page_title": article.title},
     )
 
 
@@ -122,6 +126,7 @@ def web_authors_and_editors(request):
         {
             "tribune": UserProfile.objects.get(pk=settings.TRIBUNE_ID),
             "famous_users": hall_of_fame,
+            "page_title": "Tvůrci a Redakce",
         },
     )
 
@@ -137,7 +142,11 @@ def market_create(request):
     else:
         form = MarketForm()
 
-    return render(request, "market/create.html", {"form": form})
+    return render(
+        request,
+        "market/create.html",
+        {"form": form, "page_title": "Přidat inzerát"},
+    )
 
 
 @login_required
@@ -160,7 +169,11 @@ def dating_create(request):
     else:
         form = DatingForm()
 
-    return render(request, "dating/create.html", {"form": form})
+    return render(
+        request,
+        "dating/create.html",
+        {"form": form, "page_title": "Přidat inzerát do seznamky"},
+    )
 
 
 @login_required

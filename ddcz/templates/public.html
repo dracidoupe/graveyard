@@ -3,10 +3,19 @@
 <html lang="cs">
 
 <head>
-    <title>{% if page_title %}{{ page_title }}{% else %}DraciDoupe.cz{% endif %}</title>
+    <title>{% if page_title %}{{ page_title }} | DraciDoupe.cz{% else %}DraciDoupe.cz{% endif %}</title>
     <meta charset="utf-8">
-    <meta name="description" content="{% block meta_description %}{% if meta_description %}{{ meta_description }}{% endif %}{% endblock %}">
+    {% if meta_description %}<meta name="description" content="{{ meta_description }}">{% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:site_name" content="DraciDoupe.cz">
+    <meta property="og:locale" content="cs_CZ">
+    <meta property="og:type" content="{{ og_type|default:'website' }}">
+    <meta property="og:title" content="{% if page_title %}{{ page_title }}{% else %}DraciDoupe.cz{% endif %}">
+    {% if meta_description %}<meta property="og:description" content="{{ meta_description }}">{% endif %}
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ og_image_url }}">
+    {% if json_ld %}<script type="application/ld+json">{{ json_ld }}</script>{% endif %}
     <link rel="stylesheet" href="{{skin_css_url}}">
     <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-phorum' %}" title="Komentáře ve fóru">
     <link rel="alternate" type="application/rss+xml" href="{% url 'ddcz:feed-complete' %}" title="Všechny novinky">
@@ -21,9 +30,9 @@
     <div id="container">
 
         <header id="page_header">
-            <h1>
+            <div class="site-logo">
                 <a href="/" rel="home"><img src="{{ skin_logo_url }}" width="{{ logo_width }}" height="{{ logo_height }}" alt="DraciDoupe.cz"></a>
-            </h1>
+            </div>
         </header>
 
         {% if skin == "historic" %}

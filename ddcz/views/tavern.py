@@ -120,6 +120,7 @@ def list_tables(request):
             "tavern_tables": tavern_tables,
             "supported_list_styles": SUPPORTED_LIST_STYLES_DISPLAY_NAME,
             "current_list_style": list_style,
+            "page_title": "Putyka",
         },
     )
 
@@ -171,6 +172,7 @@ def table_posts(request, tavern_table_id):
             "posts_page": posts_page,
             "post_form": post_form,
             "user_can_post": user_can_post,
+            "page_title": f"{table.name} – Putyka",
         },
     )
 
@@ -224,6 +226,7 @@ def notice_board(request, tavern_table_id):
             "notice_board": board,
             "post_form": post_form,
             "user_can_update_notice_board": user_can_update_notice_board,
+            "page_title": f"Nástěnka {table.name} – Putyka",
         },
     )
 
@@ -308,5 +311,6 @@ def table_administration(request, tavern_table_id):
         {
             "table": table,
             "admin_form": tavern_table_admin_form,
+            "page_title": f"Správa {table.name} – Putyka",
         },
     )

@@ -58,5 +58,6 @@ def phorum(request):
             "discussions": discussions,
             "phorum_comment_form": PhorumCommentForm(),
             "delete_form": DeletePhorumCommentForm(),
+            "page_title": "Fórum",
         },
     )

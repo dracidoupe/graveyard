@@ -154,7 +154,10 @@ urlpatterns = [
     ### Emails
     path(
         "e-mail/antispam/potvrzeni/",
-        TemplateView.as_view(template_name="emails/unsub-confirm.html"),
+        TemplateView.as_view(
+            template_name="emails/unsub-confirm.html",
+            extra_context={"page_title": "Odstranění e-mailu"},
+        ),
         name="email-antispam-confirm",
     ),
     path(

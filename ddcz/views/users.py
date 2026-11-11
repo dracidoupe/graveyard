@@ -73,6 +73,7 @@ def users_list(request):
             "users": users,
             "searched_nick": searched_nick or "",
             "search_limited": search_limited,
+            "page_title": "Uživatelé",
         },
     )
 
@@ -106,6 +107,7 @@ def user_profile(request, user_profile_id, nick_slug):
             "level_stars": level_stars,
             "level_description": description,
             "runes": Rune.objects.filter(receiver_id=user_profile.id).order_by("-date"),
+            "page_title": f"Uživatel {user_profile.nick}",
         },
     )
 
@@ -148,5 +150,6 @@ def user_settings(request):
             "form": form,
             "saved": saved,
             "user_email": user_profile.email,
+            "page_title": "Nastavení",
         },
     )

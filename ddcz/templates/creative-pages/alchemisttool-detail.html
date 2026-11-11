@@ -4,10 +4,10 @@
 {% load html %}
 {% block content %}
 <div id="page-article-detail">
-    <h1 class="page-heading">{{ heading }}</h1>
+    <div class="page-heading"><a href="{% url 'ddcz:creation-list' creative_page_slug %}">{{ heading }}</a></div>
     <article>
         <header>
-            <h2>{{ article.name }}{% creation_rating article.rating skin %}</h2>
+            <h1 class="creation-heading">{{ article.name }}{% creation_rating article.rating skin %}</h1>
             <!-- TODO
             <p>Příprava pro tisk</p>
             -->

@@ -21,5 +21,5 @@ class TestCreativePageRendered(SeleniumTestCase):
             text = self.selenium.find_element(
                 By.XPATH, '//h1[contains(@class,"page-heading")]'
             ).text
-            self.assertEqual("DraciDoupe.cz", self.selenium.title)
+            self.assertEqual(f"{page.name} | DraciDoupe.cz", self.selenium.title)
             self.assertEqual(page.name, text)
