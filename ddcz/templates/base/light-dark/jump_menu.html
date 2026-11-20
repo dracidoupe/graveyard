@@ -1,0 +1,7 @@
+<nav id="jump_menu" aria-label="Skok na menu">
+    <ul class="nav_border">
+        <li><a href="#left_menu">Rubriky</a></li>
+        <li><a href="#ostatni">Ostatní</a></li>
+        <li><a href="#ddcz_control">{% if user.is_authenticated %}Účet{% else %}Přihlásit{% endif %}</a></li>
+    </ul>
+</nav>

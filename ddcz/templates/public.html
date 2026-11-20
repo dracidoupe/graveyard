@@ -24,6 +24,9 @@
             <h1>
                 <a href="/" rel="home"><img src="{{ skin_logo_url }}" width="{{ logo_width }}" height="{{ logo_height }}" alt="DraciDoupe.cz"></a>
             </h1>
+            {% if skin != "historic" %}
+                {% include "base/light-dark/jump_menu.html" %}
+            {% endif %}
         </header>
 
         {% if skin == "historic" %}
@@ -50,6 +53,9 @@
         </main>
 
         <footer id="page_footer">
+            {% if skin != "historic" %}
+            <p id="to_top" class="pagination"><a href="#page_header">Nahoru</a></p>
+            {% endif %}
             <p><a href="/">DraciDoupe.cz</a> verze {{ deploy_info_html | safe }} © 2018&ndash;{{ copyright_end_year }} <a href="https://www.almad.net/" rel="author">Almad</a> <a
                     href="https://github.com/dracidoupe/graveyard/graphs/contributors" rel="author">a ostatní přispěvatelé</a>. DrD,
                 Dračí doupě a Altar jsou ochranné známky společnosti ALTAR. Všechna práva vyhrazena. Žádná část těchto
