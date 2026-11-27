@@ -7,5 +7,5 @@ class DdczConfig(AppConfig):
     def ready(self):
         from django.db.models import fields
 
-        # Hotfix for missing blank field 
+        # Hotfix for missing blank field
         fields.BLANK_CHOICE_LABEL = "- Vyberte možnost -"

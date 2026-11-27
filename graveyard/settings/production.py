@@ -101,15 +101,10 @@ USER_ICON_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/ikonky/"
 QUEST_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/dobrodruzstvi/"
 
 import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 
-sentry_sdk.init(
-    dsn=os.environ["SENTRY_DSN"],
-    integrations=[DjangoIntegration()],
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=False,
-)
+from ..sentry import get_sentry_options
+
+sentry_sdk.init(dsn=os.environ["SENTRY_DSN"], **get_sentry_options())
 
 # Production way of sending email
 MAILERS = {
