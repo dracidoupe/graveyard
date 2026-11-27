@@ -170,12 +170,16 @@ DDCZ_TRANSACTION_EMAIL_FROM = "noreply@example.com"
 EMAIL_FAIL_SILENTLY = True
 EMAIL_LINKS_BASE_URI = "http://localhost:8000"
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# This is a spammy stopgap measure; you should override it, see local.example.py
-# Not including it here as a default to avoid creating a directory on server startup
-# to support a use case of running on RO webserver container
-EMAIL_FILE_PATH = gettempdir()
-# It's a bit questionable to up temporary dir on sever start
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.filebased.EmailBackend",
+        # This is a spammy stopgap measure; you should override it, see local.example.py
+        # Not including it here as a default to avoid creating a directory on server startup
+        # to support a use case of running on RO webserver container
+        "OPTIONS": {"file_path": gettempdir()},
+        # It's a bit questionable to up temporary dir on sever start
+    }
+}
 
 # Hostname for selenium hub for tests. None means running locally
 SELENIUM_HUB_HOST = None

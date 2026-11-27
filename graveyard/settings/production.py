@@ -61,14 +61,21 @@ if "MEMCACHEDCLOUD_SERVERS" in os.environ:
 _release = os.environ.get("HEROKU_RELEASE_VERSION", "")
 CACHE_VERSION = int(_release[1:]) if _release[1:].isdigit() else 1
 
-# See https://devcenter.heroku.com/articles/memcachedcloud#using-memcached-from-python
 CACHES = {
     "default": {
-        "BACKEND": "django_bmemcached.memcached.BMemcached",
+        "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
         "LOCATION": os.environ.get("MEMCACHEDCLOUD_SERVERS").split(","),
         "OPTIONS": {
+            "binary": True,
             "username": os.environ.get("MEMCACHEDCLOUD_USERNAME"),
             "password": os.environ.get("MEMCACHEDCLOUD_PASSWORD"),
+            "behaviors": {
+                "tcp_nodelay": True,
+                "ketama": True,
+                "connect_timeout": 2000,
+                "send_timeout": 750 * 1000,
+                "receive_timeout": 750 * 1000,
+            },
         },
         "KEY_PREFIX": "gy-",
         "VERSION": CACHE_VERSION,
@@ -101,25 +108,26 @@ USER_ICON_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/ikonky/"
 QUEST_MEDIA_ROOT_URL = "https://uploady.dracidoupe.cz/dobrodruzstvi/"
 
 import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 
-sentry_sdk.init(
-    dsn=os.environ["SENTRY_DSN"],
-    integrations=[DjangoIntegration()],
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=False,
-)
+from ..sentry import get_sentry_options
+
+sentry_sdk.init(dsn=os.environ["SENTRY_DSN"], **get_sentry_options())
 
 # Production way of sending email
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": os.environ.get("MAILGUN_SMTP_SERVER", ""),
+            "port": int(os.environ.get("MAILGUN_SMTP_PORT", 587)),
+            "username": os.environ.get("MAILGUN_SMTP_LOGIN", ""),
+            "password": os.environ.get("MAILGUN_SMTP_PASSWORD", ""),
+            "use_tls": True,
+        },
+    }
+}
 EMAIL_FAIL_SILENTLY = False
 EMAIL_LINKS_BASE_URI = "https://www.dracidoupe.cz"
-EMAIL_HOST = os.environ.get("MAILGUN_SMTP_SERVER", "")
-EMAIL_PORT = os.environ.get("MAILGUN_SMTP_PORT", "")
-EMAIL_HOST_USER = os.environ.get("MAILGUN_SMTP_LOGIN", "")
-EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_SMTP_PASSWORD", "")
-EMAIL_USE_TLS = True
 DDCZ_TRANSACTION_EMAIL_FROM = os.environ.get(
     "DDCZ_TRANSACTION_EMAIL_FROM", "noreply@example.com"
 )

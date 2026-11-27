@@ -271,14 +271,7 @@ def download_and_extract_chromedriver(url, download_path):
             .lower()
             == "y"
         ):
-            try:
-                os.rename(extracted_chromedriver_path, chromedriver_path)
-            except PermissionError:
-                print(
-                    "Insufficient permissions to move chromedriver from {extracted_chromedriver_path} {chromedriver_path}; provide password to move with sudo."
-                )
-                os.system(f"sudo mv {extracted_chromedriver_path} {chromedriver_path}")
-            os.chmod(chromedriver_path, 755)
+            install_chromedriver(extracted_chromedriver_path, chromedriver_path)
         else:
             print(
                 f"Chromedriver is located in {extracted_chromedriver_path}, please install it manually."
@@ -288,3 +281,16 @@ def download_and_extract_chromedriver(url, download_path):
             "Windows not supported for this, please check the code around this and write your own support :) "
         )
         # os.rename(chromedriver_path, "C:\\Windows\\chromedriver.exe")
+
+
+def install_chromedriver(source, destination):
+    os.chmod(source, 0o755)
+    try:
+        # Unlike os.rename, this works when the temp dir is on another filesystem
+        shutil.move(source, destination)
+    except PermissionError:
+        print(
+            f"Insufficient permissions to move chromedriver from {source} to {destination}; "
+            "provide password to move with sudo."
+        )
+        subprocess.run(["sudo", "mv", source, destination], check=True)
