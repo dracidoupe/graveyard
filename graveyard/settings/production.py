@@ -112,14 +112,20 @@ sentry_sdk.init(
 )
 
 # Production way of sending email
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": os.environ.get("MAILGUN_SMTP_SERVER", ""),
+            "port": int(os.environ.get("MAILGUN_SMTP_PORT", 587)),
+            "username": os.environ.get("MAILGUN_SMTP_LOGIN", ""),
+            "password": os.environ.get("MAILGUN_SMTP_PASSWORD", ""),
+            "use_tls": True,
+        },
+    }
+}
 EMAIL_FAIL_SILENTLY = False
 EMAIL_LINKS_BASE_URI = "https://www.dracidoupe.cz"
-EMAIL_HOST = os.environ.get("MAILGUN_SMTP_SERVER", "")
-EMAIL_PORT = os.environ.get("MAILGUN_SMTP_PORT", "")
-EMAIL_HOST_USER = os.environ.get("MAILGUN_SMTP_LOGIN", "")
-EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_SMTP_PASSWORD", "")
-EMAIL_USE_TLS = True
 DDCZ_TRANSACTION_EMAIL_FROM = os.environ.get(
     "DDCZ_TRANSACTION_EMAIL_FROM", "noreply@example.com"
 )

@@ -53,7 +53,12 @@ elif not os.access(maildir, os.W_OK):
 if not maildir:
     maildir = mkdtemp(prefix="ddcz-devserver-emails-")
 
-EMAIL_FILE_PATH = maildir
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.filebased.EmailBackend",
+        "OPTIONS": {"file_path": maildir},
+    }
+}
 
 
 LOGGING = {
