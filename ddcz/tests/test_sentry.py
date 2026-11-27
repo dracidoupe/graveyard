@@ -46,15 +46,12 @@ class SentryReportingTestCase(SimpleTestCase):
         client = sentry_sdk.Client(
             dsn="https://public@sentry.invalid/1",
             transport=self.transport,
-            # Limit process-wide patching done by the SDK to what is under test
             default_integrations=False,
             auto_enabling_integrations=False,
             **get_sentry_options(),
         )
         self.addCleanup(client.close)
 
-        # Same as the Django test client: a request must not close the
-        # database connection other tests are using
         signals.request_started.disconnect(close_old_connections)
         self.addCleanup(signals.request_started.connect, close_old_connections)
 
