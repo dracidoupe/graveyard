@@ -61,14 +61,21 @@ if "MEMCACHEDCLOUD_SERVERS" in os.environ:
 _release = os.environ.get("HEROKU_RELEASE_VERSION", "")
 CACHE_VERSION = int(_release[1:]) if _release[1:].isdigit() else 1
 
-# See https://devcenter.heroku.com/articles/memcachedcloud#using-memcached-from-python
 CACHES = {
     "default": {
-        "BACKEND": "django_bmemcached.memcached.BMemcached",
+        "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
         "LOCATION": os.environ.get("MEMCACHEDCLOUD_SERVERS").split(","),
         "OPTIONS": {
+            "binary": True,
             "username": os.environ.get("MEMCACHEDCLOUD_USERNAME"),
             "password": os.environ.get("MEMCACHEDCLOUD_PASSWORD"),
+            "behaviors": {
+                "tcp_nodelay": True,
+                "ketama": True,
+                "connect_timeout": 2000,
+                "send_timeout": 750 * 1000,
+                "receive_timeout": 750 * 1000,
+            },
         },
         "KEY_PREFIX": "gy-",
         "VERSION": CACHE_VERSION,
